@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/_10sdp"
+    android:paddingEnd="@dimen/_10sdp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/tv_item_name"
+        android:layout_width="match_parent"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_regular"
+        android:padding="@dimen/_6sdp"
+        android:layout_toLeftOf="@+id/tv_qty"
+        android:textColor="@color/color_text_regular"
+        android:layout_centerVertical="true"
+        tools:text="20 Jun 2020 10:00 - 20:00" />
+
+    <TextView
+        android:id="@+id/tv_qty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_regular"
+        android:textColor="@color/color_text_regular"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        tools:text="175.000" />
+
+</RelativeLayout>

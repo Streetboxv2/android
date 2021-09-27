@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:paddingTop="@dimen/_2sdp"
+        android:paddingStart="@dimen/_4sdp"
+        android:paddingEnd="@dimen/_4sdp"
+        android:padding="@dimen/_6sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_schedule"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/black"
+            android:text="Date" />
+
+        <TextView
+            android:id="@+id/tv_schedule_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:textColor="@color/black"
+            android:text="Time" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/sp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/_10sdp"
+        android:clipToPadding="false"
+        android:orientation="vertical" />
+</LinearLayout>

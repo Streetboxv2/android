@@ -1,0 +1,135 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/edit_name"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/login_bg">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:text="Istora Senayan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/black"
+            android:visibility="visible"/>
+
+        <ImageView
+            android:id="@+id/iv_address"
+            android:layout_width="@dimen/_16sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:src="@drawable/location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:text="Jalan Ancol"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/color_text_regular"
+            android:layout_marginStart="@dimen/_20sdp"
+            app:layout_constraintTop_toTopOf="@+id/iv_address"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_address"
+            app:layout_constraintStart_toEndOf="@+id/iv_address"
+            app:layout_constraintVertical_bias="0.189"
+            android:visibility="visible"/>
+
+
+        <ImageView
+            android:id="@+id/iv_startdatetime"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:src="@drawable/time"
+            android:layout_marginTop="@dimen/_40sdp"
+            app:layout_constraintTop_toBottomOf="@+id/iv_address"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/txt_startdatetime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Today 08:00 - 22:00"
+            android:textColor="@color/color_text_regular"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_address"
+            app:layout_constraintStart_toEndOf="@+id/iv_startdatetime"
+            app:layout_constraintTop_toTopOf="@+id/iv_startdatetime"
+            app:layout_constraintVertical_bias="0.087" />
+
+        <TextView
+            android:id="@+id/txt_notes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Address"
+            android:textColor="@color/color_text_regular"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_startdatetime"
+            app:layout_constraintTop_toTopOf="@+id/iv_startdatetime"
+            app:layout_constraintVertical_bias="0.025"
+            tools:ignore="MissingConstraints"
+            android:visibility="gone"/>
+
+        <EditText
+            android:id="@+id/et_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@drawable/rounded"
+            android:hint="Contoh: Blok CD 6"
+            android:paddingLeft="@dimen/_5sdp"
+            android:textColor="@color/grey_hint"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_notes"
+            app:layout_constraintTop_toTopOf="@+id/txt_notes"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="1dp"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btn_setlocation"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="wrap_content"
+            android:text="@string/setlocation"
+            android:background="@drawable/button_live_tracking_bg"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_notes" />
+
+        <Button
+            android:id="@+id/btn_checkin"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="wrap_content"
+            android:text="@string/check_in"
+            android:visibility="visible"
+            android:background="@drawable/button_live_tracking_bg"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/_30sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_notes" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

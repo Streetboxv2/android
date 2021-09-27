@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPOS"
+        app:navigationIcon="@drawable/ic_back"
+        android:theme="@style/ToolbarTheme">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Online Order"
+            android:layout_gravity="center"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="@dimen/_10ssp"
+            android:textColor="@color/white" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <LinearLayout
+        android:id="@+id/ll_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPOS"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/_15sdp">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/sv_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:background="@drawable/search_input_bg"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1"
+            android:minLines="1"
+            app:queryHint="search keyword" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/_10sdp">
+
+        <TextView
+            android:id="@+id/tv_no"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="NO."
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/color_text_regular" />
+
+
+        <TextView
+            android:id="@+id/tv_no_order"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="NO. ORDER"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/color_text_regular" />
+
+        <TextView
+            android:id="@+id/tv_no_order_bill"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="NO. ORDERBILL"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/color_text_regular" />
+
+        <TextView
+            android:id="@+id/tv_createTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="CREATED TIME"
+            android:gravity="end"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/color_text_regular" />
+
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/header_separator"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/grey" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>

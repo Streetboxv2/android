@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_back"
+            android:background="@color/colorPOS"
+            android:theme="@style/ToolbarTheme"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp">
+
+            <TextView
+                android:fontFamily="@font/poppins_bold"
+                android:id="@+id/tvGrandTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="140.000"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:fontFamily="@font/poppins_regular"
+                android:id="@+id/tv_total_amount_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total amount due"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvGrandTotal" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_dinein"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Dine In"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:fontFamily="@font/poppins_regular"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_marginTop="@dimen/_15sdp"
+                app:layout_constraintEnd_toStartOf="@+id/btn_takeaway"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_total_amount_label" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_takeaway"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Take Away"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:fontFamily="@font/poppins_regular"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toEndOf="@+id/btn_dinein"
+                app:layout_constraintTop_toTopOf="@+id/btn_dinein"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_dinein" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_doortodoor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Door to Door"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:fontFamily="@font/poppins_regular"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toEndOf="@+id/btn_takeaway"
+                app:layout_constraintTop_toTopOf="@+id/btn_takeaway"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_takeaway" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_onlinedelivery"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Online Delivery"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:fontFamily="@font/poppins_regular"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toEndOf="@+id/btn_doortodoor"
+                app:layout_constraintTop_toTopOf="@+id/btn_doortodoor"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_doortodoor" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_gofood"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="GoFood"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:fontFamily="@font/poppins_regular"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_dinein" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_grabfood"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="GrabFood"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:fontFamily="@font/poppins_regular"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toEndOf="@+id/btn_gofood"
+                app:layout_constraintTop_toTopOf="@+id/btn_gofood"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_gofood" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_shopeefood"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="ShopeeFood"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:fontFamily="@font/poppins_regular"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toEndOf="@+id/btn_grabfood"
+                app:layout_constraintTop_toTopOf="@+id/btn_grabfood"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_grabfood" />
+
+            <TextView
+                android:fontFamily="@font/poppins_regular"
+                android:id="@+id/tv_selected_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Selected type: Dine In"
+                android:paddingTop="@dimen/_4sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_gofood" />
+
+            <TextView
+                android:fontFamily="@font/poppins_bold"
+                android:id="@+id/tv_cash_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Cash received"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_selected_type" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_cash_amount"
+                style="@style/Widget.App.TextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
+                app:hintEnabled="false"
+                app:hintTextColor="@color/grey_hint"
+                app:layout_constraintEnd_toStartOf="@+id/btn_charge"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_cash_amount"
+                app:startIconDrawable="@drawable/cash">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_cash_amount"
+                    android:inputType="number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textColor="@color/color_text_regular" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Charge"
+                android:backgroundTint="@color/colorPOS"
+                android:padding="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/tl_cash_amount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tl_cash_amount" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier_charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="tl_cash_amount, btn_charge" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_amount_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="10.000"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:fontFamily="@font/poppins_regular"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_marginTop="@dimen/_15sdp"
+                app:layout_constraintEnd_toStartOf="@+id/btn_amount_2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/barrier_charge" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_amount_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="20.000"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:fontFamily="@font/poppins_regular"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:layout_constraintEnd_toStartOf="@+id/btn_amount_3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btn_amount_1"
+                app:layout_constraintTop_toTopOf="@+id/btn_amount_1"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_amount_1" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_amount_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="30.000"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:fontFamily="@font/poppins_regular"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:layout_constraintEnd_toStartOf="@+id/btn_amount_4"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btn_amount_2"
+                app:layout_constraintTop_toTopOf="@+id/btn_amount_2"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_amount_2" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_amount_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="40.000"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:fontFamily="@font/poppins_regular"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btn_amount_3"
+                app:layout_constraintTop_toTopOf="@id/btn_amount_3"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_amount_3" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_other_payment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:drawableLeft="@drawable/otherpayment"
+                android:text="QRIS"
+                android:drawableTint="@color/white"
+                android:backgroundTint="@color/colorPOS"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:fontFamily="@font/poppins_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_amount_1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</LinearLayout>

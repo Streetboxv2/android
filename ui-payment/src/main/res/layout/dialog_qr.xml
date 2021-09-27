@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_20sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tv_scan_qr"
+        android:fontFamily="@font/poppins_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scan this QR"
+        android:textSize="@dimen/_10ssp"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/_6sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_qr"
+        android:layout_width="@dimen/_160sdp"
+        android:layout_height="@dimen/_160sdp"
+        android:contentDescription="@null"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_scan_qr"
+        app:layout_constraintStart_toStartOf="@+id/tv_scan_qr"
+        app:layout_constraintEnd_toEndOf="@+id/tv_scan_qr" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Done"
+        android:background="@drawable/button_add_bg"
+        android:textColor="@color/white"
+        android:paddingTop="@dimen/_4sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingEnd="@dimen/_20sdp"
+        android:fontFamily="@font/poppins_regular"
+        app:layout_constraintTop_toBottomOf="@+id/iv_qr"
+        app:layout_constraintStart_toStartOf="@+id/iv_qr"
+        app:layout_constraintEnd_toEndOf="@+id/iv_qr" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

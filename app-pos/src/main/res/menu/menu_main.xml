@@ -1,0 +1,35 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="example.javatpoint.com.kotlinoptionsmenu.MainActivity">
+
+    <item
+        android:id="@+id/action_online_order"
+        android:title="Online Order"
+        android:icon="@drawable/online_order"
+        app:actionLayout="@layout/custom_action_item_layout"
+        app:showAsAction="always" />
+
+   <!-- <item
+        android:id="@+id/action_sync"
+        android:title="Sync"
+        android:icon="@drawable/ic_sync"
+        app:showAsAction="always"
+        android:checkable="true" />-->
+
+    <item
+        android:id="@+id/action_receipt"
+        android:title="Transaction History"
+        app:showAsAction="never" />
+
+    <!--<item
+        android:id="@+id/action_select_printer"
+        android:title="Select Printer"
+        app:showAsAction="never" />-->
+
+    <item
+        android:id="@+id/action_logout"
+        android:title="Logout"
+        app:showAsAction="never" />
+
+</menu>

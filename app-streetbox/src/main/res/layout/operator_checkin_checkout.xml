@@ -1,0 +1,101 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/edit_name"
+    android:layout_width="@dimen/_100sdp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center" android:orientation="vertical"  >
+
+
+    <ImageView
+        android:layout_centerInParent="true"
+        android:src="@drawable/logo_text"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_20sdp"
+        android:id="@+id/logo"
+        android:layout_gravity="center"
+        android:background="@color/orange"/>
+
+    <TextView
+        android:id="@+id/txt_parkingspace_name"
+        android:text="Istora Senayan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:textSize="@dimen/_10sdp"
+        android:textColor="@color/black"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/_5sdp">
+
+        <ImageView
+            android:id="@+id/iv_location"
+            android:layout_width="@dimen/_16sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:tint="@color/orange"
+            android:src="@drawable/ic_location"  />
+
+        <TextView
+            android:id="@+id/txt_address"
+            android:text="Jalan Ancol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/_5sdp">
+
+        <ImageView
+            android:layout_width="@dimen/_16sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:src="@drawable/ic_time"   />
+        
+        <TextView
+            android:id="@+id/txt_startdate"
+            android:text="Sunday,08:00"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/_5sdp">
+
+        <ImageView
+            android:layout_width="@dimen/_16sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:src="@drawable/ic_time"   />
+
+        <TextView
+            android:id="@+id/txt_enddate"
+            android:text="Sunday,08:00"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_checkOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/check_out"
+        android:background="@color/orange"
+        android:textColor="@color/white"/>
+</LinearLayout>

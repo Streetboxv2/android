@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/_10sdp"
+    android:paddingBottom="@dimen/_10sdp">
+
+    <ImageView
+        android:id="@+id/iv_product"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:contentDescription="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/image_holder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_6sdp"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/tv_trx_number"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@+id/iv_product"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="KFC Bucket" />
+
+    <TextView
+        android:id="@+id/tv_trx_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:textColor="@color/color_text_regular"
+        android:textSize="@dimen/_10ssp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_trx_type"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@+id/tv_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name"
+        tools:text="20 Aug 2020" />
+
+    <TextView
+        android:id="@+id/tv_trx_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:textColor="@color/color_text_regular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_name"
+        tools:text="#TRX-088JVNHTY" />
+
+    <TextView
+        android:id="@+id/tv_trx_grand_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/orange"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_trx_number"
+        tools:text="135.000" />
+
+    <TextView
+        android:id="@+id/tv_trx_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:background="@drawable/bg_home_visit_trx"
+        android:drawableLeft="@drawable/ic_home_white"
+        android:gravity="center"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingTop="3dp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:paddingBottom="3dp"
+        android:text="Home Visit"
+        android:textColor="@color/white"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_trx_number" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="iv_product, tv_trx_type, tv_trx_grand_total" />
+
+    <ImageView
+        android:id="@+id/iv_location"
+        android:layout_width="@dimen/_16sdp"
+        android:layout_height="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_location"
+        android:tint="@color/orange"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barrier2" />
+
+    <TextView
+        android:id="@+id/tv_address"
+        style="@style/TextAppearance.App.Caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="Jl. Selamet merdeka yang pasti selamat gang buntu no. 3 rt 01 rw 05 Selamet riadi"
+        android:textColor="@color/color_text_regular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_location"
+        app:layout_constraintTop_toTopOf="@+id/iv_location" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="tv_address" />
+
+    <View
+        android:id="@+id/sp_1"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@color/grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barrier" />
+
+
+    <TextView
+        android:id="@+id/tvListMenuDetailOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Menu List"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sp_1" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvListMenuDetailOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvListMenuDetailOrder" />
+
+    <View
+        android:id="@+id/sp2"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@color/grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvListMenuDetailOrder" />
+
+    <TextView
+        android:id="@+id/tv_order_detail_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Order Details"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sp2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

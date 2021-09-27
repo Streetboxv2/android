@@ -1,0 +1,2511 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:4926232700824803246",
+      "lastPropertyId": "4:9015961919796870002",
+      "name": "FoodTruckLocation",
+      "properties": [
+        {
+          "id": "1:8875019018770944138",
+          "name": "taskId",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4171054203256044893",
+          "name": "latitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "3:8885598856403811781",
+          "name": "longitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "4:9015961919796870002",
+          "name": "tag",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:7653233529283595633",
+      "lastPropertyId": "9:19773749582903506",
+      "name": "Check",
+      "properties": [
+        {
+          "id": "1:1282540331267426590",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:4182231826263004953",
+          "name": "tasksId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "3:7431661787764047564",
+          "name": "typesId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "4:7217065534995383499",
+          "name": "latitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "5:7995418293289231693",
+          "name": "longitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "6:7960307219954903219",
+          "name": "parkingspaceName",
+          "type": 9
+        },
+        {
+          "id": "7:7855466835010663546",
+          "name": "types",
+          "type": 9
+        },
+        {
+          "id": "8:6418017869444385138",
+          "name": "status",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "9:19773749582903506",
+          "name": "customerName",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:579584597814749016",
+      "lastPropertyId": "26:730803695555597844",
+      "name": "FoodTruck",
+      "properties": [
+        {
+          "id": "1:5714787071043317766",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:8847590379960507355",
+          "name": "merchantId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "3:6054562845931001988",
+          "name": "merchantUsersId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "4:1916785856338059579",
+          "name": "merchantName",
+          "type": 9
+        },
+        {
+          "id": "5:1642137402828399892",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "6:3886577854898008860",
+          "name": "address",
+          "type": 9
+        },
+        {
+          "id": "7:8909622829021605072",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "8:3425966865575866544",
+          "name": "logo",
+          "type": 9
+        },
+        {
+          "id": "9:5047711145601856619",
+          "name": "banner",
+          "type": 9
+        },
+        {
+          "id": "10:1859830307599945264",
+          "name": "city",
+          "type": 9
+        },
+        {
+          "id": "11:3140707960012501869",
+          "name": "schedule",
+          "type": 9
+        },
+        {
+          "id": "12:3074859018653211731",
+          "name": "rating",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "13:8211106175986142458",
+          "name": "distance",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "14:8241762979356272109",
+          "name": "latitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "15:9179240225743933822",
+          "name": "longitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "16:8938158358393011381",
+          "name": "status",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "17:992717167342266929",
+          "name": "tasksId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "18:389711187585246292",
+          "name": "types",
+          "type": 9
+        },
+        {
+          "id": "20:2316311721707142084",
+          "name": "typesId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "21:9075683454177229011",
+          "name": "category",
+          "type": 9
+        },
+        {
+          "id": "22:1363833478140648228",
+          "name": "categoryColor",
+          "type": 9
+        },
+        {
+          "id": "23:8165047711281954133",
+          "name": "merchantCategory",
+          "type": 9
+        },
+        {
+          "id": "25:7196266796569122867",
+          "name": "terms",
+          "type": 9
+        },
+        {
+          "id": "26:730803695555597844",
+          "name": "merchantIG",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:1117331687777733992",
+      "lastPropertyId": "4:4358952635353207585",
+      "name": "FoodTruckAssign",
+      "properties": [
+        {
+          "id": "1:276971534808679080",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5928408917262455081",
+          "name": "foodTruckId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "3:6021650643313925350",
+          "name": "parkingSlotSalesId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "4:4358952635353207585",
+          "name": "scheduleDate",
+          "type": 6,
+          "flags": 4
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:1387161564722463381",
+      "lastPropertyId": "7:4376612227657876915",
+      "name": "Merchant",
+      "properties": [
+        {
+          "id": "1:5482938047416106062",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:7424850608917227209",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:1300065204261487497",
+          "name": "address",
+          "type": 9
+        },
+        {
+          "id": "4:4126687276039707380",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "5:7146265879386949260",
+          "name": "phone",
+          "type": 9
+        },
+        {
+          "id": "6:6828257394774294230",
+          "name": "logo",
+          "type": 9
+        },
+        {
+          "id": "7:4376612227657876915",
+          "name": "banner",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:6085535038620076267",
+      "lastPropertyId": "8:7410481174490364243",
+      "name": "OperatorTask",
+      "properties": [
+        {
+          "id": "1:6135015863274538786",
+          "name": "taskId",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:4900717758330052433",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:7258326747042991603",
+          "name": "address",
+          "type": 9
+        },
+        {
+          "id": "4:266272652298834543",
+          "name": "startDate",
+          "type": 9
+        },
+        {
+          "id": "5:780453336576108833",
+          "name": "endDate",
+          "type": 9
+        },
+        {
+          "id": "6:9044362611798101726",
+          "name": "latParkingSpace",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "7:786514251569809306",
+          "name": "lonParkingSpace",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "8:7410481174490364243",
+          "name": "operatorParkingTask",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "7:7567932321825119022",
+      "lastPropertyId": "13:5466718415389796600",
+      "name": "ParkingSlot",
+      "properties": [
+        {
+          "id": "1:3277885940192987219",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:6688336793531045270",
+          "name": "parkingSpaceId",
+          "indexId": "1:4761702687512160068",
+          "type": 11,
+          "flags": 524,
+          "relationTarget": "ParkingSpace"
+        },
+        {
+          "id": "3:3327986860457643537",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "4:6384218145656993530",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "5:9140273822945032417",
+          "name": "point",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "6:4542636221142317343",
+          "name": "qty",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "7:3224759603777333364",
+          "name": "totalSlot",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "8:6147653069563557387",
+          "name": "availableSlot",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "9:4474610510550206455",
+          "name": "schedule",
+          "type": 9
+        },
+        {
+          "id": "10:8281535138023296846",
+          "name": "startDate",
+          "type": 9
+        },
+        {
+          "id": "11:5366405016099627589",
+          "name": "endDate",
+          "type": 9
+        },
+        {
+          "id": "12:694407801697982147",
+          "name": "createdAt",
+          "type": 9
+        },
+        {
+          "id": "13:5466718415389796600",
+          "name": "updatedAt",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "8:4145110810782503563",
+      "lastPropertyId": "21:8087457122110237509",
+      "name": "ParkingSpace",
+      "properties": [
+        {
+          "id": "1:6337516147975116433",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:5065611500763061744",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:3668724061805686242",
+          "name": "address",
+          "type": 9
+        },
+        {
+          "id": "4:1901745563510635388",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "5:8488222415073236103",
+          "name": "point",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "6:4341331487762995625",
+          "name": "latitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "7:4335761863421953559",
+          "name": "longitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "8:953945969569595543",
+          "name": "totalSpace",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "9:3127478467111922751",
+          "name": "startTime",
+          "type": 9
+        },
+        {
+          "id": "10:5390448273165514220",
+          "name": "endTime",
+          "type": 9
+        },
+        {
+          "id": "11:9081596458530290446",
+          "name": "rating",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "12:4861251366066911285",
+          "name": "createdAt",
+          "type": 9
+        },
+        {
+          "id": "13:702101589688656180",
+          "name": "updatedAt",
+          "type": 9
+        },
+        {
+          "id": "14:4718500706899148564",
+          "name": "landlordInfo",
+          "type": 9
+        },
+        {
+          "id": "15:6452820281918101181",
+          "name": "startContract",
+          "type": 9
+        },
+        {
+          "id": "16:2743152109493073567",
+          "name": "endContract",
+          "type": 9
+        },
+        {
+          "id": "17:4600400726157253204",
+          "name": "distance",
+          "type": 9
+        },
+        {
+          "id": "18:8595365143442614244",
+          "name": "isCheckin",
+          "type": 1,
+          "flags": 4
+        },
+        {
+          "id": "19:6586791885503658936",
+          "name": "documentsMeta",
+          "type": 9
+        },
+        {
+          "id": "20:8149870639379130875",
+          "name": "imagesMeta",
+          "type": 9
+        },
+        {
+          "id": "21:8087457122110237509",
+          "name": "slot",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "9:674120928057638212",
+      "lastPropertyId": "5:5123326390076146119",
+      "name": "Payment",
+      "properties": [
+        {
+          "id": "1:994951580865708162",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:6768896137404299787",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:8695661275054217173",
+          "name": "type",
+          "type": 9
+        },
+        {
+          "id": "4:2410114766995334117",
+          "name": "provider",
+          "type": 9
+        },
+        {
+          "id": "5:5123326390076146119",
+          "name": "isActive",
+          "type": 1,
+          "flags": 4
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "10:3005353671278712866",
+      "lastPropertyId": "8:469064393382652068",
+      "name": "PaymentMethod",
+      "properties": [
+        {
+          "id": "1:5489904987032949378",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:305012567464853305",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:8516829419688671929",
+          "name": "type",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "4:8808899934013933301",
+          "name": "isActive",
+          "type": 1,
+          "flags": 4
+        },
+        {
+          "id": "5:2728495134519463811",
+          "name": "createdAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "6:4829481876678363568",
+          "name": "updatedAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "7:1361227016440717319",
+          "name": "providerName",
+          "type": 9
+        },
+        {
+          "id": "8:469064393382652068",
+          "name": "image",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "11:3137475250226878069",
+      "lastPropertyId": "10:9113151875314906699",
+      "name": "PrinterSetting",
+      "properties": [
+        {
+          "id": "1:4512892505376316519",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2786035140504659653",
+          "name": "uniqueId",
+          "type": 9
+        },
+        {
+          "id": "3:5995286556111138523",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "4:8022774329150241124",
+          "name": "type",
+          "type": 9
+        },
+        {
+          "id": "5:8253126937909229156",
+          "name": "attribute",
+          "type": 9
+        },
+        {
+          "id": "6:2068619820125836331",
+          "name": "length",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "7:3458051978693186589",
+          "name": "logo",
+          "type": 9
+        },
+        {
+          "id": "8:8309249298912504835",
+          "name": "header",
+          "type": 9
+        },
+        {
+          "id": "9:985951067172596127",
+          "name": "footer",
+          "type": 9
+        },
+        {
+          "id": "10:9113151875314906699",
+          "name": "isActive",
+          "type": 1,
+          "flags": 4
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "12:129487691315136063",
+      "lastPropertyId": "14:2535622825234335664",
+      "name": "Product",
+      "properties": [
+        {
+          "id": "1:8641042399669015553",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:4494671124968516709",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:7178738293347551272",
+          "name": "price",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "4:1923086388920044590",
+          "name": "priceAfterDiscount",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "5:1984310992301000525",
+          "name": "discount",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "6:7675762514679948009",
+          "name": "qty",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "7:211393206972331716",
+          "name": "isActive",
+          "type": 1,
+          "flags": 4
+        },
+        {
+          "id": "8:504510237390543757",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "9:2402075935408751826",
+          "name": "photo",
+          "type": 9
+        },
+        {
+          "id": "10:3444340271008621457",
+          "name": "createdAt",
+          "type": 9
+        },
+        {
+          "id": "11:5673187797186481653",
+          "name": "updatedAt",
+          "type": 9
+        },
+        {
+          "id": "12:7944577103650479763",
+          "name": "deletedAt",
+          "type": 9
+        },
+        {
+          "id": "13:7774836598378629796",
+          "name": "image",
+          "type": 9
+        },
+        {
+          "id": "14:2535622825234335664",
+          "name": "priceOriginal",
+          "type": 8,
+          "flags": 4
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "13:2039110848113647357",
+      "lastPropertyId": "7:6862198651081647754",
+      "name": "Profile",
+      "properties": [
+        {
+          "id": "1:5705392208433059973",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:1081049721496172899",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:1237939419946486351",
+          "name": "user_name",
+          "type": 9
+        },
+        {
+          "id": "4:5308776229281840435",
+          "name": "phone",
+          "type": 9
+        },
+        {
+          "id": "5:8401271385996223356",
+          "name": "address",
+          "type": 9
+        },
+        {
+          "id": "6:8185136841074522753",
+          "name": "created_at",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "7:6862198651081647754",
+          "name": "updated_at",
+          "type": 6,
+          "flags": 4
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "14:7209589619974754122",
+      "lastPropertyId": "5:4580870752921448893",
+      "name": "Shift",
+      "properties": [
+        {
+          "id": "1:7787004339101971772",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:8947354256804148324",
+          "name": "latitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "3:5454784190486919983",
+          "name": "longitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "4:252543079795156838",
+          "name": "shiftIn",
+          "type": 1,
+          "flags": 4
+        },
+        {
+          "id": "5:4580870752921448893",
+          "name": "shift",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "15:6457884655964587725",
+      "lastPropertyId": "3:2486223920782879471",
+      "name": "ShiftOut",
+      "properties": [
+        {
+          "id": "1:3207898616421811029",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:846793860251717352",
+          "name": "latitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "3:2486223920782879471",
+          "name": "longitude",
+          "type": 8,
+          "flags": 4
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "16:323643309004010319",
+      "lastPropertyId": "8:4113729132358781078",
+      "name": "StatusNonRegular",
+      "properties": [
+        {
+          "id": "1:4747902664726354804",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:4893600757529245465",
+          "name": "latitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "3:7446972810423845635",
+          "name": "longitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "4:7091479231995635762",
+          "name": "createdAt",
+          "type": 9
+        },
+        {
+          "id": "5:4462964659477763258",
+          "name": "merchantUsersId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "6:4343374572493699736",
+          "name": "status",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "7:4237970333225600280",
+          "name": "types",
+          "type": 9
+        },
+        {
+          "id": "8:4113729132358781078",
+          "name": "updatedAt",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "17:395330990308571215",
+      "lastPropertyId": "8:7207987167248498652",
+      "name": "SyncData",
+      "properties": [
+        {
+          "id": "1:69937746027249295",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7383347275990626857",
+          "name": "uniqueId",
+          "type": 9
+        },
+        {
+          "id": "3:8839121433422667811",
+          "name": "type",
+          "type": 9
+        },
+        {
+          "id": "4:5893399377153473397",
+          "name": "status",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "5:2076393420628122200",
+          "name": "businessDate",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "6:7963992619956111782",
+          "name": "syncDate",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "7:7124975250923322108",
+          "name": "nextPage",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "8:7207987167248498652",
+          "name": "data",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "18:1451256031629670795",
+      "lastPropertyId": "8:8114487879101589613",
+      "name": "Tax",
+      "properties": [
+        {
+          "id": "1:1800701869769463309",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:2987154730744237792",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:531549819420543818",
+          "name": "amount",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "4:6017452695833832564",
+          "name": "type",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "5:6471825622577242234",
+          "name": "isActive",
+          "type": 1,
+          "flags": 4
+        },
+        {
+          "id": "6:7682775976001995363",
+          "name": "merchantId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "7:8370264149041797717",
+          "name": "createdAt",
+          "type": 9
+        },
+        {
+          "id": "8:8114487879101589613",
+          "name": "updatedAt",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "19:6184987274579012775",
+      "lastPropertyId": "19:2569647990291821093",
+      "name": "User",
+      "properties": [
+        {
+          "id": "1:6119320920826401503",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:8226826183371027224",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:5110667299951028595",
+          "name": "userName",
+          "type": 9
+        },
+        {
+          "id": "4:4800625263998357973",
+          "name": "token",
+          "type": 9
+        },
+        {
+          "id": "5:1648262598843464623",
+          "name": "roleName",
+          "type": 9
+        },
+        {
+          "id": "6:2719884853795152265",
+          "name": "tasksId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "7:9218525768221630213",
+          "name": "status",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "8:4482107149391919205",
+          "name": "phone",
+          "type": 9
+        },
+        {
+          "id": "9:7048720128876978524",
+          "name": "platNo",
+          "type": 9
+        },
+        {
+          "id": "10:3766934072757504062",
+          "name": "address",
+          "type": 9
+        },
+        {
+          "id": "11:227943107084606345",
+          "name": "createdAt",
+          "type": 9
+        },
+        {
+          "id": "12:3279204457363675189",
+          "name": "updatedAt",
+          "type": 9
+        },
+        {
+          "id": "13:5480455017399060635",
+          "name": "merchantUsersId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "14:1788606611012680301",
+          "name": "logo",
+          "type": 9
+        },
+        {
+          "id": "15:863687119206547299",
+          "name": "banner",
+          "type": 9
+        },
+        {
+          "id": "16:3091073877261365652",
+          "name": "profilePicture",
+          "type": 9
+        },
+        {
+          "id": "17:7218920597331524608",
+          "name": "email",
+          "type": 9
+        },
+        {
+          "id": "18:3732098338714002683",
+          "name": "city",
+          "type": 9
+        },
+        {
+          "id": "19:2569647990291821093",
+          "name": "igAccount",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "20:7835431986202228588",
+      "lastPropertyId": "6:4991497936391636726",
+      "name": "UserPassword",
+      "properties": [
+        {
+          "id": "1:4332935251728701745",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:3772924652568847981",
+          "name": "email",
+          "type": 9
+        },
+        {
+          "id": "3:1133282978255140184",
+          "name": "password",
+          "type": 9
+        },
+        {
+          "id": "4:2626824135969752935",
+          "name": "token",
+          "type": 9
+        },
+        {
+          "id": "5:3625470952229118941",
+          "name": "createdDate",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "6:4991497936391636726",
+          "name": "updatedDate",
+          "type": 6,
+          "flags": 4
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "21:349812188802031166",
+      "lastPropertyId": "7:6644219528401569743",
+      "name": "ItemSales",
+      "properties": [
+        {
+          "id": "1:7219827747067840439",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:2984732876159528017",
+          "name": "uniqueId",
+          "type": 9
+        },
+        {
+          "id": "3:394049459784725401",
+          "name": "foodTruckId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "4:3028930408022798864",
+          "name": "merchantId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "5:3500711561321056814",
+          "name": "latitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "6:7450928610549105571",
+          "name": "longitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "7:6644219528401569743",
+          "name": "status",
+          "type": 5,
+          "flags": 4
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "22:4570048960932000574",
+      "lastPropertyId": "24:3555266214270113505",
+      "name": "Order",
+      "properties": [
+        {
+          "id": "1:5934809510095032197",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7262324392716626007",
+          "name": "uniqueId",
+          "type": 9
+        },
+        {
+          "id": "3:8842751886159327265",
+          "name": "userId",
+          "indexId": "2:650658015193270596",
+          "type": 11,
+          "flags": 524,
+          "relationTarget": "User"
+        },
+        {
+          "id": "4:4225890338204975550",
+          "name": "merchantId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "5:5759005230471508803",
+          "name": "orderNo",
+          "type": 9
+        },
+        {
+          "id": "6:6500932163857509495",
+          "name": "billNo",
+          "type": 9
+        },
+        {
+          "id": "7:6847367864778554379",
+          "name": "isClose",
+          "type": 1,
+          "flags": 4
+        },
+        {
+          "id": "8:7063592347679619790",
+          "name": "businessDate",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "9:3551611379978480883",
+          "name": "totalDiscount",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "10:4844725987613084091",
+          "name": "grandTotal",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "11:4816014390515904404",
+          "name": "createdAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "12:2220356927104540774",
+          "name": "updatedAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "13:8624397282989083083",
+          "name": "no",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "14:3504702841432527474",
+          "name": "note",
+          "type": 9
+        },
+        {
+          "id": "15:4199598241711969907",
+          "name": "types",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "16:5278972478133692799",
+          "name": "orderType",
+          "type": 9
+        },
+        {
+          "id": "17:1085380675082357691",
+          "name": "trxId",
+          "type": 9
+        },
+        {
+          "id": "18:3718875646525755547",
+          "name": "merchantUsersId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "19:4695400043930145356",
+          "name": "address",
+          "type": 9
+        },
+        {
+          "id": "20:6522430869769499848",
+          "name": "paymentMethodId",
+          "type": 9
+        },
+        {
+          "id": "21:7978293693748128992",
+          "name": "paymentMethodName",
+          "type": 9
+        },
+        {
+          "id": "22:2431116358949094926",
+          "name": "typeOrder",
+          "type": 9
+        },
+        {
+          "id": "23:5141848018798772209",
+          "name": "typePayment",
+          "type": 9
+        },
+        {
+          "id": "24:3555266214270113505",
+          "name": "titleToko",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "23:4254222577416755976",
+      "lastPropertyId": "17:5402858121912208243",
+      "name": "OrderBill",
+      "properties": [
+        {
+          "id": "1:8704339037797282816",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5501318601425205578",
+          "name": "uniqueId",
+          "type": 9
+        },
+        {
+          "id": "3:7817322437391487240",
+          "name": "orderUniqueId",
+          "type": 9
+        },
+        {
+          "id": "4:3215486779587665157",
+          "name": "billNo",
+          "type": 9
+        },
+        {
+          "id": "5:7640408582042032470",
+          "name": "isClose",
+          "type": 1,
+          "flags": 4
+        },
+        {
+          "id": "6:3530441293179007836",
+          "name": "totalDiscount",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "7:101188587082286464",
+          "name": "subTotal",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "8:5981006137151929850",
+          "name": "totalTax",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "9:1051534099612171332",
+          "name": "grandTotal",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "10:912286068614208767",
+          "name": "businessDate",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "11:6380090098989944694",
+          "name": "createdAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "12:1573565418982167672",
+          "name": "updatedAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "13:4097079780409071112",
+          "name": "type",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "14:6891604588569060907",
+          "name": "orderId",
+          "indexId": "3:2534403465512863442",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Order"
+        },
+        {
+          "id": "15:1446327016362526471",
+          "name": "taxType",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "16:8140893333704294367",
+          "name": "taxName",
+          "type": 9
+        },
+        {
+          "id": "17:5402858121912208243",
+          "name": "merchantId",
+          "type": 6,
+          "flags": 4
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "24:6740398924981164585",
+      "lastPropertyId": "22:868227224887075103",
+      "name": "ParkingSales",
+      "properties": [
+        {
+          "id": "1:840299868486079326",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:772414370781725198",
+          "name": "uniqueId",
+          "type": 9
+        },
+        {
+          "id": "3:4620427104155227360",
+          "name": "orderUniqueId",
+          "type": 9
+        },
+        {
+          "id": "4:4967432071408720001",
+          "name": "parkingSpaceId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "5:8715682704628933081",
+          "name": "orderId",
+          "indexId": "4:6551071926856564207",
+          "type": 11,
+          "flags": 524,
+          "relationTarget": "Order"
+        },
+        {
+          "id": "6:9036938461489288823",
+          "name": "merchantId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "7:313442765681601462",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "8:5830784738029324275",
+          "name": "address",
+          "type": 9
+        },
+        {
+          "id": "9:2096189124122831737",
+          "name": "rating",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "10:8988948217100559418",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "11:1786975144993988102",
+          "name": "latitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "12:1875154378832864147",
+          "name": "longitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "13:4333544362248186094",
+          "name": "price",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "14:4216068156132893986",
+          "name": "subtotal",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "15:6022799300976484804",
+          "name": "businessDate",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "16:904307647893224046",
+          "name": "createdAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "17:8134866111249884528",
+          "name": "updatedAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "18:6514920467618880125",
+          "name": "startTime",
+          "type": 9
+        },
+        {
+          "id": "19:7742442124985801184",
+          "name": "endTime",
+          "type": 9
+        },
+        {
+          "id": "20:6568451332836175386",
+          "name": "trxVisitSalesId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "21:8713480284291330838",
+          "name": "profilePicture",
+          "type": 9
+        },
+        {
+          "id": "22:868227224887075103",
+          "name": "images",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "25:888997847683197845",
+      "lastPropertyId": "17:7739565489980040193",
+      "name": "ParkingSlotSales",
+      "properties": [
+        {
+          "id": "1:3335567995680742945",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:6824162745548963449",
+          "name": "uniqueId",
+          "type": 9
+        },
+        {
+          "id": "3:2119862377886816753",
+          "name": "parkingSlotId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "4:6082701961109243675",
+          "name": "parkingSalesUniqueId",
+          "type": 9
+        },
+        {
+          "id": "5:1424910363741073825",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "6:5142723453517572234",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "7:7800995182162089256",
+          "name": "schedule",
+          "type": 9
+        },
+        {
+          "id": "8:4907922377394431661",
+          "name": "startDate",
+          "type": 9
+        },
+        {
+          "id": "9:2022702117309587878",
+          "name": "endDate",
+          "type": 9
+        },
+        {
+          "id": "10:2646017599928088533",
+          "name": "price",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "11:4517447282615026200",
+          "name": "qty",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "12:300433679623233540",
+          "name": "totalSlot",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "13:1253540607563975552",
+          "name": "subtotal",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "14:5635232172973056163",
+          "name": "createdAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "15:6443900568036392043",
+          "name": "updatedAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "16:169219611661455941",
+          "name": "trxVisitSalesId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "17:7739565489980040193",
+          "name": "parkingSalesId",
+          "indexId": "5:9036326737932796050",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "ParkingSales"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "26:1157849937356142532",
+      "lastPropertyId": "16:6787393571499862197",
+      "name": "PaymentSales",
+      "properties": [
+        {
+          "id": "1:5861864048603452233",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5081275661393541892",
+          "name": "uniqueId",
+          "type": 9
+        },
+        {
+          "id": "3:1754472540077962927",
+          "name": "orderUniqueId",
+          "type": 9
+        },
+        {
+          "id": "4:857454177823696125",
+          "name": "orderBillUniqueId",
+          "type": 9
+        },
+        {
+          "id": "5:1514665342808077750",
+          "name": "no",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "6:7644092559838456050",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "7:4747501347380179368",
+          "name": "type",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "8:4369154025178729236",
+          "name": "amount",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "9:6081247286501738614",
+          "name": "createdAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "10:321843760405241601",
+          "name": "updatedAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "11:5489991551890384853",
+          "name": "paymentMethodId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "12:1292034323348103642",
+          "name": "trxId",
+          "type": 9
+        },
+        {
+          "id": "13:7727119199302768405",
+          "name": "status",
+          "type": 9
+        },
+        {
+          "id": "14:654415758765522238",
+          "name": "qrCode",
+          "type": 9
+        },
+        {
+          "id": "15:7342823072245077391",
+          "name": "orderId",
+          "indexId": "6:5618256601720519296",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Order"
+        },
+        {
+          "id": "16:6787393571499862197",
+          "name": "orderBillId",
+          "indexId": "7:5416779524337171924",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "OrderBill"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "27:4383634711007085001",
+      "lastPropertyId": "27:5851226985627256454",
+      "name": "ProductSales",
+      "properties": [
+        {
+          "id": "1:1415818271667117207",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3294337025734415986",
+          "name": "no",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "3:3430660280500768965",
+          "name": "uniqueId",
+          "type": 9
+        },
+        {
+          "id": "4:2407400954894557937",
+          "name": "orderUniqueId",
+          "type": 9
+        },
+        {
+          "id": "5:7654807275556120061",
+          "name": "orderBillUniqueId",
+          "type": 9
+        },
+        {
+          "id": "6:2105251082647186062",
+          "name": "productId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "7:3337697591198547947",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "8:5735993911736324657",
+          "name": "sku",
+          "type": 9
+        },
+        {
+          "id": "9:6800514908460590639",
+          "name": "price",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "10:6706793797733725552",
+          "name": "qty",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "11:1177488934605084343",
+          "name": "type",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "12:1700805062496350463",
+          "name": "salesTypeId",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "13:870155439601784415",
+          "name": "businessDate",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "14:6762140662497027005",
+          "name": "createDate",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "15:499381851597857809",
+          "name": "updateDate",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "16:4021186239377082805",
+          "name": "subtotal",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "17:6330040751297364410",
+          "name": "createdAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "18:4748549793344032389",
+          "name": "updatedAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "19:4045636857207730170",
+          "name": "notes",
+          "type": 9
+        },
+        {
+          "id": "20:2062084143770795415",
+          "name": "photo",
+          "type": 9
+        },
+        {
+          "id": "21:1128854222365523719",
+          "name": "orderId",
+          "indexId": "8:1291361960175253911",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Order"
+        },
+        {
+          "id": "22:5117935605808482836",
+          "name": "orderBillId",
+          "indexId": "9:6180698847300263945",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "OrderBill"
+        },
+        {
+          "id": "23:981884856299335043",
+          "name": "priceAfterDiscount",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "24:797202110302572138",
+          "name": "discount",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "25:3656508875290704165",
+          "name": "priceOriginal",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "26:2836120121204223560",
+          "name": "qtyProduct",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "27:5851226985627256454",
+          "name": "qrCode",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "28:5558279950001584094",
+      "lastPropertyId": "30:3385301622425085410",
+      "name": "TaskOperator",
+      "properties": [
+        {
+          "id": "1:1139977322018312090",
+          "name": "tasksId",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:2828607617768493163",
+          "name": "uniqueId",
+          "type": 9
+        },
+        {
+          "id": "3:1604837378721662369",
+          "name": "userId",
+          "indexId": "10:381569815696563336",
+          "type": 11,
+          "flags": 524,
+          "relationTarget": "User"
+        },
+        {
+          "id": "4:8071453786295387140",
+          "name": "parkingSalesId",
+          "indexId": "11:9016056067433664436",
+          "type": 11,
+          "flags": 524,
+          "relationTarget": "ParkingSales"
+        },
+        {
+          "id": "5:7638462730646374412",
+          "name": "parkingSlotSalesId",
+          "indexId": "12:2803853492751171584",
+          "type": 11,
+          "flags": 524,
+          "relationTarget": "ParkingSlotSales"
+        },
+        {
+          "id": "6:8046619135214570777",
+          "name": "schedule",
+          "type": 9
+        },
+        {
+          "id": "7:8679930500468207790",
+          "name": "address",
+          "type": 9
+        },
+        {
+          "id": "8:6447065801102492778",
+          "name": "scheduleDate",
+          "type": 9
+        },
+        {
+          "id": "9:2911994949854854710",
+          "name": "startDate",
+          "type": 9
+        },
+        {
+          "id": "10:7266566928115453725",
+          "name": "endDate",
+          "type": 9
+        },
+        {
+          "id": "11:1687871680119128319",
+          "name": "startTime",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "12:9126983696966072482",
+          "name": "endTime",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "13:5430878504944765645",
+          "name": "status",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "14:6593639125151490675",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "15:2499534715499185903",
+          "name": "operatorName",
+          "type": 9
+        },
+        {
+          "id": "16:2813305237186803037",
+          "name": "note",
+          "type": 9
+        },
+        {
+          "id": "17:2870587783454102075",
+          "name": "pickUpLat",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "18:7170016947520898501",
+          "name": "pickUpLng",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "19:8028690498283926692",
+          "name": "latParkingSpace",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "20:4045103957149485732",
+          "name": "lonParkingSpace",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "21:696488699649377024",
+          "name": "createdAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "22:6591370090437767084",
+          "name": "updatedAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "23:4690434454311489044",
+          "name": "types",
+          "type": 9
+        },
+        {
+          "id": "24:4625184448238072969",
+          "name": "typesId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "25:5365704847408357112",
+          "name": "merchantId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "26:3105176064399875768",
+          "name": "merchantName",
+          "type": 9
+        },
+        {
+          "id": "27:795896239457478181",
+          "name": "customerName",
+          "type": 9
+        },
+        {
+          "id": "28:3962677304844657777",
+          "name": "logo",
+          "type": 9
+        },
+        {
+          "id": "29:4480920806319622154",
+          "name": "banner",
+          "type": 9
+        },
+        {
+          "id": "30:3385301622425085410",
+          "name": "merchantIG",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "29:28645464432662063",
+      "lastPropertyId": "14:7863684253694091694",
+      "name": "TaxSales",
+      "properties": [
+        {
+          "id": "1:4407409280427906522",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4016315362275140132",
+          "name": "amount",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "3:4384268428561660114",
+          "name": "orderBillUniqueId",
+          "type": 9
+        },
+        {
+          "id": "4:9157250903063289583",
+          "name": "orderUniqueId",
+          "type": 9
+        },
+        {
+          "id": "5:1289576958013763845",
+          "name": "type",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "6:6497952059019892312",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "7:7964687429666666540",
+          "name": "uniqueId",
+          "type": 9
+        },
+        {
+          "id": "8:3787040238233360886",
+          "name": "updatedAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "9:2981116608142130717",
+          "name": "createdAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "10:1301957653764951421",
+          "name": "merchantTaxId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "11:5285754388462822192",
+          "name": "isActive",
+          "type": 1,
+          "flags": 4
+        },
+        {
+          "id": "12:6228675176282103050",
+          "name": "merchantId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "13:2839829199877984871",
+          "name": "orderId",
+          "indexId": "13:7906162138035460888",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Order"
+        },
+        {
+          "id": "14:7863684253694091694",
+          "name": "orderBillId",
+          "indexId": "14:6339511112215024956",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "OrderBill"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "30:7342277150411059654",
+      "lastPropertyId": "10:2766288001901782192",
+      "name": "VoucherSales",
+      "properties": [
+        {
+          "id": "1:6075936541492655496",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "2:6972315648896064519",
+          "name": "code",
+          "type": 9
+        },
+        {
+          "id": "3:6545963876597730772",
+          "name": "amount",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "4:7687313259034785191",
+          "name": "createdAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "5:1602060367627929616",
+          "name": "updatedAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "6:3139319847764317436",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "7:8959710348219350042",
+          "name": "uniqueId",
+          "type": 9
+        },
+        {
+          "id": "8:786860960258623709",
+          "name": "orderUniqueId",
+          "type": 9
+        },
+        {
+          "id": "9:2033682361278000719",
+          "name": "orderId",
+          "indexId": "15:5506130662416160505",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Order"
+        },
+        {
+          "id": "10:2766288001901782192",
+          "name": "orderBillId",
+          "indexId": "16:8513626848211113282",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "OrderBill"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "31:1721124368449090770",
+      "lastPropertyId": "10:1811100148387916472",
+      "name": "Address",
+      "properties": [
+        {
+          "id": "1:316992144679637990",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8629864216574506362",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:7799448851950685018",
+          "name": "address",
+          "type": 9
+        },
+        {
+          "id": "4:4171845494041547928",
+          "name": "phone",
+          "type": 9
+        },
+        {
+          "id": "5:6494090465181354657",
+          "name": "note",
+          "type": 9
+        },
+        {
+          "id": "6:5362233396514598953",
+          "name": "latitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "7:1611926307788359191",
+          "name": "longitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "8:2845138806270906332",
+          "name": "createdAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "9:2140671756546329988",
+          "name": "updatedAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "10:1811100148387916472",
+          "name": "isSelected",
+          "type": 1,
+          "flags": 4
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "32:156153389763402145",
+      "lastPropertyId": "12:8059023940983044383",
+      "name": "Trx",
+      "properties": [
+        {
+          "id": "1:1347916444898509854",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7673266890094719761",
+          "name": "trxId",
+          "type": 9
+        },
+        {
+          "id": "3:5797407805703100099",
+          "name": "types",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "4:1278578985450538751",
+          "name": "userId",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "5:509308138261107669",
+          "name": "createdAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "6:1359888080427522235",
+          "name": "updatedAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "7:3826362805454909148",
+          "name": "deletedAt",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "8:2277756191847043313",
+          "name": "status",
+          "type": 9
+        },
+        {
+          "id": "9:1869291175357387233",
+          "name": "externalId",
+          "type": 9
+        },
+        {
+          "id": "10:2193947747133300580",
+          "name": "address",
+          "type": 9
+        },
+        {
+          "id": "11:8634434718278297463",
+          "name": "qrCode",
+          "type": 9
+        },
+        {
+          "id": "12:8059023940983044383",
+          "name": "orderId",
+          "indexId": "17:1763334007029722452",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Order"
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "32:156153389763402145",
+  "lastIndexId": "17:1763334007029722452",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [
+    8528088235903720413,
+    5417312385695291888
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}

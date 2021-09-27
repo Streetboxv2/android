@@ -1,0 +1,80 @@
+package com.zeepos.ui_login
+
+import com.zeepos.domain.interactor.LoginUseCase
+import com.zeepos.domain.interactor.registration.RegistrationUseCase
+import com.zeepos.domain.interactor.user.CheckSessionUserUseCase
+import com.zeepos.models.ConstVar
+import com.zeepos.models.entities.RegisterParams
+import com.zeepos.models.entities.None
+import com.zeepos.models.master.UserAuthData
+import com.zeepos.ui_base.ui.BaseViewModel
+import javax.inject.Inject
+
+/**
+ * Created by Arif S. on 5/1/20
+ */
+class LoginViewModel @Inject constructor(
+    private val loginUseCase: LoginUseCase,
+    private val registrationUseCase: RegistrationUseCase,
+    private val checkSessionUserUseCase: CheckSessionUserUseCase
+) : BaseViewModel<LoginViewEvent>() {
+
+    fun login(username: String, password: String) {
+        val loginDisposable =
+            loginUseCase.execute(LoginUseCase.Params(username, password))
+                .subscribe(
+                    {
+                        handleLogin(it)
+                    }, { error ->
+                        viewEventObservable.postValue(
+                            LoginViewEvent.LoginFailed(
+                                error.message ?: "Login Failed"
+                            )
+                        )
+                    }
+                )
+        addDisposable(loginDisposable)
+    }
+
+    fun loginOrRegister(registerParams: RegisterParams) {
+        val disposable =
+            registrationUseCase.execute(RegistrationUseCase.Params(registerParams))
+                .subscribe(
+                    {
+                        handleLogin(it)
+                    }, { error ->
+                        viewEventObservable.postValue(
+                            LoginViewEvent.LoginFailed(
+                                error.message ?: "Login Failed"
+                            )
+                        )
+                    }
+                )
+        addDisposable(disposable)
+    }
+
+    fun checkIsLoggedIn() {
+        val userAuth = checkSessionUserUseCase.execute(None())
+        userAuth?.let {
+            handleLogin(it)
+        }
+    }
+
+    private fun handleLogin(userAuth: UserAuthData) {
+        when (userAuth.role_name) {
+            ConstVar.USER_ROLE_MERCHANT -> {
+                viewEventObservable.value = LoginViewEvent.GoToMainScreen
+            }
+            ConstVar.USER_ROLE_OPERATOR -> {
+                viewEventObservable.value = LoginViewEvent.GoToOperatorMainScreen
+            }
+            ConstVar.USER_ROLE_CUSTOMER -> {
+                viewEventObservable.value = LoginViewEvent.GoToMainScreen
+            }
+            else -> {
+                viewEventObservable.postValue(LoginViewEvent.DismissLoading)
+            }
+        }
+    }
+
+}

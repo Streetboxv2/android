@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/_10sdp">
+
+    <ImageView
+        android:id="@+id/iv_product"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:contentDescription="@null"
+        android:src="@drawable/image_holder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:ellipsize="end"
+        android:fontFamily="@font/poppins_bold"
+        android:maxLines="2"
+        android:minLines="1"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_product"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="KFC Bucket" />
+
+    <LinearLayout
+        android:id="@+id/ll_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toEndOf="@+id/iv_product"
+        app:layout_constraintStart_toStartOf="@+id/tv_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_description">
+
+        <TextView
+            android:id="@+id/tv_price_before_discount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/grey_hint"
+            tools:text="65.000" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/orange"
+            tools:text="45.000" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_edit_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_4sdp"
+        android:src="@drawable/ic_edit_note"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/ll_qty"
+        app:layout_constraintEnd_toStartOf="@+id/ll_qty"
+        app:layout_constraintTop_toTopOf="@+id/ll_qty" />
+
+    <LinearLayout
+        android:id="@+id/ll_qty"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:background="@drawable/qty_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/_5sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_price">
+
+        <TextView
+            android:id="@+id/tv_decrease"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
+            android:text="-"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/_8ssp" />
+
+        <TextView
+            android:id="@+id/tv_qty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_increase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
+            android:text="+"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/_8ssp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:ellipsize="end"
+        android:fontFamily="@font/poppins_regular"
+        android:maxLines="2"
+        android:minLines="1"
+        android:textColor="@color/color_text_regular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_product"
+        app:layout_constraintStart_toStartOf="@+id/tv_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name"
+        tools:text="Kfc ini gurih banget bro sadis bikin meringis" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="iv_product, ll_price, ll_qty, iv_edit_note" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:background="@color/grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/iv_product"
+        app:layout_constraintTop_toBottomOf="@+id/barrier" />
+</androidx.constraintlayout.widget.ConstraintLayout>

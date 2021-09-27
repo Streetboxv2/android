@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginStart="@dimen/_15sdp"
+    android:layout_marginEnd="@dimen/_15sdp"
+    android:paddingTop="@dimen/_10sdp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/black"
+        android:text="10.00 - 13.00" />
+
+    <TextView
+        android:id="@+id/tv_available"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_regular"
+        android:textColor="@color/color_text_regular"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:text="Available" />
+
+    <TextView
+        android:id="@+id/tv_slot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/black"
+        android:layout_toRightOf="@+id/tv_available"
+        android:layout_below="@+id/tv_title"
+        android:layout_alignTop="@+id/tv_available"
+        android:layout_alignBottom="@+id/tv_available"
+        android:layout_marginStart="@dimen/_6sdp"
+        android:text="10 Slot" />
+
+    <TextView
+        android:fontFamily="@font/poppins_bold"
+        android:id="@+id/bt_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="Add"
+        android:paddingTop="@dimen/_4sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:paddingStart="@dimen/_15sdp"
+        android:paddingEnd="@dimen/_15sdp"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        android:background="@drawable/button_add_bg" />
+
+    <LinearLayout
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/_5sdp"
+        android:background="@drawable/qty_bg">
+
+        <TextView
+            android:id="@+id/tv_decrease"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="@dimen/_8ssp"
+            android:textColor="@color/blue"
+            android:fontFamily="@font/poppins_bold" />
+
+        <TextView
+            android:id="@+id/tv_qty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_bold" />
+
+        <TextView
+            android:id="@+id/tv_increase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="@dimen/_8ssp"
+            android:textColor="@color/blue"
+            android:fontFamily="@font/poppins_bold" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey_hint"
+        android:layout_below="@+id/tv_available"
+        android:layout_marginTop="@dimen/_10sdp" />
+
+</RelativeLayout>

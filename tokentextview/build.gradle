@@ -1,0 +1,38 @@
+apply plugin: 'com.android.library'
+
+
+android {
+    compileSdkVersion 29
+
+    configurations {
+        javadocSources.extendsFrom implementation
+    }
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        animationsDisabled = true
+    }
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13'
+
+    implementation "androidx.annotation:annotation:1.1.0"
+    implementation "androidx.appcompat:appcompat:1.1.0"
+}

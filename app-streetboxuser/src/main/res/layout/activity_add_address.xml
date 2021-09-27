@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.address.AddAddressActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/ToolbarTheme"
+            app:navigationIcon="@drawable/ic_back">
+
+            <TextView
+                android:id="@+id/tvAddTitleAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Add Address"
+                android:textColor="@color/white" />
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btnSaveAddress"
+        android:layout_below="@id/appbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_15sdp"
+            android:orientation="vertical"
+            android:padding="@dimen/_10sdp">
+
+            <EditText
+                android:id="@+id/edAddressName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_green_rectangle"
+                android:hint="Address Name"
+                android:inputType="text"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/green"
+                android:textColorHint="@color/green"
+                android:textSize="@dimen/_11sdp" />
+
+            <EditText
+                android:id="@+id/edReceiverName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@drawable/bg_green_rectangle"
+                android:hint="Receiver Name"
+                android:inputType="text"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/green"
+                android:textColorHint="@color/green"
+                android:textSize="@dimen/_11sdp" />
+
+            <EditText
+                android:id="@+id/edAddress"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@drawable/bg_green_rectangle"
+                android:gravity="center|start|top"
+                android:hint="Address"
+                android:inputType="text"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/green"
+                android:textColorHint="@color/green"
+                android:textSize="@dimen/_11sdp" />
+
+            <EditText
+                android:id="@+id/edAdddressPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@drawable/bg_green_rectangle"
+                android:hint="Phone"
+                android:inputType="number"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/green"
+                android:textColorHint="@color/green"
+                android:textSize="@dimen/_11sdp" />
+
+            <Button
+                android:id="@+id/btnDirectToMapsAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:gravity="center"
+                android:text="Select Map Coordinate"
+                android:textAllCaps="false" />
+
+            <TextView
+                android:id="@+id/tvLatLangAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:gravity="center"
+                android:text="Lat Lng"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_12sdp" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnSaveAddress"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/_10sdp"
+        android:text="Save"
+        android:textAllCaps="false" />
+</RelativeLayout>

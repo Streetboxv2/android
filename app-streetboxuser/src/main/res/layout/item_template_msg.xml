@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_template_msg"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/template_message_1"
+    android:textColor="@color/white"
+    android:paddingStart="@dimen/_10sdp"
+    android:paddingEnd="@dimen/_10sdp"
+    android:paddingTop="@dimen/_4sdp"
+    android:paddingBottom="@dimen/_4sdp"
+    android:background="@drawable/token_textview_bg" />

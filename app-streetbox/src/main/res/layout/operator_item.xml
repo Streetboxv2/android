@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/_10sdp"
+    android:paddingStart="@dimen/_6sdp"
+    android:paddingEnd="@dimen/_10sdp">
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="tv_assign, ll_name, @+id/iv_food_truck" />
+
+    <ImageView
+        android:id="@+id/iv_food_truck"
+        android:layout_width="@dimen/_35sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:src="@drawable/ic_food_truck_block"
+        android:contentDescription="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/barrier_top"
+        app:layout_constraintBottom_toBottomOf="@id/barrier" />
+
+    <LinearLayout
+        android:id="@+id/ll_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        app:layout_constraintEnd_toStartOf="@+id/barrier_action"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@+id/iv_food_truck"
+        app:layout_constraintTop_toTopOf="@+id/barrier_top"
+        app:layout_constraintBottom_toTopOf="@+id/barrier">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/black"
+            tools:text="Istora Senayan" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/color_text_regular"
+            tools:text="Idle"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:barrierDirection="left"
+        app:constraint_referenced_ids="tv_assign, btn_tracking" />
+
+    <TextView
+        android:id="@+id/tv_assign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_add_bg"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="center"
+        android:paddingStart="@dimen/_15sdp"
+        android:paddingTop="@dimen/_4sdp"
+        android:paddingEnd="@dimen/_15sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:text="@string/assign"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_food_truck"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_food_truck" />
+
+    <com.google.android.material.button.MaterialButton
+        android:fontFamily="@font/poppins_regular"
+        android:id="@+id/btn_tracking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_live_tracking_bg"
+        android:textColor="@color/white"
+        android:text="@string/live_tracking"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_food_truck"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_food_truck" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="tv_assign, ll_name, @+id/iv_food_truck" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/grey_hint"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="@+id/ll_name"
+        app:layout_constraintEnd_toEndOf="@+id/tv_assign"
+        app:layout_constraintTop_toBottomOf="@+id/barrier" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

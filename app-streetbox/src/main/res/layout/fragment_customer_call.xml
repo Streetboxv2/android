@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvStatusCallCustomerFoodTruck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+    <ProgressBar
+        android:id="@+id/progressListBlast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_15sdp" />
+
+    <TextView
+        android:id="@+id/tvNotFoundCustomer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="@dimen/_10sdp"
+        android:text="Not Found Data"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_11sdp"
+        android:visibility="gone" />
+
+</FrameLayout>

@@ -1,0 +1,170 @@
+{
+  "project_info": {
+    "project_number": "588870711663",
+    "firebase_url": "https://streetbox-e3c1a.firebaseio.com",
+    "project_id": "streetbox-e3c1a",
+    "storage_bucket": "streetbox-e3c1a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588870711663:android:95e44c26434a58bfd8109a",
+        "android_client_info": {
+          "package_name": "com.streetbox.pos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "588870711663-if8es60mv9fc6da8v6ju2lehnet725t4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.streetbox.pos",
+            "certificate_hash": "97dd7989ba05f581633d24373ce9831e96d79670"
+          }
+        },
+        {
+          "client_id": "588870711663-qu1itntlkupsf69d8ec96po49r7q42v0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.streetbox.pos",
+            "certificate_hash": "5953832bd670d0c7a6f3a08365e370976d30cddc"
+          }
+        },
+        {
+          "client_id": "588870711663-ua2dnhk839rqv7dqjh2vt7q04f6omqt9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.streetbox.pos",
+            "certificate_hash": "a0ae046ceb537dc976f4bcfa9cb2a2c1ed390ec7"
+          }
+        },
+        {
+          "client_id": "588870711663-jo00cvdp80j9p92mln97icdln5mf3ctd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCV1VgspkCL8xVvJvmE38E0arHiiHzgJVw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "588870711663-jo00cvdp80j9p92mln97icdln5mf3ctd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588870711663:android:6de7308b74ef5afdd8109a",
+        "android_client_info": {
+          "package_name": "com.zeepos.streetbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "588870711663-4dr95nttcefnp1887qe4dc31bf8tljpc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zeepos.streetbox",
+            "certificate_hash": "a0ae046ceb537dc976f4bcfa9cb2a2c1ed390ec7"
+          }
+        },
+        {
+          "client_id": "588870711663-7cqekuadn8t4gjoji79jd7ms5apg34no.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zeepos.streetbox",
+            "certificate_hash": "5953832bd670d0c7a6f3a08365e370976d30cddc"
+          }
+        },
+        {
+          "client_id": "588870711663-ak8ivfk0c17rf1eelfj8bl2a5jv460ko.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zeepos.streetbox",
+            "certificate_hash": "ff421b1029dd4265f76fd79684cd36c93e90d200"
+          }
+        },
+        {
+          "client_id": "588870711663-jo00cvdp80j9p92mln97icdln5mf3ctd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCV1VgspkCL8xVvJvmE38E0arHiiHzgJVw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "588870711663-jo00cvdp80j9p92mln97icdln5mf3ctd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588870711663:android:67fd08e0228f7206d8109a",
+        "android_client_info": {
+          "package_name": "id.streetbox.live"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "588870711663-1hs4f0tc2s3pf0j10jrr428rt1t9fjfd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.streetbox.live",
+            "certificate_hash": "5953832bd670d0c7a6f3a08365e370976d30cddc"
+          }
+        },
+        {
+          "client_id": "588870711663-9qjcgrj0ij70hqcm0m9n3is0qenus64n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.streetbox.live",
+            "certificate_hash": "861332cbcabc7c7d816b0df85a02cc1ce2c333b8"
+          }
+        },
+        {
+          "client_id": "588870711663-bjr039kt6qs9302knm0nsoelqi3oq6p4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.streetbox.live",
+            "certificate_hash": "a0ae046ceb537dc976f4bcfa9cb2a2c1ed390ec7"
+          }
+        },
+        {
+          "client_id": "588870711663-jo00cvdp80j9p92mln97icdln5mf3ctd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCV1VgspkCL8xVvJvmE38E0arHiiHzgJVw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "588870711663-jo00cvdp80j9p92mln97icdln5mf3ctd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

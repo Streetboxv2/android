@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".ui.main.MainActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:menu="@menu/edit_profile_top_bar"
+            app:navigationIcon="@drawable/ic_back"
+            android:theme="@style/ToolbarTheme">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_profile"
+                android:textColor="@color/white"
+                android:fontFamily="@font/poppins_bold"
+                android:layout_gravity="center" />
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_below="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp">
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/iv_profile"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:src="@drawable/logo_with_text"
+                app:civ_border_color="@color/grey_hint"
+                app:civ_border_width="1dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_chang_photo"
+                android:fontFamily="@font/poppins_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/change_photo_profile"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintStart_toEndOf="@+id/iv_profile"
+                app:layout_constraintTop_toTopOf="@+id/iv_profile"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_profile" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                app:hintTextColor="@color/blue"
+                android:fontFamily="@font/poppins_regular"
+                style="@style/Widget.App.TextInputLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_profile"
+                android:layout_marginTop="@dimen/_20sdp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/et_name"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textColor="@color/color_text_regular" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Address"
+                app:hintTextColor="@color/blue"
+                android:fontFamily="@font/poppins_regular"
+                style="@style/Widget.App.TextInputLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tl_name"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/et_address"
+                    android:inputType="textMultiLine"
+                    android:minLines="2"
+                    android:maxLines="2"
+                    android:gravity="top"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textColor="@color/color_text_regular" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Phone"
+                app:hintTextColor="@color/blue"
+                android:fontFamily="@font/poppins_regular"
+                style="@style/Widget.App.TextInputLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tl_address"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/et_phone"
+                    android:inputType="phone"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textColor="@color/color_text_regular" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                app:hintTextColor="@color/blue"
+                android:fontFamily="@font/poppins_regular"
+                style="@style/Widget.App.TextInputLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tl_phone"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/et_email"
+                    android:enabled="false"
+                    android:inputType="textEmailAddress"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textColor="@color/color_text_regular" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+<!--            <com.google.android.material.button.MaterialButton-->
+<!--                android:id="@+id/btn_change_password"-->
+<!--                android:fontFamily="@font/poppins_regular"-->
+<!--                android:layout_width="@dimen/_200sdp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Change Password"-->
+<!--                app:iconTint="@color/white"-->
+<!--                android:textColor="@color/white"-->
+<!--                app:shapeAppearance="?attr/shapeAppearanceSmallComponent"-->
+<!--                style="?attr/materialButtonStyle"-->
+<!--                android:layout_marginTop="@dimen/_20sdp"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tl_email"-->
+<!--                app:icon="@drawable/ic_lock" />-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

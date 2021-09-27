@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical"
+            android:background="#17A59C"
+            android:scaleType="centerInside"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/logo_text"
+                android:contentDescription="@null"
+                android:scaleType="centerInside"
+                android:gravity="center"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_70sdp"
+            android:orientation="vertical"
+            android:scaleType="centerInside"
+            android:layout_centerInParent="true"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/parkingspacelogo"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:contentDescription="@null"
+                android:scaleType="centerInside"
+                android:gravity="center_vertical"
+                android:layout_centerInParent="true"/>
+
+            <Button
+                android:id="@+id/btn_inputparkingspace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#17A59C"
+                android:gravity="center"
+                android:text="Input parking space"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+</LinearLayout>
+

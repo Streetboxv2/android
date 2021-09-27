@@ -1,0 +1,120 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/edit_name"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_20sdp">
+
+        <ImageView
+            android:id="@+id/iv_parking"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:src="@drawable/ic_parking_green"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:text="KFC Senayan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@+id/iv_parking"
+            app:layout_constraintTop_toTopOf="@+id/iv_parking"
+            android:textColor="@color/black" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/tv_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name"
+            android:text="View Menu"
+            android:background="@drawable/button_add_bg"
+            android:textColor="@color/white" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/br"
+            app:constraint_referenced_ids="iv_parking, btn_menu"
+            app:barrierDirection="bottom" />
+
+        <ImageView
+            android:id="@+id/iv_location"
+            android:layout_width="@dimen/_12sdp"
+            android:layout_height="@dimen/_12sdp"
+            android:src="@drawable/ic_location"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/br" />
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:text="Jalan Ancol raya dua mangga tiga di tambah satu sama dengan empat"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_width="0dp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:textColor="@color/color_text_regular"
+            android:layout_marginEnd="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@+id/iv_location"
+            app:layout_constraintTop_toBottomOf="@+id/br"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabTextColor="@color/color_text_regular"
+            app:tabIndicatorColor="@color/blue"
+            app:tabSelectedTextColor="@color/black"
+            app:tabBackground="@drawable/tab_schedule_selector"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_address"
+            app:layout_constraintStart_toStartOf="parent"
+            app:tabMaxWidth="0dp"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:tabRippleColor="@null"
+            app:tabInlineLabel="true"
+            app:tabIndicatorFullWidth="true">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Schedule"
+                android:icon="@drawable/ic_time"/>
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Instagram"
+                android:icon="@drawable/ic_instagram"/>
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tab"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_behavior="@string/bottom_sheet_behavior" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

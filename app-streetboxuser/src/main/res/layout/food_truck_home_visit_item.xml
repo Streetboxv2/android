@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="@dimen/_2sdp"
+    android:paddingStart="@dimen/_4sdp"
+    android:paddingEnd="@dimen/_4sdp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/_6sdp"
+        app:cardElevation="1dp"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_banner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100sdp"
+                android:src="@drawable/image_holder"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp"
+                android:background="@drawable/gradient_transparent_bg"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_banner"
+                app:layout_constraintStart_toStartOf="@id/iv_banner"
+                app:layout_constraintEnd_toEndOf="@+id/iv_banner">
+
+                <TextView
+                    android:id="@+id/tv_merchant_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Merchant Name"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/tv_merchant_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Merchant Category"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textSize="@dimen/_8sdp"
+                    android:paddingHorizontal="@dimen/_12sdp"
+                    android:paddingVertical="@dimen/_3sdp"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

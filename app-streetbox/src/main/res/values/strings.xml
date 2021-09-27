@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">StreetBox</string>
+    <string name="title_parking_list">Parking List</string>
+    <string name="title_operator">Operator</string>
+    <string name="title_my_parking_space">My Parking</string>
+    <string name="title_log_activity">Log Activity</string>
+    <string name="title_cart">Cart</string>
+    <string name="title_profile">Profile</string>
+    <string name="hint_search">Find your parking space</string>
+    <string name="hint_search_food_truck">Find your food truck</string>
+    <string name="title_activity_parking_detail">Parking Detail</string>
+    <string name="action_settings">Settings</string>
+    <string name="assign">Assign</string>
+    <string name="live_tracking">Tracking</string>
+    <string name="food_truck">Food Truck</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="default_notification_channel_id" translatable="false">FCM Default id</string>
+
+</resources>

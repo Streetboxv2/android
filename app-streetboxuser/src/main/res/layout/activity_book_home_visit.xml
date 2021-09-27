@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <ImageView
+                android:id="@+id/iv_banner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null"
+                android:fitsSystemWindows="true"
+                android:minHeight="@dimen/_120sdp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image_holder"
+                app:layout_collapseMode="parallax" />
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/transparent"
+                app:layout_collapseMode="pin" />
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:paddingBottom="@dimen/_40sdp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/_10sdp">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="KFC Store"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_location"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_location"
+                app:layout_constraintStart_toStartOf="@+id/tv_name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Jl. Selamet merdeka yang pasti selamat gang buntu no. 3 rt 01 rw 05 Selamet riadi"
+                android:textColor="@color/color_text_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_location"
+                app:layout_constraintTop_toTopOf="@+id/iv_location" />
+
+            <TextView
+                android:id="@+id/tvSelerNoted"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_3sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Book Condition"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/iv_location"
+                app:layout_constraintTop_toBottomOf="@+id/tv_address" />
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Paket pesta indoor dengan kapasitas 250 orang dengan menu yang sangat beragam"
+                android:textColor="@color/color_text_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/iv_location"
+                app:layout_constraintTop_toBottomOf="@+id/tvSelerNoted" />
+
+            <View
+                android:id="@+id/header_separator"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_4sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@color/grey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_description" />
+
+            <TextView
+                android:id="@+id/tv_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Booking Details"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="@id/tv_description"
+                app:layout_constraintTop_toBottomOf="@+id/header_separator" />
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Date"
+                android:textColor="@color/color_text_regular"
+                app:layout_constraintStart_toStartOf="@+id/tv_details"
+                app:layout_constraintTop_toBottomOf="@+id/tv_details" />
+
+            <RelativeLayout
+                android:id="@+id/rl_select_date"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@drawable/select_date_bg"
+                app:layout_constraintStart_toStartOf="@+id/tv_date"
+                app:layout_constraintTop_toBottomOf="@+id/tv_date">
+
+                <ImageView
+                    android:id="@+id/iv_calendar"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_calendar" />
+
+                <View
+                    android:id="@+id/vertical_separator"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@+id/iv_calendar"
+                    android:background="@color/grey_hint" />
+
+                <TextView
+                    android:id="@+id/tv_selected_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_toEndOf="@+id/vertical_separator"
+                    android:fontFamily="@font/poppins_bold"
+                    android:paddingTop="4dp"
+                    android:text=""
+                    android:textColor="@color/color_text_regular" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_available_slot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Available Slot"
+                android:textColor="@color/color_text_regular"
+                app:layout_constraintStart_toStartOf="@+id/rl_select_date"
+                app:layout_constraintTop_toBottomOf="@+id/rl_select_date" />
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/fl"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:flexWrap="wrap"
+                app:justifyContent="flex_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_available_slot"
+                app:layout_constraintTop_toBottomOf="@+id/tv_available_slot">
+
+                <TextView
+                    android:id="@+id/tv_time_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_6sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_6sdp"
+                    android:text="-" />
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <View
+                android:id="@+id/customer_info_separator"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_4sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@color/grey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fl" />
+
+            <LinearLayout
+                android:id="@+id/llDeliveryAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="@id/tv_description"
+                app:layout_constraintTop_toBottomOf="@+id/customer_info_separator">
+
+                <TextView
+                    android:id="@+id/tv_customer_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_bold"
+                    android:gravity="center|left"
+                    android:text="Delivery Address"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tvChangeDeliveryAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|right"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_bold"
+                    android:gravity="right|center"
+                    android:text="Change"
+                    android:textColor="@color/blue"
+                    app:layout_constraintStart_toStartOf="@id/tv_description"
+                    app:layout_constraintTop_toBottomOf="@+id/customer_info_separator" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llAddressSelect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_15sdp"
+                android:background="@drawable/bg_rectangle"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/llDeliveryAddress">
+
+                <TextView
+                    android:id="@+id/tvItemNameAddressSelect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
+                    android:text="Alamat Kantor"
+                    android:textColor="@color/black" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_2sdp"
+                    android:background="@color/gray_btn_bg_color" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_15sdp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvItemPesonAddressSelect"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="arbaelbarcal"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tvItemAddressSelect"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:text="arbaelbarcal"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tvItemPhoneAddressSelect"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:text="arbaelbarcal"
+                        android:textColor="@color/black" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/cbAgreesHomeVisit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:padding="@dimen/_10sdp"
+                android:text="I agree to the Streetbox book conditions"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/llAddressSelect" />
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/fbl"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:visibility="gone"
+                app:flexWrap="wrap"
+                app:justifyContent="flex_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/llDeliveryAddress"
+                app:layout_constraintTop_toBottomOf="@+id/llDeliveryAddress">
+
+                <TextView
+                    android:id="@+id/tv_previous_address_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:text="Previous Address : " />
+
+                <TextView
+                    android:id="@+id/tv_address_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:background="@drawable/token_textview_bg"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:textColor="@color/white"
+                    tools:text="Gedung Serbaguna Pasar Minggu" />
+
+                <TextView
+                    android:id="@+id/tv_address_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:background="@drawable/token_textview_bg"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:textColor="@color/white"
+                    tools:text="Rumah" />
+
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_name"
+                style="@style/Widget.App.TextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="Name"
+                android:visibility="gone"
+                app:hintTextColor="@color/blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/fbl"
+                app:layout_constraintTop_toBottomOf="@+id/fbl">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:imeOptions="actionNext"
+                    android:textColor="@color/color_text_regular" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_address"
+                style="@style/Widget.App.TextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="Click to search address"
+                android:visibility="gone"
+                app:hintTextColor="@color/blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tl_name"
+                app:layout_constraintTop_toBottomOf="@+id/tl_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:minLines="2"
+                    android:textColor="@color/color_text_regular" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_phone"
+                style="@style/Widget.App.TextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="Phone"
+                android:visibility="gone"
+                app:hintTextColor="@color/blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tl_address"
+                app:layout_constraintTop_toBottomOf="@+id/tl_address">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:textColor="@color/color_text_regular" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_notes"
+                style="@style/Widget.App.TextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="Notes"
+                android:visibility="gone"
+                app:hintTextColor="@color/blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tl_phone"
+                app:layout_constraintTop_toBottomOf="@+id/tl_phone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="top"
+                    android:imeOptions="actionDone"
+                    android:inputType="textMultiLine"
+                    android:maxLines="2"
+                    android:minLines="2"
+                    android:textColor="@color/color_text_regular" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:id="@+id/rl_order_summary"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/blue">
+
+            <TextView
+                android:id="@+id/tv_item_count"
+                android:layout_width="@dimen/_75sdp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:padding="@dimen/_10sdp"
+                android:text="0 Item"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/sp"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_item_count"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_subtotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="0"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/sp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_pickup"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:text="Book Now"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_item_count"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_item_count" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,194 @@
+{
+  "project_info": {
+    "project_number": "796908376074",
+    "firebase_url": "https://streetbox-276609.firebaseio.com",
+    "project_id": "streetbox-276609",
+    "storage_bucket": "streetbox-276609.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:796908376074:android:8479554fdaf4e8f2d7cff3",
+        "android_client_info": {
+          "package_name": "com.streetbox.pos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "796908376074-8dooq85pclgcsu1d4i9jakp6ja72481n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.streetbox.pos",
+            "certificate_hash": "fbb55167ea17eee9ddaeaea688a76e0859f4ca2e"
+          }
+        },
+        {
+          "client_id": "796908376074-gqmcs8q044uh3ek93iug1gklhdtslsml.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.streetbox.pos",
+            "certificate_hash": "ff64bab828f35eb66a918e649ae3ecf159aef00b"
+          }
+        },
+        {
+          "client_id": "796908376074-j0tucq8nq6da0pn71ta6lcpjh7es4vml.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.streetbox.pos",
+            "certificate_hash": "f4e7582ad3808c5b9a82e8f29084184336fbe42b"
+          }
+        },
+        {
+          "client_id": "796908376074-r539f19tlpov3s381r09pdsuaj5njepm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.streetbox.pos",
+            "certificate_hash": "9e04ea77444cda9315e5422714f31ca878d0ea9b"
+          }
+        },
+        {
+          "client_id": "796908376074-nqgvr0pdqdcp76b060ghp0vt0u20nbec.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiYMmv1nsrm33pw1tL9t4oSRcqpeQjbrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "796908376074-f9bdnv6ohcda4iup19u76iler5loqf8s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:796908376074:android:04085273593c9fa1d7cff3",
+        "android_client_info": {
+          "package_name": "com.zeepos.streetbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "796908376074-591gorp0ql3pn2duhmq4mj2130mcugke.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zeepos.streetbox",
+            "certificate_hash": "fbb55167ea17eee9ddaeaea688a76e0859f4ca2e"
+          }
+        },
+        {
+          "client_id": "796908376074-j6jf9r8br469uaeit5a6v1560g76697p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zeepos.streetbox",
+            "certificate_hash": "ff64bab828f35eb66a918e649ae3ecf159aef00b"
+          }
+        },
+        {
+          "client_id": "796908376074-l3q5nt028g0pohuq7ntia65ia1ol93e8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zeepos.streetbox",
+            "certificate_hash": "9e04ea77444cda9315e5422714f31ca878d0ea9b"
+          }
+        },
+        {
+          "client_id": "796908376074-o5o3lrl85rs73865lp0u4ier57ho30e1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zeepos.streetbox",
+            "certificate_hash": "f4e7582ad3808c5b9a82e8f29084184336fbe42b"
+          }
+        },
+        {
+          "client_id": "796908376074-nqgvr0pdqdcp76b060ghp0vt0u20nbec.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiYMmv1nsrm33pw1tL9t4oSRcqpeQjbrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "796908376074-f9bdnv6ohcda4iup19u76iler5loqf8s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:796908376074:android:91ecc53848158413d7cff3",
+        "android_client_info": {
+          "package_name": "id.streetbox.live"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "796908376074-13gl8b7fgujp2244nradp9kdjodiandh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.streetbox.live",
+            "certificate_hash": "f4e7582ad3808c5b9a82e8f29084184336fbe42b"
+          }
+        },
+        {
+          "client_id": "796908376074-2jpf3uchi6bftd0dner0q6m2qbks56mh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.streetbox.live",
+            "certificate_hash": "fbb55167ea17eee9ddaeaea688a76e0859f4ca2e"
+          }
+        },
+        {
+          "client_id": "796908376074-3ieh9rl4mqoof95hu5tqnh5e3touogf2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.streetbox.live",
+            "certificate_hash": "ff64bab828f35eb66a918e649ae3ecf159aef00b"
+          }
+        },
+        {
+          "client_id": "796908376074-fu3nmhkd0ve3sjlan1r5bc0sujikqdis.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.streetbox.live",
+            "certificate_hash": "9e04ea77444cda9315e5422714f31ca878d0ea9b"
+          }
+        },
+        {
+          "client_id": "796908376074-nqgvr0pdqdcp76b060ghp0vt0u20nbec.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiYMmv1nsrm33pw1tL9t4oSRcqpeQjbrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "796908376074-f9bdnv6ohcda4iup19u76iler5loqf8s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

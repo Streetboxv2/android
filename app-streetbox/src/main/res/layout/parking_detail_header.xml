@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:background="@color/orange" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="@dimen/_6sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.tiagosantos.enchantedviewpager.EnchantedViewPager
+                android:id="@+id/vp_parking_picture"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_map"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:src="@drawable/ic_map"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/vpd_indicator" />
+
+            <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                android:layout_gravity="center"
+                android:id="@+id/vpd_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                app:dotsColor="@color/orange"
+                app:dotsCornerRadius="8dp"
+                app:dotsSize="14dp"
+                app:dotsSpacing="4dp"
+                app:dotsWidthFactor="2.5"
+                app:selectedDotColor="@color/orange"
+                app:progressMode="true"
+                app:layout_constraintStart_toStartOf="@+id/vp_parking_picture"
+                app:layout_constraintEnd_toEndOf="@+id/vp_parking_picture"
+                app:layout_constraintBottom_toBottomOf="@+id/vp_parking_picture" />
+
+            <TextView
+                android:fontFamily="@font/poppins_bold"
+                android:id="@+id/tv_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:text="Istora Senayan"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@+id/vp_parking_picture"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:fontFamily="@font/poppins_bold"
+                android:id="@+id/tv_point"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:text="1.000.000"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:textColor="@color/orange"
+                android:visibility="invisible"
+                app:layout_constraintTop_toTopOf="@+id/tv_rating"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_rating"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_rating"
+                android:layout_width="@dimen/_12sdp"
+                android:layout_height="@dimen/_12sdp"
+                android:src="@drawable/ic_star"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:contentDescription="@null"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name"
+                app:layout_constraintStart_toStartOf="@+id/tv_name" />
+
+            <TextView
+                android:fontFamily="@font/poppins_bold"
+                android:id="@+id/tv_rating"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:text="4.5"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/black"
+                android:layout_marginStart="@dimen/_6sdp"
+                app:layout_constraintTop_toTopOf="@+id/iv_rating"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_rating"
+                app:layout_constraintStart_toEndOf="@+id/iv_rating" />
+
+            <ImageView
+                android:id="@+id/iv_location"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_16sdp"
+                android:tint="@color/orange"
+                android:src="@drawable/ic_location"
+                android:contentDescription="@null"
+                android:layout_marginTop="@dimen/_15sdp"
+                app:layout_constraintStart_toStartOf="@+id/iv_rating"
+                app:layout_constraintEnd_toEndOf="@+id/iv_rating"
+                app:layout_constraintTop_toBottomOf="@+id/iv_rating" />
+
+            <TextView
+                android:fontFamily="@font/poppins_regular"
+                android:id="@+id/tv_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Jl. Selamet merdeka yang pasti selamat gang buntu no. 3 rt 01 rw 05 Selamet riadi"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_6sdp"
+                style="@style/TextAppearance.App.Caption"
+                android:textColor="@color/color_text_regular"
+                app:layout_constraintTop_toTopOf="@+id/iv_location"
+                app:layout_constraintStart_toEndOf="@+id/iv_location"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_time"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_16sdp"
+                android:src="@drawable/ic_time"
+                app:layout_constraintTop_toTopOf="@+id/tv_parking_time"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_parking_time"
+                app:layout_constraintStart_toStartOf="@+id/iv_location"
+                app:layout_constraintEnd_toEndOf="@+id/iv_location"/>
+
+            <TextView
+                android:fontFamily="@font/poppins_bold"
+                android:textColor="@color/color_text_regular"
+                android:id="@+id/tv_parking_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="08:00 - 20:00"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:paddingTop="4dp"
+                android:layout_marginStart="@dimen/_6sdp"
+                app:layout_constraintStart_toEndOf="@+id/iv_time"
+                app:layout_constraintTop_toBottomOf="@+id/tv_address" />
+
+            <TextView
+                android:fontFamily="@font/poppins_regular"
+                android:id="@+id/tv_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Deskripsi istora senayan ada di sini lorem ipsum dolor sit amet"
+                android:textColor="@color/black"
+                android:paddingBottom="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@+id/iv_time"
+                app:layout_constraintStart_toStartOf="@+id/tv_name"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:fontFamily="@font/poppins_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_text_regular"
+        android:layout_below="@+id/cv"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:text="Parking Slot" />
+
+</RelativeLayout>

@@ -1,0 +1,35 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/background"
+    android:layout_width="@dimen/_110sdp"
+    android:layout_height="@dimen/_100sdp"
+    android:padding="@dimen/_10sdp"
+    android:background="@drawable/background">
+
+    <ImageView
+        android:layout_centerInParent="true"
+        android:src="@drawable/mouse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mouse"
+        android:visibility="gone" />
+
+    <ImageView
+        android:layout_centerInParent="true"
+        android:src="@drawable/logo_text"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:id="@+id/logo" />
+
+    <com.zeepos.ui_base.views.progressdialog.GraduallyTextView
+        android:fontFamily="@font/poppins_regular"
+        android:id="@+id/graduallyTextView"
+        android:layout_marginBottom="5dp"
+        android:textSize="15sp"
+        android:layout_below="@+id/logo"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:text="@string/loading"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

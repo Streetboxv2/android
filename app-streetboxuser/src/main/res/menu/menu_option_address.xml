@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Set Primary Canvassing"
+        android:id="@+id/ic_mark_address" />
+    <item
+        android:id="@+id/ic_delete_address"
+        android:title="Delete" />
+</menu>

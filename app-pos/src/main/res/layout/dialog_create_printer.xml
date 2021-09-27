@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/_10sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:textSize="@dimen/_10ssp"
+        android:text="Create New Printer" />
+
+    <View
+        android:id="@+id/separator_title"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginTop="@dimen/_10sdp" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_above="@+id/btn_save"
+        android:layout_below="@+id/separator_title"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/_10sdp"
+            android:gravity="center_horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_name"
+                android:layout_width="@dimen/_200sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Name" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/sp_printer_type"
+                android:layout_width="@dimen/_200sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@+id/ti_name"
+                app:layout_constraintTop_toBottomOf="@+id/ti_name"
+                android:entries="@array/printer_type_arrays"
+                android:prompt="@string/printer_type_prompt" />
+
+            <TextView
+                android:id="@+id/tv_printer_att_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/sp_printer_type"
+                app:layout_constraintStart_toStartOf="@+id/sp_printer_type"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Printer Attributes" />
+
+            <TextView
+                android:id="@+id/tv_printer_att"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/tv_printer_att_title"
+                app:layout_constraintStart_toStartOf="@+id/tv_printer_att_title"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:text="-" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_max_char"
+                android:layout_width="@dimen/_80sdp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_printer_att"
+                app:layout_constraintStart_toStartOf="@+id/tv_printer_att"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_max_char"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Peaper max char" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_printer_title"
+                android:layout_width="@dimen/_200sdp"
+                app:layout_constraintTop_toBottomOf="@+id/ti_max_char"
+                app:layout_constraintStart_toStartOf="@+id/ti_max_char"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_printer_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:minLines="4"
+                    android:gravity="top"
+                    android:hint="Receipt Header" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_printer_footer"
+                android:layout_width="@dimen/_200sdp"
+                app:layout_constraintTop_toBottomOf="@+id/ti_printer_title"
+                app:layout_constraintStart_toStartOf="@+id/ti_printer_title"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_printer_footer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:minLines="4"
+                    android:gravity="top"
+                    android:hint="Receipt Footer" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_save"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Save" />
+</RelativeLayout>

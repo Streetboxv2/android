@@ -1,0 +1,127 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+def versionMajor = 1
+def versionMinor = 0
+def versionPatch = 0
+def versionBuild = 0
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    allprojects {
+        repositories {
+            jcenter()
+            maven { url "https://jitpack.io" }  //Make sure to add this in your project for uCrop
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.zeepos.recruiter"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath false
+                arguments << ["dagger.gradle.incremental": "true"]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "basic"
+
+    productFlavors {
+        dev {
+            dimension "basic"
+            buildConfigField 'String', 'SERVER', '"https://streetbox-api.cbs.co.id/"'
+            buildConfigField 'String', 'CLIENT_ID', '"recuiter-mobile"'
+        }
+        demo {
+            dimension "basic"
+            buildConfigField 'String', 'SERVER', '"https://streetbox-api.cbs.co.id/"'
+            buildConfigField 'String', 'CLIENT_ID', '"recuiter-mobile"'
+        }
+        prod {
+            dimension "basic"
+            buildConfigField 'String', 'SERVER', '"https://streetbox-api.cbs.co.id/"'
+            buildConfigField 'String', 'CLIENT_ID', '"recuiter-mobile"'
+        }
+    }
+
+    dexOptions {
+        preDexLibraries true
+        maxProcessCount 8
+        javaMaxHeapSize "4g"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    packagingOptions {
+        exclude 'asm-license.txt'
+        exclude 'META-INF/rxjava.properties'
+    }
+
+}
+
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xmaxerrs" << "500" //
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    // If you have a problem with Glide, please use the same Glide version or simply open an issue
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    // Glide v4 uses this new annotation processor -- see https://bumptech.github.io/glide/doc/generatedapi.html
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'com.github.dhaval2404:imagepicker:1.7.1'
+    implementation "androidx.multidex:multidex:$multidex"
+    implementation "io.reactivex.rxjava2:rxjava:$rxJava"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroid"
+    implementation "com.jakewharton.rxbinding2:rxbinding:$rxBinding"
+    implementation "com.github.tbruyelle:rxpermissions:$rxPermissions"
+    implementation "com.jakewharton.rxrelay2:rxrelay:$rxRelay"
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+
+    implementation project(':data')
+    implementation project(':ui-base')
+//    implementation project(':ui-login')
+//    implementation project(':ui-splashscreen')
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
+
+}

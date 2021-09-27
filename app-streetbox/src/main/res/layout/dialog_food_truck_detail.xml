@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_20sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/iv_food_truck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_food_truck_block"
+        android:contentDescription="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:fontFamily="@font/poppins_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Car plate number"
+        android:layout_marginStart="@dimen/_10sdp"
+        app:layout_constraintStart_toEndOf="@+id/iv_food_truck"
+        app:layout_constraintTop_toTopOf="@+id/iv_food_truck"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_food_truck" />
+
+    <TextView
+        android:id="@+id/tv_plate_number_label"
+        android:fontFamily="@font/poppins_regular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/grey_hint"
+        android:text="Plate Number"
+        android:layout_marginTop="@dimen/_20sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_food_truck" />
+
+    <TextView
+        android:id="@+id/tv_plate_number"
+        android:fontFamily="@font/poppins_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_text_regular"
+        android:text="-"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_plate_number_label" />
+
+    <TextView
+        android:fontFamily="@font/poppins_regular"
+        android:id="@+id/tv_email_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Email"
+        android:textColor="@color/grey_hint"
+        app:layout_constraintTop_toBottomOf="@+id/tv_plate_number"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_email"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/color_text_regular"
+        android:text="-"
+        app:layout_constraintTop_toBottomOf="@+id/tv_email_label"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_address_label"
+        android:fontFamily="@font/poppins_regular"
+        android:textColor="@color/grey_hint"
+        android:text="Address"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_email" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_address"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/color_text_regular"
+        android:text="-"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_address_label" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

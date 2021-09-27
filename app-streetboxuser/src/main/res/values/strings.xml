@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Streetbox User</string>
+    <string name="hint_search">Find Food Trucks</string>
+    <string name="home">Home</string>
+    <string name="order_history">Order History</string>
+    <string name="cart">Cart</string>
+    <string name="profile">Profile</string>
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="change_photo_profile">Change Photo Profile</string>
+    <string name="nearby">Nearby</string>
+    <string name="home_visit">Home Visit</string>
+    <string name="menu">Menu</string>
+    <string name="order_item">Order item(s)</string>
+    <string name="add_more">+ Add More</string>
+    <string name="template_message_1">I\'ll be there in 5 minutes</string>
+    <string name="template_message_2">I\'ll be there in 10 minutes</string>
+    <string name="template_message_3">I\'ll be there in 15 minutes</string>
+    <string name="template_message_4">I\'ll be there in 20 minutes</string>
+    <string name="template_message_5">Setengah jam lagi sampai</string>
+    <string name="template_message_6">Saya datang jam 5 sore ya ditunggu</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

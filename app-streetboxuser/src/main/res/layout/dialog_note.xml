@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_10sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tv_product_notes_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notes"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tl_product_notes"
+        style="@style/Widget.App.TextInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_regular"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_product_notes_label">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_product_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="top|left"
+            android:hint="Type here..."
+            android:inputType="textMultiLine"
+            android:maxLines="2"
+            android:minLines="2"
+            android:textColor="@color/color_text_regular" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:id="@+id/btn_save"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Save"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:layout_marginTop="@dimen/_10sdp"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tl_product_notes"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/tl_product_notes"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/tl_product_notes" />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

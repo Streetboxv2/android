@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:keepScreenOn="true"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/iv_food_truck"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:contentDescription="@null"
+        android:scaleType="centerInside"
+        android:layout_marginTop="@dimen/_35sdp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/foodtruck" />
+
+    <LinearLayout
+        android:id="@+id/ll_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_below="@+id/iv_food_truck">
+
+        <ImageView
+            android:layout_width="@dimen/_16sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:tint="@color/orange"
+            android:layout_gravity="top"
+            android:src="@drawable/ic_location"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kamu bisa membuka lapak secara bebas"
+            android:fontFamily="@font/poppins_bold"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/orange"
+        android:gravity="center"
+        android:text="Start"
+        android:layout_below="@+id/ll_desc"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:visibility="visible"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/btn_check_in"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/orange"
+        android:gravity="center"
+        android:text="Check In"
+        android:layout_below="@+id/ll_desc"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:visibility="visible"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/btn_checkOut"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:layout_below="@+id/ll_desc"
+        android:layout_centerHorizontal="true"
+        android:background="@color/orange"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:text="@string/check_out" />
+
+    <Button
+        android:id="@+id/btn_direction"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:layout_below="@+id/btn_check_in"
+        android:layout_centerHorizontal="true"
+        android:background="@color/orange"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:text="Show Map Location" />
+
+    <Button
+        android:id="@+id/btn_show_map_location"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:layout_below="@+id/btn_checkOut"
+        android:layout_centerHorizontal="true"
+        android:background="@color/orange"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:text="Show map location" />
+
+    <Button
+        android:id="@+id/btn_shiftoutfreetask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_alignParentBottom="true"
+        android:visibility="visible"
+        android:textColor="@color/white"
+        android:text="@string/shift_out" />
+
+    <TextView
+        android:id="@+id/tv_logs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:layout_above="@+id/btn_shiftoutfreetask"
+        android:layout_below="@+id/btn_direction" />
+
+</RelativeLayout>
+

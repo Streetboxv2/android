@@ -1,0 +1,380 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--Top Action Bar-->
+
+    <LinearLayout
+        android:id="@+id/topprofilebar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical">
+        <include layout="@layout/app_bar" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lytGalleryPick"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/topprofilebar">
+        <include layout="@layout/galery_photo"/>
+
+    </LinearLayout>
+
+
+    <!--Add a layout_below/@id/top_profile_bar to have it below the bar-->
+    <ScrollView
+        android:layout_below="@+id/lytGalleryPick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_below="@+id/lytGalleryPick"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_15sdp"
+                    android:hint="Nama Parking Space"
+                    android:textColor="@android:color/black"
+                    />
+
+                <EditText
+                    android:id="@+id/et_parkingspace_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Masukan Nama Tempat Parkir "
+                    android:minEms="15"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_15sdp"
+                    android:hint="ALamat"
+                    android:textColor="@android:color/black"
+                    />
+
+                <EditText
+                    android:id="@+id/et_alamat"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Masukan Alamat "
+                    android:minEms="15"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_15sdp"
+                    android:hint="Catatan"
+                    android:textColor="@android:color/black"
+                    />
+
+                <EditText
+                    android:id="@+id/et_catatan"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Masukan Catatan"
+                    android:minEms="15"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_15sdp"
+                    android:hint="Jumlah Parking Spot"
+                    android:textColor="@android:color/black"
+                    />
+
+                <EditText
+                    android:id="@+id/et_parkingspotnumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Masukan Jumlah Parking Spot"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal"
+                >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/_15sdp"
+                        android:hint="Jam Buka"
+                        android:textColor="@android:color/black"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/_15sdp"
+                        android:layout_marginLeft="@dimen/_50sdp"
+                        android:hint="Jam Tutup"
+                        android:textColor="@android:color/black"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal"
+                    >
+
+                    <TimePicker
+                        android:id="@+id/timePickerStart"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:timePickerMode="spinner"/>
+
+                    <TimePicker
+                        android:id="@+id/timePickerEnd"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:timePickerMode="spinner"/>
+
+                </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_15sdp"
+                    android:hint="Masa Kontrak"
+                    android:textColor="@android:color/black"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal" >
+
+                    <DatePicker
+                        android:id="@+id/datePickerStart"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:datePickerMode="spinner"
+                        android:calendarViewShown="false"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:text="S.D"
+                        android:textColor="@android:color/black"
+                        />
+
+                    <DatePicker
+                        android:id="@+id/datePickerEnd"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:datePickerMode="spinner"
+                        android:calendarViewShown="false"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_15sdp"
+                    android:hint="Nama Pemilik"
+                    android:textColor="@android:color/black"
+                    />
+
+                <EditText
+                    android:id="@+id/et_landlorname"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:hint="Masukan Nama Pemilik"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_15sdp"
+                    android:hint="Alamat Pemilik"
+                    android:textColor="@android:color/black"
+                    />
+
+                <EditText
+                    android:id="@+id/et_landlordaddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Masukan Alamat Pemilik"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_15sdp"
+                    android:hint="No KTP Pemilik"
+                    android:textColor="@android:color/black"
+                    />
+
+                <EditText
+                    android:id="@+id/et_landlordId"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:hint="Masukan NO KTP Pemilik"
+                    android:minEms="15"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_15sdp"
+                    android:hint="Nama Pemilik"
+                    android:textColor="@android:color/black"
+                    />
+
+                <EditText
+                    android:id="@+id/et_landlordHP"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:hint="Masukan NO HP Pemilik"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center"
+                android:orientation="vertical" >
+                <Button
+                    android:id="@+id/btn_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="40dp"
+                    android:background="#17A59C"
+                    android:gravity="center"
+                    android:text="Submit Parking Space"
+                    android:textColor="@android:color/white"></Button>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!--Some Content-->
+    </ScrollView>
+
+</RelativeLayout>

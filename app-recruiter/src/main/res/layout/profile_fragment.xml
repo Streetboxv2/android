@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.profile.ProfileFragment"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical"
+        android:background="#17A59C"
+        android:scaleType="centerInside"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/logo_text"
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/rec_profile"
+        android:contentDescription="@null"
+        android:scaleType="centerInside"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="@dimen/_15sdp"
+            android:hint="name"
+            android:textColor="@android:color/black"
+            />
+
+        <EditText
+            android:id="@+id/et_nama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="nama_recruiter"
+            android:enabled="false"
+            android:minEms="15"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="@dimen/_15sdp"
+            android:hint="No HP"
+            android:textColor="@android:color/black"
+            />
+
+        <EditText
+            android:id="@+id/et_nohp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:hint="0"
+            android:minEms="15"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="@dimen/_15sdp"
+            android:hint="Alamat"
+            android:textColor="@android:color/black"
+            />
+
+        <EditText
+            android:id="@+id/et_alamat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:hint="masukan alamat"
+            android:minEms="15"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="@dimen/_15sdp"
+            android:hint="prompt_password"
+            android:textColor="@android:color/black"
+            />
+
+        <EditText
+            android:id="@+id/et_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:minEms="15"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_changepassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="#17A59C"
+            android:text="Change Passowrd"
+            android:textColor="@android:color/white"></Button>
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="40dp"
+            android:background="#17A59C"
+            android:text="Logout"
+            android:textColor="@android:color/white"></Button>
+    </LinearLayout>
+
+</LinearLayout>

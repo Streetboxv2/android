@@ -1,0 +1,29 @@
+<resources>
+    <string name="title_activity_login">Log in</string>
+    <string name="input_parkingspace">Input New Parking Space</string>
+    <string name="shift_in">Shift In</string>
+    <string name="shift_out">Shift Out</string>
+    <string name="check_in">Check In</string>
+    <string name="start">Start</string>
+    <string name="nama" translatable="false">Nama</string>
+    <string name="nohp" translatable="false">Nomor Hp</string>
+    <string name="nama_recruiter" translatable="false">Nama Recruiter</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_address">Address</string>
+    <string name="prompt_notes">Notes</string>
+    <string name="prompt_slotnumber">Number of slot parking space</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_forgotpassword">Forgot Password?</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_submit">Submit</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="login">Login</string>
+    <string name="server_client_id">796908376074-nqgvr0pdqdcp76b060ghp0vt0u20nbec.apps.googleusercontent.com</string>
+<!--    <string name="server_client_id">588870711663-o3jot04smdfag4o46mellirfddmbataa.apps.googleusercontent.com</string>-->
+<!--    <string name="server_client_id">796908376074-f9bdnv6ohcda4iup19u76iler5loqf8s.apps.googleusercontent.com</string>-->
+</resources>

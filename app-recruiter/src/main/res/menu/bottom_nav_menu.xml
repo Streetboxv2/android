@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_parkingspace"
+        android:icon="@mipmap/parkingspace"
+        android:title="@string/parkingspace" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@mipmap/profile"
+        android:title="@string/Profile" />
+
+</menu>

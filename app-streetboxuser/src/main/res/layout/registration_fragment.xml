@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".ui.main.MainActivity"
+    tools:ignore="MissingDefaultResource">
+
+    <LinearLayout
+        android:id="@+id/ll_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/_20sdp"
+        android:gravity="center_horizontal"
+        android:background="@color/orange">
+
+        <ImageView
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:src="@drawable/image_holder" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Streetbox"
+            android:textColor="@color/white"
+            android:fontFamily="@font/poppins_regular" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_below="@+id/ll_header"
+        android:background="@color/orange" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_below="@+id/ll_header">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
+
+                <TextView
+                    android:fontFamily="@font/poppins_bold"
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Registration"
+                    style="@style/TextAppearance.App.Headline6"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Name"
+                    app:hintTextColor="@color/orange"
+                    android:fontFamily="@font/poppins_regular"
+                    style="@style/Widget.App.TextInputLayout"
+                    android:layout_marginTop="@dimen/_10sdp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_name"
+                        android:enabled="false"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/color_text_regular" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Username"
+                    android:fontFamily="@font/poppins_regular"
+                    app:hintTextColor="@color/orange"
+                    style="@style/Widget.App.TextInputLayout"
+                    android:layout_marginTop="@dimen/_10sdp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_username"
+                        android:enabled="false"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/color_text_regular" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone Number"
+                    android:fontFamily="@font/poppins_regular"
+                    android:enabled="false"
+                    app:hintTextColor="@color/orange"
+                    style="@style/Widget.App.TextInputLayout"
+                    android:layout_marginTop="@dimen/_10sdp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_phone"
+                        android:enabled="false"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/color_text_regular" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Address"
+                    android:fontFamily="@font/poppins_regular"
+                    app:hintTextColor="@color/orange"
+                    style="@style/Widget.App.TextInputLayout"
+                    android:layout_marginTop="@dimen/_10sdp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_address"
+                        android:enabled="false"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/color_text_regular" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="password"
+                    app:passwordToggleEnabled="true"
+                    android:fontFamily="@font/poppins_regular"
+                    app:hintTextColor="@color/orange"
+                    style="@style/Widget.App.TextInputLayout"
+                    android:layout_marginTop="@dimen/_10sdp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_password"
+                        android:inputType="textPassword"
+                        app:passwordToggleEnabled="true"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/color_text_regular" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/bt_save"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Change password"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/poppins_bold"
+                        android:background="@drawable/button_add_bg" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </com.google.android.material.card.MaterialCardView>
+
+</RelativeLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingStart="@dimen/_4sdp"
+    android:paddingEnd="@dimen/_4sdp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/_4sdp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_payment"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_centerVertical="true"
+                android:scaleType="centerInside" />
+
+            <TextView
+                android:fontFamily="@font/poppins_bold"
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Credit Card"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/iv_payment"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:fontFamily="@font/poppins_regular"
+                android:id="@+id/tv_notes"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_name"
+                android:layout_toRightOf="@+id/iv_payment"
+                android:layout_marginStart="@dimen/_10sdp"
+                tools:text="Credit card input cc number"
+                android:textColor="@color/color_text_regular" />
+
+            <ImageView
+                android:id="@+id/iv_select"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/ic_unselect"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

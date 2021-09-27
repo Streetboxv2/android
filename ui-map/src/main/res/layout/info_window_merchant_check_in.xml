@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_40sdp"
+    android:layout_height="@dimen/_45sdp"
+    android:paddingBottom="@dimen/_10sdp"
+    android:paddingStart="@dimen/_2sdp"
+    android:paddingEnd="@dimen/_2sdp"
+    android:paddingTop="@dimen/_2sdp"
+    android:background="@drawable/food_truck_marker_green">
+
+    <!--    <com.github.florent37.shapeofview.shapes.BubbleView-->
+    <!--        android:layout_width="@dimen/_40sdp"-->
+    <!--        android:layout_height="@dimen/_40sdp"-->
+    <!--        app:shape_bubble_arrowHeight="10dp"-->
+    <!--        app:shape_bubble_arrowWidth="10dp"-->
+    <!--        android:layout_centerInParent="true"-->
+    <!--        app:shape_bubble_arrowPosition="bottom"-->
+    <!--        app:shape_bubble_borderRadius="8dp"-->
+    <!--        app:arrow_posititon_percent="0.5">-->
+
+    <!--        <View-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:background="@color/blue" />-->
+
+    <RelativeLayout
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:scaleType="centerCrop"
+            android:layout_centerInParent="true"
+            android:contentDescription="@null" />
+    </RelativeLayout>
+
+    <!--    </com.github.florent37.shapeofview.shapes.BubbleView>-->
+
+</RelativeLayout>

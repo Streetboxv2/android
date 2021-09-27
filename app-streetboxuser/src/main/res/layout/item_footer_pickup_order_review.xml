@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/_20sdp">
+
+    <View
+        android:id="@+id/sp_1"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        android:background="@color/grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_note_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Notes"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sp_1" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tl_notes"
+        style="@style/Widget.App.TextInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_regular"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_note_label">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="top|left"
+            android:hint="Type here..."
+            android:inputType="textMultiLine"
+            android:maxLines="2"
+            android:minLines="2"
+            android:textColor="@color/color_text_regular" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/fbl"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:visibility="gone"
+        app:flexWrap="wrap"
+        app:justifyContent="flex_start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tl_notes">
+
+        <TextView
+            android:id="@+id/tm_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:background="@drawable/token_textview_bg"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingTop="@dimen/_4sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_4sdp"
+            android:text="I'll be there in 5 minutes"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tm_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:background="@drawable/token_textview_bg"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingTop="@dimen/_4sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_4sdp"
+            android:text="I'll be there in 10 minutes"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tm_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:background="@drawable/token_textview_bg"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingTop="@dimen/_4sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_4sdp"
+            android:text="I'll be there in 15 minutes"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tm_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:background="@drawable/token_textview_bg"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingTop="@dimen/_4sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_4sdp"
+            android:text="I'll be there in 20 minutes"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tm_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="@drawable/token_textview_bg"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingTop="@dimen/_4sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_4sdp"
+            android:text="Call me if ready"
+            android:textColor="@color/white" />
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <View
+        android:id="@+id/sp_2"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@color/grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fbl" />
+
+    <TextView
+        android:id="@+id/tv_payment_detail_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Payment Details"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sp_2" />
+
+    <TextView
+        android:id="@+id/tv_subtotal_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="Subtotal"
+        android:textColor="@color/color_text_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_payment_detail_label" />
+
+    <TextView
+        android:id="@+id/tv_subtotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="0"
+        android:textColor="@color/color_text_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_subtotal_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_subtotal_label" />
+
+    <TextView
+        android:id="@+id/tv_tax_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:textColor="@color/color_text_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_subtotal_label"
+        tools:text="Tax" />
+
+    <TextView
+        android:id="@+id/tv_total_tax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="0"
+        android:textColor="@color/color_text_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_tax_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_tax_label" />
+
+    <View
+        android:id="@+id/sp_3"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:background="@drawable/dash_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_tax_label" />
+
+    <TextView
+        android:id="@+id/tv_total_payment_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="Total Payment"
+        android:textColor="@color/color_text_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sp_3" />
+
+    <TextView
+        android:id="@+id/tv_total_payment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="0"
+        android:textColor="@color/color_text_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_total_payment_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_total_payment_label" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

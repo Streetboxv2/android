@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingStart="@dimen/_10sdp"
+    android:paddingEnd="@dimen/_10sdp"
+    android:paddingTop="@dimen/_6sdp"
+    android:paddingBottom="@dimen/_6sdp">
+
+    <TextView
+        android:id="@+id/tv_bill_no"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Nomor Antrian"
+        android:layout_weight="0.2" />
+
+    <TextView
+        android:id="@+id/tv_tanggal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Tanggal"
+        android:paddingEnd="@dimen/_10sdp"
+        android:layout_weight="0.2" />
+
+    <TextView
+        android:id="@+id/tv_jam"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Jam"
+        android:paddingEnd="@dimen/_10sdp"
+        android:layout_weight="0.2" />
+
+    <TextView
+        android:id="@+id/tv_no_trx"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="No Transaksi"
+        android:paddingEnd="@dimen/_10sdp"
+        android:layout_weight="0.3" />
+
+    <TextView
+        android:id="@+id/tv_payment_method"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Metode Pembayaran"
+        android:layout_weight="0.2" />
+
+    <TextView
+        android:id="@+id/tv_jumlah"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Grand Total"
+        android:gravity="right"
+        android:layout_weight="0.2" />
+</LinearLayout>

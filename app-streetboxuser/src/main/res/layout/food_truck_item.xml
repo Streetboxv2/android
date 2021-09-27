@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="@dimen/_2sdp"
+    android:paddingStart="@dimen/_4sdp"
+
+    android:paddingEnd="@dimen/_4sdp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/_6sdp"
+        app:cardElevation="1dp"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_merchant_logo"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:src="@drawable/image_holder"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:text="Istora Senayan"
+                android:fontFamily="@font/poppins_bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_merchant_logo" />
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:text="Deskripsi istora senayan ada di sini lorem ipsum dolor sit amet"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/color_text_regular"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                app:layout_constraintStart_toStartOf="@+id/tv_title"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:fontFamily="@font/poppins_regular"
+                android:id="@+id/tv_distance"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:text="5 Km"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:textColor="@color/color_text_regular"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_rating"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_rating"
+                android:layout_width="@dimen/_12sdp"
+                android:layout_height="@dimen/_12sdp"
+                android:src="@drawable/ic_star"
+                android:contentDescription="@null"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_description" />
+
+            <TextView
+                android:fontFamily="@font/poppins_bold"
+                android:id="@+id/tv_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="4.5"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:textColor="@color/black"
+                android:visibility="gone"
+                app:layout_constraintStart_toEndOf="@+id/iv_rating"
+                app:layout_constraintTop_toTopOf="@+id/iv_rating"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_rating" />
+
+            <TextView
+                android:fontFamily="@font/poppins_bold"
+                android:id="@+id/tv_merchant_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Merchant Category"
+                android:textSize="@dimen/_8sdp"
+                android:paddingHorizontal="@dimen/_12sdp"
+                android:paddingVertical="@dimen/_3sdp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_description" />
+
+            <View
+                android:id="@+id/v_overly"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                android:background="#90FFFFFF"
+                app:layout_constraintTop_toTopOf="@+id/iv_merchant_logo"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_merchant_logo" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

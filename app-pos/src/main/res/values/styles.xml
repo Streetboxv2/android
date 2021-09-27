@@ -1,0 +1,87 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/orange</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/orange</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBarStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/colorPOS</item>
+        <item name="colorPrimaryVariant">@color/colorPOS</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <!-- android:textColorPrimary adalah warna teks title yang ada di Toolbar  -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <!-- actionMenuTextColor adalah warna teks action (menu item)  -->
+        <item name="actionMenuTextColor">@color/orange</item>
+        <!-- Memberi warna accent untuk input field seperti checkbox -->
+        <!--        <item name="colorAccent">@colors</item>-->
+        <!-- memberi warna view saat normal. -->
+        <!--        <item name="colorControlNormal">@color/controlNormal</item>-->
+        <!-- Memberi warna saat view aktif (sedang diberi tanda cek atau di switch) -->
+        <!--        <item name="colorControlActivated">@color/controlActivated</item>-->
+        <!-- Memberi warna kontrol untuk efek ripples atau pemilihan list -->
+        <!--        <item name="colorControlHighlight">@color/controlActivated</item>-->
+
+        <!-- Tambahkan jika ingin memberi efek ripple saat memilih salah satu ikon -->
+        <item name="selectableItemBackground">?android:selectableItemBackground</item>
+        <item name="selectableItemBackgroundBorderless">?android:selectableItemBackground</item>
+    </style>
+
+
+
+    <style name="ToolbarTheme.White" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <!-- android:textColorPrimary adalah warna teks title yang ada di Toolbar  -->
+        <item name="android:textColorPrimary">@color/color_text_regular</item>
+        <!-- actionMenuTextColor adalah warna teks action (menu item)  -->
+        <item name="actionMenuTextColor">@color/orange</item>
+        <!-- Memberi warna accent untuk input field seperti checkbox -->
+        <item name="colorAccent">@color/orange</item>
+        <!-- memberi warna view saat normal. -->
+        <item name="colorControlNormal">@color/color_text_regular</item>
+        <!-- Memberi warna saat view aktif (sedang diberi tanda cek atau di switch) -->
+        <!--        <item name="colorControlActivated">@color/controlActivated</item>-->
+        <!-- Memberi warna kontrol untuk efek ripples atau pemilihan list -->
+        <!--        <item name="colorControlHighlight">@color/controlActivated</item>-->
+
+        <!-- Tambahkan jika ingin memberi efek ripple saat memilih salah satu ikon -->
+        <item name="selectableItemBackground">?android:selectableItemBackground</item>
+        <item name="selectableItemBackgroundBorderless">?android:selectableItemBackground</item>
+    </style>
+
+    <style name="Widget.App.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Card</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.App.MediumComponent</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Card" parent="">
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+    </style>
+
+    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">@dimen/_10sdp</item>
+    </style>
+
+</resources>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.main.MainActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/profile"
+                android:textColor="@color/white" />
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:paddingStart="@dimen/_10sdp">
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/iv_profile"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:src="@mipmap/ic_launcher_round"
+                app:civ_border_color="@color/grey_hint"
+                app:civ_border_width="1dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/ll_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_profile"
+                app:layout_constraintStart_toEndOf="@+id/iv_profile"
+                app:layout_constraintTop_toTopOf="@+id/iv_profile">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    tools:text="Name" />
+
+                <TextView
+                    android:id="@+id/btn_see_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="See Detail"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:text="General"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_profile" />
+
+            <ImageView
+                android:id="@+id/iv_delivery"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:src="@drawable/ic_delivery"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_location" />
+
+            <TextView
+                android:id="@+id/tv_food_truck"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:text="Delivery Address"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_delivery"
+                app:layout_constraintStart_toEndOf="@+id/iv_delivery"
+                app:layout_constraintTop_toTopOf="@+id/iv_delivery" />
+
+            <ImageView
+                android:id="@+id/iv_terms"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:src="@drawable/ic_terms"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_food_truck" />
+
+            <TextView
+                android:id="@+id/btn_terms"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:text="@string/terms_and_conditions"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_terms"
+                app:layout_constraintStart_toEndOf="@+id/iv_terms"
+                app:layout_constraintTop_toTopOf="@+id/iv_terms" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_logout"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_60sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Logout"
+                android:textColor="@color/red"
+                app:icon="@drawable/ic_logout"
+                app:iconTint="@color/red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_terms"
+                app:shapeAppearance="?attr/shapeAppearanceSmallComponent"
+                app:strokeColor="@color/red" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

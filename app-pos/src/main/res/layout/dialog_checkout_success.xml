@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_20sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/iv_food_truck"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:src="@drawable/logo"
+        android:contentDescription="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_success_label"
+        android:fontFamily="@font/poppins_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Payment Success"
+        android:textSize="@dimen/_10ssp"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/_6sdp"
+        app:layout_constraintTop_toBottomOf="@+id/iv_food_truck"
+        app:layout_constraintStart_toStartOf="@+id/iv_food_truck"
+        app:layout_constraintEnd_toEndOf="@+id/iv_food_truck" />
+
+    <TextView
+        android:id="@+id/tv_change_label"
+        android:fontFamily="@font/poppins_regular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/grey_hint"
+        android:text="Change"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/_15sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_success_label" />
+
+    <TextView
+        android:id="@+id/tv_change"
+        android:fontFamily="@font/poppins_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="17.500"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_change_label"
+        app:layout_constraintStart_toStartOf="@+id/tv_change_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_change_label" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/_4sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingEnd="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_change"
+        app:layout_constraintStart_toStartOf="@+id/tv_change"
+        app:layout_constraintEnd_toEndOf="@+id/tv_change">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Done"
+            android:fontFamily="@font/poppins_regular"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_kitchen_print"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kitchen Print"
+            android:background="@drawable/button_add_bg"
+            android:textColor="@color/white"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_marginLeft="@dimen/_16sdp" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

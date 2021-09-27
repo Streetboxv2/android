@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">StreetBox POS</string>
+    <string name="menu_name">Menu Name</string>
+    <string name="detail">Detail</string>
+    <string name="title_activity_login">Log in</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_address">Address</string>
+    <string name="prompt_notes">Notes</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_forgotpassword">Forgot Password?</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="login">Login</string>
+    <string name="msg_subscribed">message subscribed</string>
+    <string name="msg_subscribe_failed">message subscribed failed</string>
+
+    <string name="printer_type_prompt">Printer Type</string>
+
+    <string-array name="printer_type_arrays">
+        <item>Select Printer</item>
+        <item>Bluetooth</item>
+        <item>Wifi/Ethernet</item>
+    </string-array>
+
+</resources>

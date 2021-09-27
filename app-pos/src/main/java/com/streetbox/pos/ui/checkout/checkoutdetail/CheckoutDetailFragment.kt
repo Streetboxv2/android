@@ -1,0 +1,1137 @@
+package com.streetbox.pos.ui.checkout.checkoutdetail
+
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.os.Bundle
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
+import com.dantsu.escposprinter.connection.DeviceConnection
+import com.dantsu.escposprinter.connection.bluetooth.BluetoothConnection
+import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections
+import com.dantsu.escposprinter.textparser.PrinterTextParserImg
+import com.google.gson.Gson
+import com.google.zxing.MultiFormatWriter
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.WriterException
+import com.journeyapps.barcodescanner.BarcodeEncoder
+import com.mazenrashed.printooth.Printooth
+import com.mazenrashed.printooth.data.printable.ImagePrintable
+import com.mazenrashed.printooth.data.printable.Printable
+import com.mazenrashed.printooth.data.printable.TextPrintable
+import com.mazenrashed.printooth.data.printer.DefaultPrinter
+import com.mazenrashed.printooth.data.printer.DefaultPrinter.Companion.ALIGNMENT_CENTER
+import com.mazenrashed.printooth.utilities.Printing
+import com.mazenrashed.printooth.utilities.PrintingCallback
+import com.streetbox.pos.R
+import com.streetbox.pos.async.AsyncBluetoothEscPosPrint
+import com.streetbox.pos.async.AsyncEscPosPrinter
+import com.streetbox.pos.ui.main.MainActivity
+import com.streetbox.pos.worker.SyncTransactionWorker
+import com.zeepos.models.ConstVar
+import com.zeepos.models.factory.ObjectFactory
+import com.zeepos.models.master.User
+import com.zeepos.models.transaction.Order
+import com.zeepos.ui_base.ui.BaseFragment
+import com.zeepos.ui_base.views.GlideApp
+import com.zeepos.utilities.DateTimeUtil
+import com.zeepos.utilities.NumberUtil
+import com.zeepos.utilities.SharedPreferenceUtil
+import com.zeepos.utilities.Utils
+import kotlinx.android.synthetic.main.dialog_checkout_qr.*
+import kotlinx.android.synthetic.main.fragment_checkout_detail.*
+import java.text.SimpleDateFormat
+import java.util.*
+import javax.inject.Inject
+
+
+/**
+ * Created by Arif S. on 7/12/20
+ */
+class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDetailViewModel>() {
+    private var startDate: Long = DateTimeUtil.getCurrentLocalDateWithoutTime()
+    private var endDate: Long = DateTimeUtil.getCurrentLocalDateWithoutTime()
+
+    private var amount1: Int? = 0
+    private var amount2: Int? = 0
+    private var amount3: Int? = 0
+    private var amount4: Int? = 0
+    private var grandTotal: Double? = 0.0
+    private var cashChange: Double? = 0.0
+    private var cashAmount: Double? = 0.0
+    private var cashTotalAmount: Double? = 0.0
+    private lateinit var order: Order
+    private var printing: Printing? = null
+    private var isCashPayment = true
+    private var loadingCharge = false
+    private var user: User? = null
+
+    private var userOperator: User? = null
+
+    private var theBitmap: Bitmap? = null
+    private var qrCode: String = ConstVar.EMPTY_STRING
+    private var type: Int = 0
+    private var menu: String = ""
+    private var menuOnly: String = ""
+    private var menuDisc: String = ""
+    private var subTot: String = ""
+    private var grandTot: String = ""
+    private var taxTotal: String = ""
+    private var pay: String = ""
+    private var changeM: String = ""
+    private var qrCodeM: String = ""
+    private var header: String = ""
+
+    private var printContent: String = ""
+    private var printKitchenContent: String = ""
+
+
+    /*==============================================================================================
+    ======================================BLUETOOTH PART============================================
+    ==============================================================================================*/
+    val PERMISSION_BLUETOOTH = 1
+    private var selectedDevice: BluetoothConnection? = null
+
+    @Inject
+    lateinit var gson: Gson
+
+
+    override fun initResourceLayout(): Int {
+        return R.layout.fragment_checkout_detail
+    }
+
+    override fun init() {
+        checkPrinter()
+        viewModel =
+            ViewModelProvider(this, viewModeFactory).get(CheckoutDetailViewModel::class.java)
+        val args = arguments
+        val orderUniqueId = args!!.getString("orderUniqueId")
+        viewModel.getOrder("" + orderUniqueId)
+        user = viewModel.getProfileMerchantLocal()
+
+        userOperator = viewModel.getOperator()
+
+        val imageUrl: String =
+            ConstVar.PATH_IMAGE + if (user?.logo != null) user?.logo else ConstVar.EMPTY_STRING
+
+        GlideApp.with(this)
+            .asBitmap()
+            .load(imageUrl)
+            .override(200, 200)
+            .into(object : CustomTarget<Bitmap>() {
+                override fun onLoadCleared(placeholder: Drawable?) {
+                }
+
+                override fun onResourceReady(
+                    resource: Bitmap,
+                    transition: Transition<in Bitmap>?
+                ) {
+                    if (user?.logo != null) {
+                        theBitmap = resource
+                    }
+                }
+
+            })
+
+
+    }
+
+
+    override fun onViewReady(savedInstanceState: Bundle?) {
+        toolbar.setNavigationOnClickListener { activity?.finish() }
+        btn_charge.setOnClickListener {
+            isCashPayment = true
+            if (et_cash_amount.text.toString().isNullOrEmpty()) {
+                cashAmount = 0.0
+            } else if (!et_cash_amount.text.toString().isNullOrEmpty()) {
+                cashAmount = et_cash_amount.text.toString().toDouble()
+            }
+
+            if (cashAmount!! < grandTotal!!) {
+                Toast.makeText(context, "Failed", Toast.LENGTH_LONG).show()
+            } else {
+                calculateChange()
+
+            }
+        }
+
+        btn_other_payment.setOnClickListener {
+            showLoading()
+            isCashPayment = false
+//            viewModel.closeOrder(order.uniqueId)
+            order.address = "Address"
+            viewModel.getQRCodePayment(
+                order.merchantId,
+                grandTotal!!,
+                ConstVar.TRANSACTION_TYPE_ORDER,
+                order
+            )
+        }
+
+
+        btn_dinein.setOnClickListener {
+            order.typeOrder = "Dine In"
+            tv_selected_type.text = "Selected type: " + order.typeOrder
+        }
+
+        btn_takeaway.setOnClickListener {
+            order.typeOrder = "Take Away"
+            tv_selected_type.text = "Selected type: " + order.typeOrder
+        }
+
+        btn_doortodoor.setOnClickListener {
+            order.typeOrder = "Door to Door"
+            tv_selected_type.text = "Selected type: " + order.typeOrder
+        }
+
+        btn_onlinedelivery.setOnClickListener {
+            order.typeOrder = "Online Delivery"
+            tv_selected_type.text = "Selected type: " + order.typeOrder
+        }
+
+        btn_gofood.setOnClickListener {
+            order.typeOrder = "GoFood"
+            tv_selected_type.text = "Selected type: " + order.typeOrder
+        }
+
+        btn_grabfood.setOnClickListener {
+            order.typeOrder = "GrabFood"
+            tv_selected_type.text = "Selected type: " + order.typeOrder
+        }
+
+        btn_shopeefood.setOnClickListener {
+            order.typeOrder = "ShopeeFood"
+            tv_selected_type.text = "Selected type: " + order.typeOrder
+        }
+
+        btn_amount_1.setOnClickListener {
+            cashAmount = amount1!!.toDouble()
+            et_cash_amount.setText("" + amount1)
+        }
+
+        btn_amount_2.setOnClickListener {
+            cashAmount = amount2!!.toDouble()
+            et_cash_amount.setText("" + amount2)
+        }
+
+        btn_amount_3.setOnClickListener {
+            cashAmount = amount3!!.toDouble()
+            et_cash_amount.setText("" + amount3)
+        }
+
+        btn_amount_4.setOnClickListener {
+            cashAmount = amount4!!.toDouble()
+            et_cash_amount.setText("" + amount4!!)
+        }
+    }
+
+
+    override fun onEvent(useCase: CheckoutDetailViewEvent) {
+        when (useCase) {
+
+            is CheckoutDetailViewEvent.GetOrderSuccess -> {
+                order = useCase.order
+                val taxSales =
+                    if (useCase.order.taxSales.isNotEmpty()) useCase.order.taxSales[0] else null
+
+                type = taxSales?.type ?: 1
+                if (taxSales == null) {
+                    grandTotal =
+                        useCase.order.orderBill.get(0).subTotal
+                } else {
+                    if (type == 1) {
+                        grandTotal =
+                            useCase.order.orderBill.get(0).subTotal
+                    } else {
+                        grandTotal =
+                            useCase.order.orderBill.get(0).subTotal + useCase.order.orderBill.get(0).totalTax
+                    }
+                }
+                val subtotal =
+                    NumberUtil.formatToStringWithoutDecimal("" + useCase.order.orderBill.get(0).subTotal)
+                tvGrandTotal.text = "" + NumberUtil.formatToStringWithoutDecimal(grandTotal!!)
+                if (grandTotal!! > 100000) {
+                    amount1 = 100000
+                    amount2 = 150000
+                    amount3 = 200000
+                    amount4 = 250000
+                } else {
+                    amount1 = 10000
+                    amount2 = 20000
+                    amount3 = 50000
+                    amount4 = 100000
+                }
+
+                btn_amount_1.text =
+                    "" + NumberUtil.formatToStringWithoutDecimal(amount1!!.toDouble())
+                btn_amount_2.text =
+                    "" + NumberUtil.formatToStringWithoutDecimal(amount2!!.toDouble())
+                btn_amount_3.text =
+                    "" + NumberUtil.formatToStringWithoutDecimal(amount3!!.toDouble())
+                btn_amount_4.text =
+                    "" + NumberUtil.formatToStringWithoutDecimal(amount4!!.toDouble())
+            }
+            CheckoutDetailViewEvent.CloseOrderSuccess -> {
+                val data: HashMap<String, Any> = hashMapOf()
+                data["order"] = order
+                data["orderBills"] = order.orderBill
+                data["productSales"] = order.productSales
+                data["paymentSales"] = order.paymentSales
+                data["taxSales"] = order.taxSales
+
+                val jsonText: String = gson.toJson(data)
+//                viewModel.createSync(ConstVar.SYNC_TYPE_TRANSACTION, order.businessDate, jsonText)
+
+                var syncData = ObjectFactory.createSync(
+                    ConstVar.SYNC_TYPE_TRANSACTION,
+                    jsonText,
+                    order.businessDate
+                )
+
+                syncData = viewModel.saveSyncData(syncData)
+
+                context?.let {
+                    SyncTransactionWorker.syncTransactionData(it, syncData.uniqueId)
+                }
+
+                // Restart App
+//                Thread.sleep(1000)
+//                val intent = Intent(context, MainActivity::class.java)
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//                context?.startActivity(intent)
+//                if (context is Activity) {
+//                    (context as Activity).finish()
+//                }
+//                Runtime.getRuntime().exit(0)
+
+                try {
+                    viewModel.getAllTransaction(startDate, endDate, "")
+                } catch(e: Exception) {
+                    e.printStackTrace()
+                    viewModel.getRecentOrder()
+                }
+
+            }
+            is CheckoutDetailViewEvent.GetAllTransactionSuccess -> {
+                viewModel.getRecentOrder()
+//                Thread.sleep(2000)
+            }
+            is CheckoutDetailViewEvent.GetQRCodePaymentSuccess -> {
+                qrCode = useCase.data.qrCode!!
+                order.trxId = useCase.data.trxId!!
+
+                /*   if (!Printooth.hasPairedPrinter()) {
+                       val i = Intent(activity, ScanningActivity::class.java)
+                       startActivityForResult(i, ScanningActivity.SCANNING_FOR_PRINTER)
+                   } else {*/
+                formatReceipt()
+                printBluetooth()
+//                }
+//                Thread.sleep(500)
+                viewModel.closeOrder(order.uniqueId)
+
+                qrCode.let {
+                    showDialog(CheckoutQRDialog.getInstance(it, printContent, printKitchenContent))
+                }
+
+            }
+            is CheckoutDetailViewEvent.GetQRCodePaymentFailed -> {
+                Toast.makeText(context, "Failed", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    fun formatReceipt() {
+        for (i in order.productSales.indices) {
+
+            header = "[L]QTY ITEM[R]PRICE\n"
+            var productName = order.productSales[i].name
+            if (productName.length > 15) {
+                productName = order.productSales[i].name.substring(0,15) + "..."
+            }
+            val disc = order.productSales[i].discount
+            val discPrice =
+                (order.productSales[i].priceOriginal * order.productSales[i].discount / 100)
+            if (disc > 0) {
+                menuDisc += "[L]" + order.productSales[i].qty + "   " + productName + "[R]" + NumberUtil.formatToStringWithoutDecimal(
+                    order.productSales[i].price
+                ) + "\n" + "[L]     discount " + NumberUtil.formatToStringWithoutDecimal(
+                    discPrice
+                ) + "\n"
+
+            } else {
+                menu += "[L]" + order.productSales[i].qty + " " + productName + "[R]" + NumberUtil.formatToStringWithoutDecimal(
+                    order.productSales[i].price
+                ) + "\n"
+            }
+            menuOnly += "[L]" + order.productSales[i].qty + "   " + productName + "\n"
+        }
+        val taxSales = if (order.taxSales.isNotEmpty()) order.taxSales[0] else null
+        val taxName = taxSales?.name ?: ConstVar.EMPTY_STRING
+        if (taxSales == null) {
+            subTot =
+                "[L]<b>Subtotal </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(order.orderBill[0].subTotal) + "\n"
+            grandTot = "[L]<b>Grand Total </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
+                order.orderBill[0].subTotal
+            ) + "\n"
+
+        } else {
+            subTot =
+                "[L]<b>Subtotal </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(order.orderBill[0].subTotal) + "\n"
+            if (type < 1) {
+                taxTotal =
+                    "[L]<b>" + taxName + "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
+                        order.orderBill[0].totalTax
+                    ) + "\n"
+                grandTot =
+                    "[L]<b>Grand Total </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
+                        order.orderBill[0].subTotal + order.orderBill[0].totalTax
+                    ) + "\n"
+
+            }
+        }
+
+        if (isCashPayment) {
+            order.typePayment = "CASH"
+
+            pay =
+                "[L]<b>Pay</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal("" + et_cash_amount.text.toString()) + "\n"
+            changeM =
+                "[L]<b>Change</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal("" + cashChange) + "\n"
+
+        } else {
+            order.typePayment = "QRIS"
+        }
+
+    }
+
+
+    fun calculateChange() {
+        if (et_cash_amount.text.toString().isEmpty()) {
+            cashAmount = 0.0
+        } else {
+            cashAmount = et_cash_amount.text.toString().toDouble()
+        }
+
+        cashChange = cashAmount!! - grandTotal!!
+
+        formatReceipt()
+        printBluetooth()
+
+        viewModel.closeOrder(order.uniqueId)
+
+        showDialog(
+            CheckoutSuccessDialog.getInstance(order.uniqueId, cashChange!!, printContent, printKitchenContent),
+            CheckoutSuccessDialog::class.java.simpleName
+        )
+    }
+
+    companion object {
+
+        fun getInstance(orderUniqueId: String?, cashChange: Double?): CheckoutDetailFragment {
+            val fragment = CheckoutDetailFragment()
+            val args = Bundle()
+            args.putString("orderUniqueId", orderUniqueId)
+            args.putDouble("cashChange", cashChange?.toDouble()!!)
+            fragment.arguments = args
+            return fragment
+        }
+
+        fun newInstance(): CheckoutDetailFragment {
+            return CheckoutDetailFragment()
+        }
+    }
+
+    private fun printSomePrintable() {
+        val printables = getSomePrintables()
+        printing?.print(printables)
+    }
+
+    private fun printSomePrintableKitchen() {
+        val printables = getSomePrintablesKitchen()
+        printing?.print(printables)
+    }
+
+    private fun checkPrinter() {
+        if (Printooth.hasPairedPrinter())
+            printing = Printooth.printer()
+
+        printing?.printingCallback = object : PrintingCallback {
+            override fun connectingWithPrinter() {
+                context?.let {
+                    Toast.makeText(
+                        it,
+                        "Connecting with printer",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            override fun printingOrderSentSuccessfully() {
+                context?.let {
+                    Toast.makeText(
+                        it,
+                        "Order sent to printer",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            override fun connectionFailed(error: String) {
+                context?.let {
+                    Toast.makeText(
+                        it,
+                        "Failed to connect printer",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            override fun onError(error: String) {
+                context?.let {
+                    Toast.makeText(it, error, Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onMessage(message: String) {
+                context?.let {
+                    Toast.makeText(it, "Message: $message", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+
+        }
+
+    }
+
+    fun printBluetooth() {
+        if (ContextCompat.checkSelfPermission(
+                requireActivity().applicationContext,
+                Manifest.permission.BLUETOOTH
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity().applicationContext as Activity,
+                arrayOf(Manifest.permission.BLUETOOTH),
+                PERMISSION_BLUETOOTH
+            )
+        } else {
+
+            try {
+//                printSomePrintable()
+//                printSomePrintableKitchen()
+                val bluetoothDevicesList: Array<BluetoothConnection> =
+                    BluetoothPrintersConnections().list!!
+                selectedDevice = bluetoothDevicesList[0]
+
+//                AsyncBluetoothEscPosPrint(context).execute(getAsyncEscPosPrinter(selectedDevice))
+//                AsyncBluetoothEscPosPrint(context).execute(getAsyncEscPosPrinterCopy(selectedDevice))
+                getAsyncEscPosPrinter(selectedDevice)
+                getAsyncEscPosPrinterCopy(selectedDevice)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+    }
+
+
+    /**
+     * Asynchronous printing
+     */
+    @SuppressLint("SimpleDateFormat")
+    fun getAsyncEscPosPrinter(printerConnection: DeviceConnection?): AsyncEscPosPrinter? {
+        val username =
+            userOperator!!.userName!!.substring(0, userOperator!!.userName!!.indexOf("@"))
+
+        val address: String = userOperator?.address.toString()
+
+        val format =
+            SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss")
+        format.timeZone = DateTimeUtil.timeZone
+
+        val printer = AsyncEscPosPrinter(printerConnection, 203, 48f, 32)
+
+        var logoImg = "";
+        if (user?.logo != null) {
+            logoImg = "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(
+                printer,
+                theBitmap
+            ) + "</img>\n";
+        }
+
+        try {
+            if (qrCode.isNotEmpty()) {
+                val multiFormatWriter = MultiFormatWriter()
+                val bitMatrix =
+                    multiFormatWriter.encode(qrCode, BarcodeFormat.QR_CODE, 400, 400)
+                val barcodeEncoder = BarcodeEncoder()
+                val bitmap: Bitmap = barcodeEncoder.createBitmap(bitMatrix)
+
+//                    qrCodeM = "[C]<qrcode size='20'>" + qrCode + "</qrcode>\n"
+                qrCodeM = "[L]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(
+                    printer,
+                    bitmap
+                ) + "</img>\n";
+            }
+        } catch (e: WriterException) {
+            e.printStackTrace()
+        }
+
+        printContent = logoImg +
+                "[L]\n" +
+                "[C]" + address + "\n" +
+                "[C]Employee : " + username + "\n" +
+                "[C]" + format.format(order.createdAt) + "\n" +
+                "[C]================================\n" +
+                "[L]No Antrian: " + order.orderNo + "\n" +
+                "[L]Order Bill No : " + order.orderBill[0].billNo + "\n" +
+                "[C]================================\n" +
+                header +
+                menu +
+                menuDisc +
+                "[C]================================\n" +
+                subTot +
+                taxTotal +
+                grandTot +
+                "[C]================================\n" +
+                pay +
+                changeM +
+                qrCodeM +
+                "[L]<b>Payment Method</b>" + "[R]" + order.typePayment + "\n" +
+                "[L]<b>Type</b>" + "[R]" + order.typeOrder + "\n" +
+                "[C]================================\n" +
+                "[C]THANK YOU\n" +
+                "[C]" +
+                "[C]"
+
+        printer.textToPrint = printContent
+
+        return printer
+    }
+
+    /**
+     * Asynchronous printing
+     */
+    @SuppressLint("SimpleDateFormat")
+    fun getAsyncEscPosPrinterCopy(printerConnection: DeviceConnection?): AsyncEscPosPrinter? {
+        val taxSales = if (order.taxSales.isNotEmpty()) order.taxSales[0] else null
+
+        val taxName = taxSales?.name ?: ConstVar.EMPTY_STRING
+
+        val username =
+            userOperator!!.userName!!.substring(0, userOperator!!.userName!!.indexOf("@"))
+
+
+        val address: String = userOperator?.address.toString()
+        val disc = order.productSales[0].discount
+        val discPrice = (order.productSales[0].priceOriginal * order.productSales[0].discount / 100)
+
+        val format =
+            SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss")
+        format.timeZone = DateTimeUtil.timeZone
+
+        val printer = AsyncEscPosPrinter(printerConnection, 203, 48f, 32)
+        var logoImg = "";
+
+        if (user?.logo != null) {
+            logoImg = "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(
+                printer,
+                theBitmap
+            ) + "</img>\n";
+        }
+
+        printKitchenContent = logoImg +
+                "[C]~KITCHEN RECEIPT~\n" +
+                "[L]\n" +
+                "[C]" + address + "\n" +
+                "[C]Employee : " + username + "\n" +
+                "[C]" + format.format(order.createdAt) + "\n" +
+                "[C]================================\n" +
+                "[L]No Antrian: " + order.orderNo + "\n" +
+                "[L]Order Bill No : " + order.orderBill[0].billNo + "\n" +
+                "[C]================================\n" +
+                header +
+                menuOnly +
+                "[C]================================\n" +
+                "[L]<b>Payment Method</b>" + "[R]" + order.typePayment + "\n" +
+                "[L]<b>Type</b>" + "[R]" + order.typeOrder + "\n" +
+                "[C]================================\n" +
+                "[C]THANK YOU\n" +
+                "[C]" +
+                "[C]"
+
+        printer.textToPrint = printKitchenContent
+
+        return printer
+    }
+
+    private fun getSomePrintables() = ArrayList<Printable>().apply {
+        val taxSales = if (order.taxSales.isNotEmpty()) order.taxSales[0] else null
+
+        val taxName = taxSales?.name ?: ConstVar.EMPTY_STRING
+
+        val username =
+            userOperator!!.userName!!.substring(0, userOperator!!.userName!!.indexOf("@"));
+
+        val address: String = userOperator?.address.toString()
+        //        add(RawPrintable.Builder(byteArrayOf(27, 100, 4)).build()) // feed lines example in raw mode
+
+
+        if (user?.logo != null) {
+//            add(
+//                ImagePrintable.Builder(theBitmap!!)
+//                    .setAlignment(ALIGNMENT_CENTER)
+//                    .build()
+//            )
+
+
+//            add(
+//                TextPrintable.Builder()
+//                    .setText("<img>"+ImagePrintable.Builder(theBitmap!!)+"</img>")
+//                    .setLineSpacing(DefaultPrinter.LINE_SPACING_60)
+//                    .setNewLinesAfter(1)
+//                    .build()
+//            )
+        }
+
+        add(
+            TextPrintable.Builder()
+                .setText(user!!.name!!)
+                .setAlignment(DefaultPrinter.ALIGNMENT_CENTER)
+                .setFontSize(10)
+                .setLineSpacing(DefaultPrinter.LINE_SPACING_60)
+                .setNewLinesAfter(1)
+                .build()
+        )
+
+        add(
+            TextPrintable.Builder()
+                .setText(address)
+                .setAlignment(DefaultPrinter.ALIGNMENT_CENTER)
+                .setNewLinesAfter(1)
+                .build()
+        )
+
+        add(
+            TextPrintable.Builder()
+                .setText("Employee  :" + username)
+                .setAlignment(DefaultPrinter.ALIGNMENT_CENTER)
+                .setNewLinesAfter(1)
+                .build()
+        )
+
+        add(
+            TextPrintable.Builder()
+                .setText("" + DateTimeUtil.getCurrentTimeStamp("dd-MM-yyyy hh:mm"))
+                .setAlignment(DefaultPrinter.ALIGNMENT_CENTER)
+                .setNewLinesAfter(1)
+                .build()
+        )
+
+        add(
+            TextPrintable.Builder()
+                .setText("===============================")
+                .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                .setNewLinesAfter(1)
+                .build()
+        )
+
+        add(
+            TextPrintable.Builder()
+                .setText("No Antrian   : " + order.orderNo)
+                .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                .setNewLinesAfter(1)
+                .setLineSpacing(DefaultPrinter.LINE_SPACING_60)
+                .build()
+        )
+
+        add(
+            TextPrintable.Builder()
+                .setText("OrderBill No : " + order.orderBill[0].billNo)
+                .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                .setNewLinesAfter(1)
+                .setLineSpacing(DefaultPrinter.LINE_SPACING_60)
+                .build()
+        )
+
+        for (i in order.productSales.indices) {
+            var productName = order.productSales[i].name
+            if (productName.length > 15) {
+                productName = order.productSales[i].name.substring(0,15) + "..."
+            }
+            val disc = order.productSales[i].discount
+            val discPrice =
+                (order.productSales[i].priceOriginal * order.productSales[i].discount / 100)
+            if (disc > 0) {
+                add(
+                    TextPrintable.Builder()
+                        .setText(
+                            "" + productName + "\n" + "" + order.productSales[i].qty + " x " + NumberUtil.formatToStringWithoutDecimal(
+                                order.productSales[i].price
+                            ) + "    " + "\n" + "disc. " + NumberUtil.formatToStringWithoutDecimal(
+                                discPrice
+                            )
+                        )
+                        .setAlignment(DefaultPrinter.LINE_SPACING_60)
+                        .setNewLinesAfter(2)
+                        .build()
+                )
+            } else {
+                add(
+                    TextPrintable.Builder()
+                        .setText(
+                            "" + order.productSales[i].qty + " " + productName + "    " + "\n" + NumberUtil.formatToStringWithoutDecimal(
+                                order.productSales[i].price
+                            )
+                        )
+                        .setAlignment(DefaultPrinter.LINE_SPACING_60)
+                        .setNewLinesAfter(2)
+                        .build()
+                )
+            }
+
+        }
+        add(
+            TextPrintable.Builder()
+                .setText("SubTotal          : " + NumberUtil.formatToStringWithoutDecimal(order.orderBill[0].subTotal))
+                .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                .setNewLinesAfter(1)
+                .build()
+        )
+
+        if (taxSales == null) {
+            add(
+                TextPrintable.Builder()
+                    .setText("Grand Total        : " + NumberUtil.formatToStringWithoutDecimal(order.orderBill[0].subTotal))
+                    .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                    .setNewLinesAfter(1)
+                    .build()
+            )
+        } else {
+
+            if (type < 1) {
+
+                add(
+                    TextPrintable.Builder()
+                        .setText(
+                            taxName + "(Excl.)        : " + NumberUtil.formatToStringWithoutDecimal(
+                                order.orderBill[0].totalTax
+                            )
+                        )
+                        .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                        .setNewLinesAfter(1)
+                        .build()
+                )
+
+
+
+                add(
+                    TextPrintable.Builder()
+                        .setText(
+                            "Grand Total       : " + NumberUtil.formatToStringWithoutDecimal(
+                                order.orderBill[0].subTotal + order.orderBill[0].totalTax
+                            )
+                        )
+                        .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                        .setNewLinesAfter(1)
+                        .build()
+                )
+
+            } else if(type > 1){
+
+                add(
+                    TextPrintable.Builder()
+                        .setText(
+                            taxName + "(Incl.)        : " + NumberUtil.formatToStringWithoutDecimal(
+                                order.orderBill[0].totalTax
+                            )
+                        )
+                        .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                        .setNewLinesAfter(1)
+                        .build()
+                )
+
+                add(
+                    TextPrintable.Builder()
+                        .setText(
+                            "Grand Total       : " + NumberUtil.formatToStringWithoutDecimal(
+                                order.orderBill[0].subTotal
+                            )
+                        )
+                        .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                        .setNewLinesAfter(1)
+                        .build()
+                )
+
+            }
+        }
+
+        add(
+            TextPrintable.Builder()
+                .setText("===============================")
+                .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                .setAlignment(DefaultPrinter.LINE_SPACING_60)
+                .setNewLinesAfter(1)
+                .build()
+        )
+
+        if(isCashPayment) {
+
+            add(
+                TextPrintable.Builder()
+                    .setText("Pay               : " + NumberUtil.formatToStringWithoutDecimal("" + et_cash_amount.text.toString()))
+                    .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                    .setNewLinesAfter(1)
+                    .build()
+            )
+
+            add(
+                TextPrintable.Builder()
+                    .setText("Change            : " + NumberUtil.formatToStringWithoutDecimal("" + cashChange))
+                    .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                    .setNewLinesAfter(1)
+                    .build()
+            )
+        }
+
+        add(
+            TextPrintable.Builder()
+                .setText("===============================")
+                .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                .setAlignment(DefaultPrinter.LINE_SPACING_60)
+                .setNewLinesAfter(1)
+                .build()
+        )
+
+
+        if (qrCode.isNotEmpty()) {
+            val multiFormatWriter = MultiFormatWriter()
+            val bitMatrix =
+                multiFormatWriter.encode(qrCode, BarcodeFormat.QR_CODE, 200, 200)
+            val barcodeEncoder = BarcodeEncoder()
+            val bitmap: Bitmap = barcodeEncoder.createBitmap(bitMatrix)
+            val bitmap1: Bitmap = bitmap
+
+
+
+            add(
+                ImagePrintable.Builder(bitmap1)
+                    .setAlignment(ALIGNMENT_CENTER)
+                    .build()
+
+            )
+
+        }
+
+        add(
+            TextPrintable.Builder()
+                .setText("Payment Method               : " + order.typePayment)
+                .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                .setNewLinesAfter(1)
+                .build()
+        )
+        add(
+            TextPrintable.Builder()
+                .setText("Type               : " + order.typeOrder)
+                .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                .setNewLinesAfter(1)
+                .build()
+        )
+
+
+        add(
+            TextPrintable.Builder()
+                .setText("===============================")
+                .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                .setAlignment(DefaultPrinter.LINE_SPACING_60)
+                .setNewLinesAfter(1)
+                .build()
+        )
+
+        add(
+            TextPrintable.Builder()
+                .setText("Thank You")
+                .setAlignment(DefaultPrinter.ALIGNMENT_CENTER)
+                .setNewLinesAfter(1)
+                .build()
+        )
+    }
+
+    private fun getSomePrintablesKitchen() = ArrayList<Printable>().apply {
+        val username =
+            userOperator!!.userName!!.substring(0, userOperator!!.userName!!.indexOf("@"));
+
+        val address: String = userOperator?.address.toString()
+        //        add(RawPrintable.Builder(byteArrayOf(27, 100, 4)).build()) // feed lines example in raw mode
+
+
+        if (user?.logo != null) {
+//            add(
+//                ImagePrintable.Builder(theBitmap!!)
+//                    .setAlignment(ALIGNMENT_CENTER)
+//                    .build()
+//            )
+
+
+//            add(
+//                TextPrintable.Builder()
+//                    .setText("<img>"+ImagePrintable.Builder(theBitmap!!)+"</img>")
+//                    .setLineSpacing(DefaultPrinter.LINE_SPACING_60)
+//                    .setNewLinesAfter(1)
+//                    .build()
+//            )
+        }
+
+        add(
+            TextPrintable.Builder()
+                .setText("~Kitchen Receipt~")
+                .setAlignment(DefaultPrinter.ALIGNMENT_CENTER)
+                .setNewLinesAfter(1)
+                .build()
+        )
+
+        add(
+            TextPrintable.Builder()
+                .setText(user!!.name!!)
+                .setAlignment(DefaultPrinter.ALIGNMENT_CENTER)
+                .setFontSize(10)
+                .setLineSpacing(DefaultPrinter.LINE_SPACING_60)
+                .setNewLinesAfter(1)
+                .build()
+        )
+
+        add(
+            TextPrintable.Builder()
+                .setText(address)
+                .setAlignment(DefaultPrinter.ALIGNMENT_CENTER)
+                .setNewLinesAfter(1)
+                .build()
+        )
+
+        add(
+            TextPrintable.Builder()
+                .setText("Employee  :" + username)
+                .setAlignment(DefaultPrinter.ALIGNMENT_CENTER)
+                .setNewLinesAfter(1)
+                .build()
+        )
+
+        add(
+            TextPrintable.Builder()
+                .setText("" + DateTimeUtil.getCurrentTimeStamp("dd-MM-yyyy hh:mm"))
+                .setAlignment(DefaultPrinter.ALIGNMENT_CENTER)
+                .setNewLinesAfter(1)
+                .build()
+        )
+
+        add(
+            TextPrintable.Builder()
+                .setText("===============================")
+                .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                .setNewLinesAfter(1)
+                .build()
+        )
+
+        add(
+            TextPrintable.Builder()
+                .setText("No Antrian   : " + order.orderNo)
+                .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                .setNewLinesAfter(1)
+                .setLineSpacing(DefaultPrinter.LINE_SPACING_60)
+                .build()
+        )
+
+        add(
+            TextPrintable.Builder()
+                .setText("OrderBill No : " + order.orderBill[0].billNo)
+                .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                .setNewLinesAfter(1)
+                .setLineSpacing(DefaultPrinter.LINE_SPACING_60)
+                .build()
+        )
+
+        for (i in order.productSales.indices) {
+            var productName = order.productSales[i].name
+            if (productName.length > 15) {
+                productName = order.productSales[i].name.substring(0,15) + "..."
+            }
+            val disc = order.productSales[i].discount
+            val discPrice =
+                (order.productSales[i].priceOriginal * order.productSales[i].discount / 100)
+            if (disc > 0) {
+                add(
+                    TextPrintable.Builder()
+                        .setText(
+                            "" + productName + "\n" + "" + order.productSales[i].qty
+                        )
+                        .setAlignment(DefaultPrinter.LINE_SPACING_60)
+                        .setNewLinesAfter(2)
+                        .build()
+                )
+            } else {
+                add(
+                    TextPrintable.Builder()
+                        .setText(
+                            "" + order.productSales[i].qty + " " + productName
+                        )
+                        .setAlignment(DefaultPrinter.LINE_SPACING_60)
+                        .setNewLinesAfter(2)
+                        .build()
+                )
+            }
+
+        }
+
+        add(
+            TextPrintable.Builder()
+                .setText("===============================")
+                .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                .setAlignment(DefaultPrinter.LINE_SPACING_60)
+                .setNewLinesAfter(1)
+                .build()
+        )
+
+        add(
+            TextPrintable.Builder()
+                .setText("Payment Method               : " + order.typePayment)
+                .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                .setNewLinesAfter(1)
+                .build()
+        )
+        add(
+            TextPrintable.Builder()
+                .setText("Type               : " + order.typeOrder)
+                .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                .setNewLinesAfter(1)
+                .build()
+        )
+
+
+        add(
+            TextPrintable.Builder()
+                .setText("===============================")
+                .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
+                .setAlignment(DefaultPrinter.LINE_SPACING_60)
+                .setNewLinesAfter(1)
+                .build()
+        )
+
+        add(
+            TextPrintable.Builder()
+                .setText("Thank You")
+                .setAlignment(DefaultPrinter.ALIGNMENT_CENTER)
+                .setNewLinesAfter(1)
+                .build()
+        )
+    }
+
+}

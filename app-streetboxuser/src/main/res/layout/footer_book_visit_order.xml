@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/_20sdp">
+
+    <TextView
+        android:id="@+id/tvNameDeposit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="Deposit"
+        android:textColor="@color/color_text_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDepositOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="0"
+        android:textColor="@color/color_text_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/tvNameDeposit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvNameDeposit" />
+
+    <TextView
+        android:id="@+id/tv_subtotal_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="Subtotal"
+        android:textColor="@color/color_text_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvNameDeposit" />
+
+    <TextView
+        android:id="@+id/tv_subtotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="0"
+        android:textColor="@color/color_text_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_subtotal_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_subtotal_label" />
+
+    <TextView
+        android:id="@+id/tv_tax_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="Tax"
+        android:textColor="@color/color_text_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_subtotal_label" />
+
+    <TextView
+        android:id="@+id/tv_total_tax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="0"
+        android:textColor="@color/color_text_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_tax_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_tax_label" />
+
+    <View
+        android:id="@+id/sp_3"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:background="@drawable/dash_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_tax_label" />
+
+    <TextView
+        android:id="@+id/tv_total_payment_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="Total Payment"
+        android:textColor="@color/color_text_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sp_3" />
+
+    <TextView
+        android:id="@+id/tv_total_payment"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="0"
+        android:textColor="@color/color_text_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_total_payment_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_total_payment_label" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <fragment
+        android:id="@+id/mapFragment"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/imgBackMaps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_15sdp"
+        android:src="@drawable/ic_back_maps" />
+
+    <ImageView
+        android:id="@+id/imgIgEndUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_15sdp"
+        android:background="@color/white"
+        android:src="@drawable/ic_ig_user" />
+
+    <RelativeLayout
+        android:id="@+id/rlRefreshLocation"
+        android:layout_width="@dimen/_32sdp"
+        android:layout_height="@dimen/_32sdp"
+        android:layout_below="@id/imgIgEndUser"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:background="@drawable/bg_circle_white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_baseline_refresh_24" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/tvDurationEstimate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/llBottomStatus"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_15sdp"
+        android:background="@drawable/bg_rectangle"
+        android:gravity="center"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10sdp"
+        android:visibility="gone" />
+
+
+    <LinearLayout
+        android:id="@+id/llBottomStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp">
+
+
+        <RelativeLayout
+            android:id="@+id/llNameStatusCallDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/_15sdp">
+
+            <ImageView
+                android:id="@+id/imgNotifUserDetail"
+                android:layout_width="@dimen/_45sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_marginEnd="@dimen/_6sdp" />
+
+            <LinearLayout
+                android:id="@+id/llNameUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:layout_toEndOf="@id/imgNotifUserDetail"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvNameUserNotifDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="Arba"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/tvStatusCallDetailNotif"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center|right"
+                    android:text="Status Accepted"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/_12sdp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llNameUser"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_toEndOf="@id/imgNotifUserDetail"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvPlatNomorFoodtruck"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:id="@+id/tvDateStatusCallDetailNotif"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:text="20 Januari 2020"
+                    android:textSize="@dimen/_10sdp" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnCallFoodTruck"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_38sdp"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:gravity="center"
+                android:text="Call Food Truck"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

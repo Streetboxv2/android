@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="@dimen/_2sdp"
+    android:paddingStart="@dimen/_4sdp"
+    android:paddingEnd="@dimen/_4sdp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/_6sdp"
+        app:cardElevation="1dp"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_merchant_logo"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:src="@drawable/image_holder"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:fontFamily="@font/poppins_bold"
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:text="Istora Senayan"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textColor="@color/black"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_merchant_logo" />
+
+            <ImageView
+                android:id="@+id/iv_schedule"
+                android:layout_width="@dimen/_10sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:src="@drawable/ic_time"
+                android:tint="@color/blue"
+                app:layout_constraintStart_toStartOf="@+id/tv_title"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                android:layout_marginTop="@dimen/_10sdp" />
+
+            <TextView
+                android:fontFamily="@font/poppins_regular"
+                android:id="@+id/tv_schedule"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:text="Sunday 08:00 - 22:00"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textColor="@color/color_text_regular"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/iv_schedule"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_schedule"
+                app:layout_constraintStart_toEndOf="@+id/iv_schedule"
+                android:layout_marginStart="@dimen/_10sdp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>
