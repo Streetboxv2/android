@@ -15,8 +15,8 @@ out/
 classes/
 
 # Local build properties
-build.properties
-local.properties
+# build.properties
+# local.properties
 
 ### CMake build files
 CMakeFiles/

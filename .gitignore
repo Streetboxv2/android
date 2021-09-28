@@ -1,6 +1,6 @@
 *.iml
 .gradle
-/local.properties
+# /local.properties
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
@@ -31,8 +31,8 @@ out/
 classes/
 
 # Local build properties
-build.properties
-local.properties
+# build.properties
+# local.properties
 
 ### CMake build files
 CMakeFiles/

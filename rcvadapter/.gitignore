@@ -1,6 +1,6 @@
 .gradle/
 .DS_Store
-local.properties
+# local.properties
 
 # build files
 build/
