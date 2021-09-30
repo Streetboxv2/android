@@ -3,6 +3,7 @@ package id.streetbox.live.ui.main.cart
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
@@ -45,6 +46,16 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
 
     override fun initResourceLayout(): Int {
         return R.layout.fragment_cart
+    }
+
+    override fun onStart() {
+        super.onStart()
+        menuItemStoreList = AppDatabase.getInstance(requireContext())
+            .dataDao().getAllDataListMenu()
+        if(menuItemStoreList.isEmpty()) {
+            hideView(btn_checkout)
+            hideView(llNameTokoCart)
+        }
     }
 
     override fun init() {
