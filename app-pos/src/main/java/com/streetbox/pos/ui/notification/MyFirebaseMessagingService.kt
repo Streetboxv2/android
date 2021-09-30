@@ -1,10 +1,13 @@
 package com.streetbox.pos.ui.notification
 
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.media.RingtoneManager
+import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.iid.FirebaseInstanceId
@@ -18,6 +21,8 @@ import org.greenrobot.eventbus.EventBus
 class MyFirebaseMessagingService : FirebaseMessagingService(){
 
     val TAG = "Service"
+    var notificationChannel = "id.streetbox.live"
+
     override fun onNewToken(token: String) {
         Log.d("Tag","toke refress :  $token")
 
@@ -41,19 +46,47 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
 
 
     private fun sendNotification(remoteMessage:RemoteMessage) {
+        val mNotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-            PendingIntent.FLAG_ONE_SHOT)
+                .putExtra("typeNotif", "listnotif")
+
+        val pendingIntent = PendingIntent.getActivity(
+                this, 0,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT
+        )
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this)
-            .setContentText(remoteMessage.notification!!.body)
-            .setAutoCancel(true)
-            .setSmallIcon(R.drawable.ic_star)
-            .setSound(defaultSoundUri)
-            .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL)
-            .setContentIntent(pendingIntent)
+                .setContentText(remoteMessage.notification!!.body)
+                .setContentTitle(remoteMessage.notification!!.title)
+                .setAutoCancel(true)
+                .setSmallIcon(R.drawable.ic_star)
+                .setSound(defaultSoundUri)
+                .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL)
+                .setContentIntent(pendingIntent)
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                    notificationChannel, "Notifku",
+                    NotificationManager.IMPORTANCE_HIGH
+            )
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.RED
+            notificationChannel.description = ""
+            notificationChannel.enableVibration(true)
+            notificationChannel.setShowBadge(true)
+//            notificationChannel.setAllowBubbles(true)
+            notificationChannel.enableLights(true)
+            notificationChannel.enableVibration(true)
+            mNotificationManager.createNotificationChannel(notificationChannel)
+        }
+
+        // to diaplay notification in DND Mode
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = mNotificationManager.getNotificationChannel(notificationChannel)
+            channel.canBypassDnd()
+        }
     }
 }
