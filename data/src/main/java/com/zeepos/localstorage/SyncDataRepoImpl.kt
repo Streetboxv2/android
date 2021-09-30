@@ -268,59 +268,6 @@ class SyncDataRepoImpl @Inject constructor(
         return box.get(id)
     }
 
-    override fun getHistory(
-        startDate: Long,
-        endDate: Long,
-        keyword: String
-    ): Single<List<Trx>> {
-        val startDateMillis = DateTimeUtil.getCurrentDateWithoutTime(
-            if (startDate > 0) startDate else DateTimeUtil.getCurrentDateWithoutTime()
-        )
-        val endDateMillis = DateTimeUtil.getCurrentDateWithoutTime(
-            if (endDate > 0) endDate else DateTimeUtil.getCurrentDateWithoutTime()
-        )
-
-        val prevDate = DateTimeUtil.getPreviousDate(startDateMillis)
-        val nextDate = DateTimeUtil.getNextDate(endDateMillis)
-
-        val queryMap: HashMap<String, String> = hashMapOf()
-        queryMap["startDate"] = DateTimeUtil.getDateWithFormat(startDate, "dd/MM/YYYY")
-        queryMap["endDate"] = DateTimeUtil.getDateWithFormat(endDate, "dd/MM/YYYY")
-
-        if (keyword.isNotEmpty()) {
-            queryMap["keyword"] = keyword
-        }
-
-        return service.getHistory(queryMap)
-            .onErrorResumeNext {
-                Single.error {
-                    RetrofitException.handleRetrofitException(
-                        it,
-                        retrofit
-                    )
-                }
-            }
-            .map {
-                if (it.isSuccess()) {
-                    val data = it.data!!
-                    val trx = data.trx
-
-                    val trxs: MutableList<Trx> = mutableListOf()
-                    Single.fromCallable { trx }
-
-                    return@map trx
-                }
-
-                throw Exceptions.propagate(Throwable(ConstVar.DATA_NULL))
-
-            }
-
-        /*return service.getHistory(queryMap)
-            .map {
-               val a = it
-                throw Exceptions.propagate(Throwable(ConstVar.DATA_NULL))
-            }*/
-    }
 
     override fun getAllTransaction(
         startDate: Long,
