@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.example.dbroom.db.room.AppDatabase
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -86,6 +87,7 @@ class ProfileFragment : BaseFragment<ProfileViewEvent, ProfileViewModel>() {
                     "Logout"
                 ) { p0, _ ->
                     signOut(p0)
+
                 }
                 alertDialogBuilder.setNegativeButton(
                     "Cancel"
@@ -115,6 +117,10 @@ class ProfileFragment : BaseFragment<ProfileViewEvent, ProfileViewModel>() {
         mGoogleSignInClient.signOut()
             .addOnCompleteListener {
                 viewModel.deleteSession()
+                context?.let { it1 ->
+                    AppDatabase.getInstance(it1)
+                        .dataDao().deleteAllMenuStore()
+                }
                 dialog.dismiss()
                 activity?.let { activity ->
                     startActivity(LoginActivity.getIntent(activity))
