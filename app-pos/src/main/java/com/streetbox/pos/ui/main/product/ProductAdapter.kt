@@ -32,7 +32,7 @@ class ProductAdapter(data: MutableList<Product> = mutableListOf()) :
                 .into(ivProduct)
         }
 
-        ClickBounceAnim.setAnimView(holder.itemView)
-            .setScale(ClickBounceAnim.Mode.MODE_STATIC_DP, 6f)
+//        ClickBounceAnim.setAnimView(holder.itemView)
+//            .setScale(ClickBounceAnim.Mode.MODE_STATIC_DP, 6f)
     }
 }

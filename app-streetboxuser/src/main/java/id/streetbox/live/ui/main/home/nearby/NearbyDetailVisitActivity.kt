@@ -61,10 +61,19 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                 Hawk.put("saveAddressToko", foodTruck?.address)
                 tvQty.text = value.toString()
                 viewModel.addItem(product, order)
-                val total = value * product.price
+                var disc:Double = product.discount
+                var total:Double = 0.0
+                var calculate:Double = 0.0
+                if(disc > 0){
+                    calculate = product.price - (product.price * (disc / 100))
+                }else{
+                    calculate = product.price
+                }
+
+                 total = value * calculate
 
                 lifecycleScope.launch(Dispatchers.Main) {
-                    addRoomItemStore(product, value, total.toLong(), product.price.toLong())
+                    addRoomItemStore(product, value, total.toLong(), calculate.toLong())
                 }
 
                 if (types.equals("homevisit", ignoreCase = true)) {
@@ -78,7 +87,18 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
         override fun ClickDecrease(position: Int, product: Product, value: Int, tvQty: TextView) {
             Hawk.put("saveAddressToko", foodTruck?.address)
             tvQty.text = value.toString()
-            val total = product.price * value
+//            val total = product.price * value
+            var disc:Double = product.discount
+            var total:Double = 0.0
+            var calculate:Double = 0.0
+            if(disc > 0){
+                calculate = product.price - (product.price * (disc / 100))
+            }else{
+                calculate = product.price
+            }
+
+            total = value * calculate
+
             viewModel.removeProductSales(product, order)
 
             if (value == 0) {
@@ -96,7 +116,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
 
             } else {
                 lifecycleScope.launch(Dispatchers.Main) {
-                    addRoomItemStore(product, value, total.toLong(), product.price.toLong())
+                    addRoomItemStore(product, value, total.toLong(), calculate.toLong())
                 }
             }
 

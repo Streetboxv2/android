@@ -2,6 +2,7 @@ package id.streetbox.live.ui.main.profile
 
 import com.zeepos.domain.interactor.user.GetUserInfoUseCase
 import com.zeepos.domain.repository.LocalPreferencesRepository
+import com.zeepos.domain.repository.OrderRepo
 import com.zeepos.ui_base.ui.BaseViewModel
 import javax.inject.Inject
 
@@ -10,10 +11,12 @@ import javax.inject.Inject
  */
 class ProfileViewModel @Inject constructor(
     private val localPreferencesRepository: LocalPreferencesRepository,
-    private val getUserInfoUseCase: GetUserInfoUseCase
+    private val getUserInfoUseCase: GetUserInfoUseCase,
+    private val orderRepo: OrderRepo
 ) : BaseViewModel<ProfileViewEvent>() {
     fun deleteSession() {
         localPreferencesRepository.deleteSession()
+        orderRepo.removeAll()
     }
 
     fun getUserInfoCloud(id: Long = 0) {
