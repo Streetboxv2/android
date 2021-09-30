@@ -8,10 +8,7 @@ import com.zeepos.models.entities.ResponseApi
 import com.zeepos.models.master.SyncData
 import com.zeepos.models.master.Tax
 import com.zeepos.models.master.User
-import com.zeepos.models.transaction.OnlineOrder
-import com.zeepos.models.transaction.Order
-import com.zeepos.models.transaction.OrderBill
-import com.zeepos.models.transaction.ProductSales
+import com.zeepos.models.transaction.*
 import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.ResponseBody

@@ -53,7 +53,9 @@ class ReceiptActivity : BaseActivity<ReceiptViewEvent, ReceiptViewModel>() {
 
         initList()
 
+        showLoading()
         viewModel.getAllTransaction(startDate, endDate, "")
+
 
         val selectedDateDisplay =
             DateTimeUtil.getDateWithFormat(startDate, "dd/MM/YYYY")
@@ -84,6 +86,7 @@ class ReceiptActivity : BaseActivity<ReceiptViewEvent, ReceiptViewModel>() {
     override fun onEvent(useCase: ReceiptViewEvent) {
         when (useCase) {
             is ReceiptViewEvent.GetAllTransactionSuccess -> {
+                dismissLoading()
                 receiptAdapter.setList(useCase.orderList)
             }
             is ReceiptViewEvent.VoidOrderSuccess -> {

@@ -21,7 +21,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Tanggal"
-        android:paddingEnd="@dimen/_10sdp"
         android:layout_weight="0.2" />
 
     <TextView
@@ -30,14 +29,13 @@
         android:layout_height="wrap_content"
         android:text="Jam"
         android:paddingEnd="@dimen/_10sdp"
-        android:layout_weight="0.2" />
+        android:layout_weight="0.1" />
 
     <TextView
         android:id="@+id/tv_no_trx"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="No Transaksi"
-        android:paddingEnd="@dimen/_10sdp"
         android:layout_weight="0.3" />
 
     <TextView
@@ -52,6 +50,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Grand Total"
+        android:layout_weight="0.2" />
+
+
+    <TextView
+        android:id="@+id/tv_status_payment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Status"
         android:gravity="right"
         android:layout_weight="0.2" />
 </LinearLayout>

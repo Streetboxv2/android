@@ -12,18 +12,20 @@ import io.objectbox.relation.ToOne
 @Entity
 class Trx {
     @Id
-    var id: Long = 0
-    var types: Long = 0
+    var ids: Long = 0
+    var types: String = ConstVar.EMPTY_STRING
     var userId: Long = 0
-    var createdAt: Long = 0L
-    var updatedAt: Long = 0L
-    var deletedAt: Long = 0L
-    var status: String = ConstVar.EMPTY_STRING
+    var createdAt: String = ConstVar.EMPTY_STRING
+    var updatedAt: String = ConstVar.EMPTY_STRING
+    var deletedAt:String = ConstVar.EMPTY_STRING
+
     var externalId: String = ConstVar.EMPTY_STRING
     var address: String = ConstVar.EMPTY_STRING
     var qrCode: String = ConstVar.EMPTY_STRING
+    var id: String = ConstVar.EMPTY_STRING
+    var trxId: String = ConstVar.EMPTY_STRING
+    var status: String = ConstVar.EMPTY_STRING
 
     @Exclude
-    var trxId: String = ConstVar.EMPTY_STRING
     lateinit var order: ToOne<Order>
 }

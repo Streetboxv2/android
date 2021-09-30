@@ -39,6 +39,7 @@ class Order {
     var paymentMethodName: String = ConstVar.EMPTY_STRING
     var typeOrder: String = "Dine In"
     var typePayment: String = ConstVar.EMPTY_STRING
+    var status:String = ConstVar.EMPTY_STRING
 
     @Exclude
     lateinit var user: ToOne<User>

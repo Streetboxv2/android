@@ -17,6 +17,7 @@ import com.zeepos.models.factory.ObjectFactory
 import com.zeepos.models.master.*
 import com.zeepos.models.transaction.*
 import com.zeepos.remotestorage.RemoteService
+import com.zeepos.remotestorage.RetrofitException
 import com.zeepos.utilities.DateTimeUtil
 import io.objectbox.Box
 import io.objectbox.BoxStore
@@ -61,6 +62,12 @@ class SyncDataRepoImpl @Inject constructor(
     private val boxOrder: Box<Order> by lazy {
         boxStore.boxFor(
             Order::class.java
+        )
+    }
+
+    private val boxTrx: Box<Trx> by lazy {
+        boxStore.boxFor(
+            Trx::class.java
         )
     }
 
@@ -261,6 +268,60 @@ class SyncDataRepoImpl @Inject constructor(
         return box.get(id)
     }
 
+    override fun getHistory(
+        startDate: Long,
+        endDate: Long,
+        keyword: String
+    ): Single<List<Trx>> {
+        val startDateMillis = DateTimeUtil.getCurrentDateWithoutTime(
+            if (startDate > 0) startDate else DateTimeUtil.getCurrentDateWithoutTime()
+        )
+        val endDateMillis = DateTimeUtil.getCurrentDateWithoutTime(
+            if (endDate > 0) endDate else DateTimeUtil.getCurrentDateWithoutTime()
+        )
+
+        val prevDate = DateTimeUtil.getPreviousDate(startDateMillis)
+        val nextDate = DateTimeUtil.getNextDate(endDateMillis)
+
+        val queryMap: HashMap<String, String> = hashMapOf()
+        queryMap["startDate"] = DateTimeUtil.getDateWithFormat(startDate, "dd/MM/YYYY")
+        queryMap["endDate"] = DateTimeUtil.getDateWithFormat(endDate, "dd/MM/YYYY")
+
+        if (keyword.isNotEmpty()) {
+            queryMap["keyword"] = keyword
+        }
+
+        return service.getHistory(queryMap)
+            .onErrorResumeNext {
+                Single.error {
+                    RetrofitException.handleRetrofitException(
+                        it,
+                        retrofit
+                    )
+                }
+            }
+            .map {
+                if (it.isSuccess()) {
+                    val data = it.data!!
+                    val trx = data.trx
+
+                    val trxs: MutableList<Trx> = mutableListOf()
+                    Single.fromCallable { trx }
+
+                    return@map trx
+                }
+
+                throw Exceptions.propagate(Throwable(ConstVar.DATA_NULL))
+
+            }
+
+        /*return service.getHistory(queryMap)
+            .map {
+               val a = it
+                throw Exceptions.propagate(Throwable(ConstVar.DATA_NULL))
+            }*/
+    }
+
     override fun getAllTransaction(
         startDate: Long,
         endDate: Long,
@@ -297,23 +358,24 @@ class SyncDataRepoImpl @Inject constructor(
                         boxOrder.remove(existingOrder)//duplikat uniqueid di db di hapus
 
                         order.id = 0//reset id (will generate new one)
-                        val orderId = boxOrder.put(order)
-                        val newOrder = boxOrder.get(orderId)
+                        var orderId = boxOrder.put(order)
+                        var newOrder = boxOrder.get(orderId)
 
-//                        val trxs: MutableList<Trx> = mutableListOf()
-//                        res.trx?.forEach { trx ->
-//                            if (newOrder.trxId == trx.trxId) {
-//                                val dataLocal = boxTrx.query()
-//                                    .equal(Trx_.trxId, trx.trxId).build().find()
-//                                boxTrx.remove(dataLocal)//duplikat uniqueid di db di hapus
-//
-//                                trx.id = 0
-//                                trx.order.target = newOrder
-//                                trxs.add(trx)
-//                            }
-//                        }
-//
-//                        boxTrx.put(trxs)
+                        val trxs: MutableList<Trx> = mutableListOf()
+                        res.trx?.forEach { trx ->
+                            if (newOrder.trxId == trx.trxId) {
+                                val dataLocal = boxTrx.query()
+                                    .equal(Trx_.trxId, trx.trxId).build().find()
+                                boxTrx.remove(dataLocal)//duplikat uniqueid di db di hapus
+
+//                                trx.id = 0.toString()
+                                order.status = trx.status
+                                order.address = trx.address
+                                boxOrder.put(order)
+                            }
+                        }
+
+                        boxTrx.put(trxs)
 
                         val orderBills: MutableList<OrderBill> = mutableListOf()
                         res.orderBills?.forEach { orderBill ->

@@ -2,6 +2,7 @@ package com.streetbox.pos.ui.receipts
 
 import androidx.lifecycle.MutableLiveData
 import com.zeepos.domain.interactor.GetAllTransactionSyncData
+import com.zeepos.domain.interactor.GetHistoryUseCaseData
 import com.zeepos.domain.interactor.VoidOrderUseCase
 import com.zeepos.domain.interactor.order.GetOrderByUniqueIdUseCase
 import com.zeepos.domain.repository.UserRepository
@@ -18,7 +19,8 @@ class ReceiptViewModel @Inject constructor(
     private val getAllTransactionSyncData: GetAllTransactionSyncData,
     private val getOrderByUniqueIdUseCase: GetOrderByUniqueIdUseCase,
     private val voidOrderUseCase: VoidOrderUseCase,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val getHistoryUseCaseData: GetHistoryUseCaseData
 ) : BaseViewModel<ReceiptViewEvent>() {
 
     val orderObs: MutableLiveData<Order> = MutableLiveData()
@@ -32,6 +34,22 @@ class ReceiptViewModel @Inject constructor(
             )
         ).subscribe({
             viewEventObservable.postValue(ReceiptViewEvent.GetAllTransactionSuccess(it))
+        }, {
+            it.printStackTrace()
+        })
+        addDisposable(disposable)
+    }
+
+
+    fun getHistory(startDate: Long, endDate: Long, keyword: String) {
+        val disposable = getHistoryUseCaseData.execute(
+            GetHistoryUseCaseData.Params(
+                startDate,
+                endDate,
+                keyword
+            )
+        ).subscribe({
+            viewEventObservable.postValue(ReceiptViewEvent.GetHistorySuccess(it))
         }, {
             it.printStackTrace()
         })

@@ -40,5 +40,7 @@ class ReceiptAdapter(data: MutableList<Order> = mutableListOf()) :
         }else {
             holder.setText(R.id.tv_payment_method, item.typePayment)
         }
+
+        holder.setText(R.id.tv_status_payment, item.status)
     }
 }
