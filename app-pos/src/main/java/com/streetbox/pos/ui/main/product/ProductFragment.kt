@@ -45,7 +45,7 @@ class ProductFragment : BaseFragment<ProductViewEvent, ProductViewModel>(),
     private var badgeCount: Int = 0
     private var tvOnlineCount: TextView? = null
     private var selectedDevice: BluetoothConnection? = null
-
+    private var qty:Int = 1
 
     override fun initResourceLayout(): Int {
         return R.layout.fragment_product
@@ -99,12 +99,22 @@ class ProductFragment : BaseFragment<ProductViewEvent, ProductViewModel>(),
         }
         rcv_item?.setHasFixedSize(true)
 
+        mainViewModel?.productSalesObserver?.observe(this, Observer {
+
+            qty = it.qty
+
+        })
+
         productAdapter.setOnItemClickListener { adapter, _, position ->
             val product = adapter.getItem(position) as Product
+                qty++
+                if(product.qty < qty  ){
+                    Toast.makeText(context,"Maximal Limited",Toast.LENGTH_LONG).show()
+                }else {
+                    mainViewModel?.addItem(product, order)
+                }
 
-            mainViewModel?.addItem(product, order)
         }
-
     }
 
 

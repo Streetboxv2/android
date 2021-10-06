@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -36,10 +37,13 @@ import com.streetbox.pos.R
 import com.streetbox.pos.async.AsyncBluetoothEscPosPrint
 import com.streetbox.pos.async.AsyncEscPosPrinter
 import com.streetbox.pos.ui.main.MainActivity
+import com.streetbox.pos.ui.main.MainViewModel
 import com.streetbox.pos.ui.main.onlineorder.OnlineOrderActivity
 import com.streetbox.pos.ui.main.onlineorder.OnlineOrderViewModel
 import com.streetbox.pos.ui.main.onlineorder.orderbil.OrderBillViewModel
+import com.streetbox.pos.worker.SyncTransactionWorker
 import com.zeepos.models.ConstVar
+import com.zeepos.models.factory.ObjectFactory
 import com.zeepos.models.master.SyncData
 import com.zeepos.models.master.User
 import com.zeepos.models.transaction.Order
@@ -51,19 +55,22 @@ import com.zeepos.utilities.DateTimeUtil
 import com.zeepos.utilities.NumberUtil
 import kotlinx.android.synthetic.main.activity_checkout.*
 import kotlinx.android.synthetic.main.fragment_checkout_detail.*
+import kotlinx.android.synthetic.main.fragment_order.*
 import kotlinx.android.synthetic.main.fragment_orderbill.*
+import kotlinx.android.synthetic.main.fragment_orderbill.rcv_order
+import kotlinx.android.synthetic.main.fragment_orderbill.tv_grand_total
+import kotlinx.android.synthetic.main.fragment_orderbill.tv_no_order
 import kotlinx.android.synthetic.main.fragment_orderbill.tv_tax
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>() {
 
     private lateinit var orderBillAdapter: OrderBillAdapter
     private var onlineOrderViewModel: OnlineOrderViewModel? = null
     private var order: Order? = null
+    private var orderAntrian: Order? = null
     private var trxId:String? = ConstVar.EMPTY_STRING
     private var user: User? = null
     private var printing: Printing? = null
@@ -97,9 +104,10 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
 
     override fun init() {
 
-        checkPrinter()
+//        checkPrinter()
 
         viewModel = ViewModelProvider(this, viewModeFactory).get(OrderBillViewModel::class.java)
+
 
         user = viewModel.getProfileMerchantLocal()
 
@@ -132,6 +140,7 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
             onlineOrderViewModel = ViewModelProvider(it).get(OnlineOrderViewModel::class.java)
         }
 
+
         onlineOrderViewModel?.orderObserver?.observe(this, Observer {
             this.order = it
 
@@ -148,11 +157,12 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
                 tv_resNotesOrder.setText(order!!.note)
             }
 
-            if(order!!.note.isNotEmpty()) {
-                tv_phoneCustomer.visibility = View.VISIBLE
-                tv_resPhoneCustomer.visibility= View.VISIBLE
-                tv_resPhoneCustomer.setText(order!!.user.target.phone)
-            }
+          /*  if(order!!.user.target.phone != null ) {
+                    tv_phoneCustomer.visibility = View.VISIBLE
+                    tv_resPhoneCustomer.visibility = View.VISIBLE
+                    tv_resPhoneCustomer.setText(order!!.user.target.phone)
+            }*/
+
 
             val tax = order!!.orderBill[0].totalTax
             val taxSales = if (order!!.taxSales.isNotEmpty()) order!!.taxSales[0] else null
@@ -203,14 +213,14 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
             }
             is OrderBillViewEvent.GetOrderBillSuccess -> TODO()
             OrderBillViewEvent.CloseOnlineOrderSuccess -> {
+
                 viewModel?.closeOrder(order!!.uniqueId)
-                startActivity(context?.let { it1 -> OnlineOrderActivity.getIntent(it1) })
+
             }
             is OrderBillViewEvent.CloseOnlineOrderFailed -> {
                 Toast.makeText(context,"Failed",Toast.LENGTH_LONG).show()
             }
             OrderBillViewEvent.CloseOrderSuccess -> {
-                val syncData = SyncData()
                 val data: HashMap<String, Any> = hashMapOf()
                 data["order"] = order!!
                 data["orderBills"] = order!!.orderBill
@@ -219,9 +229,29 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
                 data["taxSales"] = order!!.taxSales
 
                 val jsonText: String = gson.toJson(data)
-                viewModel.createSync(ConstVar.SYNC_TYPE_TRANSACTION, order!!.businessDate, jsonText)
+
+                var syncData = ObjectFactory.createSync(
+                    ConstVar.SYNC_TYPE_TRANSACTION,
+                    jsonText,
+                    order!!.businessDate
+                )
+
+                syncData = viewModel.saveSyncData(syncData)
+
+                context?.let {
+                    SyncTransactionWorker.syncTransactionData(it, syncData.uniqueId)
+                }
+                dismissLoading()
+                startActivity(context?.let { it1 -> OnlineOrderActivity.getIntent(it1) })
             }
             OrderBillViewEvent.OnRemoveProductSuccess -> TODO()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            onlineOrderViewModel?.getRecentOrder()
         }
     }
 
@@ -235,14 +265,14 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
         initList()
 
         btn_print.setOnClickListener{
+            showLoading()
+            Handler().postDelayed({
+                trxId?.let { it1 -> viewModel.closeOnlineOrder(it1) }
+            }, 4000)
 
-//            if (!Printooth.hasPairedPrinter()) {
-//                val i = Intent(activity, ScanningActivity::class.java)
-//                startActivityForResult(i, ScanningActivity.SCANNING_FOR_PRINTER)
-//            } else {
-                formatReceipt()
-                printBluetooth()
-//            }
+              /* formatReceipt()
+                printBluetooth()*/
+
         }
 
         }
@@ -358,8 +388,12 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
                 selectedDevice = bluetoothDevicesList[0]
 
                 AsyncBluetoothEscPosPrint(context).execute(getAsyncEscPosPrinter(selectedDevice))
+                showLoading()
+                    Handler().postDelayed({
+                        trxId?.let { it1 -> viewModel.closeOnlineOrder(it1) }
+                    }, 4000)
 
-                trxId?.let { it1 -> viewModel.closeOnlineOrder(it1) }
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -372,7 +406,7 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
     @SuppressLint("SimpleDateFormat")
     fun getAsyncEscPosPrinter(printerConnection: DeviceConnection?): AsyncEscPosPrinter? {
         val taxSales = if (order!!.taxSales.isNotEmpty()) order!!.taxSales[0] else null
-
+        val trxs = trxId
         val taxName = taxSales?.name ?: ConstVar.EMPTY_STRING
 
         val username =
@@ -425,11 +459,10 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
                     "[C]\n" +
                     "[C]\n"
 
-
-
         )
-
         return printer
+
+
     }
 
     private fun getSomePrintables() = ArrayList<Printable>().apply {

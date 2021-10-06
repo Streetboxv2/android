@@ -1,6 +1,7 @@
 package com.streetbox.pos.ui.main.onlineorder
 
 import androidx.lifecycle.MutableLiveData
+import com.streetbox.pos.ui.main.MainViewEvent
 import com.zeepos.domain.interactor.GetProductUniqueIdUseCase
 import com.zeepos.domain.interactor.order.GetAllOrderUseCase
 import com.zeepos.domain.interactor.order.GetOrderByUniqueIdUseCase
@@ -16,9 +17,10 @@ import javax.inject.Inject
 class OnlineOrderViewModel @Inject constructor(
     private val getOrderBillByUniqueIdUseCase: GetOrderBillByUniqueIdUseCase,
     private val getProductUniqueIdUseCase: GetProductUniqueIdUseCase,
-    private val getOrderByUniqueIdUseCase: GetOrderByUniqueIdUseCase
+    private val getOrderByUniqueIdUseCase: GetOrderByUniqueIdUseCase,
+    private val getRecentOpenOrCreateOrderUseCase: GetRecentOpenOrCreateOrderUseCase
 
-) : BaseViewModel<OnlineOrderViewEvent>() {
+    ) : BaseViewModel<OnlineOrderViewEvent>() {
 
     val productSalesObserver = MutableLiveData<ProductSales>()
     val orderBillObserver = MutableLiveData<OrderBill>()
@@ -31,6 +33,16 @@ class OnlineOrderViewModel @Inject constructor(
 
         addDisposable(disposable)
 
+    }
+
+    fun getRecentOrder() {
+        val disposable =
+            getRecentOpenOrCreateOrderUseCase.execute(GetRecentOpenOrCreateOrderUseCase.Params())
+                .subscribe({
+                    orderObserver.postValue(it)
+                }, { viewEventObservable.postValue(OnlineOrderViewEvent.OrderFailedCreated) })
+
+        addDisposable(disposable)
     }
 
 

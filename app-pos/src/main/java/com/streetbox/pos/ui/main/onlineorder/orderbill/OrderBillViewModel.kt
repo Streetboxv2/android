@@ -1,16 +1,22 @@
 package com.streetbox.pos.ui.main.onlineorder.orderbil
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.streetbox.pos.ui.checkout.checkoutdetail.CheckoutDetailViewEvent
+import com.streetbox.pos.ui.main.MainViewEvent
 import com.streetbox.pos.ui.main.onlineorder.orderbill.OrderBillViewEvent
 import com.streetbox.pos.ui.main.order.OrderViewEvent
 import com.zeepos.domain.interactor.CloseOnlineOrderUseCase
 import com.zeepos.domain.interactor.CreateSyncUseCase
 import com.zeepos.domain.interactor.order.CloseOrderUseCase
+import com.zeepos.domain.interactor.order.GetRecentOpenOrCreateOrderUseCase
 import com.zeepos.domain.interactor.orderbill.GetOrderBillByUniqueIdUseCase
 import com.zeepos.domain.interactor.payment.GetQRCodePaymentUseCase
+import com.zeepos.domain.interactor.productsales.GetRecentOrderUseCase
 import com.zeepos.domain.interactor.productsales.RemoveProductSalesUseCase
+import com.zeepos.domain.repository.SyncDataRepo
 import com.zeepos.domain.repository.UserRepository
 import com.zeepos.models.ConstVar
+import com.zeepos.models.master.SyncData
 import com.zeepos.models.master.User
 import com.zeepos.models.transaction.Order
 import com.zeepos.models.transaction.ProductSales
@@ -24,8 +30,9 @@ class OrderBillViewModel @Inject constructor(
     private val getQRCodePaymentUseCase: GetQRCodePaymentUseCase,
     private val closeOrderUseCase: CloseOrderUseCase,
     private val removeProductSalesUseCase: RemoveProductSalesUseCase,
-    private val createSyncUseCase: CreateSyncUseCase
-) : BaseViewModel<OrderBillViewEvent>() {
+    private val createSyncUseCase: CreateSyncUseCase,
+    private val syncDataRepo: SyncDataRepo
+    ) : BaseViewModel<OrderBillViewEvent>() {
     fun getOrderBill(uniqueId: String) {
         val disposable =
             getOrderBillByUniqueIdUseCase.execute(GetOrderBillByUniqueIdUseCase.Params(uniqueId))
@@ -34,6 +41,10 @@ class OrderBillViewModel @Inject constructor(
                 }, { it.printStackTrace() })
 
         addDisposable(disposable)
+    }
+
+    fun saveSyncData(syncData: SyncData): SyncData {
+        return syncDataRepo.save(syncData)
     }
 
 

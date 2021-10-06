@@ -21,7 +21,7 @@ import org.greenrobot.eventbus.EventBus
 class MyFirebaseMessagingService : FirebaseMessagingService(){
 
     val TAG = "Service"
-    var notificationChannel = "id.streetbox.live"
+    var notificationChannel = "com.streetbox.pos"
 
     override fun onNewToken(token: String) {
         Log.d("Tag","toke refress :  $token")
@@ -60,7 +60,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
                 .setContentText(remoteMessage.notification!!.body)
                 .setContentTitle(remoteMessage.notification!!.title)
                 .setAutoCancel(true)
-                .setSmallIcon(R.drawable.ic_star)
+                .setSmallIcon(R.mipmap.ic_launcher_foreground)
                 .setSound(defaultSoundUri)
                 .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL)
                 .setContentIntent(pendingIntent)

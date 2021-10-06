@@ -89,7 +89,6 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_void"
-            android:visibility="gone"
             android:layout_width="@dimen/_120sdp"
             android:layout_height="wrap_content"
             android:text="Void"

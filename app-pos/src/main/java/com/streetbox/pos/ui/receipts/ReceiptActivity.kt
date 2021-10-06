@@ -119,6 +119,7 @@ class ReceiptActivity : BaseActivity<ReceiptViewEvent, ReceiptViewModel>() {
             val order = adapter.getItem(position) as Order
             val dialog = ReceiptDetailDialog()
             val bundle = Bundle()
+
             bundle.putString("orderUniqueId", order.uniqueId)
 
             dialog.arguments = bundle

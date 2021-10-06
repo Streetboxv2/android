@@ -1,6 +1,7 @@
 package com.streetbox.pos.ui.main.onlineorder.orderbill
 
 import com.streetbox.pos.ui.checkout.checkoutdetail.CheckoutDetailViewEvent
+import com.streetbox.pos.ui.main.MainViewEvent
 import com.streetbox.pos.ui.main.order.OrderViewEvent
 import com.zeepos.models.transaction.Order
 import com.zeepos.models.transaction.OrderBill
@@ -15,5 +16,6 @@ sealed class OrderBillViewEvent : BaseViewEvent {
     data class CloseOnlineOrderFailed(val errorMessage: String) : OrderBillViewEvent()
     object CloseOrderSuccess : OrderBillViewEvent()
     object OnRemoveProductSuccess : OrderBillViewEvent()
+    object OrderFailedCreated : OrderBillViewEvent()
 
 }

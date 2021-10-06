@@ -216,7 +216,7 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
     }
 
     private fun setFooterData(order: Order) {
-        val tvSubtotal = footerView.findViewById<TextView>(R.id.tv_subtotal)
+        val tvSubtotal = footerView.findViewById<TextView>(R.id.tv_subtotals)
         val tvTotalTax = footerView.findViewById<TextView>(R.id.tv_total_tax)
         val tvTaxLabel = footerView.findViewById<TextView>(R.id.tv_tax_label)
         val tvTotalPayment = footerView.findViewById<TextView>(R.id.tv_total_payment)
@@ -229,8 +229,8 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
         val paymentSales = if (order.paymentSales.isNotEmpty()) order.paymentSales[0] else null
 
         val totalTax: Double = orderBill?.totalTax ?: 0.0
-        val subTotal: Double = orderBill?.subTotal ?: 0.0
-        val totalPayment: Double = orderBill?.grandTotal ?: 0.0
+        val subTotal: Double = order.grandTotal ?: 0.0
+        val totalPayment: Double = order.grandTotal ?: 0.0
         val taxType = taxSales ?: 1
         val taxTypeDisplay =
             if (taxType == ConstVar.TAX_TYPE_EXCLUSIVE) ConstVar.TAX_TYPE_EXCLUSIVE_DISPLAY else ConstVar.TAX_TYPE_INCLUSIVE_DISPLAY

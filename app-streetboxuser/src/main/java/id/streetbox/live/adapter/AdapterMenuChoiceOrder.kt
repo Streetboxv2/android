@@ -36,17 +36,11 @@ class AdapterMenuChoiceOrder(
         val item = mutableListProductSales[position]
         holder.apply {
             itemView.apply {
-                val priceBeforeDiscount = NumberUtil.formatToStringWithoutDecimal(item.price)
-                val priceDisplay = if (item.priceAfterDiscount > 0) {
-                    val priceDisc = item.price - (item.price * item.discount / 100)
-                    NumberUtil.formatToStringWithoutDecimal(priceDisc)
-                } else {
-                    NumberUtil.formatToStringWithoutDecimal(item.price)
-                }
-
+                val priceBeforeDiscount = NumberUtil.formatToStringWithoutDecimal(item.priceOriginal - (item.priceOriginal * item.discount / 100))
+                val priceDisplay = item.priceOriginal.toString()
                 if (item.discount > 0) {
                     showView(tv_price_before_discount)
-                    tv_price_before_discount.text = priceBeforeDiscount
+                    tv_price_before_discount.text = priceDisplay
                     tv_price_before_discount.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                 } else {
                     hideView(tv_price_before_discount)
@@ -54,7 +48,7 @@ class AdapterMenuChoiceOrder(
 
 
                 tv_name.text = item.name
-                tv_price.text = priceDisplay
+                tv_price.text = priceBeforeDiscount
 
                 val imageUrl: String =
                     ConstVar.PATH_IMAGE + if (item.photo != null) item.photo else ConstVar.EMPTY_STRING

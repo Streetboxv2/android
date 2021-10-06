@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.gms.common.api.Status
+import com.google.android.gms.common.util.CollectionUtils.listOf
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
@@ -71,9 +72,17 @@ class BookHomeVisitActivity : BaseActivity<BookHomeVisitViewEvent, BookHomeVisit
     var totalQty: Int = 0
     var deposit: Double = 0.0
     var getMenuList: String = ""
+    var bookedData = BookHomeVisit()
+    val visitSales = VisitSales()
 
     override fun initResourceLayout(): Int {
         return R.layout.activity_book_home_visit
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        bookedData.visitSales.clear()
     }
 
     override fun init() {
@@ -168,7 +177,7 @@ class BookHomeVisitActivity : BaseActivity<BookHomeVisitViewEvent, BookHomeVisit
                 showToastExt("Total price item limited deposit", this)
             } else {
                 if (cbAgreesHomeVisit.isChecked) {
-                    val bookedData = BookHomeVisit()
+
                     bookedData.address = dataAddress?.address.toString()
                     bookedData.customerName = dataAddress?.person.toString()
                     bookedData.phone = dataAddress?.phone.toString()
@@ -196,7 +205,7 @@ class BookHomeVisitActivity : BaseActivity<BookHomeVisitViewEvent, BookHomeVisit
                     viewModel.saveAddress(address)
 
                     selectedTimeSet.forEach {
-                        val visitSales = VisitSales()
+
                         visitSales.salesId = it.id
                         visitSales.deposit = it.deposit.toLong()
                         visitSales.scheduleDate = it.scheduleDate

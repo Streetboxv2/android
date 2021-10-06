@@ -51,8 +51,14 @@ class BookHomeVisitOrderActivity :
     var getTotalMenuItem: Double = 0.0
     var bundle: Bundle? = null
     var menuItem: List<ProductSales> = mutableListOf()
+    var subtotal:Double = 0.0
     override fun initResourceLayout(): Int {
         return R.layout.activity_book_home_visit_order
+    }
+
+    override fun onResume() {
+        super.onResume()
+        subtotal = 0.0
     }
 
     override fun init() {
@@ -83,22 +89,25 @@ class BookHomeVisitOrderActivity :
 
     override fun onViewReady(savedInstanceState: Bundle?) {
         toolbar.setNavigationOnClickListener { finish() }
-        initList()
         initDataMenuChoice()
+        initList()
+
 
         btn_next.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putString("foodTruckData", foodTruckStr)
-            bundle.putString("bookedData", bookedDataStr)
-            startActivityForResult(
-                PaymentActivity.getIntent(this, bundle),
-                REQ_CODE_PAYMENT
-            )
+            if (subtotal > getDeposit) {
+                val bundle = Bundle()
+                bundle.putString("foodTruckData", foodTruckStr)
+                bundle.putString("bookedData", bookedDataStr)
+                startActivityForResult(
+                    PaymentActivity.getIntent(this, bundle),
+                    REQ_CODE_PAYMENT
+                )
+            }
         }
     }
 
     private fun initDataMenuChoice() {
-        val getMenuList = bundle?.getString("menulist")
+         getMenuList = bundle?.getString("menulist")!!
 
         menuItem = gson.fromJson(getMenuList, Array<ProductSales>::class.java).toList()
 
@@ -168,14 +177,28 @@ class BookHomeVisitOrderActivity :
         val view: View =
             layoutInflater.inflate(R.layout.footer_book_visit_order, rcv, false)
 
-        val tvSubtotal = view.findViewById<TextView>(R.id.tv_subtotal)
+        var tvSubtotal = view.findViewById<TextView>(R.id.tv_subtotal)
         val tvTotalPayment = view.findViewById<TextView>(R.id.tv_total_payment)
         val tvDeposit = view.findViewById<TextView>(R.id.tvDepositOrder)
+        var total:Double = 0.0
+        menuItem.forEach{
+            var price :Double= it.price
+            val disc:Double = it.discount
+            var qty:Int = it.qty
+            price = price
+
+            val calculate:Double = price * qty
+            total =+ calculate
+
+
+        }
+        subtotal = total
+        var totalPayment:Double = subtotal
 
         tvSubtotal.text =
-            NumberUtil.formatToStringWithoutDecimal(bookHomeVisit.grandTotal.toDouble())
+            NumberUtil.formatToStringWithoutDecimal(subtotal)
         tvTotalPayment.text =
-            NumberUtil.formatToStringWithoutDecimal(bookHomeVisit.grandTotal.toDouble())
+            NumberUtil.formatToStringWithoutDecimal(totalPayment)
 
         tvDeposit.text =
             NumberUtil.formatToStringWithoutDecimal(getDeposit)
