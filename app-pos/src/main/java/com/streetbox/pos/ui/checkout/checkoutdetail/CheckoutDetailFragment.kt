@@ -59,7 +59,6 @@ import javax.inject.Inject
 class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDetailViewModel>() {
     private var startDate: Long = DateTimeUtil.getCurrentLocalDateWithoutTime()
     private var endDate: Long = DateTimeUtil.getCurrentLocalDateWithoutTime()
-
     private var amount1: Int? = 0
     private var amount2: Int? = 0
     private var amount3: Int? = 0
@@ -425,6 +424,9 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
 
         formatReceipt()
         printBluetooth()
+
+        order.updatedAt = DateTimeUtil.getCurrentDateTime()
+        order.createdAt = DateTimeUtil.getCurrentDateTime()
 
         viewModel.closeOrder(order.uniqueId)
 
