@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Handler
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -279,6 +280,7 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
                     "" + NumberUtil.formatToStringWithoutDecimal(amount4!!.toDouble())
             }
             CheckoutDetailViewEvent.CloseOrderSuccess -> {
+                dismissLoading()
                 val data: HashMap<String, Any> = hashMapOf()
                 data["order"] = order
                 data["orderBills"] = order.orderBill
@@ -422,18 +424,19 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
 
         cashChange = cashAmount!! - grandTotal!!
 
-        formatReceipt()
-        printBluetooth()
-
         order.updatedAt = DateTimeUtil.getCurrentDateTime()
         order.createdAt = DateTimeUtil.getCurrentDateTime()
 
-        viewModel.closeOrder(order.uniqueId)
+
+        formatReceipt()
+        printBluetooth()
 
         showDialog(
             CheckoutSuccessDialog.getInstance(order.uniqueId, cashChange!!, printContent, printKitchenContent),
             CheckoutSuccessDialog::class.java.simpleName
         )
+
+
     }
 
     companion object {
@@ -537,7 +540,16 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
 //                AsyncBluetoothEscPosPrint(context).execute(getAsyncEscPosPrinter(selectedDevice))
 //                AsyncBluetoothEscPosPrint(context).execute(getAsyncEscPosPrinterCopy(selectedDevice))
                 getAsyncEscPosPrinter(selectedDevice)
-                getAsyncEscPosPrinterCopy(selectedDevice)
+
+                Handler().postDelayed({
+                    getAsyncEscPosPrinterCopy(selectedDevice)
+                }, 2000)
+
+                showLoading()
+                Handler().postDelayed({
+                    viewModel.closeOrder(order.uniqueId)
+                }, 4000)
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }

@@ -17,10 +17,18 @@
         android:layout_weight="0.2" />
 
     <TextView
+        android:id="@+id/tv_type_order"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Type"
+        android:layout_weight="0.2" />
+
+    <TextView
         android:id="@+id/tv_tanggal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Tanggal"
+        android:paddingEnd="@dimen/_5sdp"
         android:layout_weight="0.2" />
 
     <TextView
@@ -28,8 +36,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Jam"
-        android:paddingEnd="@dimen/_10sdp"
-        android:layout_weight="0.1" />
+        android:paddingEnd="@dimen/_5sdp"
+        android:layout_weight="0.2" />
 
     <TextView
         android:id="@+id/tv_no_trx"
@@ -42,6 +50,7 @@
         android:id="@+id/tv_payment_method"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/_5sdp"
         android:text="Metode Pembayaran"
         android:layout_weight="0.2" />
 

@@ -15,6 +15,7 @@ interface OrderRepo {
     fun getCart(): Single<Order>
     fun getLastClosedOrder(businessDate: Long): Order?
     fun getCountOrder(businessDate: Long): Long?
+    fun getCountOrderUser(businessDate: Long): Long?
     fun removeAll()
     fun getOrder(id: Long): Order?
     fun getOrder(uniqueId: String): Order?

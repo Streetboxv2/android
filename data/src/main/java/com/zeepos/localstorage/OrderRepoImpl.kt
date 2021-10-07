@@ -62,6 +62,7 @@ class OrderRepoImpl @Inject internal constructor(
             var order: Order? = if (merchantId > 0) { //end user
                 box.query().equal(Order_.isClose, false)
                     .equal(Order_.types, 1)
+                    .equal(Order_.businessDate, DateTimeUtil.getCurrentDateWithoutTime())
                     .orderDesc(Order_.createdAt).build()
                     .findFirst()
             } else {
@@ -73,9 +74,17 @@ class OrderRepoImpl @Inject internal constructor(
             }
 
 //            if (order == null) {
-                val orderNo =
-                    getCountOrder(DateTimeUtil.getCurrentDateWithoutTime())?.toInt()
-                        ?.inc()?.toString() ?: "1"
+                var orderNo:String = ConstVar.EMPTY_STRING
+                if(merchantId > 0){
+                    orderNo =
+                        getCountOrderUser(DateTimeUtil.getCurrentDateWithoutTime())?.toInt()
+                            ?.inc()?.toString() ?: "1"
+                }else{
+                    orderNo =
+                        getCountOrder(DateTimeUtil.getCurrentDateWithoutTime())?.toInt()
+                            ?.inc()?.toString() ?: "1"
+                }
+
                 val userMerChant = userRepository.getProfileMerchant()
                 val user = userRepository.getCurrentUser()
 
@@ -129,6 +138,15 @@ class OrderRepoImpl @Inject internal constructor(
             .equal(Order_.isClose, true)
             .equal(Order_.businessDate, businessDate)
             .equal(Order_.types, 0)
+            .orderDesc(Order_.createdAt).build()
+            .count()
+    }
+
+    override fun getCountOrderUser(businessDate: Long): Long? {
+        return box.query()
+            .equal(Order_.isClose, true)
+            .equal(Order_.businessDate, businessDate)
+            .equal(Order_.types, 1)
             .orderDesc(Order_.createdAt).build()
             .count()
     }

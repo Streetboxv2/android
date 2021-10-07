@@ -80,7 +80,6 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
                 getOrder?.grandTotal = totalMenuItem
 //            getOrder?.address = foodTruck?.address
                 getOrder?.note = notes
-                getOrder?.typeOrder = "Online"
                 viewModel.updateOrder(getOrder!!)
                 val intent = intentPageData(this, PaymentActivity::class.java)
                     .putExtra("foodTruckData", gson.toJson(foodTruck))

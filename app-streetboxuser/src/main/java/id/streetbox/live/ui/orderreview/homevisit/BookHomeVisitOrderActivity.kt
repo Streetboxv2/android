@@ -58,7 +58,6 @@ class BookHomeVisitOrderActivity :
 
     override fun onResume() {
         super.onResume()
-        subtotal = 0.0
     }
 
     override fun init() {
@@ -181,6 +180,7 @@ class BookHomeVisitOrderActivity :
         val tvTotalPayment = view.findViewById<TextView>(R.id.tv_total_payment)
         val tvDeposit = view.findViewById<TextView>(R.id.tvDepositOrder)
         var total:Double = 0.0
+        subtotal = 0.0
         menuItem.forEach{
             var price :Double= it.price
             val disc:Double = it.discount

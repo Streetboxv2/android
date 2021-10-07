@@ -2,6 +2,7 @@ package com.streetbox.pos.ui.main.product
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -45,7 +46,7 @@ class ProductFragment : BaseFragment<ProductViewEvent, ProductViewModel>(),
     private var badgeCount: Int = 0
     private var tvOnlineCount: TextView? = null
     private var selectedDevice: BluetoothConnection? = null
-    private var qty:Int = 1
+    private var qty:Int = 0
 
     override fun initResourceLayout(): Int {
         return R.layout.fragment_product
@@ -63,7 +64,7 @@ class ProductFragment : BaseFragment<ProductViewEvent, ProductViewModel>(),
         })
 
         productAdapter = ProductAdapter()
-        viewModel.getAllProducts()
+        viewModel.getAllProductsCloud()
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
@@ -94,6 +95,13 @@ class ProductFragment : BaseFragment<ProductViewEvent, ProductViewModel>(),
     }
 
     private fun initList() {
+
+        swipe_refresh.setColorSchemeColors(Color.rgb(47, 223, 189))
+        swipe_refresh.isRefreshing = true
+        swipe_refresh.setOnRefreshListener {
+            viewModel.getAllProductsCloud()
+        }
+
         rcv_item?.apply {
             adapter = productAdapter
         }
@@ -121,8 +129,12 @@ class ProductFragment : BaseFragment<ProductViewEvent, ProductViewModel>(),
     override fun onEvent(useCase: ProductViewEvent) {
         when (useCase) {
             is ProductViewEvent.GetAllProductsSuccess -> {
+                if (swipe_refresh.isRefreshing) {
+                    productAdapter.data.clear()
+                }
                 productAdapter.setList(useCase.products.sortedBy { it.name })
                 viewModel.getTax()
+                swipe_refresh.isRefreshing = false
             }
             is ProductViewEvent.GetSyncSuccess ->
                 Toast.makeText(context, "success", Toast.LENGTH_LONG).show()

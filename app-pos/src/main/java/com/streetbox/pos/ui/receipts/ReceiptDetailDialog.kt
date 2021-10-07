@@ -246,7 +246,7 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
                 order.businessDate,
                 "dd/MM/YYYY"
             )
-        } ${DateTimeUtil.getLocalDateWithFormat(order.updatedAt, "HH:mm")}"
+        } ${DateTimeUtil.getLocalDateWithFormat(order.createdAt, "HH:mm")}"
 
         if (totalTax <= 0) {
             tvTotalTax.visibility = View.INVISIBLE

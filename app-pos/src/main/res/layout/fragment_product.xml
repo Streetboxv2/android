@@ -32,15 +32,22 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/appbar">
+
     <com.zeepos.ui_base.views.AutoFitGirdRecyclerView
         android:id="@+id/rcv_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/appbar"
+        android:layout_below="@+id/swipe_refresh"
         android:columnWidth="@dimen/_65sdp"
         android:layout_marginStart="@dimen/_4sdp"
         android:layout_marginEnd="@dimen/_4sdp"
         android:paddingTop="@dimen/_6sdp"
         android:paddingBottom="@dimen/_6sdp" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

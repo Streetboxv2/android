@@ -157,11 +157,13 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
                 tv_resNotesOrder.setText(order!!.note)
             }
 
-          /*  if(order!!.user.target.phone != null ) {
+
+
+           if(order!!.phone != null ) {
                     tv_phoneCustomer.visibility = View.VISIBLE
                     tv_resPhoneCustomer.visibility = View.VISIBLE
-                    tv_resPhoneCustomer.setText(order!!.user.target.phone)
-            }*/
+                    tv_resPhoneCustomer.setText(order!!.phone)
+            }
 
 
             val tax = order!!.orderBill[0].totalTax
@@ -241,7 +243,7 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
                 context?.let {
                     SyncTransactionWorker.syncTransactionData(it, syncData.uniqueId)
                 }
-                dismissLoading()
+
                 startActivity(context?.let { it1 -> OnlineOrderActivity.getIntent(it1) })
             }
             OrderBillViewEvent.OnRemoveProductSuccess -> TODO()
@@ -266,12 +268,12 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
 
         btn_print.setOnClickListener{
             showLoading()
+
             Handler().postDelayed({
                 trxId?.let { it1 -> viewModel.closeOnlineOrder(it1) }
             }, 4000)
-
-              /* formatReceipt()
-                printBluetooth()*/
+            /* formatReceipt()
+             printBluetooth()*/
 
         }
 
@@ -388,7 +390,7 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
                 selectedDevice = bluetoothDevicesList[0]
 
                 AsyncBluetoothEscPosPrint(context).execute(getAsyncEscPosPrinter(selectedDevice))
-                showLoading()
+
                     Handler().postDelayed({
                         trxId?.let { it1 -> viewModel.closeOnlineOrder(it1) }
                     }, 4000)
@@ -440,6 +442,7 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
                     "[C]================================\n"+
                     "[L]No Antrian: "+order!!.orderNo+"\n"+
                     "[L]Transaction ID : " + order!!.trxId+"\n"+
+                    "[L]Type Order: " + order!!.typeOrder+"\n"+
                     "[C]================================\n"+
                     header+
                     menu +

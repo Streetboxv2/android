@@ -3,6 +3,7 @@ package com.streetbox.pos.ui.main.product
 import com.zeepos.domain.interactor.GetAllTransactionSyncData
 import com.zeepos.domain.interactor.GetOnlineOrderUseCase
 import com.zeepos.domain.interactor.GetTaxUseCase
+import com.zeepos.domain.interactor.product.GetAllProductCloudUseCase
 import com.zeepos.domain.interactor.product.GetAllProductUseCase
 import com.zeepos.domain.repository.LocalPreferencesRepository
 import com.zeepos.domain.repository.OrderRepo
@@ -16,6 +17,7 @@ import javax.inject.Inject
  */
 class ProductViewModel @Inject constructor(
     private val getAllProductUseCase: GetAllProductUseCase,
+    private val getAllProductCloudUseCase: GetAllProductCloudUseCase,
     private val getAllTransactionSyncData: GetAllTransactionSyncData,
     private val localPreferencesRepository: LocalPreferencesRepository,
     private val getOnlineOrderUseCase: GetOnlineOrderUseCase,
@@ -25,6 +27,16 @@ class ProductViewModel @Inject constructor(
 
     fun getAllProducts() {
         val disposable = getAllProductUseCase.execute(None())
+            .subscribe({
+                viewEventObservable.postValue(ProductViewEvent.GetAllProductsSuccess(it))
+            },
+                { it.printStackTrace() })
+        addDisposable(disposable)
+
+    }
+
+    fun getAllProductsCloud() {
+        val disposable = getAllProductCloudUseCase.execute(None())
             .subscribe({
                 viewEventObservable.postValue(ProductViewEvent.GetAllProductsSuccess(it))
             },

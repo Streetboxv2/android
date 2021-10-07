@@ -21,6 +21,7 @@ class ReceiptAdapter(data: MutableList<Order> = mutableListOf()) :
 //            holder.setText(R.id.tv_bill_no, item?.trx[0]?.status)
 //        }else {
             holder.setText(R.id.tv_bill_no, item?.orderNo)
+            holder.setText(R.id.tv_type_order, item?.typeOrder)
 //        }
         holder.setText(R.id.tv_tanggal, tanggal)
         if (item.trxId.isEmpty()) {

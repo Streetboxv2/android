@@ -16,6 +16,7 @@ import com.zeepos.models.master.FoodTruck
 import com.zeepos.models.master.PaymentMethod
 import com.zeepos.models.transaction.Order
 import com.zeepos.ui_base.ui.BaseActivity
+import com.zeepos.utilities.DateTimeUtil
 import com.zeepos.utilities.PermissionUtils
 import com.zeepos.utilities.SharedPreferenceUtil
 import kotlinx.android.synthetic.main.activity_payment.*
@@ -84,11 +85,14 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
         initList()
 
         btn_pay.setOnClickListener {
+            order.updatedAt = DateTimeUtil.getCurrentDateTime()
+            order.createdAt = DateTimeUtil.getCurrentDateTime()
+            order.typeOrder = "Online"
             val selectedPayment = paymentAdapter.selectedPayment
             if (selectedPayment != null) {
                 showLoading()
                 if (appType == ConstVar.APP_CUSTOMER) {
-                    if (bookHomeVisit != null) {//home visit
+                      if (bookHomeVisit != null) {//home visit
                         val order = Order()//fake order not used in home visit
                         order.uniqueId = "123qwer"
                         order.address = foodTruck?.address
@@ -105,6 +109,7 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
                     } else {
 
                         //from nearby
+
                         viewModel.generatePaymentSales(
                             selectedPayment,
                             ConstVar.PAYMENT_STATUS_UNPAID,
