@@ -1,10 +1,12 @@
 package id.streetbox.live.ui.main.home.nearby
 
 import com.zeepos.domain.interactor.map.RequestNearbyFoodTruckUseCase
+import com.zeepos.domain.interactor.user.GetUserInfoUseCase
 import com.zeepos.domain.repository.RemoteRepository
 import com.zeepos.models.ConstVar
 import com.zeepos.models.master.FoodTruck
 import com.zeepos.ui_base.ui.BaseViewModel
+import id.streetbox.live.ui.orderreview.pickup.PickupOrderReviewViewEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -14,7 +16,8 @@ import javax.inject.Inject
  */
 class NearByViewModel @Inject constructor(
     private val nearbyFoodTruckUseCase: RequestNearbyFoodTruckUseCase,
-    val remoteRepository: RemoteRepository
+    val remoteRepository: RemoteRepository,
+    private val getUserInfoUseCase: GetUserInfoUseCase
 ) : BaseViewModel<NearByViewEvent>() {
     fun getNearByFoodTruck(lat: Double, lng: Double, page: Int, distance: String) {
         val disposable =
@@ -43,6 +46,8 @@ class NearByViewModel @Inject constructor(
         addDisposable(disposable)
 
     }
+
+
 
     fun getDistanceKm() {
         val disposable = remoteRepository.callGetDistance()

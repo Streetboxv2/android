@@ -324,7 +324,7 @@ class MenuActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
             }
             MenuViewEvent.UpdateProductSalesSuccess -> {
             }
-            MenuViewEvent.GetTaxSuccess -> {
+            is MenuViewEvent.GetTaxSuccess -> {
                 viewModel.getRecentOrder(merchantId, foodTruck)
             }
             is MenuViewEvent.GetMerchantScheduleSuccess -> {

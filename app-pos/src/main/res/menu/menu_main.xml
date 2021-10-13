@@ -10,12 +10,11 @@
         app:actionLayout="@layout/custom_action_item_layout"
         app:showAsAction="always" />
 
-   <!-- <item
+    <item
         android:id="@+id/action_sync"
-        android:title="Sync"
-        android:icon="@drawable/ic_sync"
-        app:showAsAction="always"
-        android:checkable="true" />-->
+        android:title="Refresh"
+        app:showAsAction="never"
+         />
 
     <item
         android:id="@+id/action_receipt"

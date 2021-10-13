@@ -15,7 +15,7 @@ object DateTimeUtil {
     const val FORMAT_DATE_SERVER = "yyyy-MM-dd'T'HH:mm:ss'Z'"
     const val FORMAT_DATE_SERVER_2 = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 //    private val timeZone = TimeZone.getTimeZone("UTC")
-val timeZone = TimeZone.getTimeZone("GMT")
+    val timeZone = TimeZone.getTimeZone("GMT")
 
     fun getCurrentDateTime(): Long {
         val calendar: Calendar = Calendar.getInstance(timeZone)

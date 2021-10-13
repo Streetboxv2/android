@@ -41,6 +41,7 @@ class Order {
     var typePayment: String = ConstVar.EMPTY_STRING
     var status:String = ConstVar.EMPTY_STRING
     var phone:String = ConstVar.EMPTY_STRING
+    var dateCreated:Long = 0L
 
     @Exclude
     lateinit var user: ToOne<User>

@@ -3,6 +3,7 @@ package id.streetbox.live.ui.main
 import android.location.Location
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.zeepos.domain.interactor.GetTaxUseCase
 import com.zeepos.domain.interactor.SendTokenUser
 import com.zeepos.domain.interactor.profile.GetAllProfileUseCase
 import com.zeepos.domain.interactor.user.GetMerchantInfoUseCase
@@ -42,4 +43,5 @@ class MainViewModel @Inject constructor(
     fun getUserLocal(): User? {
         return userRepository.getCurrentUser()
     }
+
 }

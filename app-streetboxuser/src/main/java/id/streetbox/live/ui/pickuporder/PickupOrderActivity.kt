@@ -3,6 +3,7 @@ package id.streetbox.live.ui.pickuporder
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -11,6 +12,7 @@ import com.example.dbroom.db.room.AppDatabase
 import com.example.dbroom.db.room.enitity.MenuItemStore
 import com.google.gson.Gson
 import com.orhanobut.hawk.Hawk
+import com.zeepos.models.ConstVar
 import com.zeepos.models.master.FoodTruck
 import com.zeepos.models.transaction.Order
 import com.zeepos.payment.PaymentActivity
@@ -37,7 +39,12 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
     var merchantId: String? = ""
     var foodTruck: FoodTruck? = null
     var getOrder: Order? = null
+    var taxName:String = ConstVar.EMPTY_STRING
+    var typeTax:Int = 0
+    var totalTax:Double = 0.0
+    var isActive:Boolean = false
     var adapterMenuChoiceOrder: AdapterPickupOrderNearby? = null
+    var calculateTax:Double = 0.0
 
     @Inject
     lateinit var gson: Gson
@@ -55,19 +62,24 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
+
         initial()
     }
 
     private fun initial() {
         val bundle = intent.extras
-
         totalMenuItem = bundle?.getDouble("total")!!
         totalQty = bundle.getInt("qty", 0)
+        taxName = bundle.getString("taxName","taxName")
+        typeTax = bundle.getInt("taxtType",0)
+        totalTax = bundle.getDouble("totalTax",0.0)
+        isActive = bundle.getBoolean("isActive",false)
         val foodtruckBundle = bundle.getString("foodTruckData")
         val orderBundle = bundle.getString("order")
         foodTruck = gson.fromJson(foodtruckBundle, FoodTruck::class.java)
         getOrder = gson.fromJson(orderBundle, Order::class.java)
         merchantId = getOrder?.merchantId.toString()
+        getOrder?.grandTotal = totalMenuItem
 
         initGetData()
         iniOnClick()
@@ -77,7 +89,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
         btn_next.setOnClickListener {
             if (menuItemStoreList.isNotEmpty()) {
                 val notes = et_notes.text.toString()
-                getOrder?.grandTotal = totalMenuItem
+
 //            getOrder?.address = foodTruck?.address
                 getOrder?.note = notes
                 viewModel.updateOrder(getOrder!!)
@@ -86,6 +98,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
                     .putExtra("notes", notes)
                     .putExtra(PaymentActivity.ORDER_UNIQUE_ID, getOrder!!.uniqueId)
                     .putExtra("grandTotal", totalMenuItem)
+
                 startActivityForResult(intent, 1002)
             } else {
                 showToastExt("Item Order not found", this)
@@ -193,19 +206,46 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
             hasFixedSize()
         }
 
+        if(isActive == false){
+            tv_tax_label.visibility = View.GONE
+            tv_total_tax.visibility = View.GONE
+        }else{
+            tv_tax_label.visibility = View.VISIBLE
+            tv_total_tax.visibility = View.VISIBLE
+        }
+
+        calculateTax = (totalTax/100) * totalMenuItem
+        if(typeTax < 1 && isActive == true){
+            totalMenuItem = totalMenuItem + calculateTax
+            taxName = taxName+"(Excl)"
+        }else{
+            taxName = taxName+"(Incl)"
+        }
+
+        tv_total_tax.text =  NumberUtil.formatToStringWithoutDecimal(calculateTax)
+        tv_tax_label.text = taxName
         tv_subtotal.text =
             NumberUtil.formatToStringWithoutDecimal(totalMenuItem)
+
         tv_total_payment.text =
             NumberUtil.formatToStringWithoutDecimal(totalMenuItem)
     }
 
     private fun showSummary(menuItemStoreList: List<MenuItemStore>) {
         var total = 0.0
+        var type = 0
+        var taxName = ConstVar.EMPTY_STRING
         menuItemStoreList.forEach {
             total += it.total
+
         }
 
-        tv_subtotal.text =
+        if(typeTax == 0){
+            total + totalTax
+        }
+        tv_tax_label.text = taxName
+        tv_total_tax.text = ""+totalTax
+            tv_subtotal.text =
             ConvertToRupiah.toRupiah("", total.toString(), false)
         tv_total_payment.text =
             ConvertToRupiah.toRupiah("", total.toString(), false)

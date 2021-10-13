@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
@@ -16,6 +17,7 @@ import com.streetbox.pos.R
 import com.zeepos.models.transaction.Order
 import com.zeepos.ui_base.ui.BaseActivity
 import com.zeepos.utilities.DateTimeUtil
+import io.objectbox.BoxStore.context
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -54,8 +56,9 @@ class ReceiptActivity : BaseActivity<ReceiptViewEvent, ReceiptViewModel>() {
         initList()
 
         showLoading()
-        viewModel.getAllTransaction(startDate, endDate, "")
-
+        Handler().postDelayed({
+            viewModel.getAllTransaction(startDate, endDate, "")
+        }, 2000)
 
         val selectedDateDisplay =
             DateTimeUtil.getDateWithFormat(startDate, "dd/MM/YYYY")
@@ -77,8 +80,8 @@ class ReceiptActivity : BaseActivity<ReceiptViewEvent, ReceiptViewModel>() {
         }
 
         btn_cari.setOnClickListener {
-            if (!sv_search.isIconified)
-                sv_search.isIconified = true
+//            if (!sv_search.isIconified)
+//                sv_search.isIconified = true
             viewModel.getAllTransaction(startDate, endDate, "")
         }
     }
@@ -86,6 +89,7 @@ class ReceiptActivity : BaseActivity<ReceiptViewEvent, ReceiptViewModel>() {
     override fun onEvent(useCase: ReceiptViewEvent) {
         when (useCase) {
             is ReceiptViewEvent.GetAllTransactionSuccess -> {
+                Thread.sleep(2000)
                 dismissLoading()
                 receiptAdapter.setList(useCase.orderList)
             }
@@ -121,7 +125,10 @@ class ReceiptActivity : BaseActivity<ReceiptViewEvent, ReceiptViewModel>() {
             val bundle = Bundle()
 
             bundle.putString("orderUniqueId", order.uniqueId)
-
+            bundle.putInt("taxType", order.taxSales[0].type)
+            bundle.putDouble("taxAmount", order.taxSales[0].amount)
+            bundle.putString("taxName",order.taxSales[0].name)
+            bundle.putBoolean("isActive",order.taxSales[0].isActive)
             dialog.arguments = bundle
             showDialog(dialog)
         }

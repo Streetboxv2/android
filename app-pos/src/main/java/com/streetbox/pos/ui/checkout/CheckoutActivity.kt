@@ -58,7 +58,7 @@ class CheckoutActivity : BaseActivity<CheckoutViewEvent, CheckoutViewModel>() {
                 val type = taxSales?.type ?: 1
 
                 val nameTax = taxSales?.name?: ConstVar.EMPTY_STRING
-                if(taxSales == null){
+                if(taxSales == null || taxSales.isActive == false){
                     tv_resTax.visibility = View.GONE
                     tv_tax.visibility = View.GONE
                     val grantTotal = useCase.order.orderBill.get(0).subTotal

@@ -118,6 +118,10 @@ class SyncDataRepoImpl @Inject constructor(
 
             if (order != null) {
                 val data: HashMap<String, Any> = hashMapOf()
+                order.createdAt = DateTimeUtil.getCurrentDateTime()
+                order.updatedAt = DateTimeUtil.getCurrentDateTime()
+                order.typeOrder = "Online"
+                order.typePayment = order.paymentSales[0].name
                 data["order"] = order
                 data["trx"] = order.trx
                 data["orderBills"] = order.orderBill
@@ -126,6 +130,7 @@ class SyncDataRepoImpl @Inject constructor(
                 data["taxSales"] = order.taxSales
                 data["trxId"] = order.trxId
 
+                val a = gson.toJson(data)
                 return@fromCallable data
             }
 

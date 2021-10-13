@@ -93,7 +93,7 @@ class BookHomeVisitOrderActivity :
 
 
         btn_next.setOnClickListener {
-            if (subtotal > getDeposit) {
+            if (subtotal >= getDeposit) {
                 val bundle = Bundle()
                 bundle.putString("foodTruckData", foodTruckStr)
                 bundle.putString("bookedData", bookedDataStr)
@@ -188,7 +188,7 @@ class BookHomeVisitOrderActivity :
             price = price
 
             val calculate:Double = price * qty
-            total =+ calculate
+            total = total +  calculate
 
 
         }

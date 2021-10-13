@@ -49,6 +49,7 @@ import com.zeepos.utilities.SharedPreferenceUtil
 import com.zeepos.utilities.Utils
 import kotlinx.android.synthetic.main.dialog_checkout_qr.*
 import kotlinx.android.synthetic.main.fragment_checkout_detail.*
+import org.joda.time.DateTime
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -174,6 +175,8 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
                 ConstVar.TRANSACTION_TYPE_ORDER,
                 order
             )
+
+
         }
 
 
@@ -239,6 +242,7 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
 
             is CheckoutDetailViewEvent.GetOrderSuccess -> {
                 order = useCase.order
+
                 val taxSales =
                     if (useCase.order.taxSales.isNotEmpty()) useCase.order.taxSales[0] else null
 
@@ -282,6 +286,8 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
             CheckoutDetailViewEvent.CloseOrderSuccess -> {
                 dismissLoading()
                 val data: HashMap<String, Any> = hashMapOf()
+                order.createdAt = DateTimeUtil.getCurrentDateTime()
+                order.updatedAt = DateTimeUtil.getCurrentDateTime()
                 data["order"] = order
                 data["orderBills"] = order.orderBill
                 data["productSales"] = order.productSales
@@ -397,6 +403,15 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
                         order.orderBill[0].subTotal + order.orderBill[0].totalTax
                     ) + "\n"
 
+            }else{
+                taxTotal =
+                    "[L]<b>" + taxName + "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
+                        order.orderBill[0].totalTax
+                    ) + "\n"
+                grandTot =
+                    "[L]<b>Grand Total </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
+                        order.orderBill[0].subTotal
+                    ) + "\n"
             }
         }
 
@@ -424,9 +439,6 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
 
         cashChange = cashAmount!! - grandTotal!!
 
-        order.updatedAt = DateTimeUtil.getCurrentDateTime()
-        order.createdAt = DateTimeUtil.getCurrentDateTime()
-
 
         formatReceipt()
         printBluetooth()
@@ -436,7 +448,7 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
             CheckoutSuccessDialog::class.java.simpleName
         )
 
-
+        viewModel.closeOrder(order.uniqueId)
     }
 
     companion object {
@@ -541,14 +553,9 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
 //                AsyncBluetoothEscPosPrint(context).execute(getAsyncEscPosPrinterCopy(selectedDevice))
                 getAsyncEscPosPrinter(selectedDevice)
 
-                Handler().postDelayed({
-                    getAsyncEscPosPrinterCopy(selectedDevice)
-                }, 2000)
+                getAsyncEscPosPrinterCopy(selectedDevice)
 
-                showLoading()
-                Handler().postDelayed({
-                    viewModel.closeOrder(order.uniqueId)
-                }, 4000)
+                viewModel.closeOrder(order.uniqueId)
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -567,10 +574,12 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
             userOperator!!.userName!!.substring(0, userOperator!!.userName!!.indexOf("@"))
 
         val address: String = userOperator?.address.toString()
+        val format =SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss")
 
-        val format =
-            SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss")
-        format.timeZone = DateTimeUtil.timeZone
+
+
+        val tanggal = DateTimeUtil.getDateWithFormat(order.businessDate, "dd/MM/YYYY")
+        val jam = DateTimeUtil.getLocalDateWithFormat(order.createdAt, "HH:mm")
 
         val printer = AsyncEscPosPrinter(printerConnection, 203, 48f, 32)
 
@@ -604,7 +613,7 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
                 "[L]\n" +
                 "[C]" + address + "\n" +
                 "[C]Employee : " + username + "\n" +
-                "[C]" + format.format(order.createdAt) + "\n" +
+                "[C]" + format.format(Date())+"\n" +
                 "[C]================================\n" +
                 "[L]No Antrian: " + order.orderNo + "\n" +
                 "[L]Order Bill No : " + order.orderBill[0].billNo + "\n" +
@@ -649,9 +658,8 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
         val disc = order.productSales[0].discount
         val discPrice = (order.productSales[0].priceOriginal * order.productSales[0].discount / 100)
 
-        val format =
-            SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss")
-        format.timeZone = DateTimeUtil.timeZone
+        val format = SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss")
+
 
         val printer = AsyncEscPosPrinter(printerConnection, 203, 48f, 32)
         var logoImg = "";
@@ -668,7 +676,7 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
                 "[L]\n" +
                 "[C]" + address + "\n" +
                 "[C]Employee : " + username + "\n" +
-                "[C]" + format.format(order.createdAt) + "\n" +
+                "[C]" + format.format(Date()) + "\n" +
                 "[C]================================\n" +
                 "[L]No Antrian: " + order.orderNo + "\n" +
                 "[L]Order Bill No : " + order.orderBill[0].billNo + "\n" +

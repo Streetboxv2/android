@@ -2,9 +2,11 @@ package com.streetbox.pos.ui.receipts
 
 import androidx.lifecycle.MutableLiveData
 import com.zeepos.domain.interactor.GetAllTransactionSyncData
+import com.zeepos.domain.interactor.GetTaxUseCase
 import com.zeepos.domain.interactor.VoidOrderUseCase
 import com.zeepos.domain.interactor.order.GetOrderByUniqueIdUseCase
 import com.zeepos.domain.repository.UserRepository
+import com.zeepos.models.master.Tax
 import com.zeepos.models.master.User
 import com.zeepos.models.transaction.Order
 import com.zeepos.ui_base.ui.BaseViewModel
@@ -18,10 +20,12 @@ class ReceiptViewModel @Inject constructor(
     private val getAllTransactionSyncData: GetAllTransactionSyncData,
     private val getOrderByUniqueIdUseCase: GetOrderByUniqueIdUseCase,
     private val voidOrderUseCase: VoidOrderUseCase,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val getTaxUseCase: GetTaxUseCase
 ) : BaseViewModel<ReceiptViewEvent>() {
 
     val orderObs: MutableLiveData<Order> = MutableLiveData()
+    val tax: MutableLiveData<Tax> = MutableLiveData()
 
     fun getAllTransaction(startDate: Long, endDate: Long, keyword: String) {
         val disposable = getAllTransactionSyncData.execute(
@@ -66,6 +70,18 @@ class ReceiptViewModel @Inject constructor(
         addDisposable(disposable)
     }
 
+    fun getMerchantTax(merchantId: Long) {
+        val disposable = getTaxUseCase.execute(GetTaxUseCase.Params(merchantId))
+            .subscribe({
+                tax.postValue(it)
+            },
+                {
+                    it.printStackTrace()
+
+                })
+        addDisposable(disposable)
+    }
+
     fun voidOrder(trxId: String) {
         val disposable = voidOrderUseCase.execute(
             VoidOrderUseCase.Params(trxId)
@@ -77,6 +93,8 @@ class ReceiptViewModel @Inject constructor(
         addDisposable(disposable)
     }
 
+
+
     fun getProfileMerchantLocal() : User?{
         return userRepository.getProfileMerchant()
     }
@@ -84,5 +102,7 @@ class ReceiptViewModel @Inject constructor(
     fun getOperator() : User?{
         return userRepository.getOperator()
     }
+
+
 
 }

@@ -27,6 +27,7 @@ import com.zeepos.ui_base.views.GlideApp
 import com.zeepos.utilities.DateTimeUtil
 import id.streetbox.live.ui.menu.MenuAdapter
 import id.streetbox.live.ui.menu.MenuViewEvent
+import id.streetbox.live.ui.menu.MenuViewEvent.GetTaxSuccess
 import id.streetbox.live.ui.menu.MenuViewModel
 import id.streetbox.live.ui.pickuporder.PickupOrderActivity
 import kotlinx.android.synthetic.main.activity_menu.*
@@ -53,6 +54,10 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
     var total: Double = 0.0
     var getSaveListMenu: List<MenuItemStore> = ArrayList()
     var types: String? = ""
+    var typesTax:Int = 0
+    var taxName:String = ConstVar.EMPTY_STRING
+    var totalTax:Double = 0.0
+    var isActive:Boolean = false
 
     val onClickIncrease = object : AdapterMenu.OnClickIncrease {
         override fun ClickIncrease(position: Int, product: Product, value: Int, tvQty: TextView) {
@@ -208,6 +213,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
 
     override fun init() {
         viewModel = ViewModelProvider(this, viewModeFactory).get(MenuViewModel::class.java)
+        viewModel.getRecentOrder(merchantId, foodTruck)
         merchantId = intent.getLongExtra(ConstVar.MERCHANT_ID, 0)
         val bundle = intent.extras
         if (bundle != null) {
@@ -239,6 +245,10 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
             bundle.putDouble("total", total)
             bundle.putInt("qty", qtyItems)
             bundle.putString("order", gson.toJson(order))
+            bundle.putString("taxName", taxName)
+            bundle.putInt("taxType",typesTax)
+            bundle.putDouble("totalTax",totalTax)
+            bundle.putBoolean("isActive",false)
 
             val intent = Intent(this, PickupOrderActivity::class.java)
                 .putExtras(bundle)
@@ -259,7 +269,11 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                 dismissLoading()
                 showToastExt(useCase.errorMessage, this)
             }
-            MenuViewEvent.GetTaxSuccess -> {
+            is MenuViewEvent.GetTaxSuccess -> {
+                taxName = useCase.tax.name!!
+                typesTax = useCase.tax.type
+                totalTax = useCase.tax.amount
+                isActive = useCase.tax.isActive
                 viewModel.getRecentOrder(merchantId, foodTruck)
             }
             MenuViewEvent.GetTaxFailed -> {
@@ -269,8 +283,16 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                 dismissLoading()
                 isGetOrderSuccess = true
                 order = useCase.order
+                viewModel.getUserInfoCloud()
                 adapterMenu?.setProDuctSalesMap(useCase.order.productSales)
             }
+            is MenuViewEvent.GetUserInfoSuccess -> {
+                order.phone = useCase.user.phone!!
+            }
+            is MenuViewEvent.GetTaxSettingSuccess ->{
+
+            }
+
         }
     }
 

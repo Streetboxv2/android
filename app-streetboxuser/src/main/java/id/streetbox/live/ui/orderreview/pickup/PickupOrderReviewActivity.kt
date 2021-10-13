@@ -126,6 +126,7 @@ class PickupOrderReviewActivity :
             }
             PickupOrderReviewViewEvent.UpdateOrderSuccess -> {
             }
+
         }
     }
 
@@ -200,15 +201,25 @@ class PickupOrderReviewActivity :
 
         if (order.orderBill.isNotEmpty()) {
             orderBill = order.orderBill[0]
-            tvSubtotal?.text =
-                "Rp. ${NumberUtil.formatToStringWithoutDecimal(orderBill!!.subTotal)}"
-            tvTotalTax.text = "Rp. ${NumberUtil.formatToStringWithoutDecimal(orderBill.totalTax)}"
+            tvTaxLabel.text = orderBill.taxName
+            tv_total_tax.text = ""+orderBill.totalTax
+            if(type < 1){
+                tvSubtotal?.text =
+                    "Rp. ${NumberUtil.formatToStringWithoutDecimal(orderBill!!.subTotal)}"
+                tvTotalTax.text = "Rp. ${NumberUtil.formatToStringWithoutDecimal(orderBill.totalTax)}"
+            }else{
+                tvSubtotal?.text =
+                    "Rp. ${NumberUtil.formatToStringWithoutDecimal((orderBill!!.subTotal) + (orderBill.totalTax))}"
+                tvTotalTax.text = "Rp. ${NumberUtil.formatToStringWithoutDecimal(orderBill.totalTax)}"
+            }
+
             tvTotalPayment?.text =
                 "Rp. ${NumberUtil.formatToStringWithoutDecimal(orderBill.grandTotal)}"
             if (orderBill.totalTax <= 0) {
                 tvTotalTax.visibility = View.INVISIBLE
                 tvTaxLabel.visibility = View.INVISIBLE
             }
+
         }
 
         etNotes.setText(order.note)

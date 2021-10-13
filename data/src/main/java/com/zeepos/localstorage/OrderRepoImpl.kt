@@ -74,16 +74,10 @@ class OrderRepoImpl @Inject internal constructor(
             }
 
 //            if (order == null) {
-                var orderNo:String = ConstVar.EMPTY_STRING
-                if(merchantId > 0){
-                    orderNo =
-                        getCountOrderUser(DateTimeUtil.getCurrentDateWithoutTime())?.toInt()
-                            ?.inc()?.toString() ?: "1"
-                }else{
-                    orderNo =
+
+                   val  orderNo =
                         getCountOrder(DateTimeUtil.getCurrentDateWithoutTime())?.toInt()
                             ?.inc()?.toString() ?: "1"
-                }
 
                 val userMerChant = userRepository.getProfileMerchant()
                 val user = userRepository.getCurrentUser()

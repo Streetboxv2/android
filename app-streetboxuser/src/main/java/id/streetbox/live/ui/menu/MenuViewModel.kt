@@ -10,11 +10,15 @@ import com.zeepos.domain.interactor.productsales.CreateProductSalesUseCase
 import com.zeepos.domain.interactor.productsales.RemoveProductSalesByProductUseCase
 import com.zeepos.domain.interactor.productsales.UpdateOrRemoveProductSalesUseCase
 import com.zeepos.domain.interactor.productsales.UpdateProductSalesUseCase
+import com.zeepos.domain.interactor.user.GetUserInfoUseCase
+import com.zeepos.models.entities.None
 import com.zeepos.models.master.FoodTruck
 import com.zeepos.models.master.Product
 import com.zeepos.models.transaction.Order
 import com.zeepos.models.transaction.ProductSales
 import com.zeepos.ui_base.ui.BaseViewModel
+import id.streetbox.live.ui.main.MainViewEvent
+import id.streetbox.live.ui.orderreview.pickup.PickupOrderReviewViewEvent
 import javax.inject.Inject
 
 /**
@@ -28,9 +32,10 @@ class MenuViewModel @Inject constructor(
     private val removeProductSalesByProductUseCase: RemoveProductSalesByProductUseCase,
     private val updateOrRemoveProductSalesUseCase: UpdateOrRemoveProductSalesUseCase,
     private val updateProductSalesUseCase: UpdateProductSalesUseCase,
-    private val getTaxUseCase: GetTaxUseCase,
     private val getFoodTruckHomeVisitUseCase: GetFoodTruckHomeVisitUseCase,
-    private val getMerchantParkingScheduleUseCase: GetMerchantParkingScheduleUseCase
+    private val getMerchantParkingScheduleUseCase: GetMerchantParkingScheduleUseCase,
+    private val getUserInfoUseCase: GetUserInfoUseCase,
+    private val getTaxUseCase: GetTaxUseCase
 ) : BaseViewModel<MenuViewEvent>() {
 
     fun getRecentOrder(merchantId: Long, foodTruck: FoodTruck?) {
@@ -41,6 +46,19 @@ class MenuViewModel @Inject constructor(
                 viewEventObservable.postValue(MenuViewEvent.GetOrCreateOrderSuccess(it))
             }, { viewEventObservable.postValue(MenuViewEvent.OrderFailedCreated) })
 
+        addDisposable(disposable)
+    }
+
+
+    fun getUserInfoCloud(id: Long = 0) {
+        val disposable = getUserInfoUseCase.execute(GetUserInfoUseCase.Params(id))
+            .subscribe({
+                viewEventObservable.postValue(MenuViewEvent.GetUserInfoSuccess(it))
+            }, {
+                it.message?.let { errorMessage ->
+                    viewEventObservable.postValue(MenuViewEvent.GetUserInfoFailed(errorMessage))
+                }
+            })
         addDisposable(disposable)
     }
 
@@ -117,11 +135,11 @@ class MenuViewModel @Inject constructor(
     fun getMerchantTax(merchantId: Long) {
         val disposable = getTaxUseCase.execute(GetTaxUseCase.Params(merchantId))
             .subscribe({
-                viewEventObservable.postValue(MenuViewEvent.GetTaxSuccess)
+                viewEventObservable.postValue(MenuViewEvent.GetTaxSuccess(it))
             },
                 {
                     it.printStackTrace()
-                    viewEventObservable.postValue(MenuViewEvent.GetTaxFailed)
+
                 })
         addDisposable(disposable)
     }

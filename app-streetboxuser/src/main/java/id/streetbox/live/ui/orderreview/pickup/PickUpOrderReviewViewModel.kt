@@ -4,9 +4,11 @@ import com.zeepos.domain.interactor.order.GetRecentOpenOrCreateOrderUseCase
 import com.zeepos.domain.interactor.order.UpdateOrderUseCase
 import com.zeepos.domain.interactor.productsales.RemoveQtyProductSalesUseCase
 import com.zeepos.domain.interactor.productsales.UpdateOrRemoveProductSalesUseCase
+import com.zeepos.domain.interactor.user.GetUserInfoUseCase
 import com.zeepos.models.transaction.Order
 import com.zeepos.models.transaction.ProductSales
 import com.zeepos.ui_base.ui.BaseViewModel
+import id.streetbox.live.ui.main.profile.ProfileViewEvent
 import javax.inject.Inject
 
 /**
@@ -30,6 +32,8 @@ class PickUpOrderReviewViewModel @Inject constructor(
 
         addDisposable(disposable)
     }
+
+
 
     fun updateOrRemoveProductSales(productSales: ProductSales) {
         val disposable =

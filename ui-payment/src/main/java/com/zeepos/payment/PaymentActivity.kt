@@ -51,7 +51,6 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
     override fun init() {
         val bundle = intent.extras
         viewModel = ViewModelProvider(this, viewModeFactory).get(PaymentViewModel::class.java)
-
         grandTotal = intent.getDoubleExtra("grandTotal", 0.0)
         println("respon Grand total $grandTotal")
 
@@ -85,9 +84,6 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
         initList()
 
         btn_pay.setOnClickListener {
-            order.updatedAt = DateTimeUtil.getCurrentDateTime()
-            order.createdAt = DateTimeUtil.getCurrentDateTime()
-            order.typeOrder = "Online"
             val selectedPayment = paymentAdapter.selectedPayment
             if (selectedPayment != null) {
                 showLoading()

@@ -22,7 +22,8 @@ class ProductViewModel @Inject constructor(
     private val localPreferencesRepository: LocalPreferencesRepository,
     private val getOnlineOrderUseCase: GetOnlineOrderUseCase,
     private val syncDataRepo: SyncDataRepo,
-    private val orderRepo: OrderRepo
+    private val orderRepo: OrderRepo,
+    private val getTaxUseCase: GetTaxUseCase
 ) : BaseViewModel<ProductViewEvent>() {
 
     fun getAllProducts() {
@@ -55,6 +56,11 @@ class ProductViewModel @Inject constructor(
 
     fun deleteSession(){
         localPreferencesRepository.deleteSession()
+        syncDataRepo.removeAll()
+        orderRepo.removeAll()
+    }
+
+    fun refresh(){
         syncDataRepo.removeAll()
         orderRepo.removeAll()
     }

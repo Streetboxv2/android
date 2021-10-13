@@ -466,6 +466,8 @@ class BookHomeVisitActivity : BaseActivity<BookHomeVisitViewEvent, BookHomeVisit
         calendar.clear()
 
         val activeDate: List<Long> = dataTimeMap.keys.toList()
+//        val endDateMillis = activeDate[activeDate.size - 1]
+        val startDateMillis = activeDate[0]
         val endDateMillis = activeDate[activeDate.size - 1]
 
 //        calendar.timeInMillis = MaterialDatePicker.todayInUtcMilliseconds()
@@ -476,11 +478,11 @@ class BookHomeVisitActivity : BaseActivity<BookHomeVisitViewEvent, BookHomeVisit
         val constraintBuilder = CalendarConstraints.Builder()
 
         builder.setTitleText("Select date")
-        builder.setSelection(endDateMillis)
+        builder.setSelection(startDateMillis)
 
-        constraintBuilder.setStart(endDateMillis)
+        constraintBuilder.setStart(startDateMillis)
         constraintBuilder.setEnd(endDateMillis)
-        constraintBuilder.setOpenAt(endDateMillis)
+        constraintBuilder.setOpenAt(startDateMillis)
 
 
         constraintBuilder.setValidator(ActiveDateValidator(activeDate))

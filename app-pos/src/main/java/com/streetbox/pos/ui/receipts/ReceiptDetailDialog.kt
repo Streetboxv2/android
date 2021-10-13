@@ -41,6 +41,7 @@ import com.streetbox.pos.R
 import com.streetbox.pos.async.AsyncBluetoothEscPosPrint
 import com.streetbox.pos.async.AsyncEscPosPrinter
 import com.zeepos.models.ConstVar
+import com.zeepos.models.master.Tax
 import com.zeepos.models.master.User
 import com.zeepos.models.transaction.Order
 import com.zeepos.ui_base.ui.BaseDialogFragment
@@ -65,6 +66,7 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
     private var viewModel: ReceiptViewModel? = null
     private lateinit var adapter: ReceiptDetailAdapter
     private lateinit var order: Order
+    private lateinit var tax: Tax
     private var printing: Printing? = null
     private var user: User? = null
     private var theBitmap: Bitmap? = null
@@ -82,6 +84,10 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
     private var qrCodeM:String = ""
     private var header:String=""
     private var type: Int = 0
+    private var typeTax:Int = 0
+    private var taxName:String = ConstVar.EMPTY_STRING
+    private var taxAmount:Double = 0.0
+    private var isActive:Boolean = false
 
 
 
@@ -108,12 +114,17 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
 
         viewModel?.orderObs?.observe(this, Observer {
             order = it
-            setData(it)
+            setData(order)
+
         })
 
         val bundle = arguments
         if (bundle != null) {
             val orderUniqueId = bundle.getString("orderUniqueId") ?: ""
+            taxName = bundle.getString("taxName","")
+            typeTax = bundle.getInt("taxType",0)
+            taxAmount = bundle.getDouble("taxAmount",0.0)
+            isActive = bundle.getBoolean("isActive",false)
             if (orderUniqueId.isNotEmpty()) {
                 viewModel?.getOrder(orderUniqueId)
             }
@@ -122,6 +133,13 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
         user = viewModel!!.getProfileMerchantLocal()
 
         userOperator = viewModel!!.getOperator()
+
+
+        viewModel?.tax?.observe(this, Observer {
+            tax = it
+
+
+        })
 
 //        checkPrinter()
 
@@ -149,18 +167,24 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
 
         btn_print.setOnClickListener {
 //            printSomePrintable()
+            if(order.typeOrder.equals("Online")){
+                order.createdAt = order.dateCreated
+            }
             formatReceipt()
             printBluetooth()
         }
 
         btn_void.setOnClickListener {
             viewModel!!.voidOrder(order.trxId)
-            dismiss()
+            startActivity(context?.let { it1 -> ReceiptActivity.getIntent(it1) })
         }
 
     }
 
     private fun setData(order: Order) {
+        if(order.typeOrder.equals("Online")){
+            order.createdAt = order.dateCreated
+        }
         if (order.trxId.isNotEmpty()) {
             tv_no_trx?.text = "No Transaksi #${order.trxId}"
         } else {
@@ -230,25 +254,47 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
 
         val totalTax: Double = orderBill?.totalTax ?: 0.0
         val subTotal: Double = order.grandTotal ?: 0.0
-        val totalPayment: Double = order.grandTotal ?: 0.0
+        var totalPayment: Double = order.grandTotal ?: 0.0
         val taxType = taxSales ?: 1
         val taxTypeDisplay =
             if (taxType == ConstVar.TAX_TYPE_EXCLUSIVE) ConstVar.TAX_TYPE_EXCLUSIVE_DISPLAY else ConstVar.TAX_TYPE_INCLUSIVE_DISPLAY
         val paymentMethod = (paymentSales?.name ?: order?.typePayment ?: "-") + " - " + order?.typeOrder
+        if(order.typeOrder.equals("Online")){
+            order.createdAt = order.dateCreated
+        }
 
-        tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(subTotal)}"
-        tvTotalTax.text = "${NumberUtil.formatToStringWithoutDecimal(totalTax)}"
+
+        if(typeTax == 0){
+            tvTaxLabel.text = taxName+"(Excl)"
+            tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(subTotal - taxAmount)}"
+        }else{
+            tvTaxLabel.text = taxName+"(Incl"
+            tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(subTotal)}"
+        }
+        tvTotalTax.text = "${NumberUtil.formatToStringWithoutDecimal(taxAmount)}"
+
+
+
         tvTotalPayment.text = "${NumberUtil.formatToStringWithoutDecimal(totalPayment)}"
         tvPaymentName.text = "$paymentMethod"
-        tvTaxLabel.text = "${taxSales?.name} ($taxTypeDisplay)"
+//        tvTaxLabel.text = "${taxSales?.name} ($taxTypeDisplay)"
+
+
         tvTrxDateLabel.text = "${
             DateTimeUtil.getDateWithFormat(
                 order.businessDate,
                 "dd/MM/YYYY"
             )
-        } ${DateTimeUtil.getLocalDateWithFormat(order.createdAt, "HH:mm")}"
+        } ${DateTimeUtil.getLocalDateWithFormat(order.createdAt, "HH:mm:ss")}"
 
+/*
         if (totalTax <= 0) {
+            tvTotalTax.visibility = View.INVISIBLE
+            tvTaxLabel.visibility = View.INVISIBLE
+        }
+*/
+
+        if (isActive == false) {
             tvTotalTax.visibility = View.INVISIBLE
             tvTaxLabel.visibility = View.INVISIBLE
         }
@@ -366,13 +412,27 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
                 order.orderBill[0].subTotal)+"\n"
 
         }else{
-            subTot =  "[L]<b>Subtotal </b>" +"[R]"+ NumberUtil.formatToStringWithoutDecimal(order.orderBill[0].subTotal) + "\n"
-            if(type<1){
-                taxTotal = "[L]<b>"+taxName+"</b>" + "[R]" +  NumberUtil.formatToStringWithoutDecimal(
-                    order.orderBill[0].totalTax)+"\n"
-                grandTot = "[L]<b>Grand Total </b>" + "[R]" +  NumberUtil.formatToStringWithoutDecimal(
-                    order.orderBill[0].subTotal +  order.orderBill[0].totalTax)+"\n"
+            subTot =
+                "[L]<b>Subtotal </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(order.orderBill[0].subTotal) + "\n"
+            if (type < 1) {
+                taxTotal =
+                    "[L]<b>" + taxName + "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
+                        order.orderBill[0].totalTax
+                    ) + "\n"
+                grandTot =
+                    "[L]<b>Grand Total </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
+                        order.orderBill[0].subTotal + order.orderBill[0].totalTax
+                    ) + "\n"
 
+            }else{
+                taxTotal =
+                    "[L]<b>" + taxName + "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
+                        order.orderBill[0].totalTax
+                    ) + "\n"
+                grandTot =
+                    "[L]<b>Grand Total </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
+                        order.orderBill[0].subTotal
+                    ) + "\n"
             }
         }
 

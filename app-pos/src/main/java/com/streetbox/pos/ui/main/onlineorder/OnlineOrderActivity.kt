@@ -20,6 +20,7 @@ class OnlineOrderActivity : BaseActivity<OnlineOrderViewEvent, OnlineOrderViewMo
 
     override fun init() {
         viewModel = ViewModelProvider(this, viewModeFactory).get(OnlineOrderViewModel::class.java)
+        viewModel.getRecentOrder()
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
@@ -33,6 +34,11 @@ class OnlineOrderActivity : BaseActivity<OnlineOrderViewEvent, OnlineOrderViewMo
             R.id.fl_right,
             OrderBillFragment::class.java.simpleName
         )
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
     }
 
     override fun onEvent(useCase: OnlineOrderViewEvent) {

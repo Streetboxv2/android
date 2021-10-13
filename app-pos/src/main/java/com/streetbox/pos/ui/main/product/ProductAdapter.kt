@@ -25,14 +25,14 @@ class ProductAdapter(data: MutableList<Product> = mutableListOf()) :
         val imageUrl: String =
             ConstVar.PATH_IMAGE + if (imageUrls.isNotEmpty()) item.photo else ConstVar.EMPTY_STRING
 
-        if (item.photo != null && item.photo!!.isNotEmpty()) {
+//        if (item.photo != null && item.photo!!.isNotEmpty()) {
             GlideApp.with(context)
                 .load(imageUrl)
                 .apply(RequestOptions().placeholder(R.drawable.nomenu))
                 .into(ivProduct)
-        }
+//        }
 
-//        ClickBounceAnim.setAnimView(holder.itemView)
-//            .setScale(ClickBounceAnim.Mode.MODE_STATIC_DP, 6f)
+       /* ClickBounceAnim.setAnimView(holder.itemView)
+            .setScale(ClickBounceAnim.Mode.MODE_STATIC_DP, 6f)*/
     }
 }

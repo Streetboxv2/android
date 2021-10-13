@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothConnection
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections
 import com.mazenrashed.printooth.ui.ScanningActivity
@@ -64,7 +65,7 @@ class ProductFragment : BaseFragment<ProductViewEvent, ProductViewModel>(),
         })
 
         productAdapter = ProductAdapter()
-        viewModel.getAllProductsCloud()
+        viewModel.getAllProducts()
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
@@ -96,12 +97,6 @@ class ProductFragment : BaseFragment<ProductViewEvent, ProductViewModel>(),
 
     private fun initList() {
 
-        swipe_refresh.setColorSchemeColors(Color.rgb(47, 223, 189))
-        swipe_refresh.isRefreshing = true
-        swipe_refresh.setOnRefreshListener {
-            viewModel.getAllProductsCloud()
-        }
-
         rcv_item?.apply {
             adapter = productAdapter
         }
@@ -129,12 +124,10 @@ class ProductFragment : BaseFragment<ProductViewEvent, ProductViewModel>(),
     override fun onEvent(useCase: ProductViewEvent) {
         when (useCase) {
             is ProductViewEvent.GetAllProductsSuccess -> {
-                if (swipe_refresh.isRefreshing) {
-                    productAdapter.data.clear()
-                }
+                productAdapter.data.clear()
                 productAdapter.setList(useCase.products.sortedBy { it.name })
                 viewModel.getTax()
-                swipe_refresh.isRefreshing = false
+
             }
             is ProductViewEvent.GetSyncSuccess ->
                 Toast.makeText(context, "success", Toast.LENGTH_LONG).show()
@@ -164,9 +157,12 @@ class ProductFragment : BaseFragment<ProductViewEvent, ProductViewModel>(),
 //                    browseBluetoothDevice()
 //                }
 
-               /* R.id.action_sync -> {
-                    viewModel.getAllTransaction()
-                }*/
+                R.id.action_sync -> {
+                    qty = 0
+                    viewModel.getAllProductsCloud()
+                    mainViewModel?.getRecentOrder()
+
+                }
 
                 R.id.action_online_order -> {
                     startActivity(context?.let { it1 -> OnlineOrderActivity.getIntent(it1) })
