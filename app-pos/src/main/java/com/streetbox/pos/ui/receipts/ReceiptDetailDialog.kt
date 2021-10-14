@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.opengl.Visibility
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -285,19 +286,14 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
                 order.businessDate,
                 "dd/MM/YYYY"
             )
-        } ${DateTimeUtil.getLocalDateWithFormat(order.createdAt, "HH:mm:ss")}"
+        } ${DateTimeUtil.getLocalDateWithFormat(order.createdAt, "HH:mm")}"
 
 /*
         if (totalTax <= 0) {
             tvTotalTax.visibility = View.INVISIBLE
             tvTaxLabel.visibility = View.INVISIBLE
-        }
+        }b
 */
-
-        if (isActive == false) {
-            tvTotalTax.visibility = View.INVISIBLE
-            tvTaxLabel.visibility = View.INVISIBLE
-        }
 
         if (order.typePayment == "QRIS") {
             var qrCode = "";
@@ -412,26 +408,27 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
                 order.orderBill[0].subTotal)+"\n"
 
         }else{
-            subTot =
-                "[L]<b>Subtotal </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(order.orderBill[0].subTotal) + "\n"
-            if (type < 1) {
-                taxTotal =
-                    "[L]<b>" + taxName + "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
-                        order.orderBill[0].totalTax
-                    ) + "\n"
-                grandTot =
-                    "[L]<b>Grand Total </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
-                        order.orderBill[0].subTotal + order.orderBill[0].totalTax
-                    ) + "\n"
 
-            }else{
+            if (type == 0) {
                 taxTotal =
-                    "[L]<b>" + taxName + "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
+                    "[L]<b>" + taxName+ "(Incl)"+ "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
                         order.orderBill[0].totalTax
                     ) + "\n"
                 grandTot =
                     "[L]<b>Grand Total </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
                         order.orderBill[0].subTotal
+                    ) + "\n"
+                subTot =  "[L]<b>Subtotal </b>" +"[R]"+ NumberUtil.formatToStringWithoutDecimal(order.orderBill[0].subTotal) + "\n"
+
+            }else{
+                taxTotal =
+                    "[L]<b>" + taxName +"(Excl)"+ "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
+                        order.orderBill[0].totalTax
+                    ) + "\n"
+                subTot =  "[L]<b>Subtotal </b>" +"[R]"+ NumberUtil.formatToStringWithoutDecimal((order.orderBill[0].subTotal) ) + "\n"
+                grandTot =
+                    "[L]<b>Grand Total </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
+                        order.orderBill[0].subTotal + order.orderBill[0].totalTax
                     ) + "\n"
             }
         }
@@ -457,6 +454,10 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
                     BluetoothPrintersConnections().getList()!!
                 selectedDevice = bluetoothDevicesList[0]
                 AsyncBluetoothEscPosPrint(context).execute(getAsyncEscPosPrinter(selectedDevice))
+//                getAsyncEscPosPrinter(selectedDevice)
+                Thread.sleep(2000)
+
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -481,7 +482,7 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
         val discPrice = (order.productSales[0].priceOriginal * order.productSales[0].discount / 100)
 
         val format =
-            SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss")
+            SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm")
         format.timeZone = DateTimeUtil.timeZone
 
         val printer = AsyncEscPosPrinter(printerConnection, 203, 48f, 32)

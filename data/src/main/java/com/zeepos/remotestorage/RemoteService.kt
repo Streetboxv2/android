@@ -320,6 +320,11 @@ interface RemoteService {
         @Path("merchantId") merchantId: Long
     ): Single<ResponseApi<Tax>>
 
+    @GET("consumer/merchant/tax/{merchantId}")
+    fun getMerchantTaxSales(
+        @Path("merchantId") merchantId: Long
+    ): Single<ResponseApi<TaxSales>>
+
     @Streaming
     @GET
     fun downloadReportFile(@Url fileUrl: String): Single<ResponseBody>

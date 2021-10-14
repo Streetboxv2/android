@@ -43,13 +43,11 @@ android {
         dev {
             dimension "basic"
             buildConfigField 'String', 'SERVER', '"https://streetbox-api.cbs.co.id/"'
-//            buildConfigField 'String', 'SERVER', '"https://api.streetbox.id/"'
             buildConfigField 'String', 'CLIENT_ID', '"streetbox-mobile-pos"'
         }
         demo {
             dimension "basic"
             buildConfigField 'String', 'SERVER', '"https://streetbox-api.cbs.co.id/"'
-//            buildConfigField 'String', 'SERVER', '"https://api.streetbox.id/"'
             buildConfigField 'String', 'CLIENT_ID', '"streetbox-mobile-pos"'
         }
         prod {

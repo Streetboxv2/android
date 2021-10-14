@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.streetbox.pos.R
+import com.streetbox.pos.ui.main.MainActivity
 import com.zeepos.models.transaction.Order
 import com.zeepos.ui_base.ui.BaseActivity
 import com.zeepos.utilities.DateTimeUtil
@@ -50,6 +51,10 @@ class ReceiptActivity : BaseActivity<ReceiptViewEvent, ReceiptViewModel>() {
 
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(MainActivity.getIntent(this))
+    }
     override fun onViewReady(savedInstanceState: Bundle?) {
         toolbar.setNavigationOnClickListener { finish() }
 

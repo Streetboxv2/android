@@ -14,7 +14,9 @@ import com.zeepos.models.entities.BookHomeVisit
 import com.zeepos.models.factory.ObjectFactory
 import com.zeepos.models.master.FoodTruck
 import com.zeepos.models.master.PaymentMethod
+import com.zeepos.models.master.Tax
 import com.zeepos.models.transaction.Order
+import com.zeepos.models.transaction.TaxSales
 import com.zeepos.ui_base.ui.BaseActivity
 import com.zeepos.utilities.DateTimeUtil
 import com.zeepos.utilities.PermissionUtils
@@ -35,6 +37,7 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
 
     private lateinit var paymentAdapter: PaymentAdapter
     private lateinit var order: Order
+    private lateinit var tax: Tax
     private var foodTruck: FoodTruck? = null
     private var bookHomeVisit: BookHomeVisit? = null
     var grandTotal: Double = 0.0
@@ -57,8 +60,8 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
         val foodTruckStr = bundle?.getString("foodTruckData", ConstVar.EMPTY_STRING)
         val bookedDataStr = bundle?.getString("bookedData", ConstVar.EMPTY_STRING)
 
-        if (foodTruckStr != null)
-            foodTruck = gson.fromJson(foodTruckStr, FoodTruck::class.java)
+        val taxStr = bundle?.getString("tax",ConstVar.EMPTY_STRING)
+            tax = gson.fromJson(foodTruckStr, Tax::class.java)
 
         if (bookedDataStr != null)
             bookHomeVisit = gson.fromJson(bookedDataStr, BookHomeVisit::class.java)
@@ -83,6 +86,7 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
 
         initList()
 
+
         btn_pay.setOnClickListener {
             val selectedPayment = paymentAdapter.selectedPayment
             if (selectedPayment != null) {
@@ -105,14 +109,12 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
                     } else {
 
                         //from nearby
-
-                        viewModel.generatePaymentSales(
+                          viewModel.generatePaymentSales(
                             selectedPayment,
                             ConstVar.PAYMENT_STATUS_UNPAID,
                             order
                         )
 //                        val idMerchant = foodTruck?.merchantId
-//                        viewModel.getQrPaymentNearby(
 //                            idMerchant!!,
 //                            grandTotal.toInt(),
 //                            foodTruck?.address.toString(),
@@ -120,6 +122,7 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
 //                        )
                     }
                 } else {
+
                     //for POS always paid when order close
                     viewModel.generatePaymentSales(
                         selectedPayment,
@@ -154,7 +157,7 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
             dismissLoading()
         }
         is PaymentViewEvent.GetPaymentMethodFailed -> {
-            Toast.makeText(applicationContext, useCase.errorMessage, Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, useCase.errorMesge, Toast.LENGTH_SHORT).show()
             dismissLoading()
         }
         is PaymentViewEvent.GetQRCodePaymentSuccess -> {

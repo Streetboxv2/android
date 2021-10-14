@@ -42,6 +42,7 @@ class Order {
     var status:String = ConstVar.EMPTY_STRING
     var phone:String = ConstVar.EMPTY_STRING
     var dateCreated:Long = 0L
+    var qrCode:String = ConstVar.EMPTY_STRING
 
     @Exclude
     lateinit var user: ToOne<User>

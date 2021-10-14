@@ -434,7 +434,7 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
         val discPrice = (order!!.productSales[0].priceOriginal * order!!.productSales[0].discount / 100)
 
         val format =
-            SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss")
+            SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm")
         format.timeZone = DateTimeUtil.timeZone
 
         val printer = AsyncEscPosPrinter(printerConnection, 203, 48f, 32)

@@ -18,9 +18,9 @@ class ReceiptAdapter(data: MutableList<Order> = mutableListOf()) :
         val tanggal = DateTimeUtil.getDateWithFormat(item.businessDate, "dd/MM/YYYY")
        var jam:String = ConstVar.EMPTY_STRING
         if(item.typeOrder.equals("Online")){
-            jam = DateTimeUtil.getLocalDateWithFormat(item.dateCreated,"HH:mm:ss")
+            jam = DateTimeUtil.getLocalDateWithFormat(item.dateCreated,"HH:mm")
         }else{
-            jam = DateTimeUtil.getLocalDateWithFormat(item.createdAt, "HH:mm:ss")
+            jam = DateTimeUtil.getLocalDateWithFormat(item.createdAt, "HH:mm")
         }
 
         val jumlah = NumberUtil.formatToStringWithoutDecimal(item.grandTotal)

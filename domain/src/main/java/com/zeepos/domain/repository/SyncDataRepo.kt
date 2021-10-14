@@ -33,6 +33,7 @@ interface SyncDataRepo {
     fun getMerchantInfo(): Single<ResponseApi<User>>
     fun getTaxSetting(): Single<Tax>
     fun getTaxSetting(merchantId: Long): Single<Tax>
+    fun getTaxSettingSales(merchantId: Long): Single<TaxSales>
     fun createOrderBill(orderUniqueId: String): OrderBill
     fun createProductSales(orderUniqueId: String): ProductSales
     fun getListOrder(keyword: String): Single<List<Order>>

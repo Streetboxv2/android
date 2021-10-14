@@ -322,7 +322,8 @@ class SyncDataRepoImpl @Inject constructor(
 
 //                                trx.id = 0.toString()
                                 order.status = trx.status
-                                order.address = trx.address
+
+                                order.address =  trx.address
                                 boxOrder.put(order)
                             }
                         }
@@ -670,6 +671,19 @@ class SyncDataRepoImpl @Inject constructor(
                     val data = it.data!!
                     boxTax.removeAll()
                     boxTax.put(data)
+                    return@map data
+                }
+                throw Exceptions.propagate(Throwable(ConstVar.DATA_NULL))
+            }
+    }
+
+    override fun getTaxSettingSales(merchantId: Long): Single<TaxSales> {
+        return service.getMerchantTaxSales(merchantId)
+            .map {
+                if (it.isSuccess()) {
+                    val data = it.data!!
+                    boxTaxSales.removeAll()
+                    boxTaxSales.put(data)
                     return@map data
                 }
                 throw Exceptions.propagate(Throwable(ConstVar.DATA_NULL))

@@ -574,7 +574,7 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
             userOperator!!.userName!!.substring(0, userOperator!!.userName!!.indexOf("@"))
 
         val address: String = userOperator?.address.toString()
-        val format =SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss")
+        val format =SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm")
 
 
 
@@ -658,7 +658,7 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
         val disc = order.productSales[0].discount
         val discPrice = (order.productSales[0].priceOriginal * order.productSales[0].discount / 100)
 
-        val format = SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss")
+        val format = SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:s")
 
 
         val printer = AsyncEscPosPrinter(printerConnection, 203, 48f, 32)

@@ -16,6 +16,7 @@ import com.zeepos.models.ConstVar
 import com.zeepos.models.master.FoodTruck
 import com.zeepos.models.master.Tax
 import com.zeepos.models.transaction.Order
+import com.zeepos.models.transaction.TaxSales
 import com.zeepos.payment.PaymentActivity
 import com.zeepos.ui_base.ui.BaseActivity
 import com.zeepos.utilities.*
@@ -39,7 +40,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
     var totalMenuItem: Double = 0.0
     var merchantId: String? = ""
     var foodTruck: FoodTruck? = null
-    var tax: Tax= null
+    var tax: Tax?= null
     var getOrder: Order? = null
     var taxName:String = ConstVar.EMPTY_STRING
     var typeTax:Int = 0
@@ -97,13 +98,13 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
 
 //            getOrder?.address = foodTruck?.address
                 getOrder?.note = notes
-                getOrder!!.taxSales[0].type = typeTax
                 viewModel.updateOrder(getOrder!!)
                 val intent = intentPageData(this, PaymentActivity::class.java)
                     .putExtra("foodTruckData", gson.toJson(foodTruck))
                     .putExtra("notes", notes)
                     .putExtra(PaymentActivity.ORDER_UNIQUE_ID, getOrder!!.uniqueId)
                     .putExtra("grandTotal", totalMenuItem)
+                    .putExtra("tax",gson.toJson(tax))
                 startActivityForResult(intent, 1002)
             } else {
                 showToastExt("Item Order not found", this)

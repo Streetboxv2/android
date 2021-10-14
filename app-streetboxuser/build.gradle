@@ -47,13 +47,13 @@ android {
         dev {
             dimension "basic"
 //            buildConfigField 'String', 'SERVER', '"http://192.168.1.10:2730/"'
-            buildConfigField 'String', 'SERVER', '"https://streetbox-api.cbs.co.id/"'
+            buildConfigField 'String', 'SERVER', '"https://api.streetbox.id/"'
             buildConfigField 'String', 'CLIENT_ID', '"streetbox-mobile-user"'
         }
         demo {
             dimension "basic"
 //            buildConfigField 'String', 'SERVER', '"http://192.168.1.10:2730/"'
-            buildConfigField 'String', 'SERVER', '"https://streetbox-api.cbs.co.id/"'
+            buildConfigField 'String', 'SERVER', '"https://api.streetbox.id/"'
             buildConfigField 'String', 'CLIENT_ID', '"streetbox-mobile-user"'
         }
         prod {
