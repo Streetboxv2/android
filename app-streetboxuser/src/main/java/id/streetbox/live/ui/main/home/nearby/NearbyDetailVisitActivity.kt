@@ -23,6 +23,7 @@ import id.streetbox.live.R
 import id.streetbox.live.adapter.AdapterMenu
 import com.example.dbroom.db.room.AppDatabase
 import com.example.dbroom.db.room.enitity.MenuItemStore
+import com.zeepos.models.master.Tax
 import com.zeepos.ui_base.views.GlideApp
 import com.zeepos.utilities.DateTimeUtil
 import id.streetbox.live.ui.menu.MenuAdapter
@@ -35,6 +36,7 @@ import kotlinx.android.synthetic.main.header_product.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
@@ -57,7 +59,8 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
     var typesTax:Int = 0
     var taxName:String = ConstVar.EMPTY_STRING
     var totalTax:Double = 0.0
-    var isActive:Boolean = false
+    var isActive:Boolean =  false
+    private lateinit var tax: Tax
 
     val onClickIncrease = object : AdapterMenu.OnClickIncrease {
         override fun ClickIncrease(position: Int, product: Product, value: Int, tvQty: TextView) {
@@ -242,13 +245,14 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
         tv_pickup.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("foodTruckData", gson.toJson(foodTruck))
+            bundle.putString("tax",gson.toJson(tax))
             bundle.putDouble("total", total)
             bundle.putInt("qty", qtyItems)
             bundle.putString("order", gson.toJson(order))
             bundle.putString("taxName", taxName)
             bundle.putInt("taxType",typesTax)
             bundle.putDouble("totalTax",totalTax)
-            bundle.putBoolean("isActive",false)
+            bundle.putBoolean("isActive",isActive)
 
             val intent = Intent(this, PickupOrderActivity::class.java)
                 .putExtras(bundle)
@@ -270,6 +274,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                 showToastExt(useCase.errorMessage, this)
             }
             is MenuViewEvent.GetTaxSuccess -> {
+                tax = useCase.tax
                 taxName = useCase.tax.name!!
                 typesTax = useCase.tax.type
                 totalTax = useCase.tax.amount

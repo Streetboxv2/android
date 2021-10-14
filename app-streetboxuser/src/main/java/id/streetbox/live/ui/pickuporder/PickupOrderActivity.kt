@@ -14,6 +14,7 @@ import com.google.gson.Gson
 import com.orhanobut.hawk.Hawk
 import com.zeepos.models.ConstVar
 import com.zeepos.models.master.FoodTruck
+import com.zeepos.models.master.Tax
 import com.zeepos.models.transaction.Order
 import com.zeepos.payment.PaymentActivity
 import com.zeepos.ui_base.ui.BaseActivity
@@ -38,6 +39,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
     var totalMenuItem: Double = 0.0
     var merchantId: String? = ""
     var foodTruck: FoodTruck? = null
+    var tax: Tax= null
     var getOrder: Order? = null
     var taxName:String = ConstVar.EMPTY_STRING
     var typeTax:Int = 0
@@ -45,6 +47,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
     var isActive:Boolean = false
     var adapterMenuChoiceOrder: AdapterPickupOrderNearby? = null
     var calculateTax:Double = 0.0
+    var beforeTax:Double = 0.0
 
     @Inject
     lateinit var gson: Gson
@@ -71,15 +74,17 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
         totalMenuItem = bundle?.getDouble("total")!!
         totalQty = bundle.getInt("qty", 0)
         taxName = bundle.getString("taxName","taxName")
-        typeTax = bundle.getInt("taxtType",0)
+        typeTax = bundle.getInt("taxType",0)
         totalTax = bundle.getDouble("totalTax",0.0)
         isActive = bundle.getBoolean("isActive",false)
         val foodtruckBundle = bundle.getString("foodTruckData")
         val orderBundle = bundle.getString("order")
+        val taxBundle = bundle.getString("tax")
         foodTruck = gson.fromJson(foodtruckBundle, FoodTruck::class.java)
         getOrder = gson.fromJson(orderBundle, Order::class.java)
         merchantId = getOrder?.merchantId.toString()
         getOrder?.grandTotal = totalMenuItem
+        tax = gson.fromJson(taxBundle,Tax::class.java)
 
         initGetData()
         iniOnClick()
@@ -92,13 +97,13 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
 
 //            getOrder?.address = foodTruck?.address
                 getOrder?.note = notes
+                getOrder!!.taxSales[0].type = typeTax
                 viewModel.updateOrder(getOrder!!)
                 val intent = intentPageData(this, PaymentActivity::class.java)
                     .putExtra("foodTruckData", gson.toJson(foodTruck))
                     .putExtra("notes", notes)
                     .putExtra(PaymentActivity.ORDER_UNIQUE_ID, getOrder!!.uniqueId)
                     .putExtra("grandTotal", totalMenuItem)
-
                 startActivityForResult(intent, 1002)
             } else {
                 showToastExt("Item Order not found", this)
@@ -215,17 +220,19 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
         }
 
         calculateTax = (totalTax/100) * totalMenuItem
+        tv_subtotal.text =
+            NumberUtil.formatToStringWithoutDecimal(totalMenuItem)
+
         if(typeTax < 1 && isActive == true){
             totalMenuItem = totalMenuItem + calculateTax
             taxName = taxName+"(Excl)"
+
         }else{
             taxName = taxName+"(Incl)"
         }
 
         tv_total_tax.text =  NumberUtil.formatToStringWithoutDecimal(calculateTax)
         tv_tax_label.text = taxName
-        tv_subtotal.text =
-            NumberUtil.formatToStringWithoutDecimal(totalMenuItem)
 
         tv_total_payment.text =
             NumberUtil.formatToStringWithoutDecimal(totalMenuItem)
