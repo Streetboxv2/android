@@ -47,15 +47,25 @@ class  OrderFragment : BaseFragment<OrderViewEvent, OrderViewModel>() {
 
         mainViewModel?.productSalesObserver?.observe(this, Observer {
 
-            if(orderAdapter.data.size == 0){
+            if(orderAdapter.data.size == 0 ){
+
                 orderAdapter.addData(it)
+
+
             }
             else {
-                orderAdapter.setList(order.productSales)
+
+                    orderAdapter.setList(order.productSales)
+
             }
 
             tv_total_order_count?.text = "Count : ${orderAdapter.itemCount}"
-            viewModel.calculateOrder(order)
+
+            if(it.qtyProduct < it.qty){
+                Toast.makeText(context,"Out of stock",Toast.LENGTH_SHORT).show()
+            }else {
+                viewModel.calculateOrder(order)
+            }
             scrollOrderListToBottom()
         })
 
