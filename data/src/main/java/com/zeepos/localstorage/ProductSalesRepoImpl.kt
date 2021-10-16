@@ -89,18 +89,6 @@ class ProductSalesRepoImpl @Inject constructor(
         }
     }
 
-    override fun getProductSales(product: Product, order: Order): ProductSales {
-
-        var productSales: ProductSales?
-        productSales =
-            box.query()
-                .equal(ProductSales_.productId, product.id)
-                .equal(ProductSales_.orderUniqueId, order.uniqueId)
-                .build().findFirst()
-
-        return productSales!!
-    }
-
 
     override fun getRecentOrder(): Single<List<ProductSales>> {
         return Single.fromCallable { arrayListOf<ProductSales>() }

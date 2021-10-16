@@ -41,6 +41,7 @@ import com.mazenrashed.printooth.utilities.PrintingCallback
 import com.streetbox.pos.R
 import com.streetbox.pos.async.AsyncBluetoothEscPosPrint
 import com.streetbox.pos.async.AsyncEscPosPrinter
+import com.streetbox.pos.ui.main.MainActivity
 import com.zeepos.models.ConstVar
 import com.zeepos.models.master.Tax
 import com.zeepos.models.master.User
@@ -173,9 +174,7 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
             }
             formatReceipt()
             printBluetooth()
-            Handler().postDelayed({
-                startActivity(context?.let { it1 -> ReceiptActivity.getIntent(it1) })
-            }, 2000)
+
 
         }
 
@@ -411,7 +410,7 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
         }
         val taxSales = if (order.taxSales.isNotEmpty()) order.taxSales[0] else null
         val taxName = taxSales?.name ?: ConstVar.EMPTY_STRING
-        if(taxSales == null){
+        if(taxSales == null || order.taxSales[0].isActive == false){
             subTot =  "[L]<b>Subtotal </b>" +"[R]"+ NumberUtil.formatToStringWithoutDecimal(order.orderBill[0].subTotal) + "\n"
             grandTot = "[L]<b>Grand Total </b>" + "[R]" +  NumberUtil.formatToStringWithoutDecimal(
                 order.orderBill[0].subTotal)+"\n"
@@ -474,6 +473,9 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
                 selectedDevice = bluetoothDevicesList[0]
                 AsyncBluetoothEscPosPrint(context).execute(getAsyncEscPosPrinter(selectedDevice))
 //                getAsyncEscPosPrinter(selectedDevice)
+                Handler().postDelayed({
+                    startActivity(context?.let { it1 -> ReceiptActivity.getIntent(it1) })
+                }, 2000)
 
             } catch (e: Exception) {
                 e.printStackTrace()

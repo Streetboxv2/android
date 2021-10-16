@@ -13,7 +13,6 @@ interface ProductSalesRepo {
     fun createProductSales(product: Product, order: Order, isMerge: Boolean): Single<ProductSales>
     fun updateOrRemoveProductSales(productSales: ProductSales): Completable
     fun updateProductSales(product: Product, order: Order): Completable
-    fun getProductSales(product: Product, order: Order): Single<ProductSales>
     fun getRecentOrder(): Single<List<ProductSales>>
     fun getByUniqueId(uniqueId: String): ProductSales?
     fun insertUpdate(productSales: ProductSales)

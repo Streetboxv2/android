@@ -15,7 +15,7 @@ class ProductSalesAdapter(data: MutableList<Order> = mutableListOf()) :
         holder.setText(R.id.tv_no_order_bill, "" + item.billNo)
         holder.setText(
             R.id.tv_createTime,
-            DateTimeUtil.getLocalDateWithFormat(item.createdAt, "dd/MM/YYYY hh:mm")
+            DateTimeUtil.getLocalDateWithFormat(item.createdAt, "dd/MM/YYYY HH:mm")
         )
 
     }

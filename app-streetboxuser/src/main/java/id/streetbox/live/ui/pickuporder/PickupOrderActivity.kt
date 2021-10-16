@@ -164,7 +164,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
                     tvQty: TextView
                 ) {
                     if (value > product.qty!!) {
-                        showToastExt("Maximal limited", this@PickupOrderActivity)
+                        showToastExt("Out of stock", this@PickupOrderActivity)
                     } else {
                         Hawk.put("saveAddressToko", foodTruck?.address)
                         val totalProduct = value * product.price
