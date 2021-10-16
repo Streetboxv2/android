@@ -1,8 +1,10 @@
 package com.zeepos.localstorage
 
+import android.widget.Toast
 import com.zeepos.domain.repository.OrderBillRepo
 import com.zeepos.domain.repository.OrderRepo
 import com.zeepos.domain.repository.ProductSalesRepo
+import com.zeepos.models.ConstVar
 import com.zeepos.models.factory.ObjectFactory
 import com.zeepos.models.master.Product
 import com.zeepos.models.transaction.Order
@@ -12,6 +14,7 @@ import io.objectbox.Box
 import io.objectbox.BoxStore
 import io.reactivex.Completable
 import io.reactivex.Single
+import io.reactivex.exceptions.Exceptions
 import javax.inject.Inject
 
 /**
@@ -59,7 +62,14 @@ class ProductSalesRepoImpl @Inject constructor(
                 productSales = ObjectFactory.createProductSales(product, order, orderBill)
             }
 
-            insertUpdate(productSales)
+
+            if(productSales.qty <= product.qty){
+                insertUpdate(productSales)
+            }else{
+                throw Exceptions.propagate(Throwable(ConstVar.DATA_NULL))
+            }
+
+
             getByUniqueId(productSales.uniqueId)
         }
     }
@@ -79,8 +89,16 @@ class ProductSalesRepoImpl @Inject constructor(
         }
     }
 
-    override fun getProductSales(product: Product, order: Order): Single<ProductSales> {
-        TODO("Not yet implemented")
+    override fun getProductSales(product: Product, order: Order): ProductSales {
+
+        var productSales: ProductSales?
+        productSales =
+            box.query()
+                .equal(ProductSales_.productId, product.id)
+                .equal(ProductSales_.orderUniqueId, order.uniqueId)
+                .build().findFirst()
+
+        return productSales!!
     }
 
 

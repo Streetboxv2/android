@@ -62,6 +62,7 @@ class MenuViewModel @Inject constructor(
         addDisposable(disposable)
     }
 
+
     fun getProduct(filter: String, merchantId: Long) {
         val disposable = getAllProductByMerchantIdUseCase.execute(
             GetAllProductByMerchantIdUseCase.Params(filter, merchantId)

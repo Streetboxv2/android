@@ -1,7 +1,9 @@
 package com.streetbox.pos.ui.main
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import com.streetbox.pos.ui.checkout.checkoutdetail.CheckoutDetailViewEvent
 import com.streetbox.pos.ui.receipts.ReceiptViewEvent
 import com.zeepos.domain.interactor.CreateSyncUseCase
 import com.zeepos.domain.interactor.GetAllTransactionSyncData
@@ -66,7 +68,13 @@ class MainViewModel @Inject constructor(
             createProductSalesUseCase.execute(CreateProductSalesUseCase.Params(product, order))
                 .subscribe({
                     productSalesObserver.value = it
-                }, { it.printStackTrace() })
+                }, {  it.message?.let { errorMessage ->
+                    viewEventObservable.postValue(
+                        MainViewEvent.OnAddItemFailed(
+                            errorMessage
+                        )
+                    )
+                } })
 
         addDisposable(disposable)
     }

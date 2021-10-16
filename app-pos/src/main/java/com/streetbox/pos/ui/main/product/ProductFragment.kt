@@ -26,6 +26,7 @@ import com.streetbox.pos.ui.receipts.ReceiptActivity
 import com.zeepos.models.ConstVar
 import com.zeepos.models.master.Product
 import com.zeepos.models.transaction.Order
+import com.zeepos.models.transaction.ProductSales
 import com.zeepos.ui_base.ui.BaseFragment
 import com.zeepos.utilities.SharedPreferenceUtil
 import kotlinx.android.synthetic.main.fragment_product.*
@@ -33,6 +34,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.lang.String
+import java.util.*
 
 
 /**
@@ -47,7 +49,8 @@ class ProductFragment : BaseFragment<ProductViewEvent, ProductViewModel>(),
     private var badgeCount: Int = 0
     private var tvOnlineCount: TextView? = null
     private var selectedDevice: BluetoothConnection? = null
-    private var qty:Int = 1
+    private lateinit var product:Product
+
 
     override fun initResourceLayout(): Int {
         return R.layout.fragment_product
@@ -102,36 +105,31 @@ class ProductFragment : BaseFragment<ProductViewEvent, ProductViewModel>(),
         }
         rcv_item?.setHasFixedSize(true)
 
-        mainViewModel?.productSalesObserver?.observe(this, Observer {
-
-            qty = it.qtyProduct
-        })
 
         productAdapter.setOnItemClickListener { adapter, _, position ->
-            val product = adapter.getItem(position) as Product
+             product = adapter.getItem(position) as Product
 
             mainViewModel?.addItem(product, order)
+
         }
     }
 
-
-    override fun onEvent(useCase: ProductViewEvent) {
+    override fun onEvent(useCase: ProductViewEvent) =
         when (useCase) {
-            is ProductViewEvent.GetAllProductsSuccess -> {
-                productAdapter.data.clear()
-                productAdapter.setList(useCase.products.sortedBy { it.name })
-                viewModel.getTax()
+        is ProductViewEvent.GetAllProductsSuccess -> {
+            productAdapter.data.clear()
+            productAdapter.setList(useCase.products.sortedBy { it.name })
+            viewModel.getTax()
 
-            }
-            is ProductViewEvent.GetSyncSuccess ->
-                Toast.makeText(context, "success", Toast.LENGTH_LONG).show()
-            is ProductViewEvent.GetAllTransactionSuccess -> {
-                Toast.makeText(context, "success", Toast.LENGTH_LONG).show()
-            }
-            is ProductViewEvent.GetOnlineOrderSuccess -> {
-            }
-            is ProductViewEvent.GetTaxSuccess -> {
-            }
+        }
+        is ProductViewEvent.GetSyncSuccess ->
+            Toast.makeText(context, "success", Toast.LENGTH_LONG).show()
+        is ProductViewEvent.GetAllTransactionSuccess -> {
+            Toast.makeText(context, "success", Toast.LENGTH_LONG).show()
+        }
+        is ProductViewEvent.GetOnlineOrderSuccess -> {
+        }
+        is ProductViewEvent.GetTaxSuccess -> {
         }
     }
 
@@ -152,7 +150,6 @@ class ProductFragment : BaseFragment<ProductViewEvent, ProductViewModel>(),
 //                }
 
                 R.id.action_sync -> {
-                    qty = 0
                     viewModel.getAllProductsCloud()
                     mainViewModel?.getRecentOrder()
 

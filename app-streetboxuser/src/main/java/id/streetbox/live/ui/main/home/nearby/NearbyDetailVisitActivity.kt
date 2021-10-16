@@ -25,6 +25,7 @@ import com.example.dbroom.db.room.AppDatabase
 import com.example.dbroom.db.room.enitity.MenuItemStore
 import com.zeepos.models.master.Tax
 import com.zeepos.models.transaction.TaxSales
+import com.zeepos.ui_base.ui.BaseViewEvent
 import com.zeepos.ui_base.views.GlideApp
 import com.zeepos.utilities.DateTimeUtil
 import id.streetbox.live.ui.menu.MenuAdapter
@@ -289,6 +290,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                 dismissLoading()
                 isGetOrderSuccess = true
                 order = useCase.order
+                viewModel.calculateOrder(order)
                 viewModel.getUserInfoCloud()
                 adapterMenu?.setProDuctSalesMap(useCase.order.productSales)
             }

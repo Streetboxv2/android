@@ -37,7 +37,7 @@ class OrderBillRepoImpl @Inject constructor(
     override fun calculateOrder(order: Order): Single<OrderBill> {
         return Single.fromCallable {
             var orderBill = getByOrderUniqueId(order.uniqueId)
-            val tax = boxTax.query().equal(Tax_.isActive, true).build().findFirst()
+            val tax = boxTax.query().build().findFirst()
 
             if (orderBill == null) {
                 orderBill = ObjectFactory.createOrderBill(order)

@@ -39,4 +39,5 @@ sealed class MenuViewEvent : BaseViewEvent {
     data class GetUserInfoFailed(val errorMessage: String) : MenuViewEvent()
     data class GetTaxSettingSuccess(val products: ResponseApi<TaxSales>) : MenuViewEvent()
 
+
 }

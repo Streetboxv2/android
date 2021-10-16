@@ -125,7 +125,7 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
             taxName = bundle.getString("taxName","")
             typeTax = bundle.getInt("taxType",0)
             taxAmount = bundle.getDouble("taxAmount",0.0)
-            isActive = bundle.getBoolean("isActive",false)
+            isActive = bundle.getBoolean("isActive",isActive)
             if (orderUniqueId.isNotEmpty()) {
                 viewModel?.getOrder(orderUniqueId)
             }
@@ -173,6 +173,10 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
             }
             formatReceipt()
             printBluetooth()
+            Handler().postDelayed({
+                startActivity(context?.let { it1 -> ReceiptActivity.getIntent(it1) })
+            }, 2000)
+
         }
 
         btn_void.setOnClickListener {
@@ -265,14 +269,19 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
         }
 
 
-        if(typeTax == 0){
-            tvTaxLabel.text = taxName+"(Excl)"
-            tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(subTotal - taxAmount)}"
-        }else{
-            tvTaxLabel.text = taxName+"(Incl"
-            tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(subTotal)}"
+        if(isActive == true) {
+            if (typeTax == 0) {
+                tvTaxLabel.text = taxName + "(Excl)"
+                tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(subTotal - taxAmount)}"
+            } else if (typeTax == 1) {
+                tvTaxLabel.text = taxName + "(Incl)"
+                tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(subTotal)}"
+            }
         }
-        tvTotalTax.text = "${NumberUtil.formatToStringWithoutDecimal(taxAmount)}"
+        else {
+            tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(subTotal)}"
+            tvTotalTax.text = "${NumberUtil.formatToStringWithoutDecimal(taxAmount)}"
+        }
 
 
 
@@ -431,6 +440,16 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
                         order.orderBill[0].subTotal + order.orderBill[0].totalTax
                     ) + "\n"
             }
+
+            taxTotal =
+                "[L]<b>" + taxName+ "(Incl)"+ "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
+                    order.orderBill[0].totalTax
+                ) + "\n"
+            grandTot =
+                "[L]<b>Grand Total </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
+                    order.orderBill[0].subTotal
+                ) + "\n"
+            subTot =  "[L]<b>Subtotal </b>" +"[R]"+ NumberUtil.formatToStringWithoutDecimal(order.orderBill[0].subTotal) + "\n"
         }
 
 
@@ -455,8 +474,6 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
                 selectedDevice = bluetoothDevicesList[0]
                 AsyncBluetoothEscPosPrint(context).execute(getAsyncEscPosPrinter(selectedDevice))
 //                getAsyncEscPosPrinter(selectedDevice)
-                Thread.sleep(2000)
-
 
             } catch (e: Exception) {
                 e.printStackTrace()

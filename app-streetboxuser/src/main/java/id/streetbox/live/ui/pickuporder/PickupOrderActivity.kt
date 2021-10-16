@@ -22,10 +22,13 @@ import com.zeepos.ui_base.ui.BaseActivity
 import com.zeepos.utilities.*
 import id.streetbox.live.R
 import id.streetbox.live.adapter.AdapterPickupOrderNearby
+import id.streetbox.live.ui.main.home.nearby.NearbyDetailVisitActivity
 import id.streetbox.live.ui.onclick.OnClickIncreaseOrderNearby
 import id.streetbox.live.ui.orderreview.pickup.PickUpOrderReviewViewModel
 import id.streetbox.live.ui.orderreview.pickup.PickupOrderReviewViewEvent
+
 import kotlinx.android.synthetic.main.activity_pickup_order.*
+import kotlinx.android.synthetic.main.activity_pickup_order.toolbar
 import kotlinx.android.synthetic.main.item_footer_pickup_order_review.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -68,6 +71,8 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
     override fun onViewReady(savedInstanceState: Bundle?) {
 
         initial()
+
+        toolbar.setNavigationOnClickListener { finish() }
     }
 
     private fun initial() {
@@ -224,11 +229,11 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
         tv_subtotal.text =
             NumberUtil.formatToStringWithoutDecimal(totalMenuItem)
 
-        if(typeTax < 1 && isActive == true){
+        if(typeTax == 0 && isActive == true){
             totalMenuItem = totalMenuItem + calculateTax
             taxName = taxName+"(Excl)"
 
-        }else{
+        }else if(typeTax == 1 && isActive == true){
             taxName = taxName+"(Incl)"
         }
 

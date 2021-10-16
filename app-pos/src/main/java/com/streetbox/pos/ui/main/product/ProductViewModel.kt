@@ -1,14 +1,18 @@
 package com.streetbox.pos.ui.main.product
 
+import com.streetbox.pos.ui.main.MainViewEvent
 import com.zeepos.domain.interactor.GetAllTransactionSyncData
 import com.zeepos.domain.interactor.GetOnlineOrderUseCase
 import com.zeepos.domain.interactor.GetTaxUseCase
 import com.zeepos.domain.interactor.product.GetAllProductCloudUseCase
 import com.zeepos.domain.interactor.product.GetAllProductUseCase
+import com.zeepos.domain.interactor.productsales.CreateProductSalesUseCase
 import com.zeepos.domain.repository.LocalPreferencesRepository
 import com.zeepos.domain.repository.OrderRepo
 import com.zeepos.domain.repository.SyncDataRepo
 import com.zeepos.models.entities.None
+import com.zeepos.models.master.Product
+import com.zeepos.models.transaction.Order
 import com.zeepos.ui_base.ui.BaseViewModel
 import javax.inject.Inject
 
@@ -23,8 +27,10 @@ class ProductViewModel @Inject constructor(
     private val getOnlineOrderUseCase: GetOnlineOrderUseCase,
     private val syncDataRepo: SyncDataRepo,
     private val orderRepo: OrderRepo,
-    private val getTaxUseCase: GetTaxUseCase
-) : BaseViewModel<ProductViewEvent>() {
+    private val getTaxUseCase: GetTaxUseCase,
+    private val createProductSalesUseCase: CreateProductSalesUseCase
+
+    ) : BaseViewModel<ProductViewEvent>() {
 
     fun getAllProducts() {
         val disposable = getAllProductUseCase.execute(None())
@@ -45,6 +51,9 @@ class ProductViewModel @Inject constructor(
         addDisposable(disposable)
 
     }
+
+
+
 
     fun getAllTransaction(){
 //        val disposable = getAllTransactionSyncData.execute(None()).subscribe({

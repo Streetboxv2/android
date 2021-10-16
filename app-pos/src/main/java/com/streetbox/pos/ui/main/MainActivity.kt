@@ -103,6 +103,10 @@ class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
                 "Open or Create Order Failed",
                 Toast.LENGTH_SHORT
             ).show()
+            is MainViewEvent.OnAddItemFailed -> {
+                Toast.makeText(this,"Out Of Stock",Toast.LENGTH_SHORT).show()
+            }
+
         }
         when (useCase) {
             is MainViewEvent.GetAllTransactionSuccess -> {

@@ -1,5 +1,6 @@
 package com.streetbox.pos.ui.main.product
 
+import com.streetbox.pos.ui.checkout.checkoutdetail.CheckoutDetailViewEvent
 import com.zeepos.models.entities.ResponseApi
 import com.zeepos.models.master.Product
 import com.zeepos.models.transaction.OnlineOrder
@@ -16,6 +17,5 @@ sealed class ProductViewEvent : BaseViewEvent {
     object GetSyncSuccess : ProductViewEvent()
     data class GetOnlineOrderSuccess(val onlineOrder: OnlineOrder) : ProductViewEvent()
     data class GetTaxSuccess(val products: ResponseApi<TaxSales>) : ProductViewEvent()
-
 
 }

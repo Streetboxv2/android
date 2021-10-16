@@ -129,6 +129,7 @@ class ReceiptActivity : BaseActivity<ReceiptViewEvent, ReceiptViewModel>() {
             val dialog = ReceiptDetailDialog()
             val bundle = Bundle()
 
+
             bundle.putString("orderUniqueId", order.uniqueId)
             bundle.putInt("taxType", order.taxSales[0].type)
             bundle.putDouble("taxAmount", order.taxSales[0].amount)

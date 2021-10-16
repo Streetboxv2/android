@@ -50,22 +50,16 @@ class  OrderFragment : BaseFragment<OrderViewEvent, OrderViewModel>() {
             if(orderAdapter.data.size == 0 ){
 
                 orderAdapter.addData(it)
-
-
             }
             else {
 
-                    orderAdapter.setList(order.productSales)
-
+                orderAdapter.setList(order.productSales)
             }
 
             tv_total_order_count?.text = "Count : ${orderAdapter.itemCount}"
 
-            if(it.qtyProduct < it.qty){
-                Toast.makeText(context,"Out of stock",Toast.LENGTH_SHORT).show()
-            }else {
-                viewModel.calculateOrder(order)
-            }
+            viewModel.calculateOrder(order)
+
             scrollOrderListToBottom()
         })
 
@@ -119,7 +113,6 @@ class  OrderFragment : BaseFragment<OrderViewEvent, OrderViewModel>() {
 
         orderAdapter.setOnItemChildClickListener { adapter, view, position ->
             var productSales = adapter.getItem(position) as ProductSales
-
             when (view.id) {
                 R.id.rl_remove -> {
                     if(productSales.qty > 1 ) {
@@ -176,7 +169,6 @@ class  OrderFragment : BaseFragment<OrderViewEvent, OrderViewModel>() {
 //                orderAdapter.setList(order.productSales)
             }
             OrderViewEvent.OnRemoveProductQtySuccess -> {
-
                     viewModel.calculateOrder(order)
                     orderAdapter . setList (order.productSales)
         }
