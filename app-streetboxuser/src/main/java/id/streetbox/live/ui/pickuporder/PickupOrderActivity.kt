@@ -70,7 +70,9 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
 
     override fun onViewReady(savedInstanceState: Bundle?) {
 
+
         initial()
+
 
         toolbar.setNavigationOnClickListener { finish() }
     }
@@ -100,7 +102,6 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
         btn_next.setOnClickListener {
             if (menuItemStoreList.isNotEmpty()) {
                 val notes = et_notes.text.toString()
-
 //            getOrder?.address = foodTruck?.address
                 getOrder?.note = notes
                 viewModel.updateOrder(getOrder!!)

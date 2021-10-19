@@ -56,6 +56,11 @@ class ProductFragment : BaseFragment<ProductViewEvent, ProductViewModel>(),
         return R.layout.fragment_product
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllProductsCloud()
+    }
+
     override fun init() {
         viewModel = ViewModelProvider(this, viewModeFactory).get(ProductViewModel::class.java)
 
@@ -68,7 +73,7 @@ class ProductFragment : BaseFragment<ProductViewEvent, ProductViewModel>(),
         })
 
         productAdapter = ProductAdapter()
-        viewModel.getAllProducts()
+        viewModel.getAllProductsCloud()
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {

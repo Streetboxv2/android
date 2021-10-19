@@ -61,11 +61,11 @@ class OrderBillRepoImpl @Inject constructor(
 
                 if (taxSalesDb == null) {
                      val taxSales = ObjectFactory.createTaxSales(tax, order)
-                    taxSales.amount = totalTax
+                    taxSales.amount = tax.amount
                     taxSales.type = tax.type
                     boxTaxSales.put(taxSales)
                 } else {
-                    taxSalesDb.amount = totalTax
+                    taxSalesDb.amount = tax.amount
                     taxSalesDb.type = tax.type
                     boxTaxSales.put(taxSalesDb)
                 }
@@ -84,6 +84,9 @@ class OrderBillRepoImpl @Inject constructor(
             if (tax != null) {
                 orderBill.taxType = tax.type
                 orderBill.taxName = tax.name ?: ConstVar.EMPTY_STRING
+                orderBill.totalTax = tax.amount
+                orderBill.grandTotal = order.grandTotal
+
             }
 
             box.put(orderBill)

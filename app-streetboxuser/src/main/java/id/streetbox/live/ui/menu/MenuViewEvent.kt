@@ -29,11 +29,8 @@ sealed class MenuViewEvent : BaseViewEvent {
     object UpdateProductSalesSuccess : MenuViewEvent()
     data class GetTaxSuccess(val tax: Tax) : MenuViewEvent()
     object GetTaxFailed : MenuViewEvent()
-    data class GetFoodTruckHomeVisitDataSuccess(val data: List<AvailableHomeVisitBookDate>) :
-        MenuViewEvent()
-
-    data class GetFoodTruckHomeVisitDataFailed(val errorMessage: String) :
-        MenuViewEvent()
+    data class GetFoodTruckHomeVisitDataSuccess(val data: List<AvailableHomeVisitBookDate>) : MenuViewEvent()
+    data class GetFoodTruckHomeVisitDataFailed(val errorMessage: String) : MenuViewEvent()
 
     data class GetUserInfoSuccess(val user: User) : MenuViewEvent()
     data class GetUserInfoFailed(val errorMessage: String) : MenuViewEvent()

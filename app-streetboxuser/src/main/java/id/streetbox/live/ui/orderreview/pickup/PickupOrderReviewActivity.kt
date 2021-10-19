@@ -40,7 +40,7 @@ class PickupOrderReviewActivity :
         object : PickUpOrderReviewAdapter.OnClickIncreasePickup {
             override fun ClickIncrease(productSales: ProductSales, value: Int, tvQty: TextView) {
                 if (value > productSales.qtyProduct) {
-                    showToastExt("Maximal Limited", this@PickupOrderReviewActivity)
+                    showToastExt("Out of Stock", this@PickupOrderReviewActivity)
                 } else {
                     tvQty.text = value.toString()
                     viewModel.updateOrRemoveProductSales(productSales)

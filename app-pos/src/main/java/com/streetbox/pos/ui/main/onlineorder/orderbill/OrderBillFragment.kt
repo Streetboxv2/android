@@ -174,23 +174,24 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
 
                 type = taxSales?.type ?: 1
                 val nameTax = taxSales?.name ?: ConstVar.EMPTY_STRING
-
-                if (taxSales == null) {
+                var calculate:Double = 0.0
+                calculate = (order!!.taxSales[0].amount/100)* order!!.grandTotal
+                if (taxSales == null || order!!.taxSales[0].isActive == false) {
                     tv_taxLabel.visibility = View.GONE
                     tv_tax.visibility = View.GONE
                     tv_grand_total.setText("" + NumberUtil.formatToStringWithoutDecimal(order!!.grandTotal))
                 } else {
-                    if (type < 1) {
+                    if (type == 0) {
                         tv_taxLabel.visibility = View.VISIBLE
                         tv_tax.visibility = View.VISIBLE
                         tv_taxLabel.setText(nameTax + "(Excl.)")
-                        tv_tax.setText("" + NumberUtil.formatToStringWithoutDecimal(order!!.orderBill[0].totalTax))
-                        tv_grand_total.setText("" + NumberUtil.formatToStringWithoutDecimal(order!!.grandTotal + tax))
-                    } else {
+                        tv_tax.setText("" + NumberUtil.formatToStringWithoutDecimal(calculate))
+                        tv_grand_total.setText("" + NumberUtil.formatToStringWithoutDecimal(order!!.grandTotal + calculate))
+                    } else if(type == 1) {
                         tv_taxLabel.visibility = View.VISIBLE
                         tv_tax.visibility = View.VISIBLE
                         tv_taxLabel.setText(nameTax + "(Incl.)")
-                        tv_tax.setText("" + NumberUtil.formatToStringWithoutDecimal(order!!.orderBill[0].totalTax))
+                        tv_tax.setText("" + NumberUtil.formatToStringWithoutDecimal(calculate))
                         tv_grand_total.setText("" + NumberUtil.formatToStringWithoutDecimal(order!!.grandTotal))
                     }
                 }
@@ -276,7 +277,7 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
             showLoading()
              formatReceipt()
              printBluetooth()
-
+//            trxId?.let { it1 -> viewModel.closeOnlineOrder(it1) }
         }
 
         }
@@ -360,26 +361,28 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
                 order!!.grandTotal)+"\n"
 
         }else{
+            var calculate:Double = 0.0
+            calculate = (order!!.taxSales[0].amount/100)* order!!.grandTotal
             subTot =
-                "[L]<b>Subtotal </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(order!!.orderBill[0].subTotal) + "\n"
-            if (type < 1) {
+                "[L]<b>Subtotal </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(order!!.grandTotal) + "\n"
+            if (type == 0) {
                 taxTotal =
                     "[L]<b>" + taxName + "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
-                        order!!.orderBill[0].totalTax
+                        calculate
                     ) + "\n"
                 grandTot =
                     "[L]<b>Grand Total </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
-                        order!!.orderBill[0].subTotal + order!!.orderBill[0].totalTax
+                        order!!.grandTotal + calculate
                     ) + "\n"
 
-            }else{
+            }else if(type == 1){
                 taxTotal =
                     "[L]<b>" + taxName + "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
-                        order!!.orderBill[0].totalTax
+                        calculate
                     ) + "\n"
                 grandTot =
                     "[L]<b>Grand Total </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
-                        order!!.orderBill[0].subTotal
+                        order!!.grandTotal
                     ) + "\n"
             }
         }

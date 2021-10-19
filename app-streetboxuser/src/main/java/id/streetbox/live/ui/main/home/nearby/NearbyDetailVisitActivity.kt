@@ -245,6 +245,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
         initHeaderProduct()
 
         tv_pickup.setOnClickListener {
+
             val bundle = Bundle()
             bundle.putString("foodTruckData", gson.toJson(foodTruck))
             bundle.putString("tax",gson.toJson(tax))
@@ -290,8 +291,9 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                 dismissLoading()
                 isGetOrderSuccess = true
                 order = useCase.order
-                viewModel.calculateOrder(order)
+                order.grandTotal = total
                 viewModel.getUserInfoCloud()
+                viewModel.calculateOrder(order)
                 adapterMenu?.setProDuctSalesMap(useCase.order.productSales)
             }
             is MenuViewEvent.GetUserInfoSuccess -> {

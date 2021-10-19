@@ -447,14 +447,14 @@ class RemoteRepositoryImpl @Inject internal constructor(
         return service.callBlastAutoToggle()
     }
 
-    override fun callApiPaymentNearby(
+   /* override fun callApiPaymentNearby(
         merchantId: Long,
         amount: Int,
         address: String,
         types: String
     ): Single<ResponseApi<QRCodeResponse>> {
         return service.getQRCodePayment(merchantId, amount, types, address)
-    }
+    }*/
 
 
     /*override fun getOperatorTask(): Single<ResponseApi<List<OperatorTask>>> {

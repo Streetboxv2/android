@@ -16,6 +16,7 @@ interface PaymentMethodRepo {
         merchantId: Long?,
         amount: Double,
         type: String,
-        order: Order
+        order: Order,
+        orderJson:String
     ): Single<QRCodeResponse>
 }

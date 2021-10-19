@@ -99,12 +99,13 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
                         val idMerchant = foodTruck?.merchantId
 
                         bookHomeVisit!!.paymentMethodId = selectedPayment.id
-
+                          val orderJson =  gson.toJson(order)
                         viewModel.getQRCodePayment(
                             idMerchant!!,
                             bookHomeVisit!!.grandTotal.toDouble(),
                             ConstVar.TRANSACTION_TYPE_VISIT,
-                            order
+                            order,
+                            orderJson
                         )
                     } else {
 
@@ -197,11 +198,13 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
         }
         PaymentViewEvent.CloseOrderSuccess -> {
             val merchanId = order.merchantId
+            val orderJson =  gson.toJson(order.productSales)
             viewModel.getQRCodePayment(
                 merchanId,
                 grandTotal,
                 ConstVar.TRANSACTION_TYPE_ORDER,
-                order
+                order,
+                orderJson
             )
         }
     }

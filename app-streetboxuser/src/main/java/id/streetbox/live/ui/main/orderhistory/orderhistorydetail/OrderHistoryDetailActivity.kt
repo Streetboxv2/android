@@ -120,6 +120,8 @@ class OrderHistoryDetailActivity :
         )?.time ?: 0
 
         tvTrxGrandTotal.text = "${NumberUtil.formatToStringWithoutDecimal(orderHistory.amount)}"
+        val taxType =
+            orderHistory.detail?.paymentDetails?.taxType ?: ConstVar.TAX_TYPE_EXCLUSIVE
         tvTrxNumber.text = "${orderHistory.trxId}"
         tvAddress.text = orderHistory.address
         tvName.text = orderHistory.merchantName
@@ -159,11 +161,22 @@ class OrderHistoryDetailActivity :
         val tvNote = view.findViewById<TextView>(R.id.tv_note)
         val tvPhone = view.findViewById<TextView>(R.id.tv_phone)
         val ivQr = view.findViewById<ImageView>(R.id.iv_qr)
-
-        if (orderHistory.types.equals("ORDER")) {
-            tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(orderHistory.amount)}"
-            tvTotalPayment.text =
-                "${NumberUtil.formatToStringWithoutDecimal(orderHistory.amount)}"
+        val taxType =
+            orderHistory.detail?.paymentDetails?.taxType ?: ConstVar.TAX_TYPE_EXCLUSIVE
+        val totalTax: Double = orderHistory.detail?.paymentDetails?.tax ?: 0.0
+        val calculate:Double = (totalTax/100) * orderHistory.detail?.paymentDetails?.total!!
+        if (orderHistory.types.equals("ORDER") && orderHistory.detail?.paymentDetails?.isActive == true) {
+            if(taxType == 0){
+                tvTotalTax.text = "${NumberUtil.formatToStringWithoutDecimal(calculate)}"
+                tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(orderHistory.detail?.paymentDetails?.total!!)}"
+                tvTotalPayment.text =
+                    "${NumberUtil.formatToStringWithoutDecimal(orderHistory.detail?.paymentDetails?.total!! + calculate)}"
+            }else if(taxType == 1) {
+                tvTotalTax.text = "${NumberUtil.formatToStringWithoutDecimal(calculate)}"
+                tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(orderHistory.amount)}"
+                tvTotalPayment.text =
+                    "${NumberUtil.formatToStringWithoutDecimal(orderHistory.amount)}"
+            }
         } else {
             tvTotalPayment.text =
                 "${NumberUtil.formatToStringWithoutDecimal(orderHistory.detail?.paymentDetails?.total!!)}"
@@ -171,13 +184,15 @@ class OrderHistoryDetailActivity :
                 "${NumberUtil.formatToStringWithoutDecimal(orderHistory.detail?.paymentDetails?.subtotal!!)}"
         }
 
-        val totalTax: Double = orderHistory.detail?.paymentDetails?.tax ?: 0.0
-        val taxType =
-            orderHistory.detail?.paymentDetails?.taxType ?: ConstVar.TAX_TYPE_EXCLUSIVE
+
+
+
+
         val taxTypeDisplay =
             if (taxType == ConstVar.TAX_TYPE_EXCLUSIVE) ConstVar.TAX_TYPE_EXCLUSIVE_DISPLAY else ConstVar.TAX_TYPE_INCLUSIVE_DISPLAY
 
-        tvTotalTax.text = "${NumberUtil.formatToStringWithoutDecimal(totalTax)}"
+
+
 
         tvPaymentName.text = "${orderHistory.detail?.paymentName}"
         tvTaxLabel.text = "${orderHistory.detail?.paymentDetails?.taxName} ($taxTypeDisplay)"
@@ -186,10 +201,10 @@ class OrderHistoryDetailActivity :
 
         Linkify.addLinks(tvPhone, Linkify.PHONE_NUMBERS)
 
-        if (totalTax <= 0) {
+       /* if (totalTax <= 0) {
             tvTotalTax.visibility = View.INVISIBLE
             tvTaxLabel.visibility = View.INVISIBLE
-        }
+        }*/
 
         if (orderHistory.status == ConstVar.PAYMENT_STATUS_PENDING) {
             val content = orderHistory.qrCode ?: ConstVar.EMPTY_STRING

@@ -42,17 +42,19 @@ interface RemoteService {
         @Field("merchant_id") merchantId: Long?,
         @Field("amount") amount: Int,
         @Field("types") types: String,
-        @Field("address") address: String
+        @Field("address") address: String,
+        @Field("order") order: Order,
+        @Field("orderJson") orderJson: String
     ): Single<ResponseApi<QRCodeResponse>>
 
-    @FormUrlEncoded
+   /* @FormUrlEncoded
     @POST("payment/create-qrcode")
     fun getQRCodePaymentNearby(
         @Field("merchant_id") merchantId: Long?,
         @Field("amount") amount: Int,
         @Field("types") types: String,
         @Field("address") address: String
-    ): Single<QRCodeResponse>
+    ): Single<QRCodeResponse>*/
 
 
     @POST("trx/order")

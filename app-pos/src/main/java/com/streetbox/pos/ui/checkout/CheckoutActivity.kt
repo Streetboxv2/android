@@ -56,7 +56,8 @@ class CheckoutActivity : BaseActivity<CheckoutViewEvent, CheckoutViewModel>() {
                 val tax =  NumberUtil.formatToStringWithoutDecimal(""+useCase.order.orderBill.get(0).totalTax)
                 val taxSales = if (useCase.order.taxSales.isNotEmpty()) useCase.order.taxSales[0] else null
                 val type = taxSales?.type ?: 1
-
+                var calculate:Double = 0.0
+                calculate = (useCase.order.orderBill.get(0).totalTax/100) * useCase.order.orderBill.get(0).subTotal
                 val nameTax = taxSales?.name?: ConstVar.EMPTY_STRING
                 if(taxSales == null || taxSales.isActive == false){
                     tv_resTax.visibility = View.GONE
@@ -68,15 +69,15 @@ class CheckoutActivity : BaseActivity<CheckoutViewEvent, CheckoutViewModel>() {
                         tv_resTax.visibility = View.VISIBLE
                         tv_tax.visibility = View.VISIBLE
                         tv_tax.setText(nameTax + "(Inclusive)")
-                        tv_resTax.setText("" + tax)
+                        tv_resTax.setText(NumberUtil.formatToStringWithoutDecimal(calculate))
                         val grantTotal = useCase.order.orderBill.get(0).subTotal
                         tv_resGrandTotal.setText(NumberUtil.formatToStringWithoutDecimal("" + grantTotal))
                     } else if (type == 0) {
                         tv_tax.visibility = View.VISIBLE
                         tv_tax.setText(nameTax + "(Exclusive)")
-                        tv_resTax.setText("" + tax)
+                        tv_resTax.setText(NumberUtil.formatToStringWithoutDecimal(calculate))
                         val grantTotal =
-                            useCase.order.orderBill.get(0).subTotal + useCase.order.orderBill.get(0).totalTax
+                            useCase.order.orderBill.get(0).subTotal + calculate
                         tv_resGrandTotal.setText(NumberUtil.formatToStringWithoutDecimal("" + grantTotal))
                     }
                 }

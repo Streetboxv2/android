@@ -41,7 +41,7 @@ class PaymentViewModel @Inject constructor(
         addDisposable(disposable)
     }
 
-    fun getQrPaymentNearby(
+    /*fun getQrPaymentNearby(
         merchantId: Long,
         amount: Int,
         address: String,
@@ -65,16 +65,17 @@ class PaymentViewModel @Inject constructor(
                 )
             })
         addDisposable(disposable)
-    }
+    }*/
 
-    fun getQRCodePayment(merchantId: Long?, amount: Double, type: String, order: Order) {
+    fun getQRCodePayment(merchantId: Long?, amount: Double, type: String, order: Order,orderJson:String) {
         val disposable =
             getQRCodePaymentUseCase.execute(
                 GetQRCodePaymentUseCase.Params(
                     merchantId,
                     amount,
                     type,
-                    order
+                    order,
+                    orderJson
                 )
             )
                 .subscribe({

@@ -90,6 +90,7 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
     private var taxName:String = ConstVar.EMPTY_STRING
     private var taxAmount:Double = 0.0
     private var isActive:Boolean = false
+    var calculate:Double = 0.0
 
 
 
@@ -174,6 +175,10 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
             }
             formatReceipt()
             printBluetooth()
+            Handler().postDelayed({
+               dismiss()
+            }, 3000)
+
 
 
         }
@@ -265,26 +270,32 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
         val paymentMethod = (paymentSales?.name ?: order?.typePayment ?: "-") + " - " + order?.typeOrder
         if(order.typeOrder.equals("Online")){
             order.createdAt = order.dateCreated
+
         }
 
-
+       calculate = (taxAmount/100) * subTotal
+        val a:Double = order.orderBill[0].subTotal
         if(isActive == true) {
             if (typeTax == 0) {
+                tvTotalTax.text = "${NumberUtil.formatToStringWithoutDecimal(calculate)}"
                 tvTaxLabel.text = taxName + "(Excl)"
-                tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(subTotal - taxAmount)}"
+                tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(subTotal - calculate )}"
+                tvTotalPayment.text = "${NumberUtil.formatToStringWithoutDecimal(totalPayment)}"
             } else if (typeTax == 1) {
                 tvTaxLabel.text = taxName + "(Incl)"
                 tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(subTotal)}"
+                tvTotalTax.text = "${NumberUtil.formatToStringWithoutDecimal(calculate)}"
+                tvTotalPayment.text = "${NumberUtil.formatToStringWithoutDecimal(totalPayment )}"
             }
         }
         else {
-            tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(subTotal)}"
-            tvTotalTax.text = "${NumberUtil.formatToStringWithoutDecimal(taxAmount)}"
+            tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(subTotal - calculate)}"
+            tvTotalPayment.text = "${NumberUtil.formatToStringWithoutDecimal(totalPayment - calculate)}"
         }
 
 
 
-        tvTotalPayment.text = "${NumberUtil.formatToStringWithoutDecimal(totalPayment)}"
+
         tvPaymentName.text = "$paymentMethod"
 //        tvTaxLabel.text = "${taxSales?.name} ($taxTypeDisplay)"
 
@@ -410,45 +421,40 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
         }
         val taxSales = if (order.taxSales.isNotEmpty()) order.taxSales[0] else null
         val taxName = taxSales?.name ?: ConstVar.EMPTY_STRING
+        val grandTotal = order.grandTotal
+        calculate =  (order.taxSales[0].amount/100) * grandTotal
         if(taxSales == null || order.taxSales[0].isActive == false){
-            subTot =  "[L]<b>Subtotal </b>" +"[R]"+ NumberUtil.formatToStringWithoutDecimal(order.orderBill[0].subTotal) + "\n"
+            subTot =  "[L]<b>Subtotal </b>" +"[R]"+ NumberUtil.formatToStringWithoutDecimal(order.grandTotal - calculate) + "\n"
             grandTot = "[L]<b>Grand Total </b>" + "[R]" +  NumberUtil.formatToStringWithoutDecimal(
-                order.orderBill[0].subTotal)+"\n"
+                order.grandTotal)+"\n"
 
-        }else{
+        }else if( order.taxSales[0].isActive == true){
 
-            if (type == 0) {
+
+            if (type == 1) {
                 taxTotal =
                     "[L]<b>" + taxName+ "(Incl)"+ "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
-                        order.orderBill[0].totalTax
+                        calculate
                     ) + "\n"
                 grandTot =
                     "[L]<b>Grand Total </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
-                        order.orderBill[0].subTotal
+                       grandTotal
                     ) + "\n"
-                subTot =  "[L]<b>Subtotal </b>" +"[R]"+ NumberUtil.formatToStringWithoutDecimal(order.orderBill[0].subTotal) + "\n"
+                subTot =  "[L]<b>Subtotal </b>" +"[R]"+ NumberUtil.formatToStringWithoutDecimal(order.grandTotal) + "\n"
 
-            }else{
+            }else if (type == 0){
                 taxTotal =
                     "[L]<b>" + taxName +"(Excl)"+ "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
-                        order.orderBill[0].totalTax
+                        calculate
                     ) + "\n"
-                subTot =  "[L]<b>Subtotal </b>" +"[R]"+ NumberUtil.formatToStringWithoutDecimal((order.orderBill[0].subTotal) ) + "\n"
+                subTot =  "[L]<b>Subtotal </b>" +"[R]"+ NumberUtil.formatToStringWithoutDecimal((grandTotal - calculate) ) + "\n"
                 grandTot =
                     "[L]<b>Grand Total </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
-                        order.orderBill[0].subTotal + order.orderBill[0].totalTax
+                        grandTotal
                     ) + "\n"
             }
 
-            taxTotal =
-                "[L]<b>" + taxName+ "(Incl)"+ "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
-                    order.orderBill[0].totalTax
-                ) + "\n"
-            grandTot =
-                "[L]<b>Grand Total </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
-                    order.orderBill[0].subTotal
-                ) + "\n"
-            subTot =  "[L]<b>Subtotal </b>" +"[R]"+ NumberUtil.formatToStringWithoutDecimal(order.orderBill[0].subTotal) + "\n"
+
         }
 
 
@@ -473,9 +479,6 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
                 selectedDevice = bluetoothDevicesList[0]
                 AsyncBluetoothEscPosPrint(context).execute(getAsyncEscPosPrinter(selectedDevice))
 //                getAsyncEscPosPrinter(selectedDevice)
-                Handler().postDelayed({
-                    startActivity(context?.let { it1 -> ReceiptActivity.getIntent(it1) })
-                }, 2000)
 
             } catch (e: Exception) {
                 e.printStackTrace()

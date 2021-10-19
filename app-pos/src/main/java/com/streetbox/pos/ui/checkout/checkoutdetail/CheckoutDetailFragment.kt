@@ -93,6 +93,7 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
 
     private var printContent: String = ""
     private var printKitchenContent: String = ""
+    private var calculate:Double = 0.0
 
 
     /*==============================================================================================
@@ -169,11 +170,13 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
             isCashPayment = false
 //            viewModel.closeOrder(order.uniqueId)
             order.address = "Address"
+            val orderJson = gson.toJson(order)
             viewModel.getQRCodePayment(
                 order.merchantId,
                 grandTotal!!,
                 ConstVar.TRANSACTION_TYPE_ORDER,
-                order
+                order,
+                orderJson
             )
 
 
@@ -247,16 +250,18 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
                     if (useCase.order.taxSales.isNotEmpty()) useCase.order.taxSales[0] else null
 
                 type = taxSales?.type ?: 1
-                if (taxSales == null) {
+                var calculate:Double = 0.0
+                calculate = (order.taxSales[0].amount/100) * order.grandTotal
+                if (taxSales == null || order.taxSales[0].isActive == false) {
                     grandTotal =
                         useCase.order.orderBill.get(0).subTotal
-                } else {
-                    if (type == 1) {
+                } else if(order.taxSales[0].isActive == true){
+                    if (type == 0) {
+                        grandTotal =
+                            useCase.order.orderBill.get(0).subTotal + calculate
+                    } else if(type == 1) {
                         grandTotal =
                             useCase.order.orderBill.get(0).subTotal
-                    } else {
-                        grandTotal =
-                            useCase.order.orderBill.get(0).subTotal + useCase.order.orderBill.get(0).totalTax
                     }
                 }
                 val subtotal =
@@ -288,6 +293,7 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
                 val data: HashMap<String, Any> = hashMapOf()
                 order.createdAt = DateTimeUtil.getCurrentDateTime()
                 order.updatedAt = DateTimeUtil.getCurrentDateTime()
+                order.grandTotal = grandTotal!!
                 data["order"] = order
                 data["orderBills"] = order.orderBill
                 data["productSales"] = order.productSales
@@ -383,7 +389,9 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
         }
         val taxSales = if (order.taxSales.isNotEmpty()) order.taxSales[0] else null
         val taxName = taxSales?.name ?: ConstVar.EMPTY_STRING
-        if (taxSales == null) {
+        var calculate:Double = 0.0
+        calculate = (order.taxSales[0].amount/100) *  order.orderBill[0].subTotal
+        if (taxSales == null || order.taxSales[0].isActive == false) {
             subTot =
                 "[L]<b>Subtotal </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(order.orderBill[0].subTotal) + "\n"
             grandTot = "[L]<b>Grand Total </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
@@ -393,20 +401,20 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
         } else {
             subTot =
                 "[L]<b>Subtotal </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(order.orderBill[0].subTotal) + "\n"
-            if (type < 1) {
+            if (type == 0 ) {
                 taxTotal =
                     "[L]<b>" + taxName + "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
-                        order.orderBill[0].totalTax
+                        calculate
                     ) + "\n"
                 grandTot =
                     "[L]<b>Grand Total </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
-                        order.orderBill[0].subTotal + order.orderBill[0].totalTax
+                        order.orderBill[0].subTotal + calculate
                     ) + "\n"
 
-            }else{
+            }else  if(type == 1){
                 taxTotal =
                     "[L]<b>" + taxName + "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
-                        order.orderBill[0].totalTax
+                        calculate
                     ) + "\n"
                 grandTot =
                     "[L]<b>Grand Total </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
@@ -437,8 +445,16 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
             cashAmount = et_cash_amount.text.toString().toDouble()
         }
 
-        cashChange = cashAmount!! - grandTotal!!
-
+        if(order.taxSales[0].isActive == true){
+            if(order.taxSales[0].type == 0){
+                calculate = (order.taxSales[0].amount/100) * order.grandTotal!!
+                cashChange = cashAmount!! - order.grandTotal!! - calculate
+            }else{
+                cashChange = cashAmount!! - order.grandTotal!!
+            }
+        }else{
+            cashChange = cashAmount!! - order.grandTotal!!
+        }
 
         formatReceipt()
         printBluetooth()

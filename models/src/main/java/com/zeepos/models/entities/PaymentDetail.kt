@@ -9,4 +9,5 @@ class PaymentDetail {
     var taxName: String? = "Tax"
     var taxType: Int = 0
     var subtotal: Double = 0.0
+    var isActive:Boolean = false
 }

@@ -71,10 +71,11 @@ class PaymentMethodRepoImpl @Inject constructor(
         merchantId: Long?,
         amount: Double,
         type: String,
-        order: Order
+        order: Order,
+        orderJson:String
     ): Single<QRCodeResponse> {
         val address = order.address ?: ConstVar.EMPTY_STRING
-        return service.getQRCodePayment(merchantId, amount.toInt(), type, address)
+        return service.getQRCodePayment(merchantId, amount.toInt(), type, address,order,orderJson)
             .onErrorResumeNext {
                 Single.error {
                     RetrofitException.handleRetrofitException(it, retrofit)

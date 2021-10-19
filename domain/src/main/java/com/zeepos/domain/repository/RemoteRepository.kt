@@ -62,9 +62,9 @@ interface RemoteRepository {
     fun callApiGetLocFoodtruck(id: String): Single<ResponseGetLocFoodTruck>
     fun callApiAutoBlastToggle(): Single<JsonObject>
 
-    fun callApiPaymentNearby(
+  /*  fun callApiPaymentNearby(
         merchantId: Long, amount: Int,
         address: String, types: String
-    ): Single<ResponseApi<QRCodeResponse>>
+    ): Single<ResponseApi<QRCodeResponse>>*/
 
 }
