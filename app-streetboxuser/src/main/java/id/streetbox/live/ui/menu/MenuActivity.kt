@@ -187,6 +187,10 @@ class MenuActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
             bundle.putString("menulist", gson.toJson(order.productSales))
             bundle.putDouble("total", total)
             bundle.putInt("qty", qtyItems)
+            bundle.putString("taxName", order.orderBill[0].taxName)
+            bundle.putInt("taxType",order.orderBill[0].taxType)
+            bundle.putDouble("totalTax",order.taxSales[0].amount)
+            bundle.putBoolean("isActive",order.taxSales[0].isActive)
             bundle.putString("order", gson.toJson(order))
 
             val intent = Intent(this, PickupOrderActivity::class.java)

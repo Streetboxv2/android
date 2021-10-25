@@ -449,8 +449,7 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
 
         if(order.taxSales[0].isActive == true){
             if(order.taxSales[0].type == 0){
-                calculate = order.orderBill[0].totalTax
-                cashChange = cashAmount!! - grandTotal!! - calculate
+                cashChange = cashAmount!! - grandTotal!!
             }else{
                 cashChange = cashAmount!! - grandTotal!!
             }
