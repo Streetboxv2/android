@@ -37,7 +37,6 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
 
     private lateinit var paymentAdapter: PaymentAdapter
     private lateinit var order: Order
-    private lateinit var tax: Tax
     private var foodTruck: FoodTruck? = null
     private var bookHomeVisit: BookHomeVisit? = null
     var grandTotal: Double = 0.0
@@ -58,10 +57,8 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
         println("respon Grand total $grandTotal")
 
         val foodTruckStr = bundle?.getString("foodTruckData", ConstVar.EMPTY_STRING)
+        foodTruck = gson.fromJson(foodTruckStr, FoodTruck::class.java)
         val bookedDataStr = bundle?.getString("bookedData", ConstVar.EMPTY_STRING)
-
-        val taxStr = bundle?.getString("tax",ConstVar.EMPTY_STRING)
-            tax = gson.fromJson(foodTruckStr, Tax::class.java)
 
         if (bookedDataStr != null)
             bookHomeVisit = gson.fromJson(bookedDataStr, BookHomeVisit::class.java)

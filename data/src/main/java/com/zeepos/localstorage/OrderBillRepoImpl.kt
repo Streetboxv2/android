@@ -84,7 +84,7 @@ class OrderBillRepoImpl @Inject constructor(
             if (tax != null) {
                 orderBill.taxType = tax.type
                 orderBill.taxName = tax.name ?: ConstVar.EMPTY_STRING
-                orderBill.totalTax = tax.amount
+                orderBill.totalTax = totalTax
                 orderBill.grandTotal = order.grandTotal
 
             }

@@ -17,6 +17,7 @@ import id.streetbox.live.R
 import id.streetbox.live.adapter.AdapterPickupOrderNearby
 import com.example.dbroom.db.room.AppDatabase
 import com.example.dbroom.db.room.enitity.MenuItemStore
+import com.zeepos.models.ConstVar
 import com.zeepos.utilities.hideView
 import com.zeepos.utilities.showToastExt
 import com.zeepos.utilities.showView
@@ -38,6 +39,10 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
     var getSaveCart: String? = ""
     var menuItemStoreList: List<MenuItemStore> = mutableListOf()
     var adapterMenuChoiceOrder: AdapterPickupOrderNearby? = null
+    var typesTax:Int = 0
+    var taxName:String = ConstVar.EMPTY_STRING
+    var totalTax:Double = 0.0
+    var isActive:Boolean =  false
 
     @Inject
     lateinit var gson: Gson
@@ -88,6 +93,11 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
             bundle.putDouble("total", total)
             bundle.putInt("qty", qtyItems)
             bundle.putString("order", gson.toJson(order))
+            bundle.putString("taxName", taxName)
+            bundle.putInt("taxType",typesTax)
+            bundle.putDouble("totalTax",totalTax)
+            bundle.putBoolean("isActive",isActive)
+
 
             val intent = Intent(requireContext(), PickupOrderActivity::class.java)
                 .putExtras(bundle)
@@ -110,10 +120,17 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
             is CartViewEvent.GetCartDataSuccess -> {
                 swipe_refresh.isRefreshing = false
                 order = useCase.data
+                viewModel.getMerchantTax(order.merchantId)
                 cartAdapter.setList(order.productSales)
 
             }
             CartViewEvent.NoDataInCart -> swipe_refresh.isRefreshing = false
+            is CartViewEvent.GetTaxSuccess -> {
+                taxName = useCase.tax.name!!
+                typesTax = useCase.tax.type
+                totalTax = useCase.tax.amount
+                isActive = useCase.tax.isActive
+            }
         }
     }
 

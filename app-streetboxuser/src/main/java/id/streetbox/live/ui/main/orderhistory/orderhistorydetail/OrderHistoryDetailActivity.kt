@@ -163,6 +163,9 @@ class OrderHistoryDetailActivity :
         val ivQr = view.findViewById<ImageView>(R.id.iv_qr)
         val taxType =
             orderHistory.detail?.paymentDetails?.taxType ?: ConstVar.TAX_TYPE_EXCLUSIVE
+        val taxTypeDisplay =
+            if (taxType == ConstVar.TAX_TYPE_EXCLUSIVE) ConstVar.TAX_TYPE_EXCLUSIVE_DISPLAY else ConstVar.TAX_TYPE_INCLUSIVE_DISPLAY
+
         val totalTax: Double = orderHistory.detail?.paymentDetails?.tax ?: 0.0
         val calculate:Double = (totalTax/100) * orderHistory.detail?.paymentDetails?.total!!
         if (orderHistory.types.equals("ORDER") && orderHistory.detail?.paymentDetails?.isActive == true) {
@@ -171,31 +174,27 @@ class OrderHistoryDetailActivity :
                 tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(orderHistory.detail?.paymentDetails?.total!!)}"
                 tvTotalPayment.text =
                     "${NumberUtil.formatToStringWithoutDecimal(orderHistory.detail?.paymentDetails?.total!! + calculate)}"
+                tvTaxLabel.text = "${orderHistory.detail?.paymentDetails?.taxName} ($taxTypeDisplay)"
             }else if(taxType == 1) {
                 tvTotalTax.text = "${NumberUtil.formatToStringWithoutDecimal(calculate)}"
                 tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(orderHistory.amount)}"
                 tvTotalPayment.text =
                     "${NumberUtil.formatToStringWithoutDecimal(orderHistory.amount)}"
+                tvTaxLabel.text = "${orderHistory.detail?.paymentDetails?.taxName} ($taxTypeDisplay)"
+
             }
         } else {
             tvTotalPayment.text =
                 "${NumberUtil.formatToStringWithoutDecimal(orderHistory.detail?.paymentDetails?.total!!)}"
             tvSubtotal.text =
-                "${NumberUtil.formatToStringWithoutDecimal(orderHistory.detail?.paymentDetails?.subtotal!!)}"
+                "${NumberUtil.formatToStringWithoutDecimal(orderHistory.detail?.paymentDetails?.total!!)}"
+            tvTaxLabel.visibility = View.GONE
         }
 
 
 
-
-
-        val taxTypeDisplay =
-            if (taxType == ConstVar.TAX_TYPE_EXCLUSIVE) ConstVar.TAX_TYPE_EXCLUSIVE_DISPLAY else ConstVar.TAX_TYPE_INCLUSIVE_DISPLAY
-
-
-
-
         tvPaymentName.text = "${orderHistory.detail?.paymentName}"
-        tvTaxLabel.text = "${orderHistory.detail?.paymentDetails?.taxName} ($taxTypeDisplay)"
+
         tvPhone.text = orderHistory.phone
         tvNote.text = orderHistory.notes
 

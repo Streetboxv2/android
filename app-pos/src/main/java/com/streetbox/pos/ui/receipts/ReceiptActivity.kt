@@ -132,7 +132,7 @@ class ReceiptActivity : BaseActivity<ReceiptViewEvent, ReceiptViewModel>() {
 
             bundle.putString("orderUniqueId", order.uniqueId)
             bundle.putInt("taxType", order.taxSales[0].type)
-            bundle.putDouble("taxAmount", order.taxSales[0].amount)
+            bundle.putDouble("taxAmount", order.orderBill[0].totalTax)
             bundle.putString("taxName",order.taxSales[0].name)
             bundle.putBoolean("isActive",order.taxSales[0].isActive)
             dialog.arguments = bundle

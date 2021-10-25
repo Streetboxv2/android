@@ -251,7 +251,7 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
 
                 type = taxSales?.type ?: 1
                 var calculate:Double = 0.0
-                calculate = (order.taxSales[0].amount/100) * order.grandTotal
+                calculate = order.orderBill[0].totalTax
                 if (taxSales == null || order.taxSales[0].isActive == false) {
                     grandTotal =
                         useCase.order.orderBill.get(0).subTotal
@@ -293,7 +293,9 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
                 val data: HashMap<String, Any> = hashMapOf()
                 order.createdAt = DateTimeUtil.getCurrentDateTime()
                 order.updatedAt = DateTimeUtil.getCurrentDateTime()
-                order.grandTotal = grandTotal!!
+                if(order.taxSales[0].isActive == true && order.taxSales[0].type == 0){
+                    order.grandTotal = grandTotal!! - order.orderBill[0].totalTax
+                }
                 data["order"] = order
                 data["orderBills"] = order.orderBill
                 data["productSales"] = order.productSales
@@ -390,7 +392,7 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
         val taxSales = if (order.taxSales.isNotEmpty()) order.taxSales[0] else null
         val taxName = taxSales?.name ?: ConstVar.EMPTY_STRING
         var calculate:Double = 0.0
-        calculate = (order.taxSales[0].amount/100) *  order.orderBill[0].subTotal
+        calculate = order.orderBill[0].totalTax
         if (taxSales == null || order.taxSales[0].isActive == false) {
             subTot =
                 "[L]<b>Subtotal </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(order.orderBill[0].subTotal) + "\n"
@@ -447,13 +449,13 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
 
         if(order.taxSales[0].isActive == true){
             if(order.taxSales[0].type == 0){
-                calculate = (order.taxSales[0].amount/100) * order.grandTotal!!
-                cashChange = cashAmount!! - order.grandTotal!! - calculate
+                calculate = order.orderBill[0].totalTax
+                cashChange = cashAmount!! - grandTotal!! - calculate
             }else{
-                cashChange = cashAmount!! - order.grandTotal!!
+                cashChange = cashAmount!! - grandTotal!!
             }
         }else{
-            cashChange = cashAmount!! - order.grandTotal!!
+            cashChange = cashAmount!! - grandTotal!!
         }
 
         formatReceipt()

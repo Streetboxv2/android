@@ -2,6 +2,7 @@ package id.streetbox.live.ui.main.home.nearby
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
@@ -72,6 +73,10 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                 Hawk.put("saveAddressToko", foodTruck?.address)
                 tvQty.text = value.toString()
                 viewModel.addItem(product, order)
+                Handler().postDelayed({
+                    viewModel.calculateOrder(order)
+                }, 1000)
+
                 var disc:Double = product.discount
                 var total:Double = 0.0
                 var calculate:Double = 0.0
@@ -111,6 +116,10 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
             total = value * calculate
 
             viewModel.removeProductSales(product, order)
+            Handler().postDelayed({
+                viewModel.calculateOrder(order)
+            }, 1000)
+
 
             if (value == 0) {
                 lifecycleScope.launch(Dispatchers.Main) {
@@ -239,6 +248,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
         getSaveListMenu = AppDatabase.getInstance(this)
             .dataDao().getAllDataListMenuNearby(merchantId.toInt())
         viewModel.getProduct("visit", merchantId)
+        viewModel.getRecentOrder(merchantId, foodTruck)
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
@@ -271,6 +281,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                 initAdapterMenu(dataProduct as MutableList<Product>, getSaveListMenu)
                 showHideOrderSummary()
                 viewModel.getMerchantTax(merchantId)
+
             }
             is MenuViewEvent.GetProductFailed -> {
                 dismissLoading()
@@ -292,9 +303,10 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                 isGetOrderSuccess = true
                 order = useCase.order
                 order.grandTotal = total
-                viewModel.getUserInfoCloud()
-                viewModel.calculateOrder(order)
                 adapterMenu?.setProDuctSalesMap(useCase.order.productSales)
+                viewModel.getUserInfoCloud()
+
+
             }
             is MenuViewEvent.GetUserInfoSuccess -> {
                 order.phone = useCase.user.phone!!

@@ -110,7 +110,6 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
                     .putExtra("notes", notes)
                     .putExtra(PaymentActivity.ORDER_UNIQUE_ID, getOrder!!.uniqueId)
                     .putExtra("grandTotal", totalMenuItem)
-                    .putExtra("tax",gson.toJson(tax))
                 startActivityForResult(intent, 1002)
             } else {
                 showToastExt("Item Order not found", this)

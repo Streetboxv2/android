@@ -204,6 +204,11 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
         Log.d(ConstVar.TAG, order?.orderBill[0]?.billNo)
 //        Log.d(ConstVar.TAG, order?.trx[0]?.trxId)
         tv_status_label?.text = "Status: ${order?.orderBill[0]?.billNo}"
+        if(order.taxSales[0].isActive == true){
+            if(order.taxSales[0].type == 0){
+                order.grandTotal = order.orderBill[0].totalTax + order.grandTotal
+            }
+        }
         tv_grand_total?.text = "${NumberUtil.formatToStringWithoutDecimal(order.grandTotal)}"
 
         adapter.setList(order.productSales)
@@ -273,7 +278,7 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
 
         }
 
-       calculate = (taxAmount/100) * subTotal
+       calculate = order.orderBill[0].totalTax
         val a:Double = order.orderBill[0].subTotal
         if(isActive == true) {
             if (typeTax == 0) {
@@ -289,8 +294,8 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
             }
         }
         else {
-            tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(subTotal - calculate)}"
-            tvTotalPayment.text = "${NumberUtil.formatToStringWithoutDecimal(totalPayment - calculate)}"
+            tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(subTotal )}"
+            tvTotalPayment.text = "${NumberUtil.formatToStringWithoutDecimal(totalPayment )}"
         }
 
 
@@ -307,7 +312,7 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
             )
         } ${DateTimeUtil.getLocalDateWithFormat(order.createdAt, "HH:mm")}"
 
-/*
+/*r
         if (totalTax <= 0) {
             tvTotalTax.visibility = View.INVISIBLE
             tvTaxLabel.visibility = View.INVISIBLE
@@ -422,9 +427,9 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
         val taxSales = if (order.taxSales.isNotEmpty()) order.taxSales[0] else null
         val taxName = taxSales?.name ?: ConstVar.EMPTY_STRING
         val grandTotal = order.grandTotal
-        calculate =  (order.taxSales[0].amount/100) * grandTotal
+        calculate =  order.orderBill[0].totalTax
         if(taxSales == null || order.taxSales[0].isActive == false){
-            subTot =  "[L]<b>Subtotal </b>" +"[R]"+ NumberUtil.formatToStringWithoutDecimal(order.grandTotal - calculate) + "\n"
+            subTot =  "[L]<b>Subtotal </b>" +"[R]"+ NumberUtil.formatToStringWithoutDecimal(order.grandTotal) + "\n"
             grandTot = "[L]<b>Grand Total </b>" + "[R]" +  NumberUtil.formatToStringWithoutDecimal(
                 order.grandTotal)+"\n"
 

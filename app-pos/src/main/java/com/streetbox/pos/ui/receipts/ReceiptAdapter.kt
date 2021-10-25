@@ -23,6 +23,11 @@ class ReceiptAdapter(data: MutableList<Order> = mutableListOf()) :
             jam = DateTimeUtil.getLocalDateWithFormat(item.createdAt, "HH:mm")
         }
 
+        if(item.taxSales[0].isActive == true){
+            if(item.taxSales[0].type == 0){
+                item.grandTotal = item.orderBill[0].totalTax + item.grandTotal
+            }
+        }
         val jumlah = NumberUtil.formatToStringWithoutDecimal(item.grandTotal)
 
 //        if (item?.trx.size > 0) {

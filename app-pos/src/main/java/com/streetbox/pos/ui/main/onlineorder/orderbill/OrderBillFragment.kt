@@ -175,7 +175,7 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
                 type = taxSales?.type ?: 1
                 val nameTax = taxSales?.name ?: ConstVar.EMPTY_STRING
                 var calculate:Double = 0.0
-                calculate = (order!!.taxSales[0].amount/100)* order!!.grandTotal
+                calculate = order!!.orderBill[0].totalTax
                 if (taxSales == null || order!!.taxSales[0].isActive == false) {
                     tv_taxLabel.visibility = View.GONE
                     tv_tax.visibility = View.GONE
@@ -362,7 +362,7 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
 
         }else{
             var calculate:Double = 0.0
-            calculate = (order!!.taxSales[0].amount/100)* order!!.grandTotal
+            calculate = order!!.orderBill[0].totalTax
             subTot =
                 "[L]<b>Subtotal </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(order!!.grandTotal) + "\n"
             if (type == 0) {
