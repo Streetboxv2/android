@@ -52,11 +52,16 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
     var adapterMenuChoiceOrder: AdapterPickupOrderNearby? = null
     var calculateTax:Double = 0.0
     var beforeTax:Double = 0.0
+    var qtyProduct:Int = 0
 
     @Inject
     lateinit var gson: Gson
 
 
+    override fun onResume() {
+        super.onResume()
+        init()
+    }
     override fun initResourceLayout(): Int {
         return R.layout.activity_pickup_order
     }
@@ -85,6 +90,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
         typeTax = bundle.getInt("taxType",0)
         totalTax = bundle.getDouble("totalTax",0.0)
         isActive = bundle.getBoolean("isActive",false)
+        qtyProduct = bundle.getInt("qtyProduct",0)
         val foodtruckBundle = bundle.getString("foodTruckData")
         val orderBundle = bundle.getString("order")
         val taxBundle = bundle.getString("tax")
@@ -163,7 +169,8 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
                     value: Int,
                     tvQty: TextView
                 ) {
-                    if (value > product.qty!!) {
+
+                    if (value > product.qtyProduct!!) {
                         showToastExt("Out of stock", this@PickupOrderActivity)
                     } else {
                         Hawk.put("saveAddressToko", foodTruck?.address)
@@ -172,7 +179,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
                         tvQty.text = value.toString()
 
                         lifecycleScope.launch(Dispatchers.Main) {
-                            addRoomItemStore(product, value, totalProduct, product.price)
+                            addRoomItemStore(product, value,product.qty!!, totalProduct, product.price)
                         }
                     }
                 }
@@ -203,7 +210,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
                     } else {
                         tvQty.text = value.toString()
                         lifecycleScope.launch(Dispatchers.Main) {
-                            addRoomItemStore(product, value, totalProduct, product.price)
+                            addRoomItemStore(product, value,product.qty!!, totalProduct, product.price)
                         }
                     }
 
@@ -272,7 +279,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
         }
     }
 
-    private fun addRoomItemStore(product: MenuItemStore, value: Int, total: Long, price: Long) {
+    private fun addRoomItemStore(product: MenuItemStore, value: Int, qtyProduct:Int,total: Long, price: Long) {
         val idDatabase =
             AppDatabase.getInstance(this).dataDao().getItemMenutStore(product.id!!)
         val idMerchant =
@@ -285,6 +292,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
                 merchantId!!.toInt(),
                 product.title,
                 value,
+                qtyProduct,
                 price,
                 total,
                 product.title
@@ -299,6 +307,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
                 merchantId!!.toInt(),
                 product.title,
                 value,
+                qtyProduct,
                 price,
                 total,
                 product.image

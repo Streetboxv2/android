@@ -68,12 +68,13 @@ class MenuActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
     var types: String? = ""
     var total: Double = 0.0
     var qtyItems = 0
+    var qtyProduct = 0
 
 
     val onClickIncrease = object : AdapterMenu.OnClickIncrease {
         override fun ClickIncrease(position: Int, product: Product, value: Int, tvQty: TextView) {
             if (value > product.qty) {
-                showToastExt("Maximal limited", this@MenuActivity)
+                showToastExt("Out Of Stock", this@MenuActivity)
             } else {
                 Hawk.put("saveAddressToko", foodTruck?.address)
                 tvQty.text = value.toString()
@@ -187,6 +188,7 @@ class MenuActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
             bundle.putString("menulist", gson.toJson(order.productSales))
             bundle.putDouble("total", total)
             bundle.putInt("qty", qtyItems)
+            bundle.putInt("qtyProduct",qtyProduct)
             bundle.putString("taxName", order.orderBill[0].taxName)
             bundle.putInt("taxType",order.orderBill[0].taxType)
             bundle.putDouble("totalTax",order.taxSales[0].amount)

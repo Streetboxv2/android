@@ -68,7 +68,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
     val onClickIncrease = object : AdapterMenu.OnClickIncrease {
         override fun ClickIncrease(position: Int, product: Product, value: Int, tvQty: TextView) {
             if (value > product.qty) {
-                showToastExt("Maximal limited", this@NearbyDetailVisitActivity)
+                showToastExt("Out of Stock", this@NearbyDetailVisitActivity)
             } else {
                 Hawk.put("saveAddressToko", foodTruck?.address)
                 tvQty.text = value.toString()
@@ -89,7 +89,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                  total = value * calculate
 
                 lifecycleScope.launch(Dispatchers.Main) {
-                    addRoomItemStore(product, value, total.toLong(), calculate.toLong())
+                    addRoomItemStore(product, value, product.qty,total.toLong(), calculate.toLong())
                 }
 
                 if (types.equals("homevisit", ignoreCase = true)) {
@@ -136,7 +136,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
 
             } else {
                 lifecycleScope.launch(Dispatchers.Main) {
-                    addRoomItemStore(product, value, total.toLong(), calculate.toLong())
+                    addRoomItemStore(product, value, product.qty,total.toLong(), calculate.toLong())
                 }
             }
 
@@ -158,7 +158,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
         }
     }
 
-    private fun addRoomItemStore(product: Product, value: Int, total: Long, price: Long) {
+    private fun addRoomItemStore(product: Product, value: Int, qtyProduct:Int,total: Long, price: Long) {
         val idDatabase =
             AppDatabase.getInstance(this).dataDao().getItemMenutStore(product.id.toInt())
         val idMerchant =
@@ -172,6 +172,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                     merchantId.toInt(),
                     product.name,
                     value,
+                    product.qty,
                     price,
                     total,
                     product.photo
@@ -186,6 +187,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                     merchantId.toInt(),
                     product.name,
                     value,
+                    qtyProduct,
                     price,
                     total,
                     product.photo
@@ -201,7 +203,8 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                     product.id.toInt(),
                     merchantId.toInt(),
                     product.name,
-                    value,
+                   value,
+                    qtyProduct,
                     price,
                     total,
                     product.photo

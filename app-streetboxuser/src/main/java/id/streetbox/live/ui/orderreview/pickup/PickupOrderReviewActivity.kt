@@ -49,6 +49,7 @@ class PickupOrderReviewActivity :
                     subTotal = total
                     tvSubtotal?.text = "Rp. ${NumberUtil.formatToStringWithoutDecimal(total)}"
                     tvTotalPayment?.text = "Rp. ${NumberUtil.formatToStringWithoutDecimal(total)}"
+
                 }
             }
 

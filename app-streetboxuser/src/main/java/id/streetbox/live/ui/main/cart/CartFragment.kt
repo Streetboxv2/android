@@ -164,7 +164,7 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
                         tvQty.text = value.toString()
 
                         lifecycleScope.launch(Dispatchers.Main) {
-                            addRoomItemStore(product, value, totalProduct, product.price)
+                            addRoomItemStore(product, value,product.qty!!, totalProduct, product.price)
                         }
                     }
                 }
@@ -192,7 +192,7 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
                         }
                     } else {
                         lifecycleScope.launch(Dispatchers.Main) {
-                            addRoomItemStore(product, value, totalProduct, product.price)
+                            addRoomItemStore(product, value, product.qty!!, totalProduct, product.price)
                         }
                     }
 
@@ -207,7 +207,7 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
         }
     }
 
-    private fun addRoomItemStore(product: MenuItemStore, value: Int, total: Long, price: Long) {
+    private fun addRoomItemStore(product: MenuItemStore, value: Int,qtyProduct:Int ,total: Long, price: Long) {
         val idDatabase =
             AppDatabase.getInstance(requireContext()).dataDao().getItemMenutStore(product.id!!)
         if (idDatabase == product.id) {
@@ -216,6 +216,7 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
                 order.merchantId.toInt(),
                 product.title,
                 value,
+                qtyProduct,
                 price,
                 total,
                 product.image
@@ -230,6 +231,7 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
                 order.merchantId.toInt(),
                 product.title,
                 value,
+                qtyProduct,
                 price,
                 total,
                 product.image

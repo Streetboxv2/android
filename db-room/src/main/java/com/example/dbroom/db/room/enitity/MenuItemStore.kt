@@ -19,6 +19,10 @@ class MenuItemStore(
     @ColumnInfo(name = "qty")
     val qty: Int? = 0,
 
+    @ColumnInfo(name = "qtyProduct")
+    val qtyProduct: Int? = 0,
+
+
     @ColumnInfo(name = "price")
     val price: Long = 0,
 
