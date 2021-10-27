@@ -399,11 +399,10 @@ class SyncDataRepoImpl @Inject constructor(
                     }
 
                     return@map if (keyword.isNotEmpty()) {
-                        boxOrder.query()
-                            .equal(Order_.isClose, true)
+                        boxOrder.query().equal(Order_.isClose,true).and()
                             .contains(Order_.trxId, keyword)
                             .or()
-                            .contains(Order_.billNo, keyword)
+                            .contains(Order_.orderNo, keyword).or().contains(Order_.typeOrder,keyword)
                             .build()
                             .find()
                     } else {
@@ -427,11 +426,10 @@ class SyncDataRepoImpl @Inject constructor(
             }
             .onErrorResumeNext {
                 val trxList = if (keyword.isNotEmpty()) {
-                    boxOrder.query()
-                        .equal(Order_.isClose, true)
+                    boxOrder.query().equal(Order_.isClose,true).and()
                         .contains(Order_.trxId, keyword)
                         .or()
-                        .contains(Order_.billNo, keyword)
+                        .contains(Order_.orderNo, keyword).or().contains(Order_.typeOrder,keyword)
                         .build()
                         .find()
                 } else {
