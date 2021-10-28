@@ -399,10 +399,20 @@ class SyncDataRepoImpl @Inject constructor(
                     }
 
                     return@map if (keyword.isNotEmpty()) {
-                        boxOrder.query().equal(Order_.isClose,true).and()
+                        boxOrder.query().equal(Order_.isClose,true)
+                            .greater(
+                                Order_.businessDate,
+                                DateTimeUtil.getCurrentDateWithoutTime(prevDate)
+                            )
+                            .less(
+                                Order_.businessDate,
+                                DateTimeUtil.getCurrentDateWithoutTime(nextDate)
+                            )
+                            .and()
                             .contains(Order_.trxId, keyword)
                             .or()
                             .contains(Order_.orderNo, keyword).or().contains(Order_.typeOrder,keyword)
+                            .orderDesc(Order_.updatedAt)
                             .build()
                             .find()
                     } else {
@@ -426,10 +436,20 @@ class SyncDataRepoImpl @Inject constructor(
             }
             .onErrorResumeNext {
                 val trxList = if (keyword.isNotEmpty()) {
-                    boxOrder.query().equal(Order_.isClose,true).and()
+                    boxOrder.query().equal(Order_.isClose,true)
+                        .greater(
+                            Order_.businessDate,
+                            DateTimeUtil.getCurrentDateWithoutTime(prevDate)
+                        )
+                        .less(
+                            Order_.businessDate,
+                            DateTimeUtil.getCurrentDateWithoutTime(nextDate)
+                        )
+                        .and()
                         .contains(Order_.trxId, keyword)
                         .or()
                         .contains(Order_.orderNo, keyword).or().contains(Order_.typeOrder,keyword)
+                        .orderDesc(Order_.updatedAt)
                         .build()
                         .find()
                 } else {

@@ -170,14 +170,14 @@ class OrderHistoryDetailActivity :
         val calculate:Double = (totalTax/100) * orderHistory.detail?.paymentDetails?.total!!
         if (orderHistory.types.equals("ORDER") && orderHistory.detail?.paymentDetails?.isActive == true) {
             if(taxType == 0){
-                tvTotalTax.text = "${NumberUtil.formatToStringWithoutDecimal(calculate)}"
-                tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(orderHistory.detail?.paymentDetails?.total!!)}"
+                tvTotalTax.text = "${NumberUtil.formatToStringWithoutDecimal(totalTax)}"
+                tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(orderHistory.detail?.paymentDetails?.total!! - totalTax)}"
                 tvTotalPayment.text =
-                    "${NumberUtil.formatToStringWithoutDecimal(orderHistory.detail?.paymentDetails?.total!! + calculate)}"
+                    "${NumberUtil.formatToStringWithoutDecimal(orderHistory.detail?.paymentDetails?.total!!)}"
                 tvTaxLabel.text = "${orderHistory.detail?.paymentDetails?.taxName} ($taxTypeDisplay)"
             }else if(taxType == 1) {
-                tvTotalTax.text = "${NumberUtil.formatToStringWithoutDecimal(calculate)}"
-                tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(orderHistory.amount)}"
+                tvTotalTax.text = "${NumberUtil.formatToStringWithoutDecimal(totalTax)}"
+                tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(orderHistory.detail?.paymentDetails?.total!!)}"
                 tvTotalPayment.text =
                     "${NumberUtil.formatToStringWithoutDecimal(orderHistory.amount)}"
                 tvTaxLabel.text = "${orderHistory.detail?.paymentDetails?.taxName} ($taxTypeDisplay)"
