@@ -1,5 +1,6 @@
 package id.streetbox.live.ui.main.cart
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -53,6 +54,10 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
         return R.layout.fragment_cart
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+    }
+
     override fun onStart() {
         super.onStart()
         menuItemStoreList = AppDatabase.getInstance(requireContext())
@@ -61,6 +66,7 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
             hideView(btn_checkout)
             hideView(llNameTokoCart)
         }
+       initGetData()
     }
 
     override fun init() {
@@ -156,15 +162,15 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
                     value: Int,
                     tvQty: TextView
                 ) {
-                    if (value > product.qty!!) {
-                        showToastExt("Maximal limited", requireContext())
+                    if (value > product.qtyProduct!!) {
+                        showToastExt("Out Of Stock", requireContext())
                     } else {
                         val totalProduct = value * product.price
 
                         tvQty.text = value.toString()
 
                         lifecycleScope.launch(Dispatchers.Main) {
-                            addRoomItemStore(product, value,product.qty!!, totalProduct, product.price)
+                            addRoomItemStore(product, value,product.qtyProduct!!, totalProduct, product.price)
                         }
                     }
                 }
@@ -192,7 +198,7 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
                         }
                     } else {
                         lifecycleScope.launch(Dispatchers.Main) {
-                            addRoomItemStore(product, value, product.qty!!, totalProduct, product.price)
+                            addRoomItemStore(product, value, product.qtyProduct!!, totalProduct, product.price)
                         }
                     }
 
@@ -264,7 +270,7 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
 
     private fun showSummary(menuItemStoreList: List<MenuItemStore>) {
         menuItemStoreList.forEach {
-            total += it.price
+            total += it.total
             qtyItems += it.qty!!
         }
 

@@ -1,8 +1,11 @@
 package id.streetbox.live.uiAPIs
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import com.zeepos.map.ui.MapUiEvent
+import com.zeepos.models.ConstVar
+import id.streetbox.live.ui.main.home.nearby.NearbyDetailVisitActivity
 import id.streetbox.live.ui.menu.MenuActivity
 import javax.inject.Inject
 
@@ -15,7 +18,12 @@ class MapUiEventImpl @Inject internal constructor() :
     }
 
     override fun goToMerchantMenuScreen(activity: Activity, merchantId: Long, bundle: Bundle) {
-        activity.startActivity(MenuActivity.getIntent(activity, merchantId, bundle))
+//        activity.startActivity(MenuActivity.getIntent(activity, merchantId, bundle))
+        activity.startActivity(
+            Intent(activity, NearbyDetailVisitActivity::class.java)
+                .putExtras(bundle)
+                .putExtra(ConstVar.MERCHANT_ID, merchantId)
+        )
     }
 
     override fun goToOperatorMainActivity(

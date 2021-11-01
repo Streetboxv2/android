@@ -3,6 +3,7 @@ package id.streetbox.live.ui.pickuporder
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
@@ -175,11 +176,10 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
                     } else {
                         Hawk.put("saveAddressToko", foodTruck?.address)
                         val totalProduct = value * product.price
-
                         tvQty.text = value.toString()
 
                         lifecycleScope.launch(Dispatchers.Main) {
-                            addRoomItemStore(product, value,product.qty!!, totalProduct, product.price)
+                            addRoomItemStore(product, value,product.qtyProduct!!, totalProduct, product.price)
                         }
                     }
                 }
@@ -210,7 +210,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
                     } else {
                         tvQty.text = value.toString()
                         lifecycleScope.launch(Dispatchers.Main) {
-                            addRoomItemStore(product, value,product.qty!!, totalProduct, product.price)
+                            addRoomItemStore(product, value,product.qtyProduct!!, totalProduct, product.price)
                         }
                     }
 
@@ -254,17 +254,25 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
     private fun showSummary(menuItemStoreList: List<MenuItemStore>) {
         var total = 0.0
         var type = 0
-        var taxName = ConstVar.EMPTY_STRING
+        var taxName = taxName
         menuItemStoreList.forEach {
             total += it.total
 
         }
-
-        if(typeTax == 0){
-            total + totalTax
+        val totalTaxs:Double = (totalTax/100) * total
+        if(isActive == false){
+            tv_tax_label.visibility = View.GONE
+            tv_total_tax.visibility = View.GONE
+        }else{
+            tv_tax_label.visibility = View.VISIBLE
+            tv_total_tax.visibility = View.VISIBLE
         }
+        if(typeTax == 0 && isActive== true){
+            total + totalTaxs
+        }
+
         tv_tax_label.text = taxName
-        tv_total_tax.text = ""+totalTax
+        tv_total_tax.text =  ConvertToRupiah.toRupiah("", totalTaxs.toString(), false)
             tv_subtotal.text =
             ConvertToRupiah.toRupiah("", total.toString(), false)
         tv_total_payment.text =

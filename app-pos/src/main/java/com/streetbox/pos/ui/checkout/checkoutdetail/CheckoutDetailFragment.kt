@@ -296,6 +296,10 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
                 if(order.taxSales[0].isActive == true && order.taxSales[0].type == 0){
                     order.grandTotal = grandTotal!! - order.orderBill[0].totalTax
                 }
+
+                if(order.taxSales[0].isActive == false){
+                    order.orderBill[0].totalTax = 0.0
+                }
                 data["order"] = order
                 data["orderBills"] = order.orderBill
                 data["productSales"] = order.productSales
