@@ -29,14 +29,19 @@ public class AsyncBluetoothEscPosPrint extends AsyncEscPosPrint {
                     printerData.getPrinterNbrCharactersPerLine()
             );
             printersData[0].setTextToPrint(printerData.getTextToPrint());
+
         } else {
             try {
                 deviceConnection.connect();
             } catch (EscPosConnectionException e) {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
                 e.printStackTrace();
             }
         }
-
         return super.doInBackground(printersData);
     }
 }
