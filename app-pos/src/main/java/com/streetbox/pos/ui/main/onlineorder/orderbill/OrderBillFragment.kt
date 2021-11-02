@@ -411,7 +411,7 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
 
                     Handler().postDelayed({
                         trxId?.let { it1 -> viewModel.closeOnlineOrder(it1) }
-                    }, 2000)
+                    }, 1000)
 
 
             } catch (e: Exception) {
