@@ -44,6 +44,7 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
     var taxName:String = ConstVar.EMPTY_STRING
     var totalTax:Double = 0.0
     var isActive:Boolean =  false
+    var totalProduct:Long = 0
 
     @Inject
     lateinit var gson: Gson
@@ -165,12 +166,19 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
                     if (value > product.qtyProduct!!) {
                         showToastExt("Out Of Stock", requireContext())
                     } else {
-                        val totalProduct = value * product.price
+                         totalProduct = value * product.price
 
                         tvQty.text = value.toString()
 
                         lifecycleScope.launch(Dispatchers.Main) {
                             addRoomItemStore(product, value,product.qtyProduct!!, totalProduct, product.price)
+                        }
+                        total = totalProduct.toDouble()
+
+                        if(isActive!! == false || typesTax == 1){
+                            order.grandTotal = totalProduct.toDouble()
+                        }else if(typesTax == 0){
+                            order.grandTotal = totalProduct.toDouble() + ((totalTax!!/100) * totalProduct.toDouble())
                         }
                     }
                 }
@@ -181,7 +189,7 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
                     value: Int,
                     tvQty: TextView
                 ) {
-                    val totalProduct = product.price * value
+                     totalProduct = product.price * value
                     tvQty.text = value.toString()
                     if (value == 0) {
                         adapterMenuChoiceOrder?.removeItem(product, position)
@@ -200,6 +208,14 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
                         lifecycleScope.launch(Dispatchers.Main) {
                             addRoomItemStore(product, value, product.qtyProduct!!, totalProduct, product.price)
                         }
+
+                        total = totalProduct.toDouble()
+                        if(isActive!! == false || typesTax == 1){
+                            order.grandTotal = totalProduct.toDouble()
+                        }else if(typesTax == 0){
+                            order.grandTotal = totalProduct.toDouble() + ((totalTax!!/100) * totalProduct.toDouble())
+                        }
+
                     }
 
                 }
@@ -270,7 +286,9 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
 
     private fun showSummary(menuItemStoreList: List<MenuItemStore>) {
         menuItemStoreList.forEach {
-            total += it.total
+            var totalPrice:Double = 0.0
+            totalPrice += it.total
+            total = totalPrice
             qtyItems += it.qty!!
         }
 

@@ -54,6 +54,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
     var calculateTax:Double = 0.0
     var beforeTax:Double = 0.0
     var qtyProduct:Int = 0
+    var merchantIds:Long = 0
 
     @Inject
     lateinit var gson: Gson
@@ -98,9 +99,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
         foodTruck = gson.fromJson(foodtruckBundle, FoodTruck::class.java)
         getOrder = gson.fromJson(orderBundle, Order::class.java)
         merchantId = getOrder?.merchantId.toString()
-        getOrder?.grandTotal = totalMenuItem
         tax = gson.fromJson(taxBundle,Tax::class.java)
-
         initGetData()
         iniOnClick()
     }
@@ -177,9 +176,16 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
                         Hawk.put("saveAddressToko", foodTruck?.address)
                         val totalProduct = value * product.price
                         tvQty.text = value.toString()
-
+                        totalMenuItem = totalProduct.toDouble()
                         lifecycleScope.launch(Dispatchers.Main) {
                             addRoomItemStore(product, value,product.qtyProduct!!, totalProduct, product.price)
+                        }
+
+                        if(isActive!! == false || typeTax == 1){
+                            getOrder!!.grandTotal = totalProduct.toDouble()
+                        }else if(typeTax == 0){
+                            getOrder!!.grandTotal = totalProduct.toDouble() + ((totalTax/100) * totalProduct.toDouble())
+                            totalMenuItem =  getOrder!!.grandTotal
                         }
                     }
                 }
@@ -209,8 +215,16 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
 
                     } else {
                         tvQty.text = value.toString()
+                        totalMenuItem = totalProduct.toDouble()
                         lifecycleScope.launch(Dispatchers.Main) {
                             addRoomItemStore(product, value,product.qtyProduct!!, totalProduct, product.price)
+                        }
+
+                        if(isActive!! == false || typeTax == 1){
+                            getOrder!!.grandTotal = totalProduct.toDouble()
+                        }else if(typeTax == 0){
+                            getOrder!!.grandTotal = totalProduct.toDouble() + ((totalTax/100) * totalProduct.toDouble())
+                            totalMenuItem = getOrder!!.grandTotal
                         }
                     }
 

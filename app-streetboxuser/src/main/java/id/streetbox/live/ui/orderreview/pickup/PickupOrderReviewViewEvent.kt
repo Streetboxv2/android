@@ -3,6 +3,8 @@ package id.streetbox.live.ui.orderreview.pickup
 import com.zeepos.models.master.Product
 import com.zeepos.models.master.User
 import com.zeepos.models.transaction.Order
+import com.zeepos.models.transaction.OrderBill
+import com.zeepos.models.transaction.ProductSales
 import com.zeepos.ui_base.ui.BaseViewEvent
 import id.streetbox.live.ui.main.profile.ProfileViewEvent
 import id.streetbox.live.ui.menu.MenuViewEvent
@@ -20,4 +22,6 @@ sealed class PickupOrderReviewViewEvent : BaseViewEvent {
     data class GetUserInfoFailed(val errorMessage: String) : PickupOrderReviewViewEvent()
     data class GetProductSuccess(val data: List<Product>) : PickupOrderReviewViewEvent()
     data class GetProductFailed(val errorMessage: String) : PickupOrderReviewViewEvent()
+    data class OnCalculateDone(val orderBill: OrderBill) : PickupOrderReviewViewEvent()
+    data class AddItemSuccess(val productSales: ProductSales) : PickupOrderReviewViewEvent()
 }

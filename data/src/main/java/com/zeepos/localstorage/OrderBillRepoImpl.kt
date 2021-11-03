@@ -73,7 +73,7 @@ class OrderBillRepoImpl @Inject constructor(
 
             orderBill.totalTax = totalTax
 
-            if (tax != null && tax.type > 0) {
+            if ( tax!!.type > 0 || tax.isActive == false) {
                 orderBill.grandTotal = subtotal
                 order.grandTotal = subtotal
             } else {

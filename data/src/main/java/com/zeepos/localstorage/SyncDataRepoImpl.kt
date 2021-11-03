@@ -125,9 +125,11 @@ class SyncDataRepoImpl @Inject constructor(
                 order.orderBill[0].grandTotal = order.grandTotal
                 if(order.taxSales[0].isActive == true && order.taxSales[0].type == 0){
                     order.orderBill[0].totalTax = (order.taxSales[0].amount/100) * order.grandTotal
+                    order.orderBill[0].grandTotal = order.grandTotal + order.orderBill[0].totalTax
                 }
                 if(order.taxSales[0].isActive == false ){
                     order.orderBill[0].totalTax = 0.0
+                    order.orderBill[0].grandTotal = order.grandTotal
                 }
                 data["order"] = order
                 data["trx"] = order.trx
