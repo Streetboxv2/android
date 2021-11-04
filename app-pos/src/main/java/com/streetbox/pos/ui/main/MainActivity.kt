@@ -10,7 +10,7 @@ import android.view.Menu
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.iid.FirebaseInstanceId
+//import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 import com.streetbox.pos.R
 import com.streetbox.pos.ui.main.order.OrderFragment
@@ -42,23 +42,50 @@ class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
 //        SyncTransactionWorker.syncTransactionData(this,"")
 //        FirebaseMessaging.getInstance().subscribeToTopic("onlineOrder")
 
-        FirebaseInstanceId.getInstance().instanceId
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Log.w("TAG TOKEN", "getInstanceId failed", task.exception)
-                    return@OnCompleteListener
-                }
-                // Get new Instance ID token
-                val token = task.result?.token
-                // Log and toast
+//        FirebaseInstanceId.getInstance().instanceId
+//            .addOnCompleteListener(OnCompleteListener { task ->
+//                if (!task.isSuccessful) {
+//                    Log.w("TAG TOKEN", "getInstanceId failed", task.exception)
+//                    return@OnCompleteListener
+//                }
+//                // Get new Instance ID token
+//                val token = task.result?.token
+//                // Log and toast
+//
+//                Log.d("TAG", "$token")
+//
+//                if (token != null)
+//                    viewModel.sendToken(token)
+//            })
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                return@OnCompleteListener
+            }
 
-                Log.d("TAG", token)
+            // Get new FCM registration token
+            val token = task.result
 
-                viewModel.sendToken(token!!)
-            })
+            // Log and toast
+//            val msg = getString(R.string.project_id, token)
+//            Log.d(("TAG", msg)
+            Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
+            Log.d("TAG", "$token")
 
+                if (token != null)
+                    viewModel.sendToken(token)
+        })
+        var token = FirebaseMessaging.getInstance().token
+        if (token != null)
+            viewModel.sendToken(token.result)
+//        val user = viewModel.getUserLocal()
+//        user?.let {
+//            FirebaseMessaging.getInstance().subscribeToTopic("blast_${user?.id}")
+//                .addOnSuccessListener {
+//                }.addOnFailureListener {
+//                }
+//        }
 
-        clearNotification()
+//        clearNotification()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
