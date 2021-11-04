@@ -16,7 +16,8 @@ import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import com.google.firebase.iid.FirebaseInstanceId
+//import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.streetbox.pos.R
@@ -36,11 +37,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         super.onNewToken(token)
         Log.d("Tag", "toke refress :  $token")
-
-        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
-            Log.d("FMS_TOKEN", it.token)
-        }
-
+//        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
+//            Log.d("FMS_TOKEN", it.token)
+//        }
     }
 
 
@@ -55,15 +54,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
             sendNotification(title = title.toString(), body = body.toString())
         }
-//        else {
+        else {
 //            println("respon Notif ${remoteMessage.notification!!.imageUrl}")
-//            Log.d(TAG, "From: " + remoteMessage.from)
-//            Log.d("respon Data enduser", "${remoteMessage.data}")
-//            sendNotification(
-//                remoteMessage.notification!!.title.toString(),
-//                remoteMessage.notification!!.body.toString()
-//            )
-//        }
+            Log.d(TAG, "From: " + remoteMessage.from)
+            Log.d("respon Data enduser", "${remoteMessage.data}")
+            sendNotification(
+                remoteMessage.notification!!.title.toString(),
+                remoteMessage.notification!!.body.toString()
+            )
+        }
     }
 
 
