@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -66,6 +67,8 @@ class LoginActivity : BaseActivity<LoginViewEvent, LoginViewModel>() {
         if (appType == ConstVar.APP_MERCHANT) {
             viewModel.checkIsLoggedIn()
         }
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
     override fun onStart() {
