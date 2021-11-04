@@ -73,11 +73,16 @@ class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
     override fun onViewReady(savedInstanceState: Bundle?) {
 
         if (typeNotif != null) {
-            addFragment(
-                HomeFragment.newInstance(typeNotif.toString()),
+//            addFragment(
+               /* HomeFragment.newInstance(typeNotif.toString()),
                 R.id.fl_content,
-                HomeFragment::class.simpleName
-            )
+                HomeFragment::class.simpleName*/
+                replaceFragment(
+                    OrderHistoryFragment.newInstance(),
+                    R.id.fl_content,
+                    OrderHistoryFragment::class.simpleName
+                )
+//            )
         } else {
             addFragment(
                 HomeFragment.newInstance(""),

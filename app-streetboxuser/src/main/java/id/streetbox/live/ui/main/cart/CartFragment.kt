@@ -44,7 +44,7 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
     var taxName:String = ConstVar.EMPTY_STRING
     var totalTax:Double = 0.0
     var isActive:Boolean =  false
-    var totalProduct:Long = 0
+    var totalProduct:Double = 0.0
 
     @Inject
     lateinit var gson: Gson
@@ -127,7 +127,11 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
             is CartViewEvent.GetCartDataSuccess -> {
                 swipe_refresh.isRefreshing = false
                 order = useCase.data
-                viewModel.getMerchantTax(order.merchantId)
+                taxName = order.taxSales[0].name!!
+                typesTax = order.taxSales[0].type
+                totalTax = order.taxSales[0].amount
+                isActive = order.taxSales[0].isActive
+//                viewModel.getMerchantTax(order.merchantId)
                 cartAdapter.setList(order.productSales)
 
             }
@@ -166,14 +170,14 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
                     if (value > product.qtyProduct!!) {
                         showToastExt("Out Of Stock", requireContext())
                     } else {
-                         totalProduct = value * product.price
+                         val totalProducts = value * product.price
 
                         tvQty.text = value.toString()
 
                         lifecycleScope.launch(Dispatchers.Main) {
-                            addRoomItemStore(product, value,product.qtyProduct!!, totalProduct, product.price)
+                            addRoomItemStore(product, value,product.qtyProduct!!, totalProducts, product.price)
                         }
-                        total = totalProduct.toDouble()
+//                        totalProduct = totalProducts.toDouble()
 
                         if(isActive!! == false || typesTax == 1){
                             order.grandTotal = totalProduct.toDouble()
@@ -189,7 +193,7 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
                     value: Int,
                     tvQty: TextView
                 ) {
-                     totalProduct = product.price * value
+                     val totalProducts = product.price * value
                     tvQty.text = value.toString()
                     if (value == 0) {
                         adapterMenuChoiceOrder?.removeItem(product, position)
@@ -206,10 +210,10 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
                         }
                     } else {
                         lifecycleScope.launch(Dispatchers.Main) {
-                            addRoomItemStore(product, value, product.qtyProduct!!, totalProduct, product.price)
+                            addRoomItemStore(product, value, product.qtyProduct!!, totalProducts, product.price)
                         }
 
-                        total = totalProduct.toDouble()
+//                        totalProduct = totalProducts.toDouble()
                         if(isActive!! == false || typesTax == 1){
                             order.grandTotal = totalProduct.toDouble()
                         }else if(typesTax == 0){
@@ -285,12 +289,14 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
     }
 
     private fun showSummary(menuItemStoreList: List<MenuItemStore>) {
+        var totalPrice:Double = 0.0
         menuItemStoreList.forEach {
-            var totalPrice:Double = 0.0
-            totalPrice += it.total
-            total = totalPrice
+
+            totalPrice += it.total + totalProduct
             qtyItems += it.qty!!
         }
+
+        total = totalPrice
 
         println("respon List Menu Cart ${Gson().toJson(menuItemStoreList)}")
         if (menuItemStoreList.isNotEmpty()) {

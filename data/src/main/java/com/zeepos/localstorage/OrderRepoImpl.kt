@@ -111,6 +111,13 @@ class OrderRepoImpl @Inject internal constructor(
             val order = box.query().equal(Order_.isClose, false).orderDesc(Order_.createdAt).build()
                 .findFirst()
 
+            val tax = boxTaxSales.query().build().findFirst()
+            order!!.taxSales[0].amount = tax!!.amount
+            order!!.taxSales[0].name = tax!!.name
+            order!!.taxSales[0].isActive = tax!!.isActive
+            order!!.taxSales[0].type = tax!!.type
+
+
             if (order != null)
                 return@fromCallable order
             throw Exceptions.propagate(Throwable(ConstVar.DATA_NULL))
