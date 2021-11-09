@@ -56,7 +56,10 @@ class ReceiptActivity : BaseActivity<ReceiptViewEvent, ReceiptViewModel>() {
         startActivity(MainActivity.getIntent(this))
     }
     override fun onViewReady(savedInstanceState: Bundle?) {
-        toolbar.setNavigationOnClickListener { finish() }
+        toolbar.setNavigationOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
 
         initList()
 

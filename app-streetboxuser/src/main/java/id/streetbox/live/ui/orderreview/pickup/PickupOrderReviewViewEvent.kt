@@ -16,6 +16,7 @@ sealed class PickupOrderReviewViewEvent : BaseViewEvent {
     object UpdateProductSalesSuccess : PickupOrderReviewViewEvent()
     data class GetOrderSuccess(val order: Order) : PickupOrderReviewViewEvent()
     object UpdateOrderSuccess : PickupOrderReviewViewEvent()
+    object UpdateOrderBillSuccess : PickupOrderReviewViewEvent()
     object OnRemoveProductSalesQtySuccess : PickupOrderReviewViewEvent()
     object NoOrderFound : PickupOrderReviewViewEvent()
     data class GetUserInfoSuccess(val user: User) : PickupOrderReviewViewEvent()
@@ -24,4 +25,6 @@ sealed class PickupOrderReviewViewEvent : BaseViewEvent {
     data class GetProductFailed(val errorMessage: String) : PickupOrderReviewViewEvent()
     data class OnCalculateDone(val orderBill: OrderBill) : PickupOrderReviewViewEvent()
     data class AddItemSuccess(val productSales: ProductSales) : PickupOrderReviewViewEvent()
+    object OnRemoveProductSuccess : PickupOrderReviewViewEvent()
+
 }

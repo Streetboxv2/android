@@ -62,13 +62,13 @@ class LoginActivity : BaseActivity<LoginViewEvent, LoginViewModel>() {
     }
 
     override fun init() {
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         viewModel = ViewModelProvider(this, viewModeFactory).get(LoginViewModel::class.java)
 
         if (appType == ConstVar.APP_MERCHANT) {
             viewModel.checkIsLoggedIn()
         }
-
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
     override fun onStart() {
@@ -88,7 +88,7 @@ class LoginActivity : BaseActivity<LoginViewEvent, LoginViewModel>() {
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         initLoginType()
 
         btn_login.setOnClickListener {
@@ -227,52 +227,6 @@ class LoginActivity : BaseActivity<LoginViewEvent, LoginViewModel>() {
         return matcher.matches()
     }
 
-//    private class GetContactsTask(activity: LoginActivity) :
-//        AsyncTask<Account, Void, List<Person>>() {
-//        private val mActivityRef: WeakReference<LoginActivity> = WeakReference(activity)
-//
-//        override fun doInBackground(vararg accounts: Account): List<Person> {
-//            if (mActivityRef.get() == null) {
-//                return arrayListOf()
-//            }
-//            val context: Context = mActivityRef.get()!!.applicationContext
-//            try {
-//                val credential: GoogleAccountCredential = GoogleAccountCredential.usingOAuth2(
-//                    context,
-//                    Collections.singleton(CONTACTS_SCOPE)
-//                )
-//                credential.setSelectedAccount(accounts[0])
-//                val service: PeopleService = Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
-//                    .setApplicationName("Google Sign In Quickstart")
-//                    .build()
-//                val connectionsResponse: ListConnectionsResponse = service
-//                    .people()
-//                    .connections()
-//                    .list("people/me")
-//                    .setFields("names,emailAddresses")
-//                    .execute()
-//                return connectionsResponse.getConnections()
-//            } catch (recoverableException: UserRecoverableAuthIOException) {
-//                if (mActivityRef.get() != null) {
-//                    mActivityRef.get().onRecoverableAuthException(recoverableException)
-//                }
-//            } catch (e: IOException) {
-//                Log.w(
-//                    ConstVar.TAG,
-//                    "getContacts:exception",
-//                    e
-//                )
-//            }
-//            return arrayListOf()
-//        }
-//
-//        protected fun onPostExecute(people: List<Person?>?) {
-//            super.onPostExecute(people)
-//            if (mActivityRef.get() != null) {
-//                mActivityRef.get().onConnectionsLoadFinished(people)
-//            }
-//        }
-//
-//    }
+
 
 }

@@ -189,6 +189,7 @@ class OrderHistoryDetailActivity :
             tvSubtotal.text =
                 "${NumberUtil.formatToStringWithoutDecimal(orderHistory.detail?.paymentDetails?.total!!)}"
             tvTaxLabel.visibility = View.GONE
+            tvTotalTax.visibility = View.GONE
         }
 
 

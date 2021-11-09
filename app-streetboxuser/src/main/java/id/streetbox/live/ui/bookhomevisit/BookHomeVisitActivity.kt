@@ -33,6 +33,7 @@ import com.zeepos.models.entities.VisitSales
 import com.zeepos.models.master.Address
 import com.zeepos.models.master.FoodTruck
 import com.zeepos.models.response.DataAddress
+import com.zeepos.models.transaction.Order
 import com.zeepos.models.transaction.ProductSales
 import com.zeepos.ui_base.ui.BaseActivity
 import com.zeepos.ui_base.views.ActiveDateValidator
@@ -74,6 +75,7 @@ class BookHomeVisitActivity : BaseActivity<BookHomeVisitViewEvent, BookHomeVisit
     var getMenuList: String = ""
     var bookedData = BookHomeVisit()
     val visitSales = VisitSales()
+    var visituniqueId : String? = ""
 
     override fun initResourceLayout(): Int {
         return R.layout.activity_book_home_visit
@@ -88,9 +90,9 @@ class BookHomeVisitActivity : BaseActivity<BookHomeVisitViewEvent, BookHomeVisit
     override fun init() {
         viewModel = ViewModelProvider(this, viewModeFactory).get(BookHomeVisitViewModel::class.java)
         viewModel.callGetAddressPrimary()
-
         val bundle = intent.extras
         if (bundle != null) {
+            visituniqueId = bundle.getString("visituniqueid")
             val foodTruckStr = bundle.getString("foodTruckData")
             if (foodTruckStr != null && foodTruckStr.isNotEmpty()) {
                 foodTruck = gson.fromJson(foodTruckStr, FoodTruck::class.java)
@@ -221,6 +223,7 @@ class BookHomeVisitActivity : BaseActivity<BookHomeVisitViewEvent, BookHomeVisit
                     bundle.putString("foodTruckData", gson.toJson(foodTruck))
                     bundle.putString("bookedData", gson.toJson(bookedData))
                     bundle.putString("menulist", getMenuList)
+                    bundle.putString("visituniqueid", visituniqueId)
                     bundle.putDouble("deposit", mTotalDeposit.toDouble())
                     bundle.putDouble("total", totalMenuItem)
 

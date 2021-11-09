@@ -29,12 +29,20 @@ import com.zeepos.models.transaction.TaxSales
 import com.zeepos.ui_base.ui.BaseViewEvent
 import com.zeepos.ui_base.views.GlideApp
 import com.zeepos.utilities.DateTimeUtil
+import id.streetbox.live.ui.bookhomevisit.BookHomeVisitActivity
 import id.streetbox.live.ui.menu.MenuAdapter
 import id.streetbox.live.ui.menu.MenuViewEvent
 import id.streetbox.live.ui.menu.MenuViewEvent.GetTaxSuccess
 import id.streetbox.live.ui.menu.MenuViewModel
 import id.streetbox.live.ui.pickuporder.PickupOrderActivity
 import kotlinx.android.synthetic.main.activity_menu.*
+import kotlinx.android.synthetic.main.activity_menu.iv_banner
+import kotlinx.android.synthetic.main.activity_menu.rcv
+import kotlinx.android.synthetic.main.activity_menu.rl_order_summary
+import kotlinx.android.synthetic.main.activity_menu.tv_item_count
+import kotlinx.android.synthetic.main.activity_menu.tv_pickup
+import kotlinx.android.synthetic.main.activity_menu.tv_subtotal
+import kotlinx.android.synthetic.main.activity_nearby_detail_visit.*
 import kotlinx.android.synthetic.main.header_product.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -57,6 +65,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
     private var isGetOrderSuccess: Boolean = false
     var qtyItems = 0
     var total: Double = 0.0
+    var subTotalItem : Double = 0.0
     var getSaveListMenu: List<MenuItemStore> = ArrayList()
     var types: String? = ""
     var typesTax:Int = 0
@@ -72,6 +81,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
             } else {
                 Hawk.put("saveAddressToko", foodTruck?.address)
                 tvQty.text = value.toString()
+                order.typeOrder = "Online"
                 viewModel.addItem(product, order)
                 Handler().postDelayed({
                     viewModel.calculateOrder(order)
@@ -114,7 +124,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
             }
 
             total = value * calculate
-
+            order.typeOrder = "Online"
             viewModel.removeProductSales(product, order)
             Handler().postDelayed({
                 viewModel.calculateOrder(order)
@@ -305,7 +315,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                 dismissLoading()
                 isGetOrderSuccess = true
                 order = useCase.order
-                order.grandTotal = total
+                order.grandTotal = subTotalItem
                 adapterMenu?.setProDuctSalesMap(useCase.order.productSales)
                 viewModel.getUserInfoCloud()
 
@@ -342,8 +352,10 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
             .into(iv_banner)
 
         tvTitleMenuHeader.text = "Menu Nearby"
+
         if (foodTruck?.merchantName?.isNotEmpty()!!) {
             Hawk.put("saveTitleToko", foodTruck?.merchantName)
+
             tv_name.text = foodTruck?.merchantName
         } else {
             Hawk.put("saveTitleToko", foodTruck?.name)
@@ -368,6 +380,12 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                 rl_order_summary.visibility = View.GONE
             }
         }
+/*
+        rl_home_visit.setOnClickListener{
+            val intent = Intent(this, BookHomeVisitActivity::class.java)
+
+            startActivity(intent)
+        }*/
         var textItemCount = "0 Item"
         var textSubtotal = "0"
         var subtotal = 0.0
@@ -389,6 +407,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
         }
 
         total = subtotal
+        subTotalItem = subtotal
         tv_item_count.text = textItemCount
         tv_subtotal.text = NumberUtil.formatToStringWithoutDecimal(total)
     }

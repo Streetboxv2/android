@@ -113,23 +113,34 @@ class SyncDataRepoImpl @Inject constructor(
     override fun syncTransactionDataEndUser(orderUniqueId: String): Completable {
         val obs = Single.fromCallable {
             Log.d(ConstVar.TAG, "Thread sync processing -> ${Thread.currentThread().name}")
-            val order = boxOrder.query().equal(Order_.uniqueId, orderUniqueId).build()
+            var order = boxOrder.query().equal(Order_.uniqueId, orderUniqueId).build()
                 .findFirst()
 
             if (order != null) {
                 val data: HashMap<String, Any> = hashMapOf()
                 order.createdAt = DateTimeUtil.getCurrentDateTime()
                 order.updatedAt = DateTimeUtil.getCurrentDateTime()
-                order.typeOrder = "Online"
+
                 order.typePayment = order.paymentSales[0].name
-                order.orderBill[0].grandTotal = order.grandTotal
-                if(order.taxSales[0].isActive == true && order.taxSales[0].type == 0){
-                    order.orderBill[0].totalTax = (order.taxSales[0].amount/100) * order.grandTotal
-//                    order.orderBill[0].grandTotal = order.grandTotal + order.orderBill[0].totalTax
+
+                if(order.orderBill == null || order.orderBill.size == 0){
+                    var orderBill = OrderBill()
+                    orderBill.grandTotal = order.grandTotal
+                    orderBill.subTotal = order.grandTotal
+                    orderBill.order.target = order
+                    val a = order
+
+                }else{
+                    order.orderBill[0].grandTotal = order.grandTotal
                 }
+
                 if(order.taxSales[0].isActive == false ){
                     order.orderBill[0].totalTax = 0.0
 //                    order.orderBill[0].grandTotal = order.grandTotal
+                }else{
+                    order.orderBill[0].totalTax = (order.taxSales[0].amount/100) * order.grandTotal
+                    order.grandTotal = order.grandTotal + order.orderBill[0].totalTax
+
                 }
                 data["order"] = order
                 data["trx"] = order.trx

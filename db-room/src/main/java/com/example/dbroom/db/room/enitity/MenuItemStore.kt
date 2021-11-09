@@ -17,10 +17,10 @@ class MenuItemStore(
     val title: String? = "",
 
     @ColumnInfo(name = "qty")
-    val qty: Int? = 0,
+    var qty: Int? = 0,
 
     @ColumnInfo(name = "qtyProduct")
-    val qtyProduct: Int? = 0,
+    var qtyProduct: Int? = 0,
 
 
     @ColumnInfo(name = "price")

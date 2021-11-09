@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 //import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 import com.streetbox.pos.R
+import com.streetbox.pos.ui.main.onlineorder.OnlineOrderActivity
 import com.streetbox.pos.ui.main.order.OrderFragment
 import com.streetbox.pos.ui.main.product.ProductFragment
 import com.streetbox.pos.ui.notification.MessageEvent
@@ -32,6 +33,7 @@ class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
     private var doubleBackToExitPressedOnce = false
     private var startDate: Long = DateTimeUtil.getCurrentLocalDateWithoutTime()
     private var endDate: Long = DateTimeUtil.getCurrentLocalDateWithoutTime()
+    var typeNotif: String? = null
 
     override fun initResourceLayout(): Int {
         return R.layout.activity_main
@@ -68,24 +70,14 @@ class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
             // Log and toast
 //            val msg = getString(R.string.project_id, token)
 //            Log.d(("TAG", msg)
-            Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
+//            Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
             Log.d("TAG", "$token")
 
                 if (token != null)
                     viewModel.sendToken(token)
         })
-        var token = FirebaseMessaging.getInstance().token
-        if (token != null)
-            viewModel.sendToken(token.result)
-//        val user = viewModel.getUserLocal()
-//        user?.let {
-//            FirebaseMessaging.getInstance().subscribeToTopic("blast_${user?.id}")
-//                .addOnSuccessListener {
-//                }.addOnFailureListener {
-//                }
-//        }
 
-//        clearNotification()
+        typeNotif = intent.getStringExtra("typeNotif")
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -94,21 +86,29 @@ class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
-        try {
-            viewModel.getAllTransaction(startDate, endDate, "")
-        } catch(e: Exception) {
-            e.printStackTrace()
-            addFragment(
-                ProductFragment.newInstance(),
-                R.id.fl_left,
-                ProductFragment::class.java.simpleName
-            )
-            addFragment(
-                OrderFragment.newInstance(),
-                R.id.fl_right,
-                OrderFragment::class.java.simpleName
-            )
-            viewModel.getRecentOrder()
+
+        if(typeNotif!=null){
+            val intent = Intent(this,OnlineOrderActivity::class.java)
+            startActivity(intent)
+        }else {
+
+            try {
+                viewModel.getAllTransaction(startDate, endDate, "")
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                addFragment(
+                    ProductFragment.newInstance(),
+                    R.id.fl_left,
+                    ProductFragment::class.java.simpleName
+                )
+                addFragment(
+                    OrderFragment.newInstance(),
+                    R.id.fl_right,
+                    OrderFragment::class.java.simpleName
+                )
+                viewModel.getRecentOrder()
+            }
         }
     }
 

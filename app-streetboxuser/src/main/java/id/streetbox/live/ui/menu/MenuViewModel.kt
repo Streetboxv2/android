@@ -3,6 +3,7 @@ package id.streetbox.live.ui.menu
 import com.zeepos.domain.interactor.GetTaxUseCase
 import com.zeepos.domain.interactor.foodtruck.GetFoodTruckHomeVisitUseCase
 import com.zeepos.domain.interactor.order.GetRecentOpenOrCreateOrderUseCase
+import com.zeepos.domain.interactor.order.UpdateOrderUseCase
 import com.zeepos.domain.interactor.orderbill.CalculateOrderUseCase
 import com.zeepos.domain.interactor.parkingspace.GetMerchantParkingScheduleUseCase
 import com.zeepos.domain.interactor.product.GetAllProductByMerchantIdUseCase
@@ -16,6 +17,7 @@ import com.zeepos.models.master.FoodTruck
 import com.zeepos.models.master.Product
 import com.zeepos.models.transaction.Order
 import com.zeepos.models.transaction.ProductSales
+import com.zeepos.payment.PaymentViewEvent
 import com.zeepos.ui_base.ui.BaseViewModel
 import id.streetbox.live.ui.main.MainViewEvent
 import id.streetbox.live.ui.orderreview.pickup.PickupOrderReviewViewEvent
@@ -35,7 +37,8 @@ class MenuViewModel @Inject constructor(
     private val getFoodTruckHomeVisitUseCase: GetFoodTruckHomeVisitUseCase,
     private val getMerchantParkingScheduleUseCase: GetMerchantParkingScheduleUseCase,
     private val getUserInfoUseCase: GetUserInfoUseCase,
-    private val getTaxUseCase: GetTaxUseCase
+    private val getTaxUseCase: GetTaxUseCase,
+    private val updateOrderUseCase: UpdateOrderUseCase
 ) : BaseViewModel<MenuViewEvent>() {
 
     fun getRecentOrder(merchantId: Long, foodTruck: FoodTruck?) {
@@ -132,6 +135,17 @@ class MenuViewModel @Inject constructor(
 
         addDisposable(disposable)
     }
+
+    fun updateOrder(order: Order) {
+        val disposable = updateOrderUseCase.execute(UpdateOrderUseCase.Params(order))
+            .subscribe({
+                viewEventObservable.postValue(MenuViewEvent.UpdateOrderSuccess)
+            }, {
+                it.printStackTrace()
+            })
+        addDisposable(disposable)
+    }
+
 
     fun getMerchantTax(merchantId: Long) {
         val disposable = getTaxUseCase.execute(GetTaxUseCase.Params(merchantId))

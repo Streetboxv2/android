@@ -441,8 +441,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="19dp"
+                    android:layout_height="15dp"
                     android:focusable="false"
                     android:fontFamily="@font/poppins_regular"
                     android:gravity="top"
@@ -485,7 +485,7 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:fontFamily="@font/poppins_regular"
                 android:hint="Notes"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:hintTextColor="@color/blue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tl_phone"

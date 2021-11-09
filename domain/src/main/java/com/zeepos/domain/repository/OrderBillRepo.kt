@@ -2,6 +2,7 @@ package com.zeepos.domain.repository
 
 import com.zeepos.models.transaction.Order
 import com.zeepos.models.transaction.OrderBill
+import io.reactivex.Completable
 import io.reactivex.Single
 
 /**
@@ -12,6 +13,8 @@ interface OrderBillRepo {
     fun getByOrderUniqueId(orderUniqueId: String): OrderBill?
     fun getAllOrderBill(): Single<List<OrderBill>>
     fun getAllOrderBillDesc(): OrderBill?
-    fun insertUpdateOrderBill(orderBill: OrderBill)
+    fun insertUpdateOrderBill(orderBill: OrderBill):Completable
     fun insertUpdateOrderBill(orderBill: List<OrderBill>)
+    fun insertOrder(order: Order)
+
 }

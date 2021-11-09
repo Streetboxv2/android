@@ -50,6 +50,7 @@ class HistoryFragment : BaseFragment<HistoryViewEvent, HistoryViewModel>() {
     override fun init() {
         viewModel = ViewModelProvider(this, viewModeFactory).get(HistoryViewModel::class.java)
         orderHistoryAdapter = OrderHistoryAdapter()
+        page = 1
 
     }
 
@@ -66,14 +67,15 @@ class HistoryFragment : BaseFragment<HistoryViewEvent, HistoryViewModel>() {
         when (useCase) {
             is HistoryViewEvent.GetOrderHistorySuccess -> {
                 swipe_refresh.isRefreshing = false
-
+                orderHistoryAdapter.data.clear()
                 if (useCase.data.isNotEmpty()) {
                     if (page == 1) {
-                        orderHistoryAdapter.data.clear()
+//                        orderHistoryAdapter.data.clear()
                         orderHistoryAdapter.loadMoreModule.loadMoreStatus
                     }
 
                     page = page.inc()
+
                     orderHistoryAdapter.addData(useCase.data)
                     orderHistoryAdapter.loadMoreModule.loadMoreComplete()
                     initList()
@@ -94,6 +96,7 @@ class HistoryFragment : BaseFragment<HistoryViewEvent, HistoryViewModel>() {
     override fun onResume() {
         super.onResume()
         swipe_refresh?.isRefreshing = true
+        page = 1
         viewModel.getOrderHistory(page, "history")
     }
 

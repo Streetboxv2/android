@@ -10,6 +10,7 @@ import com.zeepos.models.transaction.Order
 import com.zeepos.models.transaction.OrderBill
 import com.zeepos.models.transaction.ProductSales
 import com.zeepos.models.transaction.TaxSales
+import com.zeepos.payment.PaymentViewEvent
 import com.zeepos.ui_base.ui.BaseViewEvent
 import id.streetbox.live.ui.main.home.nearby.NearByViewEvent
 
@@ -31,7 +32,7 @@ sealed class MenuViewEvent : BaseViewEvent {
     object GetTaxFailed : MenuViewEvent()
     data class GetFoodTruckHomeVisitDataSuccess(val data: List<AvailableHomeVisitBookDate>) : MenuViewEvent()
     data class GetFoodTruckHomeVisitDataFailed(val errorMessage: String) : MenuViewEvent()
-
+    object UpdateOrderSuccess : MenuViewEvent()
     data class GetUserInfoSuccess(val user: User) : MenuViewEvent()
     data class GetUserInfoFailed(val errorMessage: String) : MenuViewEvent()
     data class GetTaxSettingSuccess(val products: ResponseApi<TaxSales>) : MenuViewEvent()

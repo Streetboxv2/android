@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.fragment_cart.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import okhttp3.internal.toLongOrDefault
 import javax.inject.Inject
 
 /**
@@ -45,6 +46,7 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
     var totalTax:Double = 0.0
     var isActive:Boolean =  false
     var totalProduct:Double = 0.0
+
 
     @Inject
     lateinit var gson: Gson
@@ -68,6 +70,7 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
             hideView(llNameTokoCart)
         }
        initGetData()
+
     }
 
     override fun init() {
@@ -75,6 +78,8 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
 
         menuItemStoreList = AppDatabase.getInstance(requireContext())
             .dataDao().getAllDataListMenu()
+
+
 
         cartAdapter = CartAdapter()
     }
@@ -84,12 +89,12 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
         if (menuItemStoreList.isNotEmpty())
             showSummary(menuItemStoreList)
 
-        swipe_refresh.setColorSchemeColors(Color.rgb(47, 223, 189))
-        swipe_refresh.isRefreshing = true
-
-        swipe_refresh.setOnRefreshListener {
-            viewModel.getCartData()
-        }
+//        swipe_refresh.setColorSchemeColors(Color.rgb(47, 223, 189))
+//        swipe_refresh.isRefreshing = true
+//
+//        swipe_refresh.setOnRefreshListener {
+//            viewModel.getCartData()
+//        }
         btn_checkout.setOnClickListener {
 //            context?.let {
 //                startActivity(
@@ -97,6 +102,13 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
 //                )
 //            }
             val bundle = Bundle()
+            if(typesTax == 0 && isActive == true){
+                order.grandTotal = total + ((totalTax/100)*total)
+            }else{
+                order.grandTotal = total
+            }
+            order.grandTotal = total
+//            viewModel.updateOrder(order)
             bundle.putDouble("total", total)
             bundle.putInt("qty", qtyItems)
             bundle.putString("order", gson.toJson(order))
@@ -117,7 +129,7 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
 
     override fun onResume() {
         super.onResume()
-        swipe_refresh?.isRefreshing = true
+//        swipe_refresh?.isRefreshing = true
         viewModel.getCartData()
     }
 
@@ -125,23 +137,29 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
         cartAdapter.data.clear()
         when (useCase) {
             is CartViewEvent.GetCartDataSuccess -> {
-                swipe_refresh.isRefreshing = false
+//                swipe_refresh.isRefreshing = false
                 order = useCase.data
-                taxName = order.taxSales[0].name!!
-                typesTax = order.taxSales[0].type
-                totalTax = order.taxSales[0].amount
-                isActive = order.taxSales[0].isActive
-//                viewModel.getMerchantTax(order.merchantId)
-                cartAdapter.setList(order.productSales)
+                if(order == null){
+                    order = Order()
+                }
 
+                viewModel.getMerchantTax(order.merchantId)
+//                viewModel.getMerchantTax(order.merchantId)
+//                cartAdapter.setList(order.productSales)
+//                viewModel.getRecentOrder(menuItemStoreList[0].idMerhant!!.toLong())
             }
-            CartViewEvent.NoDataInCart -> swipe_refresh.isRefreshing = false
+            CartViewEvent.NoDataInCart ->{} //swipe_refresh.isRefreshing = false
             is CartViewEvent.GetTaxSuccess -> {
                 taxName = useCase.tax.name!!
                 typesTax = useCase.tax.type
                 totalTax = useCase.tax.amount
                 isActive = useCase.tax.isActive
             }
+            is CartViewEvent.GetOrCreateOrderSuccess -> {
+                order = useCase.order
+                viewModel.getMerchantTax(order.merchantId)
+            }
+
         }
     }
 
@@ -179,11 +197,11 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
                         }
 //                        totalProduct = totalProducts.toDouble()
 
-                        if(isActive!! == false || typesTax == 1){
-                            order.grandTotal = totalProduct.toDouble()
-                        }else if(typesTax == 0){
-                            order.grandTotal = totalProduct.toDouble() + ((totalTax!!/100) * totalProduct.toDouble())
-                        }
+//                        if(isActive!! == false || typesTax == 1){
+//                            order.grandTotal = totalProducts.toDouble()
+//                        }else if(typesTax == 0){
+//                            order.grandTotal = totalProduct.toDouble() + ((totalTax!!/100) * totalProducts.toDouble())
+//                        }
                     }
                 }
 
@@ -213,12 +231,12 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
                             addRoomItemStore(product, value, product.qtyProduct!!, totalProducts, product.price)
                         }
 
-//                        totalProduct = totalProducts.toDouble()
-                        if(isActive!! == false || typesTax == 1){
-                            order.grandTotal = totalProduct.toDouble()
-                        }else if(typesTax == 0){
-                            order.grandTotal = totalProduct.toDouble() + ((totalTax!!/100) * totalProduct.toDouble())
-                        }
+////                        totalProduct = totalProducts.toDouble()
+//                        if(isActive!! == false || typesTax == 1){
+//                            order.grandTotal = totalProduct.toDouble()
+//                        }else if(typesTax == 0){
+//                            order.grandTotal = totalProduct.toDouble() + ((totalTax!!/100) * totalProduct.toDouble())
+//                        }
 
                     }
 

@@ -148,7 +148,9 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
 
 
     override fun onViewReady(savedInstanceState: Bundle?) {
-        toolbar.setNavigationOnClickListener { activity?.finish() }
+        toolbar.setNavigationOnClickListener {
+            startActivity(context?.let { it1 -> MainActivity.getIntent(it1) })
+        }
         btn_charge.setOnClickListener {
             isCashPayment = true
             if (et_cash_amount.text.toString().isNullOrEmpty()) {

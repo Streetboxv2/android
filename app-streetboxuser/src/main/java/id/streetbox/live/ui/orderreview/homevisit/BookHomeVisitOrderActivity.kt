@@ -15,6 +15,7 @@ import com.zeepos.models.ConstVar
 import com.zeepos.models.entities.BookHomeVisit
 import com.zeepos.models.entities.MenuItem
 import com.zeepos.models.master.FoodTruck
+import com.zeepos.models.transaction.Order
 import com.zeepos.models.transaction.ProductSales
 import com.zeepos.payment.PaymentActivity
 import com.zeepos.ui_base.ui.BaseActivity
@@ -43,6 +44,7 @@ class BookHomeVisitOrderActivity :
     private var merchantId: Long = 0
     private lateinit var foodTruck: FoodTruck
     private lateinit var bookHomeVisit: BookHomeVisit
+    private lateinit var order: Order
     private var bookedDataStr: String? = null
     private var foodTruckStr: String? = null
     val menuItemList: MutableList<MenuItem> = mutableListOf()
@@ -52,6 +54,8 @@ class BookHomeVisitOrderActivity :
     var bundle: Bundle? = null
     var menuItem: List<ProductSales> = mutableListOf()
     var subtotal:Double = 0.0
+    var visituniqueid: String? = ""
+
     override fun initResourceLayout(): Int {
         return R.layout.activity_book_home_visit_order
     }
@@ -68,7 +72,7 @@ class BookHomeVisitOrderActivity :
         if (bundle != null) {
             foodTruckStr = bundle!!.getString("foodTruckData", ConstVar.EMPTY_STRING)
             bookedDataStr = bundle!!.getString("bookedData", ConstVar.EMPTY_STRING)
-
+            visituniqueid = bundle!!.getString("visituniqueid", ConstVar.EMPTY_STRING)
             foodTruckStr?.let {
                 foodTruck = gson.fromJson(foodTruckStr, FoodTruck::class.java)
             }
@@ -97,6 +101,7 @@ class BookHomeVisitOrderActivity :
                 val bundle = Bundle()
                 bundle.putString("foodTruckData", foodTruckStr)
                 bundle.putString("bookedData", bookedDataStr)
+                bundle.putString("visituniqueid", visituniqueid)
                 startActivityForResult(
                     PaymentActivity.getIntent(this, bundle),
                     REQ_CODE_PAYMENT

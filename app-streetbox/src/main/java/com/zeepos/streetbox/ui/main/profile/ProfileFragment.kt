@@ -47,6 +47,7 @@ class ProfileFragment : BaseFragment<ProfileViewEvent, ProfileViewModel>(), Chan
     override fun init() {
         viewModel = ViewModelProvider(this, viewModeFactory).get(ProfileViewModel::class.java)
 //        viewModel.getProfile()
+        val user = viewModel.getUser()
         changePasswordDialog = ChangePasswordDialog()
 
         val profile = Profile()
@@ -72,13 +73,14 @@ class ProfileFragment : BaseFragment<ProfileViewEvent, ProfileViewModel>(), Chan
                 alertDialogBuilder.setPositiveButton(
                     "Logout"
                 ) { p0, _ ->
+
                     viewModel.deleteSession()
 
-                    FirebaseMessaging.getInstance().unsubscribeFromTopic("blast_${viewModel.getUser()?.id}")
+                    /*FirebaseMessaging.getInstance().unsubscribeFromTopic("blast_${viewModel.getUser()?.id}")
                         .addOnSuccessListener {
                             dismissLoading()
                         }
-
+*/
                     p0?.dismiss()
                     activity?.let { activity ->
                         startActivity(LoginActivity.getIntent(activity))

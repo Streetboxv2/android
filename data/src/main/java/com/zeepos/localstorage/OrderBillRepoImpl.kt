@@ -8,6 +8,7 @@ import com.zeepos.models.master.Tax_
 import com.zeepos.models.transaction.*
 import io.objectbox.Box
 import io.objectbox.BoxStore
+import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -33,6 +34,11 @@ class OrderBillRepoImpl @Inject constructor(
     private val boxTaxSales: Box<TaxSales> by lazy {
         boxStore.boxFor(TaxSales::class.java)
     }
+
+    override fun insertOrder(order: Order) {
+        var boxOrder = boxOrder.put(order)
+    }
+
 
     override fun calculateOrder(order: Order): Single<OrderBill> {
         return Single.fromCallable {
@@ -73,12 +79,15 @@ class OrderBillRepoImpl @Inject constructor(
 
             orderBill.totalTax = totalTax
 
-            if ( tax!!.type > 0 || tax.isActive == false) {
+            if ( tax!!.type > 0 && tax.isActive == true) {
                 orderBill.grandTotal = subtotal
                 order.grandTotal = subtotal
-            } else {
+
+            } else if (tax.type == 0 && tax.isActive == true) {
                 orderBill.grandTotal = subtotal + totalTax
                 order.grandTotal = subtotal + totalTax
+            } else if (tax.isActive == false){
+                orderBill.totalTax = 0.0
             }
 
             if (tax != null) {
@@ -108,8 +117,8 @@ class OrderBillRepoImpl @Inject constructor(
             .findFirst()
     }
 
-    override fun insertUpdateOrderBill(orderBill: OrderBill) {
-        box.put(orderBill)
+    override fun insertUpdateOrderBill(orderBill: OrderBill):Completable {
+        return Completable.fromCallable{box.put(orderBill)}
     }
 
     override fun insertUpdateOrderBill(orderBill: List<OrderBill>) {

@@ -249,9 +249,12 @@ class MenuActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
         rl_home_visit?.setOnClickListener {
             if (types.equals("homevisit")) {
                 if (getProductSales.isNotEmpty()) {
+                    order.typeOrder = ConstVar.TRANSACTION_TYPE_VISIT
+                    viewModel.updateOrder(order)
                     val bundle = Bundle()
                     bundle.putString("foodTruckData", gson.toJson(foodTruck))
                     bundle.putString("menulist", gson.toJson(order.productSales))
+                    bundle.putString("visituniqueid", order.uniqueId)
                     bundle.putDouble("total", total)
                     bundle.putInt("qty", qtyItems)
                     startActivity(BookHomeVisitActivity.getIntent(this, merchantId, bundle))
@@ -390,6 +393,7 @@ class MenuActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
             is MenuViewEvent.GetFoodTruckHomeVisitDataFailed -> {
                 dismissLoading()
             }
+
         }
     }
 
