@@ -71,18 +71,18 @@ class OnGoingFragment : BaseFragment<HistoryViewEvent, HistoryViewModel>() {
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
-//        swipe_refresh_ongoing.setColorSchemeColors(Color.rgb(47, 223, 189))
-//        swipe_refresh_ongoing.isRefreshing = true
-//        swipe_refresh_ongoing.setOnRefreshListener {
+        swipe_refresh_ongoing.setColorSchemeColors(Color.rgb(47, 223, 189))
+        swipe_refresh_ongoing.isRefreshing = true
+        swipe_refresh_ongoing.setOnRefreshListener {
 //            page = 1
-//            viewModel.getOrderHistory(page, "ongoing")
-//        }
+            viewModel.getOrderHistory(page, "ongoing")
+        }
     }
 
     override fun onEvent(useCase: HistoryViewEvent) {
         when (useCase) {
             is HistoryViewEvent.GetOrderHistorySuccess -> {
-//                swipe_refresh_ongoing.isRefreshing = false
+                swipe_refresh_ongoing.isRefreshing = false
 
                 if (useCase.data.isNotEmpty()) {
                     if (page == 1) {
@@ -91,17 +91,19 @@ class OnGoingFragment : BaseFragment<HistoryViewEvent, HistoryViewModel>() {
                     }
 
                     page = page.inc()
-                    orderHistoryAdapter.addData(useCase.data)
+//                    orderHistoryAdapter.addData(useCase.data)
                     orderHistoryAdapter.loadMoreModule.loadMoreComplete()
                     initList()
                 } else {
+                    swipe_refresh.isRefreshing = false
                     orderHistoryAdapter.loadMoreModule.loadMoreEnd()
-//                    Toast.makeText(requireContext(), "Tidak ada data", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Tidak ada data", Toast.LENGTH_SHORT).show()
                 }
             }
             is HistoryViewEvent.GetOrderHistoryFailed -> {
+                swipe_refresh_ongoing.isRefreshing = false
                 orderHistoryAdapter.loadMoreModule.loadMoreFail()
-//                swipe_refresh_ongoing.isRefreshing = false
+
                 Toast.makeText(context, useCase.errorMessage, Toast.LENGTH_SHORT).show()
             }
         }
@@ -109,7 +111,8 @@ class OnGoingFragment : BaseFragment<HistoryViewEvent, HistoryViewModel>() {
 
     override fun onResume() {
         super.onResume()
-//        swipe_refresh_ongoing?.isRefreshing = true
+        swipe_refresh_ongoing?.isRefreshing = true
+        page = 1
         viewModel.getOrderHistory(page, "ongoing")
     }
 

@@ -380,12 +380,12 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                 rl_order_summary.visibility = View.GONE
             }
         }
-/*
+
         rl_home_visit.setOnClickListener{
             val intent = Intent(this, BookHomeVisitActivity::class.java)
 
             startActivity(intent)
-        }*/
+        }
         var textItemCount = "0 Item"
         var textSubtotal = "0"
         var subtotal = 0.0
