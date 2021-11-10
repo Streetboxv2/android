@@ -58,12 +58,13 @@
         android:id="@+id/tv_trx_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="-"
-        android:visibility="gone"
+        tools:text="TRX1234"
+        android:visibility="visible"
+        android:layout_marginRight="@dimen/_10sdp"
         android:fontFamily="@font/poppins_regular"
         android:textColor="@color/color_text_regular"
-        app:layout_constraintStart_toStartOf="@+id/tv_order_time"
-        app:layout_constraintTop_toBottomOf="@+id/tv_order_time" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/tv_payment_status"

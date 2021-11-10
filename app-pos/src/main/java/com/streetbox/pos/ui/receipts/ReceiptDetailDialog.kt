@@ -206,7 +206,7 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
         tv_status_label?.text = "Status: ${order?.orderBill[0]?.billNo}"
         if(order.taxSales[0].isActive == true){
             if(order.taxSales[0].type == 0){
-                order.grandTotal = order.orderBill[0].totalTax + order.grandTotal
+                order.grandTotal =  order.grandTotal
             }
         }
         tv_grand_total?.text = "${NumberUtil.formatToStringWithoutDecimal(order.grandTotal)}"

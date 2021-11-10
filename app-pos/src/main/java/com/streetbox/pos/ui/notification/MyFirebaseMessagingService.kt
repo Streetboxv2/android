@@ -53,6 +53,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             println("respon Json Notif body $body")
 
             sendNotification(title = title.toString(), body = body.toString())
+            EventBus.getDefault().post(MessageEvent())
         }
         else {
 //            println("respon Notif ${remoteMessage.notification!!.imageUrl}")

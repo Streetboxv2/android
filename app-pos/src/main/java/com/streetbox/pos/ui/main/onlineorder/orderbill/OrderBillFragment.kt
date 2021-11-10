@@ -186,7 +186,7 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
                         tv_tax.visibility = View.VISIBLE
                         tv_taxLabel.setText(nameTax + "(Excl.)")
                         tv_tax.setText("" + NumberUtil.formatToStringWithoutDecimal(calculate))
-                        tv_grand_total.setText("" + NumberUtil.formatToStringWithoutDecimal(order!!.grandTotal + calculate))
+                        tv_grand_total.setText("" + NumberUtil.formatToStringWithoutDecimal(order!!.grandTotal ))
                     } else if(type == 1) {
                         tv_taxLabel.visibility = View.VISIBLE
                         tv_tax.visibility = View.VISIBLE

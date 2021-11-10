@@ -78,7 +78,7 @@ class UserRepositoryImpl @Inject internal constructor(
                     .map { res ->
                         if (res.isSuccess()) {
                             val taskOperators = res.data!!
-                            if (taskOperators.isNotEmpty()) {
+                          /*  if (taskOperators.isNotEmpty()) {
                                 val taskUpdateList: MutableList<TaskOperator> = mutableListOf()
 
                                 for (taskOperator in taskOperators) {
@@ -101,7 +101,7 @@ class UserRepositoryImpl @Inject internal constructor(
                                     }
                                 }
                                 taskOperatorRepo.insertUpdate(taskUpdateList)
-                            }
+                            }*/
                         }
                         it
                     }

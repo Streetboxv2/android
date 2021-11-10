@@ -69,7 +69,7 @@
                 android:id="@+id/iv_location"
                 android:layout_width="@dimen/_16sdp"
                 android:layout_height="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_location"
                 app:layout_constraintStart_toStartOf="@+id/tv_name"
@@ -93,7 +93,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_3sdp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:fontFamily="@font/poppins_bold"
                 android:text="Book Condition"
@@ -107,7 +107,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_4sdp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:fontFamily="@font/poppins_regular"
                 android:text="Paket pesta indoor dengan kapasitas 250 orang dengan menu yang sangat beragam"
@@ -120,7 +120,7 @@
                 android:id="@+id/header_separator"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_4sdp"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@color/grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -130,7 +130,7 @@
                 android:id="@+id/tv_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/poppins_bold"
                 android:text="Booking Details"
                 android:textColor="@color/black"
@@ -141,7 +141,7 @@
                 android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/poppins_regular"
                 android:text="Date"
                 android:textColor="@color/color_text_regular"
@@ -151,7 +151,7 @@
             <RelativeLayout
                 android:id="@+id/rl_select_date"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_30sdp"
+                android:layout_height="@dimen/_20sdp"
                 android:background="@drawable/select_date_bg"
                 app:layout_constraintStart_toStartOf="@+id/tv_date"
                 app:layout_constraintTop_toBottomOf="@+id/tv_date">
@@ -191,7 +191,7 @@
                 android:id="@+id/tv_available_slot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/poppins_regular"
                 android:text="Available Slot"
                 android:textColor="@color/color_text_regular"
@@ -227,7 +227,6 @@
                 android:id="@+id/customer_info_separator"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_4sdp"
-                android:layout_marginTop="@dimen/_20sdp"
                 android:background="@color/grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -238,8 +237,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
                 android:orientation="horizontal"
                 app:layout_constraintStart_toStartOf="@id/tv_description"
                 app:layout_constraintTop_toBottomOf="@+id/customer_info_separator">
@@ -252,6 +249,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="center|left"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:text="Delivery Address"
                     android:textColor="@color/black" />
 
@@ -259,6 +257,7 @@
                     android:id="@+id/tvChangeDeliveryAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:layout_gravity="center|right"
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_bold"
@@ -286,7 +285,7 @@
                     android:id="@+id/tvItemNameAddressSelect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/_10sdp"
+                    android:padding="@dimen/_5sdp"
                     android:text="Alamat Kantor"
                     android:textColor="@color/black" />
 
@@ -298,7 +297,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_15sdp"
+                    android:layout_margin="@dimen/_5sdp"
                     android:orientation="vertical">
 
                     <TextView
@@ -312,7 +311,6 @@
                         android:id="@+id/tvItemAddressSelect"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_6sdp"
                         android:text="arbaelbarcal"
                         android:textColor="@color/black" />
 
@@ -320,7 +318,7 @@
                         android:id="@+id/tvItemPhoneAddressSelect"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_6sdp"
+
                         android:text="arbaelbarcal"
                         android:textColor="@color/black" />
 
@@ -335,7 +333,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_10sdp"
-                android:padding="@dimen/_10sdp"
                 android:text="I agree to the Streetbox book conditions"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -345,7 +342,7 @@
                 android:id="@+id/fbl"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_6sdp"
+
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:visibility="gone"
                 app:flexWrap="wrap"
@@ -358,7 +355,6 @@
                     android:id="@+id/tv_previous_address_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_4sdp"
                     android:layout_marginEnd="@dimen/_4sdp"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingTop="@dimen/_4sdp"
@@ -370,7 +366,7 @@
                     android:id="@+id/tv_address_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_4sdp"
+
                     android:layout_marginEnd="@dimen/_4sdp"
                     android:background="@drawable/token_textview_bg"
                     android:ellipsize="end"
@@ -386,13 +382,13 @@
                     android:id="@+id/tv_address_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_4sdp"
+
                     android:layout_marginEnd="@dimen/_4sdp"
                     android:background="@drawable/token_textview_bg"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:paddingStart="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_4sdp"
+
                     android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_4sdp"
                     android:textColor="@color/white"
@@ -405,7 +401,7 @@
                 style="@style/Widget.App.TextInputLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:fontFamily="@font/poppins_regular"
                 android:hint="Name"
@@ -429,8 +425,8 @@
                 style="@style/Widget.App.TextInputLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
                 android:fontFamily="@font/poppins_regular"
                 android:hint="Click to search address"
                 android:visibility="gone"
@@ -456,7 +452,7 @@
                 style="@style/Widget.App.TextInputLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:fontFamily="@font/poppins_regular"
                 android:hint="Phone"
@@ -481,15 +477,15 @@
                 style="@style/Widget.App.TextInputLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:fontFamily="@font/poppins_regular"
                 android:hint="Notes"
                 android:visibility="visible"
                 app:hintTextColor="@color/blue"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tl_phone"
-                app:layout_constraintTop_toBottomOf="@+id/tl_phone">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cbAgreesHomeVisit">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_notes"
@@ -497,12 +493,15 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
                     android:gravity="top"
+                    android:layout_margin="@dimen/_10sdp"
                     android:imeOptions="actionDone"
                     android:inputType="textMultiLine"
                     android:maxLines="2"
                     android:minLines="2"
                     android:textColor="@color/color_text_regular" />
             </com.google.android.material.textfield.TextInputLayout>
+
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -512,7 +511,9 @@
     <RelativeLayout
         android:id="@+id/rl_order_summary"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -573,4 +574,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

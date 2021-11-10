@@ -186,6 +186,7 @@ class BookHomeVisitActivity : BaseActivity<BookHomeVisitViewEvent, BookHomeVisit
                     bookedData.grandTotal = totalMenuItem.toLong()
                     bookedData.latitude = dataAddress?.latitude!!
                     bookedData.longitude = dataAddress?.longitude!!
+                    et_notes.visibility = View.VISIBLE
                     val getNotes = et_notes.text.toString()
 
                     if (getNotes.isEmpty()) {
@@ -379,6 +380,7 @@ class BookHomeVisitActivity : BaseActivity<BookHomeVisitViewEvent, BookHomeVisit
                 tvItemAddressSelect.text = dataAddress?.address
                 tvItemPesonAddressSelect.text = dataAddress?.person
                 tvItemPhoneAddressSelect.text = dataAddress?.phone
+                et_notes.visibility = View.VISIBLE
             }
             is BookHomeVisitViewEvent.OnFailedAddress -> {
                 val throwable = useCase.throwable
@@ -427,6 +429,7 @@ class BookHomeVisitActivity : BaseActivity<BookHomeVisitViewEvent, BookHomeVisit
                         tv_address_2.text = it.address
                         return@forEach
                     }
+
                     pos = pos.inc()
                 }
             }

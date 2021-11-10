@@ -296,7 +296,7 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
                 order.createdAt = DateTimeUtil.getCurrentDateTime()
                 order.updatedAt = DateTimeUtil.getCurrentDateTime()
                 if(order.taxSales[0].isActive == true && order.taxSales[0].type == 0){
-                    order.grandTotal = grandTotal!! - order.orderBill[0].totalTax
+                    order.grandTotal = grandTotal!!
                 }else{
                     order.grandTotal = grandTotal!!
                 }

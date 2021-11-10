@@ -55,27 +55,28 @@ class HistoryFragment : BaseFragment<HistoryViewEvent, HistoryViewModel>() {
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
-        swipe_refresh.setColorSchemeColors(Color.rgb(47, 223, 189))
-        swipe_refresh.isRefreshing = true
-        swipe_refresh.setOnRefreshListener {
-            page = 1
-            viewModel.getOrderHistory(page, "history")
-        }
+//        swipe_refresh.setColorSchemeColors(Color.rgb(47, 223, 189))
+//        swipe_refresh.isRefreshing = true
+//        swipe_refresh.setOnRefreshListener {
+//            page = 1
+//            viewModel.getOrderHistory(page, "history")
+//        }
     }
 
     override fun onEvent(useCase: HistoryViewEvent) {
         when (useCase) {
             is HistoryViewEvent.GetOrderHistorySuccess -> {
-                swipe_refresh.isRefreshing = false
-                orderHistoryAdapter.data.clear()
+//                swipe_refresh.isRefreshing = false
+
                 if (useCase.data.isNotEmpty()) {
+
                     if (page == 1) {
-//                        orderHistoryAdapter.data.clear()
+                        orderHistoryAdapter.data.clear()
                         orderHistoryAdapter.loadMoreModule.loadMoreStatus
                     }
 
                     page = page.inc()
-
+                    orderHistoryAdapter.data.clear()
                     orderHistoryAdapter.addData(useCase.data)
                     orderHistoryAdapter.loadMoreModule.loadMoreComplete()
                     initList()
@@ -86,7 +87,7 @@ class HistoryFragment : BaseFragment<HistoryViewEvent, HistoryViewModel>() {
             }
             is HistoryViewEvent.GetOrderHistoryFailed -> {
                 orderHistoryAdapter.loadMoreModule.loadMoreFail()
-                swipe_refresh.isRefreshing = false
+//                swipe_refresh.isRefreshing = false
                 Toast.makeText(context, useCase.errorMessage, Toast.LENGTH_SHORT).show()
             }
         }
@@ -95,8 +96,8 @@ class HistoryFragment : BaseFragment<HistoryViewEvent, HistoryViewModel>() {
 
     override fun onResume() {
         super.onResume()
-        swipe_refresh?.isRefreshing = true
-        page = 1
+//        swipe_refresh?.isRefreshing = true
+//        page = 1
         viewModel.getOrderHistory(page, "history")
     }
 

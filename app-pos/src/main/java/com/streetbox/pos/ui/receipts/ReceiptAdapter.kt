@@ -25,7 +25,7 @@ class ReceiptAdapter(data: MutableList<Order> = mutableListOf()) :
 
         if(item.taxSales[0].isActive == true){
             if(item.taxSales[0].type == 0){
-                item.grandTotal = item.orderBill[0].totalTax + item.grandTotal
+                item.grandTotal =   item.grandTotal
             }
         }
         val jumlah = NumberUtil.formatToStringWithoutDecimal(item.grandTotal)
