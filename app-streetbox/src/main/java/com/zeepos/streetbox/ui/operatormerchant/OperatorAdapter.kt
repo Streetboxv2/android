@@ -63,7 +63,7 @@ class OperatorAdapter(data: MutableList<User> = arrayListOf()) :
                 }
             }
             else -> {
-                btnTracking.visibility = View.GONE
+                btnTracking.visibility = View.INVISIBLE
                 tvAssign.visibility = View.INVISIBLE
             }
         }

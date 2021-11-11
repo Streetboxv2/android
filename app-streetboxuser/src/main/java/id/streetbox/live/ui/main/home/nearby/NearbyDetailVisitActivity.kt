@@ -30,6 +30,7 @@ import com.zeepos.ui_base.ui.BaseViewEvent
 import com.zeepos.ui_base.views.GlideApp
 import com.zeepos.utilities.DateTimeUtil
 import id.streetbox.live.ui.bookhomevisit.BookHomeVisitActivity
+import id.streetbox.live.ui.menu.MenuActivity
 import id.streetbox.live.ui.menu.MenuAdapter
 import id.streetbox.live.ui.menu.MenuViewEvent
 import id.streetbox.live.ui.menu.MenuViewEvent.GetTaxSuccess
@@ -382,9 +383,10 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
         }
 
         rl_home_visit.setOnClickListener{
-            val intent = Intent(this, BookHomeVisitActivity::class.java)
-
-            startActivity(intent)
+            val bundle = Bundle()
+            bundle.putString("foodTruckData", gson.toJson(foodTruck))
+            bundle.putString("types", "homevisit")
+            startActivity(MenuActivity.getIntent(this, merchantId, bundle))
         }
         var textItemCount = "0 Item"
         var textSubtotal = "0"

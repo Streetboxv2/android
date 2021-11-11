@@ -149,12 +149,13 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:textSize="@dimen/_7sdp"
+                android:visibility="visible"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:background="@drawable/button_live_tracking_bg"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:textColor="@color/white"
-                android:text="@string/live_tracking" />
+                android:text="Monitor" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

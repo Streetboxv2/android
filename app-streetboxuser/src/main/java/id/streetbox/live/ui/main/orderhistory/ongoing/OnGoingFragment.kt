@@ -91,11 +91,11 @@ class OnGoingFragment : BaseFragment<HistoryViewEvent, HistoryViewModel>() {
                     }
 
                     page = page.inc()
-//                    orderHistoryAdapter.addData(useCase.data)
+                    orderHistoryAdapter.addData(useCase.data)
                     orderHistoryAdapter.loadMoreModule.loadMoreComplete()
                     initList()
                 } else {
-                    swipe_refresh.isRefreshing = false
+//                    swipe_refresh.isRefreshing = false
                     orderHistoryAdapter.loadMoreModule.loadMoreEnd()
                     Toast.makeText(requireContext(), "Tidak ada data", Toast.LENGTH_SHORT).show()
                 }

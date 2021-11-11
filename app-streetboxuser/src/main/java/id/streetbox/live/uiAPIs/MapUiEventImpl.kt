@@ -18,7 +18,7 @@ class MapUiEventImpl @Inject internal constructor() :
     }
 
     override fun goToMerchantMenuScreen(activity: Activity, merchantId: Long, bundle: Bundle) {
-//        activity.startActivity(MenuActivity.getIntent(activity, merchantId, bundle))
+        activity.startActivity(MenuActivity.getIntent(activity, merchantId, bundle))
         activity.startActivity(
             Intent(activity, NearbyDetailVisitActivity::class.java)
                 .putExtras(bundle)
