@@ -58,7 +58,7 @@ class HistoryFragment : BaseFragment<HistoryViewEvent, HistoryViewModel>() {
         swipe_refresh.setColorSchemeColors(Color.rgb(47, 223, 189))
         swipe_refresh.isRefreshing = true
         swipe_refresh.setOnRefreshListener {
-//            page = 1
+            page = 1
             viewModel.getOrderHistory(page, "history")
         }
     }
@@ -67,7 +67,7 @@ class HistoryFragment : BaseFragment<HistoryViewEvent, HistoryViewModel>() {
         when (useCase) {
             is HistoryViewEvent.GetOrderHistorySuccess -> {
                 swipe_refresh.isRefreshing = false
-                orderHistoryAdapter.data.clear()
+//                orderHistoryAdapter.data.clear()
                 if (useCase.data.isNotEmpty()) {
                     if (page == 1) {
                         orderHistoryAdapter.data.clear()

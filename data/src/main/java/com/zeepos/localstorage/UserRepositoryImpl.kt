@@ -109,7 +109,8 @@ class UserRepositoryImpl @Inject internal constructor(
             .map {
                 if (it.isSuccess()) {
                     it.data?.let { data ->
-                        return@map handleOperatorResponse(data)
+//                        return@map handleOperatorResponse(data)
+                        return@map data
                     }
                 }
 
