@@ -40,6 +40,9 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
     private var foodTruck: FoodTruck? = null
     private var bookHomeVisit: BookHomeVisit? = null
     var grandTotal: Double = 0.0
+    var totalTax: Double = 0.0
+    var isActive:Boolean = false
+    var typeTax:Int = 0
 
     private val appType: String by lazy {
         SharedPreferenceUtil.getString(this, ConstVar.APP_TYPE, ConstVar.EMPTY_STRING)
@@ -54,6 +57,9 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
         val bundle = intent.extras
         viewModel = ViewModelProvider(this, viewModeFactory).get(PaymentViewModel::class.java)
         grandTotal = intent.getDoubleExtra("grandTotal", 0.0)
+        totalTax = intent.getDoubleExtra("totalTax",0.0)
+        isActive = intent.getBooleanExtra("isActive", false)
+        typeTax = intent.getIntExtra("typeTax",0)
         println("respon Grand total $grandTotal")
 
         val foodTruckStr = bundle?.getString("foodTruckData", ConstVar.EMPTY_STRING)
@@ -107,6 +113,8 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
                     } else {
 
                         //from nearby
+
+
                           viewModel.generatePaymentSales(
                             selectedPayment,
                             ConstVar.PAYMENT_STATUS_UNPAID,
@@ -196,6 +204,10 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
         PaymentViewEvent.CloseOrderSuccess -> {
             val merchanId = order.merchantId
             val orderJson =  gson.toJson(order.productSales)
+            if(isActive== true && typeTax == 0){
+                grandTotal = grandTotal + ((totalTax/100) * grandTotal)
+                order.grandTotal = grandTotal
+            }
             viewModel.getQRCodePayment(
                 merchanId,
                 grandTotal,

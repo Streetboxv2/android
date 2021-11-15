@@ -86,6 +86,11 @@ class CheckInDialogFragment : BottomSheetDialogFragment(), View.OnClickListener 
             currentLongitude = args.getDouble("longi")
         }
 
+
+        if(types=="HOMEVISIT"){
+            iv_startdatetime.visibility = View.INVISIBLE
+        }
+
         btn_checkin.setOnClickListener {
             if (mapType == ConstVar.MAP_TYPE_FREE_TASK) {
                 viewModel!!.checkInOperatorFreeTask(

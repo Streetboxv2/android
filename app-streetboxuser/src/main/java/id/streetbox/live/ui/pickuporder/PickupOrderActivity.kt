@@ -134,6 +134,9 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
                     .putExtra("notes", notes)
                     .putExtra(PaymentActivity.ORDER_UNIQUE_ID, getOrder!!.uniqueId)
                     .putExtra("grandTotal", total)
+                    .putExtra("totalTax", totalTax)
+                    .putExtra("isActive", isActive)
+                    .putExtra("typeTax",typeTax)
                 startActivityForResult(intent, 1002)
             } else {
                 showToastExt("Item Order not found", this)

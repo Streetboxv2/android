@@ -210,7 +210,7 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
             }
         }
         tv_grand_total?.text = "${NumberUtil.formatToStringWithoutDecimal(order.grandTotal)}"
-
+        order.productSales[0].subtotal = order.grandTotal
         adapter.setList(order.productSales)
         setFooterData(order)
     }
@@ -281,12 +281,12 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
        calculate = order.orderBill[0].totalTax
         val a:Double = order.orderBill[0].subTotal
         if(isActive == true) {
-            if (typeTax == 0) {
+            if (order.taxSales[0].type == 0) {
                 tvTotalTax.text = "${NumberUtil.formatToStringWithoutDecimal(calculate)}"
                 tvTaxLabel.text = taxName + "(Excl)"
                 tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(subTotal - calculate )}"
                 tvTotalPayment.text = "${NumberUtil.formatToStringWithoutDecimal(totalPayment)}"
-            } else if (typeTax == 1) {
+            } else if (order.taxSales[0].type  == 1) {
                 tvTaxLabel.text = taxName + "(Incl)"
                 tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(subTotal)}"
                 tvTotalTax.text = "${NumberUtil.formatToStringWithoutDecimal(calculate)}"
@@ -344,62 +344,7 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
     }
 
 
-    private fun printSomePrintable() {
-        val printables = getSomePrintables()
-        printing?.print(printables)
-    }
 
-    private fun checkPrinter() {
-        if (Printooth.hasPairedPrinter())
-            printing = Printooth.printer()
-
-        printing?.printingCallback = object : PrintingCallback {
-            override fun connectingWithPrinter() {
-                context?.let {
-                    Toast.makeText(
-                        it,
-                        "Connecting with printer",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-
-            override fun printingOrderSentSuccessfully() {
-                context?.let {
-                    Toast.makeText(
-                        it,
-                        "Order sent to printer",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-
-            override fun connectionFailed(error: String) {
-                context?.let {
-                    Toast.makeText(
-                        it,
-                        "Failed to connect printer",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-
-            override fun onError(error: String) {
-                context?.let {
-                    Toast.makeText(it, error, Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onMessage(message: String) {
-                context?.let {
-                    Toast.makeText(it, "Message: $message", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-
-        }
-
-    }
 
     fun formatReceipt(){
         for (i in order.productSales.indices) {
@@ -436,7 +381,7 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
         }else if( order.taxSales[0].isActive == true){
 
 
-            if (type == 1) {
+            if (order.taxSales[0].type == 1) {
                 taxTotal =
                     "[L]<b>" + taxName+ "(Incl)"+ "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
                         calculate
@@ -447,7 +392,7 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
                     ) + "\n"
                 subTot =  "[L]<b>Subtotal </b>" +"[R]"+ NumberUtil.formatToStringWithoutDecimal(order.grandTotal) + "\n"
 
-            }else if (type == 0){
+            }else if (order.taxSales[0].type == 0){
                 taxTotal =
                     "[L]<b>" + taxName +"(Excl)"+ "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
                         calculate
