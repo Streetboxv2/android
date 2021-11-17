@@ -14,6 +14,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import javax.net.ssl.X509TrustManager
 
@@ -42,7 +43,9 @@ class DomainToolsModule {
                 ).build()
             chain.proceed(request)
         }
-
+        builder.connectTimeout(1, TimeUnit.MINUTES) // connect timeout
+                .writeTimeout(1, TimeUnit.MINUTES) // write timeout
+                .readTimeout(1, TimeUnit.MINUTES)
         builder.sslSocketFactory(
             SslUtils.getUnSaveSslContext().socketFactory,
             SslUtils.getTrustManager()[0] as X509TrustManager

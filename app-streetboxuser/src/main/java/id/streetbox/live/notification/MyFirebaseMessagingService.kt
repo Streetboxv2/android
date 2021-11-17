@@ -76,8 +76,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 //            .putExtra("key", remoteMessage.data["typeNotif"])
 
 
+        val uniqueInt = (System.currentTimeMillis() and 0xff).toInt()
         val contentIntentQuest = PendingIntent.getActivity(
-            this, 0,
+            this, uniqueInt,
             qIntent, PendingIntent.FLAG_UPDATE_CURRENT
         )
 
