@@ -1,6 +1,7 @@
 package com.zeepos.streetbox.ui.main.myparkingspace
 
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -27,6 +28,7 @@ class MyParkingSpaceAdapter(data: MutableList<ParkingSales> = arrayListOf()) :
     override fun convert(holder: BaseViewHolder, item: ParkingSales) {
         val ivImage = holder.getView<ImageView>(R.id.iv_parking)
         val tvHomeVisit = holder.getView<TextView>(R.id.tv_homevisit)
+        val btnLiveMonitor = holder.getView<Button>(R.id.btn_live_monitor)
         val tvRating = holder.getView<TextView>(R.id.tv_rating)
         val ivRating = holder.getView<ImageView>(R.id.iv_rating)
         val tvDescription = holder.getView<TextView>(R.id.tv_description)
@@ -40,15 +42,33 @@ class MyParkingSpaceAdapter(data: MutableList<ParkingSales> = arrayListOf()) :
 
         holder.setText(R.id.tv_title, item.name)
 
-        if(item.trxVisitSalesId > 0){
+        if (item.tasksId > 0){
+            tvHomeVisit.visibility = View.INVISIBLE
+            btnLiveMonitor.visibility = View.VISIBLE
+        } else {
             tvHomeVisit.visibility = View.VISIBLE
+            btnLiveMonitor.visibility = View.INVISIBLE
+        }
+
+        if(item.trxVisitSalesId > 0 && item.tasksId > 0){
+            tvHomeVisit.visibility = View.INVISIBLE
+            btnLiveMonitor.visibility = View.VISIBLE
             tvRating.visibility = View.GONE
             ivRating.visibility = View.GONE
            imageUrlPic = imageProfPic
             tvDescription.visibility = View.GONE
 
-        }else{
+        } else if(item.trxVisitSalesId > 0){
+            tvHomeVisit.visibility = View.VISIBLE
+            btnLiveMonitor.visibility = View.INVISIBLE
+            tvRating.visibility = View.GONE
+            ivRating.visibility = View.GONE
+            imageUrlPic = imageProfPic
+            tvDescription.visibility = View.GONE
+
+        } else {
             tvHomeVisit.visibility = View.GONE
+            btnLiveMonitor.visibility = View.VISIBLE
             tvRating.visibility = View.VISIBLE
             ivRating.visibility = View.VISIBLE
             tvDescription.visibility = View.VISIBLE
