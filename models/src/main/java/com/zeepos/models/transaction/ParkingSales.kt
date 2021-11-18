@@ -47,4 +47,6 @@ class ParkingSales {
 
     @Backlink(to = "parkingSales")
     lateinit var parkingSlotSales: ToMany<ParkingSlotSales>
+
+    var tasksId = 0L
 }
