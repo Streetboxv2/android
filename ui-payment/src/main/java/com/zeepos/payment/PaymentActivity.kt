@@ -4,10 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log.println
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dbroom.db.room.AppDatabase
+import com.example.dbroom.db.room.enitity.MenuItemStore
 import com.google.gson.Gson
 import com.zeepos.models.ConstVar
 import com.zeepos.models.entities.BookHomeVisit
@@ -16,6 +18,7 @@ import com.zeepos.models.master.FoodTruck
 import com.zeepos.models.master.PaymentMethod
 import com.zeepos.models.master.Tax
 import com.zeepos.models.transaction.Order
+import com.zeepos.models.transaction.ProductSales
 import com.zeepos.models.transaction.TaxSales
 import com.zeepos.ui_base.ui.BaseActivity
 import com.zeepos.utilities.DateTimeUtil
@@ -36,13 +39,14 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
     lateinit var gson: Gson
 
     private lateinit var paymentAdapter: PaymentAdapter
-    private lateinit var order: Order
+    private lateinit var orderTrx: Order
     private var foodTruck: FoodTruck? = null
     private var bookHomeVisit: BookHomeVisit? = null
     var grandTotal: Double = 0.0
     var totalTax: Double = 0.0
     var isActive:Boolean = false
     var typeTax:Int = 0
+    var menuItemStoreList: List<MenuItemStore> = mutableListOf()
 
     private val appType: String by lazy {
         SharedPreferenceUtil.getString(this, ConstVar.APP_TYPE, ConstVar.EMPTY_STRING)
@@ -89,6 +93,11 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
 
         initList()
 
+        menuItemStoreList = AppDatabase.getInstance(this)
+            .dataDao().getAllDataListMenu()
+
+        var productSales = ProductSales()
+
 
         btn_pay.setOnClickListener {
             val selectedPayment = paymentAdapter.selectedPayment
@@ -118,7 +127,7 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
                           viewModel.generatePaymentSales(
                             selectedPayment,
                             ConstVar.PAYMENT_STATUS_UNPAID,
-                            order
+                            orderTrx
                         )
 //                        val idMerchant = foodTruck?.merchantId
 //                            idMerchant!!,
@@ -133,7 +142,7 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
                     viewModel.generatePaymentSales(
                         selectedPayment,
                         ConstVar.PAYMENT_STATUS_PAID,
-                        order
+                        orderTrx
                     )
                 }
             } else {
@@ -183,7 +192,8 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
                     )//sync visit data transaction
                 }
             } else {
-                paymentUiEvent.onPaymentFinish(this, order.uniqueId)//sync data transaction
+
+                paymentUiEvent.onPaymentFinish(this, orderTrx.uniqueId)//sync data transaction
             }
             AppDatabase.getInstance(applicationContext)
                 .dataDao().deleteAllMenuStore()
@@ -194,7 +204,7 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
             Toast.makeText(applicationContext, useCase.errorMessage, Toast.LENGTH_SHORT).show()
         }
         is PaymentViewEvent.GetOrderSuccess -> {
-            order = useCase.order
+            orderTrx = useCase.order
             viewModel.getPaymentMethod()
         }
         is PaymentViewEvent.GetOrderFailed -> {
@@ -202,17 +212,17 @@ class PaymentActivity : BaseActivity<PaymentViewEvent, PaymentViewModel>() {
             println("respon Error order ${useCase.throwable.message}")
         }
         PaymentViewEvent.CloseOrderSuccess -> {
-            val merchanId = order.merchantId
-            val orderJson =  gson.toJson(order.productSales)
+            val merchanId = orderTrx.merchantId
+            val orderJson =  gson.toJson(orderTrx.productSales)
             if(isActive== true && typeTax == 0){
                 grandTotal = grandTotal + ((totalTax/100) * grandTotal)
-                order.grandTotal = grandTotal
+                orderTrx.grandTotal = grandTotal
             }
             viewModel.getQRCodePayment(
                 merchanId,
                 grandTotal,
                 ConstVar.TRANSACTION_TYPE_ORDER,
-                order,
+                orderTrx,
                 orderJson
             )
         }

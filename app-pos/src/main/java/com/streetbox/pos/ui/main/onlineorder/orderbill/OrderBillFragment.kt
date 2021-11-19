@@ -179,6 +179,7 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
                 if (taxSales == null || order!!.taxSales[0].isActive == false) {
                     tv_taxLabel.visibility = View.GONE
                     tv_tax.visibility = View.GONE
+                    tv_resSubTotal.setText("" + NumberUtil.formatToStringWithoutDecimal(order!!.grandTotal ))
                     tv_grand_total.setText("" + NumberUtil.formatToStringWithoutDecimal(order!!.grandTotal))
                 } else {
                     if (type == 0) {
@@ -250,11 +251,13 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
                 context?.let {
                     SyncTransactionWorker.syncTransactionData(it, syncData.uniqueId)
                 }
-//                onlineOrderViewModel?.getRecentOrder()
 
-                startActivity(context?.let { it1 -> OnlineOrderActivity.getIntent(it1) })
+                Handler().postDelayed({
+                   startActivity(context?.let { OnlineOrderActivity.getIntent(it) })
+                }, 1000)
+
             }
-            OrderBillViewEvent.OnRemoveProductSuccess -> TODO()
+            OrderBillViewEvent.OnRemoveProductSuccess -> {}
         }
     }
 
@@ -415,9 +418,9 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
 
                 AsyncBluetoothEscPosPrint(context).execute(getAsyncEscPosPrinter(selectedDevice))
 
-                    Handler().postDelayed({
+//                    Handler().postDelayed({
                         trxId?.let { it1 -> viewModel.closeOnlineOrder(it1) }
-                    }, 1000)
+//                    }, 1000)
 
 
             } catch (e: Exception) {

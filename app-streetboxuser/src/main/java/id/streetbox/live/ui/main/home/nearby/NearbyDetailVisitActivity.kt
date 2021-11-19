@@ -276,6 +276,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
             bundle.putDouble("total", total)
             bundle.putInt("qty", qtyItems)
             bundle.putString("order", gson.toJson(order))
+            bundle.putString("merchantUserId", order.merchantUsersId.toString())
             bundle.putString("taxName", taxName)
             bundle.putInt("taxType",typesTax)
             bundle.putDouble("totalTax",totalTax)

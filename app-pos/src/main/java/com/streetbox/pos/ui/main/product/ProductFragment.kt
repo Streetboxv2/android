@@ -175,6 +175,8 @@ class ProductFragment : BaseFragment<ProductViewEvent, ProductViewModel>(),
                 }
 
                 R.id.action_logout -> {
+                    SharedPreferenceUtil.setString(context!!, "appStatus", "isLogout")
+
                     viewModel.deleteSession()
                     startActivity(context?.let { it1 -> LoginActivity.getIntent(it1) })
 

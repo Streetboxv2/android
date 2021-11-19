@@ -4,6 +4,7 @@ import com.zeepos.domain.repository.OrderRepo
 import com.zeepos.domain.repository.UserRepository
 import com.zeepos.models.ConstVar
 import com.zeepos.models.entities.OrderHistory
+import com.zeepos.models.entities.OrderHistoryDetail
 import com.zeepos.models.factory.ObjectFactory
 import com.zeepos.models.master.FoodTruck
 import com.zeepos.models.master.User
@@ -171,6 +172,22 @@ class OrderRepoImpl @Inject internal constructor(
                     return@map data
                 }
 
+                throw Exceptions.propagate(Throwable(ConstVar.DATA_NULL))
+            }
+    }
+
+    override fun getOrderCloudId(trxId: String): Single<OrderHistoryDetail> {
+        return service.getOrderHistory(trxId)
+            .onErrorResumeNext{
+                Single.error {
+                    RetrofitException.handleRetrofitException(it, retrofit)
+                }
+            }
+            .map {
+                if (it.isSuccess()) {
+                    val data = it.data
+                    return@map data
+                }
                 throw Exceptions.propagate(Throwable(ConstVar.DATA_NULL))
             }
     }

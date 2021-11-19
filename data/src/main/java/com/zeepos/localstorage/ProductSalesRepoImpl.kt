@@ -86,6 +86,7 @@ class ProductSalesRepoImpl @Inject constructor(
 
     override fun updateProductSales(product: Product, order: Order): Completable {
         return Completable.fromCallable {
+
         }
     }
 
