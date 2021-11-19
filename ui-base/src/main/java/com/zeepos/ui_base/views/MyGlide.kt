@@ -10,6 +10,7 @@ import com.bumptech.glide.module.AppGlideModule
 import com.zeepos.utilities.SslUtils
 import okhttp3.OkHttpClient
 import java.io.InputStream
+import java.util.concurrent.TimeUnit
 import javax.net.ssl.X509TrustManager
 
 /**
@@ -24,7 +25,9 @@ class MyGlide : AppGlideModule() {
             SslUtils.getTrustManager()[0] as X509TrustManager
         )
         builder.hostnameVerifier { _, _ -> true }
-
+        builder.connectTimeout(2, TimeUnit.MINUTES) // connect timeout
+                .writeTimeout(2, TimeUnit.MINUTES) // write timeout
+                .readTimeout(2, TimeUnit.MINUTES)
         registry.replace(
             GlideUrl::class.java,
             InputStream::class.java,

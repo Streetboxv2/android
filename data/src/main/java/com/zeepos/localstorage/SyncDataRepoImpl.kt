@@ -344,8 +344,8 @@ class SyncDataRepoImpl @Inject constructor(
         val nextDate = DateTimeUtil.getNextDate(endDateMillis)
 
         val queryMap: HashMap<String, String> = hashMapOf()
-        queryMap["startDate"] = DateTimeUtil.getDateWithFormat(startDate, "dd/MM/YYYY")
-        queryMap["endDate"] = DateTimeUtil.getDateWithFormat(endDate, "dd/MM/YYYY")
+        queryMap["startDate"] = DateTimeUtil.getDateWithFormat(startDate, "dd/MM/yyyy")
+        queryMap["endDate"] = DateTimeUtil.getDateWithFormat(endDate, "dd/MM/yyyy")
 
         if (keyword.isNotEmpty()) {
             queryMap["keyword"] = keyword
