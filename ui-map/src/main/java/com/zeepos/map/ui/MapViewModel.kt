@@ -283,7 +283,7 @@ class MapViewModel @Inject constructor(
         )
             .subscribe(
                 {
-                    if (it.latLng != null) {
+                    if (it.latLng!!.lat != 0.0) {
                         viewEventObservable.value = MapViewEvent.UpdateFoodTruckLocation(it)
                     }
 

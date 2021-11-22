@@ -49,4 +49,5 @@ class ParkingSales {
     lateinit var parkingSlotSales: ToMany<ParkingSlotSales>
 
     var tasksId = 0L
+    var platNo: String? = ConstVar.EMPTY_STRING
 }

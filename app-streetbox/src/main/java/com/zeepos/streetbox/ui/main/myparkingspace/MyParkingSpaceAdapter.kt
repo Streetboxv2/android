@@ -32,6 +32,7 @@ class MyParkingSpaceAdapter(data: MutableList<ParkingSales> = arrayListOf()) :
         val tvRating = holder.getView<TextView>(R.id.tv_rating)
         val ivRating = holder.getView<ImageView>(R.id.iv_rating)
         val tvDescription = holder.getView<TextView>(R.id.tv_description)
+        val tvPlatNo = holder.getView<TextView>(R.id.tv_platno)
         val imageUrls = item.images ?: arrayListOf()
         val imageUrl: String =
             ConstVar.PATH_IMAGE + if (imageUrls.isNotEmpty()) item.images!![0] else ConstVar.EMPTY_STRING
@@ -42,16 +43,10 @@ class MyParkingSpaceAdapter(data: MutableList<ParkingSales> = arrayListOf()) :
 
         holder.setText(R.id.tv_title, item.name)
 
-        if (item.tasksId > 0){
-            tvHomeVisit.visibility = View.INVISIBLE
-            btnLiveMonitor.visibility = View.VISIBLE
-        } else {
-            tvHomeVisit.visibility = View.VISIBLE
-            btnLiveMonitor.visibility = View.INVISIBLE
-        }
-
         if(item.trxVisitSalesId > 0 && item.tasksId > 0){
-            tvHomeVisit.visibility = View.INVISIBLE
+            tvPlatNo.visibility = View.VISIBLE
+            tvPlatNo.text="B 8888 STB"
+            tvHomeVisit.visibility = View.VISIBLE
             btnLiveMonitor.visibility = View.VISIBLE
             tvRating.visibility = View.GONE
             ivRating.visibility = View.GONE
@@ -59,6 +54,7 @@ class MyParkingSpaceAdapter(data: MutableList<ParkingSales> = arrayListOf()) :
             tvDescription.visibility = View.GONE
 
         } else if(item.trxVisitSalesId > 0){
+            tvPlatNo.visibility = View.INVISIBLE
             tvHomeVisit.visibility = View.VISIBLE
             btnLiveMonitor.visibility = View.INVISIBLE
             tvRating.visibility = View.GONE
@@ -67,6 +63,8 @@ class MyParkingSpaceAdapter(data: MutableList<ParkingSales> = arrayListOf()) :
             tvDescription.visibility = View.GONE
 
         } else {
+            tvPlatNo.visibility = View.VISIBLE
+            tvPlatNo.text="B 8889 STB"
             tvHomeVisit.visibility = View.GONE
             btnLiveMonitor.visibility = View.VISIBLE
             tvRating.visibility = View.VISIBLE

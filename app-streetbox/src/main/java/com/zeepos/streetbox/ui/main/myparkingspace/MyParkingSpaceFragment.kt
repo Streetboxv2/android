@@ -69,19 +69,22 @@ class MyParkingSpaceFragment : BaseFragment<MyParkingSpaceViewEvent, MyParkingSp
         myParkingSpaceAdapter.setOnItemClickListener { adapter, _, position ->
             context?.let {
                 val parkingSales = adapter.getItem(position) as ParkingSales
-                if(parkingSales.trxVisitSalesId > 0){
-                     id = parkingSales.trxVisitSalesId
-                    startActivity(
-                        OperatorActivity.getIntent(
-                            it,
-                           id, id
+                if (parkingSales.tasksId > 0)
+                    Toast.makeText(context, "Already assign", Toast.LENGTH_SHORT).show()
+                else {
+                    if (parkingSales.trxVisitSalesId > 0) {
+                        id = parkingSales.trxVisitSalesId
+                        startActivity(
+                                OperatorActivity.getIntent(
+                                        it,
+                                        id, id
+                                )
                         )
-                    )
-                }else{
-                    id = parkingSales.id
-                    startActivity(ParkingDetailActivity.getIntent(it, id, true))
+                    } else {
+                        id = parkingSales.id
+                        startActivity(ParkingDetailActivity.getIntent(it, id, true))
+                    }
                 }
-
             }
         }
 
