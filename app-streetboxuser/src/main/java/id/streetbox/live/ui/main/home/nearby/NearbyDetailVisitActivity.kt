@@ -73,6 +73,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
     var taxName:String = ConstVar.EMPTY_STRING
     var totalTax:Double = 0.0
     var isActive:Boolean =  false
+    var  dataProduct: List<Product> = ArrayList()
     private lateinit var tax: Tax
 
     val onClickIncrease = object : AdapterMenu.OnClickIncrease {
@@ -231,7 +232,10 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
         lifecycleScope.launch {
             getSaveListMenu = AppDatabase.getInstance(this@NearbyDetailVisitActivity)
                 .dataDao().getAllDataListMenu()
-            showHideOrderSummary()
+               showHideOrderSummary()
+
+
+               adapterMenu!!.setData(getSaveListMenu)
         }
     }
 
@@ -241,7 +245,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
 
     override fun init() {
         viewModel = ViewModelProvider(this, viewModeFactory).get(MenuViewModel::class.java)
-        viewModel.getRecentOrder(merchantId, foodTruck)
+//        viewModel.getRecentOrder(merchantId, foodTruck)
         merchantId = intent.getLongExtra(ConstVar.MERCHANT_ID, 0)
         val bundle = intent.extras
         if (bundle != null) {
@@ -281,6 +285,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
             bundle.putInt("taxType",typesTax)
             bundle.putDouble("totalTax",totalTax)
             bundle.putBoolean("isActive",isActive)
+            bundle.putInt("taxId",tax.id.toInt())
 
             val intent = Intent(this, PickupOrderActivity::class.java)
                 .putExtras(bundle)
@@ -292,7 +297,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
         when (useCase) {
             is MenuViewEvent.GetProductSuccess -> {
                 dismissLoading()
-                val dataProduct = useCase.data
+                 dataProduct = useCase.data
                 initAdapterMenu(dataProduct as MutableList<Product>, getSaveListMenu)
                 showHideOrderSummary()
                 viewModel.getMerchantTax(merchantId)
@@ -320,6 +325,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                 order.grandTotal = subTotalItem
                 adapterMenu?.setProDuctSalesMap(useCase.order.productSales)
                 viewModel.getUserInfoCloud()
+                showHideOrderSummary()
 
 
             }

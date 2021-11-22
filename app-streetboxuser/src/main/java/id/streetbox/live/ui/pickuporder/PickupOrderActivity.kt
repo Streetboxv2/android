@@ -134,7 +134,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
         btn_next.setOnClickListener {
             if (menuItemStoreList.isNotEmpty()) {
                 val notes = et_notes.text.toString()
-            getOrder?.address = foodTruck?.address
+                getOrder?.address = foodTruck?.address
                 getOrder?.note = notes
 
                 if(total > 0){
@@ -146,7 +146,8 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
                 }
 
                 getOrder!!.merchantUsersId = merchantUserId
-
+                getOrder!!.typeOrder = "Online"
+                getOrder!!.types = 1
                 menuItemStoreList.forEach {
                     var productSales:ProductSales = ProductSales()
 
