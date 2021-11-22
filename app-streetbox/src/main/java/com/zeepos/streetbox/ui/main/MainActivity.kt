@@ -29,6 +29,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
 
     private var doubleBackToExitPressedOnce = false
+    var typeNotif: String? = null
 
     override fun initResourceLayout(): Int {
         return R.layout.activity_main
@@ -62,7 +63,7 @@ class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
         )
 
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-
+        typeNotif = intent.getStringExtra("typeNotif")
     }
 
 
@@ -73,7 +74,12 @@ class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
-        addFragment(ParkingSpaceFragment.newInstance(), R.id.fl_content)
+        if(typeNotif!=null){
+            addFragment(MyParkingSpaceFragment.newInstance(), R.id.fl_content)
+        }else{
+            addFragment(ParkingSpaceFragment.newInstance(), R.id.fl_content)
+        }
+
         nav_view.setOnNavigationItemSelectedListener(navigationItemSelectedListener)
 
     }

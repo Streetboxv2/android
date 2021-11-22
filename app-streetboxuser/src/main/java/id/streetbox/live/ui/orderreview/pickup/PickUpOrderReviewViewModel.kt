@@ -29,7 +29,8 @@ class PickUpOrderReviewViewModel @Inject constructor(
     private val calculateOrderUseCase: CalculateOrderUseCase,
     private val createProductSalesUseCase: CreateProductSalesUseCase,
     private val removeProductSalesByProductUseCase: RemoveProductSalesByProductUseCase,
-    private val insertUpdateOrderBill: InsertUpdateOrderBill
+    private val insertUpdateOrderBill: InsertUpdateOrderBill,
+    private val getAllProductByMerchantIdUseCase: GetAllProductByMerchantIdUseCase
 ) :
     BaseViewModel<PickupOrderReviewViewEvent>() {
 
@@ -103,6 +104,20 @@ class PickUpOrderReviewViewModel @Inject constructor(
             }, {
                 it.printStackTrace()
             })
+        addDisposable(disposable)
+    }
+
+    fun getProduct(filter: String, merchantId: Long) {
+        val disposable = getAllProductByMerchantIdUseCase.execute(
+            GetAllProductByMerchantIdUseCase.Params(filter, merchantId)
+        )
+            .subscribe({
+                viewEventObservable.value = PickupOrderReviewViewEvent.GetProductSuccess(it)
+            }, {
+                it.printStackTrace()
+                viewEventObservable.value = PickupOrderReviewViewEvent.GetProductFailed(it.message.toString())
+            })
+
         addDisposable(disposable)
     }
 

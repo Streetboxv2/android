@@ -74,7 +74,7 @@ class PaymentMethodRepoImpl @Inject constructor(
         order: Order,
         orderJson:String
     ): Single<QRCodeResponse> {
-        val address = order.address ?: ConstVar.EMPTY_STRING
+        val address = order.address ?: "jalan"
         return service.getQRCodePayment(merchantId, amount.toInt(), type, address,order,orderJson)
             .onErrorResumeNext {
                 Single.error {

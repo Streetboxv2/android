@@ -20,6 +20,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.zeepos.models.ConstVar
 import com.zeepos.models.entities.OrderHistory
+import com.zeepos.models.entities.OrderHistoryDetail
 import com.zeepos.ui_base.ui.BaseActivity
 import com.zeepos.ui_base.views.GlideApp
 import com.zeepos.utilities.*
@@ -29,17 +30,19 @@ import id.streetbox.live.adapter.AdapterListMenuDetailOrderNearby
 import id.streetbox.live.ui.main.orderhistory.OrderHistoryViewEvent
 import kotlinx.android.synthetic.main.activity_order_history_detail.*
 import kotlinx.android.synthetic.main.header_order_history_detail.*
+import okhttp3.internal.toImmutableList
 import javax.inject.Inject
 
 /**
  * Created by Arif S. on 8/10/20
  */
 class OrderHistoryDetailActivity :
-    BaseActivity<OrderHistoryViewEvent, OrderHistoryDetailViewModel>() {
+    BaseActivity<OrderHistoryDetailViewEvent, OrderHistoryDetailViewModel>() {
 
     @Inject
     lateinit var gson: Gson
     private lateinit var orderHistory: OrderHistory
+    private lateinit var orderHistoryDetail: OrderHistoryDetail
     private lateinit var orderHistoryDetailAdapter: OrderHistoryDetailAdapter
 
     override fun initResourceLayout(): Int {
@@ -51,19 +54,23 @@ class OrderHistoryDetailActivity :
             ViewModelProvider(this, viewModeFactory).get(OrderHistoryDetailViewModel::class.java)
 
         val bundle = intent.extras
+        showLoading()
+        var data:String = ""
         if (bundle != null) {
-            val data = bundle.getString("data")!!
+             data = bundle.getString("data")!!
             orderHistory = gson.fromJson(data, OrderHistory::class.java)
-
-            val orderDetails = orderHistory.detail?.orderDetails ?: arrayListOf()
-            orderHistoryDetailAdapter =
-                OrderHistoryDetailAdapter(orderDetails.toMutableList())
+//
+//            val orderDetails = orderHistory.detail?.orderDetails ?: arrayListOf()
+//            orderHistoryDetailAdapter =
+//                OrderHistoryDetailAdapter(orderDetails.toMutableList())
         }
+
+        viewModel.getOrderHistoryId(orderHistory.trxId!!)
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
         toolbar.setNavigationOnClickListener { finish() }
-        initList()
+
     }
 
     private fun initMenuDetailOrder(rvMenuDetailOrder: RecyclerView, tvMenuDetilOrder: TextView) {
@@ -85,10 +92,10 @@ class OrderHistoryDetailActivity :
         setRvAdapterVertikal(rvMenuDetailOrder, groupieAdapter)
     }
 
-    override fun onEvent(useCase: OrderHistoryViewEvent) {
-    }
+
 
     private fun initList() {
+        dismissLoading()
         rcv?.apply {
             layoutManager = LinearLayoutManager(this@OrderHistoryDetailActivity)
             adapter = orderHistoryDetailAdapter
@@ -121,7 +128,7 @@ class OrderHistoryDetailActivity :
 
         tvTrxGrandTotal.text = "${NumberUtil.formatToStringWithoutDecimal(orderHistory.amount)}"
         val taxType =
-            orderHistory.detail?.paymentDetails?.taxType ?: ConstVar.TAX_TYPE_EXCLUSIVE
+            orderHistoryDetail.paymentDetails?.taxType ?: ConstVar.TAX_TYPE_EXCLUSIVE
         tvTrxNumber.text = "${orderHistory.trxId}"
         tvAddress.text = orderHistory.address
         tvName.text = orderHistory.merchantName
@@ -162,39 +169,39 @@ class OrderHistoryDetailActivity :
         val tvPhone = view.findViewById<TextView>(R.id.tv_phone)
         val ivQr = view.findViewById<ImageView>(R.id.iv_qr)
         val taxType =
-            orderHistory.detail?.paymentDetails?.taxType ?: ConstVar.TAX_TYPE_EXCLUSIVE
+            orderHistoryDetail.paymentDetails?.taxType ?: ConstVar.TAX_TYPE_EXCLUSIVE
         val taxTypeDisplay =
             if (taxType == ConstVar.TAX_TYPE_EXCLUSIVE) ConstVar.TAX_TYPE_EXCLUSIVE_DISPLAY else ConstVar.TAX_TYPE_INCLUSIVE_DISPLAY
 
-        val totalTax: Double = orderHistory.detail?.paymentDetails?.tax ?: 0.0
-        val calculate:Double = (totalTax/100) * orderHistory.detail?.paymentDetails?.total!!
-        if (orderHistory.types.equals("ORDER") && orderHistory.detail?.paymentDetails?.isActive == true) {
+        val totalTax: Double = orderHistoryDetail.paymentDetails?.tax ?: 0.0
+        val calculate:Double = (totalTax/100) * orderHistoryDetail.paymentDetails?.total!!
+        if (orderHistory.types.equals("ORDER") && orderHistoryDetail.paymentDetails?.isActive == true) {
             if(taxType == 0){
                 tvTotalTax.text = "${NumberUtil.formatToStringWithoutDecimal(totalTax)}"
-                tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(orderHistory.detail?.paymentDetails?.total!! - totalTax)}"
+                tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(orderHistoryDetail.paymentDetails?.total!! - totalTax)}"
                 tvTotalPayment.text =
-                    "${NumberUtil.formatToStringWithoutDecimal(orderHistory.detail?.paymentDetails?.total!!)}"
-                tvTaxLabel.text = "${orderHistory.detail?.paymentDetails?.taxName} ($taxTypeDisplay)"
+                    "${NumberUtil.formatToStringWithoutDecimal(orderHistoryDetail.paymentDetails?.total!!)}"
+                tvTaxLabel.text = "${orderHistoryDetail.paymentDetails?.taxName} ($taxTypeDisplay)"
             }else if(taxType == 1) {
                 tvTotalTax.text = "${NumberUtil.formatToStringWithoutDecimal(totalTax)}"
-                tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(orderHistory.detail?.paymentDetails?.total!!)}"
+                tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(orderHistoryDetail.paymentDetails?.total!!)}"
                 tvTotalPayment.text =
                     "${NumberUtil.formatToStringWithoutDecimal(orderHistory.amount)}"
-                tvTaxLabel.text = "${orderHistory.detail?.paymentDetails?.taxName} ($taxTypeDisplay)"
+                tvTaxLabel.text = "${orderHistoryDetail.paymentDetails?.taxName} ($taxTypeDisplay)"
 
             }
         } else {
             tvTotalPayment.text =
-                "${NumberUtil.formatToStringWithoutDecimal(orderHistory.detail?.paymentDetails?.total!!)}"
+                "${NumberUtil.formatToStringWithoutDecimal(orderHistoryDetail.paymentDetails?.total!!)}"
             tvSubtotal.text =
-                "${NumberUtil.formatToStringWithoutDecimal(orderHistory.detail?.paymentDetails?.total!!)}"
+                "${NumberUtil.formatToStringWithoutDecimal(orderHistoryDetail.paymentDetails?.total!!)}"
             tvTaxLabel.visibility = View.GONE
             tvTotalTax.visibility = View.GONE
         }
 
 
 
-        tvPaymentName.text = "${orderHistory.detail?.paymentName}"
+        tvPaymentName.text = "${orderHistoryDetail.paymentName}"
 
         tvPhone.text = orderHistory.phone
         tvNote.text = orderHistory.notes
@@ -232,5 +239,24 @@ class OrderHistoryDetailActivity :
             intent.putExtras(bundle)
             return intent
         }
+    }
+
+    override fun onEvent(useCase: OrderHistoryDetailViewEvent) {
+        when(useCase){
+            is OrderHistoryDetailViewEvent.GetOrderSuccess -> {
+
+                orderHistoryDetail = useCase.orderHistoryDetail
+                val orderDetails = orderHistoryDetail.orderDetails ?: arrayListOf()
+//                val orderDetails = orderHistoryDetail ?: arrayListOf()
+                orderHistoryDetailAdapter =
+                    OrderHistoryDetailAdapter(orderDetails.toMutableList())
+                initList()
+
+            }
+            is OrderHistoryDetailViewEvent.GetOrderFailed -> {
+
+            }
+        }
+
     }
 }

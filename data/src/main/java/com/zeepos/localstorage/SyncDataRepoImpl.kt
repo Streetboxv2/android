@@ -112,6 +112,7 @@ class SyncDataRepoImpl @Inject constructor(
     @Synchronized
     override fun syncTransactionDataEndUser(orderUniqueId: String): Completable {
         val obs = Single.fromCallable {
+
             Log.d(ConstVar.TAG, "Thread sync processing -> ${Thread.currentThread().name}")
             var order = boxOrder.query().equal(Order_.uniqueId, orderUniqueId).build()
                 .findFirst()
@@ -122,15 +123,40 @@ class SyncDataRepoImpl @Inject constructor(
                 order.updatedAt = DateTimeUtil.getCurrentDateTime()
 
                 order.typePayment = order.paymentSales[0].name
-
+                order.productSales[0].orderBillUniqueId = orderUniqueId
+                order.productSales[0].orderUniqueId = orderUniqueId
+                var orderBill = OrderBill()
                 if(order.orderBill == null || order.orderBill.size == 0){
-                    var orderBill = OrderBill()
-                    orderBill.grandTotal = order.grandTotal
-                    orderBill.subTotal = order.grandTotal
-                    orderBill.order.target = order
-                    val a = order
 
+//                    orderBill.grandTotal = order.grandTotal
+//                    orderBill.subTotal = order.grandTotal
+                    orderBill.businessDate = order.businessDate
+                    orderBill.uniqueId = order.uniqueId
+                    orderBill.orderUniqueId = orderUniqueId
+                    orderBill.createdAt = order.createdAt
+                    orderBill.updatedAt = order.updatedAt
+                    orderBill.order.target = order
+
+                    if(order.taxSales[0].isActive == false ){
+                        orderBill.totalTax = 0.0
+                        orderBill.grandTotal = order.grandTotal
+                    }
+                    if(order.taxSales[0].isActive == true && order.taxSales[0].type == 0){
+                        orderBill.totalTax = (order.taxSales[0].amount/100) * order.grandTotal
+                        orderBill.grandTotal = order.grandTotal +orderBill.totalTax
+                        orderBill.grandTotal = order.grandTotal
+                    }else if (order.taxSales[0].isActive == true && order.taxSales[0].type == 1){
+                        orderBill.totalTax = (order.taxSales[0].amount/100) * order.grandTotal
+                        orderBill.grandTotal = order.grandTotal
+                        orderBill.grandTotal = order.grandTotal
+                    }
                 }else{
+
+                    order.taxSales[0].orderBillUniqueId = order.uniqueId
+                    if(order.taxSales[0].isActive == false ){
+                        order.orderBill[0].totalTax = 0.0
+                         order.orderBill[0].grandTotal = order.grandTotal
+                    }
                     if(order.taxSales[0].isActive == true && order.taxSales[0].type == 0){
                     order.orderBill[0].totalTax = (order.taxSales[0].amount/100) * order.grandTotal
                     order.grandTotal = order.grandTotal + order.orderBill[0].totalTax
@@ -143,19 +169,21 @@ class SyncDataRepoImpl @Inject constructor(
 
                 }
 
-                if(order.taxSales[0].isActive == false ){
-                    order.orderBill[0].totalTax = 0.0
-//                    order.orderBill[0].grandTotal = order.grandTotal
-                }
+
                 data["order"] = order
                 data["trx"] = order.trx
-                data["orderBills"] = order.orderBill
+                if(order.orderBill == null || order.orderBill.size == 0) {
+                    data["orderBills"] = orderBill
+                }else{
+                    data["orderBills"] = order.orderBill
+                }
                 data["productSales"] = order.productSales
                 data["paymentSales"] = order.paymentSales
                 data["taxSales"] = order.taxSales
                 data["trxId"] = order.trxId
 
                 val a = gson.toJson(data)
+                Log.d("SYN",a)
                 return@fromCallable data
             }
 

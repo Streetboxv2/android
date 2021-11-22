@@ -2,6 +2,8 @@ package com.streetbox.pos.worker
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.work.*
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
@@ -24,6 +26,7 @@ class SyncTransactionWorker @AssistedInject constructor(
             .toSingleDefault(Result.success())
             .doOnSuccess {
                 Log.d(TAG, "Sync transaction success...")
+              Toast.makeText(appContext,"sync transaction success",Toast.LENGTH_SHORT).show()
             }
             .doOnError {
                 Log.d(TAG, "Sync Failed -> ${it.message}")

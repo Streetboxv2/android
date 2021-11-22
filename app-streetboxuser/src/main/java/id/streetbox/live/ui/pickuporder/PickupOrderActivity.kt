@@ -14,11 +14,13 @@ import com.example.dbroom.db.room.enitity.MenuItemStore
 import com.google.gson.Gson
 import com.orhanobut.hawk.Hawk
 import com.zeepos.models.ConstVar
+import com.zeepos.models.factory.ObjectFactory
 import com.zeepos.models.master.FoodTruck
 import com.zeepos.models.master.Product
 import com.zeepos.models.master.Tax
 import com.zeepos.models.transaction.Order
 import com.zeepos.models.transaction.OrderBill
+import com.zeepos.models.transaction.ProductSales
 import com.zeepos.models.transaction.TaxSales
 import com.zeepos.payment.PaymentActivity
 import com.zeepos.ui_base.ui.BaseActivity
@@ -35,6 +37,7 @@ import kotlinx.android.synthetic.main.activity_pickup_order.toolbar
 import kotlinx.android.synthetic.main.item_footer_pickup_order_review.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrderReviewViewModel>() {
@@ -62,6 +65,12 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
     var total: Double = 0.0
     var totalProducts:Product? = null
     var orderBill:OrderBill? = null
+    var productSales:ProductSales? = null
+    var getProduct: List<Product> = ArrayList()
+    var totalTaxs:Double = 0.0
+    var merchantUserId:Long = 0
+    var taxId:Long = 0
+
 
     @Inject
     lateinit var gson: Gson
@@ -69,6 +78,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
 
     override fun onResume() {
         super.onResume()
+        viewModel.getRecentOrder(getOrder!!.merchantId)
         init()
     }
     override fun initResourceLayout(): Int {
@@ -101,14 +111,21 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
         totalTax = bundle.getDouble("totalTax",0.0)
         isActive = bundle.getBoolean("isActive",false)
         qtyProduct = bundle.getInt("qtyProduct",0)
+        var tax: Int = 0
+        tax = bundle.getInt("taxId",0)
+        taxId = tax.toLong()
+
         val foodtruckBundle = bundle.getString("foodTruckData")
         val orderBundle = bundle.getString("order")
         val taxBundle = bundle.getString("tax")
+        val products = bundle.getString("menuList")
+//        productSales = gson.fromJson(products,ProductSales::class.java)
         foodTruck = gson.fromJson(foodtruckBundle, FoodTruck::class.java)
         getOrder = gson.fromJson(orderBundle, Order::class.java)
-
+        merchantUserId = getOrder!!.merchantUsersId
         merchantId = getOrder?.merchantId.toString()
-        tax = gson.fromJson(taxBundle,Tax::class.java)
+
+
         initGetData()
         iniOnClick()
     }
@@ -117,9 +134,9 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
         btn_next.setOnClickListener {
             if (menuItemStoreList.isNotEmpty()) {
                 val notes = et_notes.text.toString()
-//            getOrder?.address = foodTruck?.address
+                getOrder?.address = foodTruck?.address
                 getOrder?.note = notes
-                val orderBill = OrderBill()
+
                 if(total > 0){
                     getOrder!!.grandTotal = subtotal
                     total = subtotal
@@ -128,16 +145,66 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
                     total = subtotalItem
                 }
 
+                getOrder!!.merchantUsersId = merchantUserId
+                getOrder!!.typeOrder = "Online"
+                getOrder!!.types = 1
+                menuItemStoreList.forEach {
+                    var productSales:ProductSales = ProductSales()
+
+                        productSales!!.qty = it.qty!!
+                        productSales!!.name = it.title!!
+                        productSales.orderUniqueId = getOrder!!.uniqueId
+                        productSales.orderBillUniqueId = getOrder!!.uniqueId
+                        productSales.businessDate = DateTimeUtil.getCurrentDateWithoutTime()
+                        productSales!!.qtyProduct = it.qtyProduct!!
+                        productSales.uniqueId = ObjectFactory.generateGUID()
+                        productSales.createdAt = DateTimeUtil.getCurrentDateTime()
+                        productSales.updatedAt = DateTimeUtil.getCurrentDateTime()
+                        productSales.photo = it.image!!
+                        productSales.price = it.price.toDouble()
+                        productSales.productId = it.id!!.toLong()
+                        getOrder!!.productSales.add(productSales)
+
+                }
+
+
+                val orderBill = OrderBill()
+                orderBill.uniqueId = ObjectFactory.generateGUID()
+                orderBill.orderUniqueId = getOrder!!.uniqueId
+//        orderBill.businessDate = order.businessDate
+                orderBill.billNo = getOrder!!.billNo
+                orderBill.businessDate = DateTimeUtil.getCurrentDateWithoutTime()
+                orderBill.createdAt = DateTimeUtil.getCurrentDateTime()
+                orderBill.updatedAt = DateTimeUtil.getCurrentDateTime()
+                orderBill.totalTax = totalTaxs
+                getOrder!!.orderBill.add(orderBill)
+
+
+                val taxSales = TaxSales()
+                taxSales.uniqueId = ObjectFactory.generateGUID()
+                taxSales.merchantId = getOrder!!.merchantId
+                taxSales.merchantTaxId = taxId
+                taxSales.name = taxName
+                taxSales.orderUniqueId = getOrder!!.uniqueId
+                taxSales.type = typeTax
+                taxSales.isActive = isActive
+                taxSales.createdAt = DateTimeUtil.getCurrentDateTime()
+                taxSales.updatedAt = DateTimeUtil.getCurrentDateTime()
+                getOrder!!.taxSales.add(taxSales)
+
                 viewModel.updateOrder(getOrder!!)
-                val intent = intentPageData(this, PaymentActivity::class.java)
-                    .putExtra("foodTruckData", gson.toJson(foodTruck))
-                    .putExtra("notes", notes)
-                    .putExtra(PaymentActivity.ORDER_UNIQUE_ID, getOrder!!.uniqueId)
-                    .putExtra("grandTotal", total)
-                    .putExtra("totalTax", totalTax)
-                    .putExtra("isActive", isActive)
-                    .putExtra("typeTax",typeTax)
-                startActivityForResult(intent, 1002)
+
+
+
+//                val intent = intentPageData(this, PaymentActivity::class.java)
+//                    .putExtra("foodTruckData", gson.toJson(foodTruck))
+//                    .putExtra("notes", notes)
+//                    .putExtra(PaymentActivity.ORDER_UNIQUE_ID, getOrder!!.uniqueId)
+//                    .putExtra("grandTotal", total)
+//                    .putExtra("totalTax", totalTax)
+//                    .putExtra("isActive", isActive)
+//                    .putExtra("typeTax",typeTax)
+//                startActivityForResult(intent, 1002)
             } else {
                 showToastExt("Item Order not found", this)
             }
@@ -181,6 +248,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
     }
 
     private fun initGetData() {
+
         adapterMenuChoiceOrder = AdapterPickupOrderNearby(
             menuItemStoreList as MutableList<MenuItemStore>,
             true, object : OnClickIncreaseOrderNearby {
@@ -190,9 +258,6 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
                     value: Int,
                     tvQty: TextView
                 ) {
-                        totalProducts = Product()
-                        totalProducts?.qty = product.qty!!
-                        totalProducts?.price = product.price.toDouble()!!
 
 
                     if (value > product.qtyProduct!!) {
@@ -202,6 +267,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
                         val totalProduct = value * product.price
                         tvQty.text = value.toString()
                         total = totalProduct.toDouble()
+//                        totalProducts!!.qty = value
                         lifecycleScope.launch(Dispatchers.Main) {
                             addRoomItemStore(product, value,product.qtyProduct!!, totalProduct, product.price)
                         }
@@ -213,7 +279,9 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
                             total =  getOrder!!.grandTotal
                             subtotalItem = totalProduct.toDouble()
                         }
-
+                        menuItemStoreList = AppDatabase.getInstance(this@PickupOrderActivity)
+                            .dataDao().getAllDataListMenu()
+                        showSummary(menuItemStoreList)
 
                     }
                 }
@@ -239,11 +307,14 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
                             menuItemStoreList = AppDatabase.getInstance(this@PickupOrderActivity)
                                 .dataDao().getAllDataListMenu()
                             showSummary(menuItemStoreList)
+
                         }
 
                     } else {
                         tvQty.text = value.toString()
                         total = totalProduct.toDouble()
+//                        totalProducts!!.qty = value
+
                         lifecycleScope.launch(Dispatchers.Main) {
                             addRoomItemStore(product, value,product.qtyProduct!!, totalProduct, product.price)
                         }
@@ -311,7 +382,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
 
         total = totalProduct
         subtotal = totalProduct
-        val totalTaxs:Double = (totalTax/100) * total
+         totalTaxs = (totalTax/100) * total
         if(isActive == false){
             tv_tax_label.visibility = View.GONE
             tv_total_tax.visibility = View.GONE
@@ -337,22 +408,61 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
     override fun onEvent(useCase: PickupOrderReviewViewEvent) {
         when (useCase) {
             PickupOrderReviewViewEvent.UpdateOrderSuccess -> {
-
+                getOrder?.note = et_notes.toString()
+                val intent = intentPageData(this, PaymentActivity::class.java)
+                    .putExtra("foodTruckData", gson.toJson(foodTruck))
+                    .putExtra("notes", et_notes.toString())
+                    .putExtra(PaymentActivity.ORDER_UNIQUE_ID, getOrder!!.uniqueId)
+                    .putExtra("grandTotal", total)
+                    .putExtra("totalTax", totalTax)
+                    .putExtra("isActive", isActive)
+                    .putExtra("typeTax",typeTax)
+                startActivityForResult(intent, 1002)
             }
 
             is PickupOrderReviewViewEvent.OnCalculateDone -> {
-                viewModel.getRecentOrder(getOrder!!.merchantId)
+               getOrder = useCase.orderBill.order.target
+                viewModel.updateOrder(getOrder!!)
+
             }
             is PickupOrderReviewViewEvent.AddItemSuccess ->{
                 viewModel.calculateOrder(getOrder!!)
             }
             PickupOrderReviewViewEvent.OnRemoveProductSuccess -> {
+
                 viewModel.calculateOrder(getOrder!!)
             }
 
             is PickupOrderReviewViewEvent.GetOrderSuccess -> {
                 getOrder = useCase.order
+                viewModel.getProduct("visit",getOrder!!.merchantId)
             }
+            PickupOrderReviewViewEvent.UpdateProductSalesSuccess -> {
+                viewModel.calculateOrder(getOrder!!)
+//                viewModel.updateOrder(getOrder!!)
+//                getOrder?.note = et_notes.toString()
+//                val intent = intentPageData(this, PaymentActivity::class.java)
+//                    .putExtra("foodTruckData", gson.toJson(foodTruck))
+//                    .putExtra("notes", et_notes.toString())
+//                    .putExtra(PaymentActivity.ORDER_UNIQUE_ID, getOrder!!.uniqueId)
+//                    .putExtra("grandTotal", total)
+//                    .putExtra("totalTax", totalTax)
+//                    .putExtra("isActive", isActive)
+//                    .putExtra("typeTax",typeTax)
+//                startActivityForResult(intent, 1002)
+            }
+            PickupOrderReviewViewEvent.UpdateOrderBillSuccess -> {
+                viewModel.updateOrder(getOrder!!)
+
+            }
+
+            is PickupOrderReviewViewEvent.GetProductSuccess ->{
+                getProduct = useCase.data
+
+            }
+
+
+
         }
     }
 
@@ -398,6 +508,9 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
                 .dataDao().getAllDataListMenu()
             showSummary(menuItemStoreList)
         }
+
+
+
     }
 
 }

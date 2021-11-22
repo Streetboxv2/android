@@ -314,6 +314,8 @@ class MenuActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                 dismissLoading()
                 isGetOrderSuccess = true
                 order = useCase.order
+                //tambahin calculate order
+
                 adapterMenu?.setProDuctSalesMap(useCase.order.productSales)
                 showHideOrderSummary()
             }
@@ -323,6 +325,7 @@ class MenuActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                 val orderBill = useCase.orderBill
                 order = orderBill.order.target//update order to get updated product sales
                 adapterMenu?.setProDuctSalesMap(orderBill.order.target.productSales)
+
                 showHideOrderSummary()
             }
             MenuViewEvent.OnRemoveProductSuccess -> {

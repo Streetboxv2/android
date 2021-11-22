@@ -25,6 +25,7 @@ import com.zeepos.utilities.showView
 import id.streetbox.live.ui.onclick.OnClickIncreaseOrderNearby
 import id.streetbox.live.ui.pickuporder.PickupOrderActivity
 import kotlinx.android.synthetic.main.fragment_cart.*
+import kotlinx.android.synthetic.main.item_product.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -39,13 +40,13 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
     private lateinit var cartAdapter: CartAdapter
     private lateinit var order: Order
     var getSaveCart: String? = ""
-    var menuItemStoreList: List<MenuItemStore> = mutableListOf()
     var adapterMenuChoiceOrder: AdapterPickupOrderNearby? = null
     var typesTax:Int = 0
     var taxName:String = ConstVar.EMPTY_STRING
     var totalTax:Double = 0.0
     var isActive:Boolean =  false
     var totalProduct:Double = 0.0
+    var menuItemStoreList: List<MenuItemStore> = mutableListOf()
 
 
     @Inject
@@ -143,10 +144,11 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
                     order = Order()
                 }
 
+                if (menuItemStoreList.isNotEmpty())
+                    showSummary(menuItemStoreList)
+
                 viewModel.getMerchantTax(order.merchantId)
-//                viewModel.getMerchantTax(order.merchantId)
-//                cartAdapter.setList(order.productSales)
-//                viewModel.getRecentOrder(menuItemStoreList[0].idMerhant!!.toLong())
+
             }
             CartViewEvent.NoDataInCart ->{} //swipe_refresh.isRefreshing = false
             is CartViewEvent.GetTaxSuccess -> {

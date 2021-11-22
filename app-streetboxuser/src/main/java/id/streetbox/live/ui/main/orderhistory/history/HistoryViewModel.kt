@@ -1,6 +1,9 @@
 package id.streetbox.live.ui.main.orderhistory.history
 
 import com.zeepos.domain.interactor.order.GetAllOrderUseCase
+import com.zeepos.domain.interactor.order.GetOrderByUniqueIdUseCase
+import com.zeepos.domain.interactor.order.GetOrderHistoryIdUseCase
+import com.zeepos.payment.PaymentViewEvent
 import com.zeepos.ui_base.ui.BaseViewModel
 import javax.inject.Inject
 
@@ -23,4 +26,5 @@ class HistoryViewModel @Inject constructor(
 
         addDisposable(disposable)
     }
+
 }

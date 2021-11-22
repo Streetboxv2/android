@@ -22,7 +22,7 @@ import java.util.*
 class AdapterMenu(
     val data: MutableList<Product> = mutableListOf(),
     val types: String,
-    val getSaveListMenu: List<MenuItemStore>?
+    var getSaveListMenu: List<MenuItemStore>?
 ) :
     RecyclerView.Adapter<AdapterMenu.MyViewHolder>() {
 
@@ -116,11 +116,15 @@ class AdapterMenu(
     }
 
     fun setProDuctSalesMap(productSalesList: List<ProductSales>) {
-        productSalesMap.clear()
+//        productSalesMap.clear()
         productSalesList.forEach {
             productSalesMap[it.productId] = it
             println("respon angka ${it.qty}")
         }
         notifyDataSetChanged()
+    }
+
+    fun setData(getSaveListMenu: List<MenuItemStore>?){
+        this.getSaveListMenu = getSaveListMenu
     }
 }

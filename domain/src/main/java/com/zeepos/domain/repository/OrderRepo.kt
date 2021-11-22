@@ -1,6 +1,7 @@
 package com.zeepos.domain.repository
 
 import com.zeepos.models.entities.OrderHistory
+import com.zeepos.models.entities.OrderHistoryDetail
 import com.zeepos.models.master.FoodTruck
 import com.zeepos.models.transaction.Order
 import io.reactivex.Completable
@@ -20,6 +21,7 @@ interface OrderRepo {
     fun getOrder(id: Long): Order?
     fun getOrder(uniqueId: String): Order?
     fun getOrderCloud(page: Int, filter: String): Single<List<OrderHistory>>
+    fun getOrderCloudId(trxId:String):Single<OrderHistoryDetail>
     fun closeOrder(uniqueId: String): Completable
     fun insertUpdate(order: Order)
     fun update(order: Order): Completable

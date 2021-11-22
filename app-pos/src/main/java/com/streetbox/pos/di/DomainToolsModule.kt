@@ -43,9 +43,11 @@ class DomainToolsModule {
                 ).build()
             chain.proceed(request)
         }
+
         builder.connectTimeout(1, TimeUnit.MINUTES) // connect timeout
-                .writeTimeout(1, TimeUnit.MINUTES) // write timeout
-                .readTimeout(1, TimeUnit.MINUTES)
+            .writeTimeout(1, TimeUnit.MINUTES) // write timeout
+            .readTimeout(1, TimeUnit.MINUTES)
+
         builder.sslSocketFactory(
             SslUtils.getUnSaveSslContext().socketFactory,
             SslUtils.getTrustManager()[0] as X509TrustManager

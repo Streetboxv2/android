@@ -41,6 +41,7 @@ class ProductSalesFragment : BaseFragment<ProductSalesViewEvent, ProductSalesVie
         }
 
         productSalesAdapter = ProductSalesAdapter()
+        showLoading()
         viewModel.getOnlineOrder()
 
     }
@@ -153,7 +154,7 @@ class ProductSalesFragment : BaseFragment<ProductSalesViewEvent, ProductSalesVie
             is ProductSalesViewEvent.GetAllOrderSalesSuccess -> {
             }
             is ProductSalesViewEvent.GetOnlineOrderSuccess -> {
-
+                dismissLoading()
                 val order = useCase.onlineOrder.order
                 if (order != null) {
                     for (i in useCase.onlineOrder.order!!.indices) {

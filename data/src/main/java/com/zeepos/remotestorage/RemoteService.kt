@@ -311,6 +311,11 @@ interface RemoteService {
         @QueryMap query: Map<String, String> = mapOf()
     ): Single<ResponseApi<List<OrderHistory>>>
 
+    @GET("consumer/order/historydetail/{trxid}")
+    fun getOrderHistory(
+        @Path("trxid") trxId: String
+    ):Single<ResponseApi<OrderHistoryDetail>>
+
 
     @GET("consumer/home/visit-sales/detail/{merchantId}")
     fun getHomeVisitBookDate(
