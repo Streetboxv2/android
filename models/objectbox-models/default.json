@@ -1531,7 +1531,7 @@
     },
     {
       "id": "24:6740398924981164585",
-      "lastPropertyId": "23:590553480326236408",
+      "lastPropertyId": "24:8701125801893374573",
       "name": "ParkingSales",
       "properties": [
         {
@@ -1664,6 +1664,11 @@
           "name": "tasksId",
           "type": 6,
           "flags": 4
+        },
+        {
+          "id": "24:8701125801893374573",
+          "name": "platNo",
+          "type": 9
         }
       ],
       "relations": []

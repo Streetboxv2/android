@@ -32,20 +32,20 @@
 
             <TextView
                 android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_6sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:ellipsize="end"
                 android:fontFamily="@font/poppins_bold"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tv_platno"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toEndOf="@+id/iv_parking"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Istora Senayan" />
+                tools:text="Istora Senayan gang wsdfsdfsdfsdfsdfsdfsdfsf" />
 
             <TextView
                 android:id="@+id/tv_platno"
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:maxLines="2"
                 android:ellipsize="end"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_marginBottom="@dimen/_10sdp"
                 tools:text="Deskripsi istora senayan ada di sini lorem ipsum dolor sit amet"
                 android:layout_marginEnd="@dimen/_10sdp"

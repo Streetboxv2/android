@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zeepos.map.ui.MapActivity
 import com.zeepos.models.ConstVar
+import com.zeepos.models.master.User
 import com.zeepos.models.transaction.ParkingSales
 import com.zeepos.streetbox.R
 import com.zeepos.streetbox.ui.operatormerchant.OperatorActivity
@@ -28,6 +29,7 @@ import java.util.concurrent.TimeUnit
 class MyParkingSpaceFragment : BaseFragment<MyParkingSpaceViewEvent, MyParkingSpaceViewModel>() {
 
     private lateinit var myParkingSpaceAdapter: MyParkingSpaceAdapter
+    private var foodtruck:List<User> = ArrayList()
     private val compositeDisposable = CompositeDisposable()
     private var isLoadMore = true
     private var id: Long= 0L
@@ -42,6 +44,7 @@ class MyParkingSpaceFragment : BaseFragment<MyParkingSpaceViewEvent, MyParkingSp
         myParkingSpaceAdapter = MyParkingSpaceAdapter()
 //        viewModel.getParkingSales()//if use cache uncomment this
         viewModel.getParkingSalesCloud(true)
+
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
@@ -91,10 +94,18 @@ class MyParkingSpaceFragment : BaseFragment<MyParkingSpaceViewEvent, MyParkingSp
         myParkingSpaceAdapter.setOnItemChildClickListener { adapter, view, position ->
             context?.let {
                 val parkingSales = adapter.getItem(position) as ParkingSales
-                context?.let {
-                    startActivity(OperatorActivity.getIntent(it, -1,parkingSales.trxVisitSalesId))
+                if (parkingSales.platNo != "") {
+                    context?.let {
+                        foodtruck.forEach {
+                            if (parkingSales.tasksId == it.tasksId) {
+                                showMap(it)
+                            }
+                        }
+//                    startActivity(OperatorActivity.getIntent(it, -1,parkingSales.trxVisitSalesId))
+                    }
                 }
             }
+
         }
 
         observeSearchView()
@@ -155,10 +166,11 @@ class MyParkingSpaceFragment : BaseFragment<MyParkingSpaceViewEvent, MyParkingSp
         when (useCase) {
             is MyParkingSpaceViewEvent.GetAllParkingSalesSuccess -> {
                 if (useCase.data.isNotEmpty()) {
-
+                    viewModel.getAllOperator()
                     if (swipe_refresh.isRefreshing) {
                         myParkingSpaceAdapter.data.clear()
                     }
+
 
 //                    myParkingSpaceAdapter.addData(useCase.data)
                     myParkingSpaceAdapter.setList(useCase.data)//currently api not support load more
@@ -214,7 +226,32 @@ class MyParkingSpaceFragment : BaseFragment<MyParkingSpaceViewEvent, MyParkingSp
                     .show()
                 dismissLoading()
             }
+            is MyParkingSpaceViewEvent.GetOperatorSuccess -> {
+                        foodtruck = useCase.data!!
+            }
+            is MyParkingSpaceViewEvent.GetOperatorFailed -> {
+
+            }
         }
+    }
+
+    private fun showMap(foodTruck: User) {
+        val bundle = Bundle()
+        bundle.putLong("taskId", foodTruck.tasksId)
+
+        val mapType = if (foodTruck.status == ConstVar.TASK_STATUS_IN_PROGRESS) {
+            ConstVar.MAP_TYPE_LIVE_TRACK
+        } else {
+            ConstVar.MAP_TYPE_CHECK_IN_LOCATION
+        }
+
+        startActivity(
+            MapActivity.getIntent(
+                context!!,
+                type = mapType,
+                bundle = bundle
+            )
+        )
     }
 
     override fun onDestroyView() {
