@@ -279,7 +279,7 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
         onlineOrderViewModel?.getRecentOrder()
         btn_print.setOnClickListener{
 
-            showLoading()
+//            showLoading()
              formatReceiptformat()
              printBluetooth()
 //            trxId?.let { it1 -> viewModel.closeOnlineOrder(it1) }

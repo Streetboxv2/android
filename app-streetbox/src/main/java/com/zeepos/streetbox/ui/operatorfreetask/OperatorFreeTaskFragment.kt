@@ -214,6 +214,11 @@ class OperatorFreeTaskFragment :
             val city: String = addresses[0].locality
             val state: String = addresses[0].adminArea
             val country: String = addresses[0].countryName
+            if(addresses[0].postalCode == null){
+                addresses[0].postalCode = ""
+            }else{
+                addresses[0].postalCode = addresses[0].postalCode
+            }
             val postalCode: String = addresses[0].postalCode
             val knownName: String = addresses[0].featureName
 
