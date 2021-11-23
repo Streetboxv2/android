@@ -74,6 +74,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
     var totalTax:Double = 0.0
     var isActive:Boolean =  false
     var  dataProduct: List<Product> = ArrayList()
+    var amount: Double = 0.0
     private lateinit var tax: Tax
 
     val onClickIncrease = object : AdapterMenu.OnClickIncrease {
@@ -283,6 +284,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
             bundle.putString("merchantUserId", order.merchantUsersId.toString())
             bundle.putString("taxName", taxName)
             bundle.putInt("taxType",typesTax)
+            bundle.putDouble("amount",amount!!)
             bundle.putDouble("totalTax",totalTax)
             bundle.putBoolean("isActive",isActive)
             bundle.putInt("taxId",tax.id.toInt())
@@ -313,6 +315,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                 typesTax = useCase.tax.type
                 totalTax = useCase.tax.amount
                 isActive = useCase.tax.isActive
+                amount = useCase.tax.amount
                 viewModel.getRecentOrder(merchantId, foodTruck)
             }
             MenuViewEvent.GetTaxFailed -> {

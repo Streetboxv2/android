@@ -70,6 +70,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
     var totalTaxs:Double = 0.0
     var merchantUserId:Long = 0
     var taxId:Long = 0
+    var amount:Double = 0.0
 
 
     @Inject
@@ -111,6 +112,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
         totalTax = bundle.getDouble("totalTax",0.0)
         isActive = bundle.getBoolean("isActive",false)
         qtyProduct = bundle.getInt("qtyProduct",0)
+        amount = bundle.getDouble("amount", 0.0)
         var tax: Int = 0
         tax = bundle.getInt("taxId",0)
         taxId = tax.toLong()
@@ -185,6 +187,7 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
                 taxSales.merchantId = getOrder!!.merchantId
                 taxSales.merchantTaxId = taxId
                 taxSales.name = taxName
+                taxSales.amount = amount
                 taxSales.orderUniqueId = getOrder!!.uniqueId
                 taxSales.type = typeTax
                 taxSales.isActive = isActive

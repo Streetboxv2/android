@@ -1307,6 +1307,13 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
                         }
 
                     })
+            }else{
+                animateMarker(
+                    movingFoodTruckMarker,
+                    newLatLng,
+                    newTaskOperator,
+                    movingFoodTruckMarkerInfo
+                )
             }
 
         } else {
