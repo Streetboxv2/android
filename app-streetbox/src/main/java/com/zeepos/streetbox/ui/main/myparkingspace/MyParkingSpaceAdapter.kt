@@ -75,6 +75,15 @@ class MyParkingSpaceAdapter(data: MutableList<ParkingSales> = arrayListOf()) :
             holder.setText(R.id.tv_rating, "${item.rating}")
             holder.setText(R.id.tv_description, "${item.description}")
             imageUrlPic = imageUrl
+        }else if(item.tasksId < 1 && item.trxVisitSalesId < 1){
+            btnLiveMonitor.visibility = View.GONE
+            tvHomeVisit.visibility = View.GONE
+            tvRating.visibility = View.VISIBLE
+            ivRating.visibility = View.VISIBLE
+            holder.setText(R.id.tv_rating, "${item.rating}")
+            tvDescription.visibility = View.VISIBLE
+            holder.setText(R.id.tv_description, "${item.description}")
+            imageUrlPic = imageUrl
         }
 
         if (imageUrl.isNotEmpty()) {

@@ -363,7 +363,15 @@ class MapRepoImpl @Inject constructor(
                             )
                         }
 
-                        return@map ObjectFactory.createMapData(ConstVar.MAP_ACTION_TYPE_TRIP_LOCATION,it.data,latLng = LatLng(it.data!!.latitude, it.data!!.longitude))
+                                     val taskOperator = TaskOperator()
+                                       taskOperator.latParkingSpace = it.data!!.latitude
+                                        taskOperator.lonParkingSpace = it.data!!.longitude
+                                      taskOperator.tasksId = it.data!!.tasksId
+                                      taskOperator.status = it.data!!.status
+                                      return@map ObjectFactory.createMapData(ConstVar.MAP_TYPE_CHECK_IN_LOCATION,taskOperator ,LatLng(it.data!!.latitude, it.data!!.longitude))
+
+
+//                        return@map ObjectFactory.createMapData(ConstVar.MAP_ACTION_TYPE_TRIP_LOCATION,it.data,latLng = LatLng(it.data!!.latitude, it.data!!.longitude))
                     }
             }
     }

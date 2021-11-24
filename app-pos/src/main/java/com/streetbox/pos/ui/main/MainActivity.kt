@@ -86,7 +86,7 @@ class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
-
+            showLoading()
         if(typeNotif!=null){
             val intent = Intent(this,OnlineOrderActivity::class.java)
             startActivity(intent)
@@ -137,6 +137,7 @@ class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
         }
         when (useCase) {
             is MainViewEvent.GetAllTransactionSuccess -> {
+                dismissLoading()
                 addFragment(
                     ProductFragment.newInstance(),
                     R.id.fl_left,
