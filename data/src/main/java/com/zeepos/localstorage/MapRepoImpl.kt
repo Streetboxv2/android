@@ -324,12 +324,14 @@ class MapRepoImpl @Inject constructor(
     }
 
     override fun scheduleGetLocationFromServer(taskId: Long): Observable<MapData> {
+        var latlng:List<LatLng> = ArrayList()
         return Observable.interval(0, 10, TimeUnit.SECONDS)
             .flatMap {
                 return@flatMap service.getLatestOperatorLocation(taskId)
                     .map {
 
                         if (it.isSuccess()) {
+
                             val data = it.data!!
                             val mTaskId = if (data.tasksId > 0) {
                                 data.tasksId
@@ -338,6 +340,7 @@ class MapRepoImpl @Inject constructor(
                             }
 
                             var mTaskOperator = taskOperatorRepo.get(mTaskId)
+                            latlng.forEach {  }
 
                             if (mTaskOperator != null) {
 
@@ -360,7 +363,7 @@ class MapRepoImpl @Inject constructor(
                             )
                         }
 
-                        return@map ObjectFactory.createMapData(ConstVar.MAP_ACTION_TYPE_TRIP_LOCATION)
+                        return@map ObjectFactory.createMapData(ConstVar.MAP_ACTION_TYPE_TRIP_LOCATION,it.data,latLng = LatLng(it.data!!.latitude, it.data!!.longitude))
                     }
             }
     }

@@ -223,8 +223,11 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
 
             }
             is OrderBillViewEvent.GetOrderBillSuccess -> TODO()
-            OrderBillViewEvent.CloseOnlineOrderSuccess -> {
-                viewModel?.closeOrder(order!!.uniqueId)
+            OrderBillViewEvent.CloseOnlineOrderSuccess ->
+            {
+                dismissLoading()
+                startActivity(context?.let { OnlineOrderActivity.getIntent(it) })
+//                viewModel?.closeOrder(order!!.uniqueId)
 
             }
             is OrderBillViewEvent.CloseOnlineOrderFailed -> {
@@ -232,30 +235,30 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
             }
             OrderBillViewEvent.CloseOrderSuccess -> {
                 dismissLoading()
-                val data: HashMap<String, Any> = hashMapOf()
-                data["order"] = order!!
-                data["orderBills"] = order!!.orderBill
-                data["productSales"] = order!!.productSales
-                data["paymentSales"] = order!!.paymentSales
-                data["taxSales"] = order!!.taxSales
-
-                val jsonText: String = gson.toJson(data)
-
-                var syncData = ObjectFactory.createSync(
-                    ConstVar.SYNC_TYPE_TRANSACTION,
-                    jsonText,
-                    order!!.businessDate
-                )
-
-                syncData = viewModel.saveSyncData(syncData)
-
-                context?.let {
-                    SyncTransactionWorker.syncTransactionData(it, syncData.uniqueId)
-                }
-
-                Handler().postDelayed({
-                   startActivity(context?.let { OnlineOrderActivity.getIntent(it) })
-                }, 1000)
+//                val data: HashMap<String, Any> = hashMapOf()
+//                data["order"] = order!!
+//                data["orderBills"] = order!!.orderBill
+//                data["productSales"] = order!!.productSales
+//                data["paymentSales"] = order!!.paymentSales
+//                data["taxSales"] = order!!.taxSales
+//
+//                val jsonText: String = gson.toJson(data)
+//
+//                var syncData = ObjectFactory.createSync(
+//                    ConstVar.SYNC_TYPE_TRANSACTION,
+//                    jsonText,
+//                    order!!.businessDate
+//                )
+//
+//                syncData = viewModel.saveSyncData(syncData)
+//
+//                context?.let {
+//                    SyncTransactionWorker.syncTransactionData(it, syncData.uniqueId)
+//                }
+//
+//                Handler().postDelayed({
+//                   startActivity(context?.let { OnlineOrderActivity.getIntent(it) })
+//                }, 1000)
 
             }
             OrderBillViewEvent.OnRemoveProductSuccess -> {}

@@ -1238,8 +1238,6 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
                 movingFoodTruckMarker = it.key
             }
         }else {
-
-
             movingFoodTruckMarkerMap.forEach {
                 val taskOperator = it.value as TaskOperator
                 if (taskOperator.tasksId == newTaskOperator.tasksId) {
