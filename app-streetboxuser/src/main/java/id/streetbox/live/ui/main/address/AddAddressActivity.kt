@@ -2,6 +2,7 @@ package id.streetbox.live.ui.main.address
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
@@ -71,7 +72,7 @@ class AddAddressActivity : BaseActivity<AddressViewEvent, AddressViewModel>() {
         toolbar.setNavigationOnClickListener { finish() }
 
         btnSaveAddress.setOnClickListener {
-            showLoading()
+
             val getAddressName = edAddressName.text.toString()
             val getReceiverName = edReceiverName.text.toString()
             val getAddress = edAddress.text.toString()
@@ -80,7 +81,7 @@ class AddAddressActivity : BaseActivity<AddressViewEvent, AddressViewModel>() {
             if (getAddress.isNotEmpty() || getReceiverName.isNotEmpty()
                 || getAddressName.isNotEmpty() || getPhone.isNotEmpty()
             ) {
-                if (dataAddress != null)
+                if (dataAddress != null && getReceiverName != "" && getPhone != "")
                     updateAddAddress(getAddress, getReceiverName, getAddressName, getPhone)
                 else reqAddAddress(getAddress, getReceiverName, getAddressName, getPhone)
             }
@@ -138,8 +139,13 @@ class AddAddressActivity : BaseActivity<AddressViewEvent, AddressViewModel>() {
             "latitude" to latitude,
             "longitude" to longitude
         )
+        if(receiverName== "" || phone == "" || address == "" ){
+            showToastExt("Receiver Name or Phone or Address can not be empty",this)
+        }else{
+            showLoading()
+            viewModel.callUpdateAddress(map)
+        }
 
-        viewModel.callUpdateAddress(map)
     }
 
     private fun reqAddAddress(
@@ -162,7 +168,12 @@ class AddAddressActivity : BaseActivity<AddressViewEvent, AddressViewModel>() {
             updateLocation(latitude, longitude)
         }
 
-        viewModel.callAddAddress(map)
+        if(receiverName== "" || phone == "" || address == "" ){
+            showToastExt("Receiver Name or Phone or Address can not be empty",this)
+        }else {
+            showLoading()
+            viewModel.callAddAddress(map)
+        }
 
     }
 

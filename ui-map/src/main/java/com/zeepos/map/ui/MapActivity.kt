@@ -1233,15 +1233,23 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
         val lng = mapData.latLng?.lng ?: 0.0
         val newLatLng = LatLng(lat, lng)
 
-        movingFoodTruckMarkerMap.forEach {
-            val taskOperator = it.value as TaskOperator
-            if (taskOperator.tasksId == newTaskOperator.tasksId) {
+        if (appType == ConstVar.APP_MERCHANT) {
+            movingFoodTruckMarkerMap.forEach {
                 movingFoodTruckMarker = it.key
+            }
+        }else {
 
-                if (appType == ConstVar.APP_CUSTOMER) {
-                    movingFoodTruckMarkerInfo = movingFoodTruckMarkerInfoMap[it.key]
+
+            movingFoodTruckMarkerMap.forEach {
+                val taskOperator = it.value as TaskOperator
+                if (taskOperator.tasksId == newTaskOperator.tasksId) {
+                    movingFoodTruckMarker = it.key
+
+                    if (appType == ConstVar.APP_CUSTOMER) {
+                        movingFoodTruckMarkerInfo = movingFoodTruckMarkerInfoMap[it.key]
+                    }
+                    return@forEach
                 }
-                return@forEach
             }
         }
 

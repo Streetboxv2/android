@@ -74,7 +74,7 @@ class OnGoingFragment : BaseFragment<HistoryViewEvent, HistoryViewModel>() {
         swipe_refresh_ongoing.setColorSchemeColors(Color.rgb(47, 223, 189))
         swipe_refresh_ongoing.isRefreshing = true
         swipe_refresh_ongoing.setOnRefreshListener {
-//            page = 1
+            page = 1
             viewModel.getOrderHistory(page, "ongoing")
         }
     }

@@ -30,6 +30,7 @@ import com.zeepos.ui_base.ui.BaseViewEvent
 import com.zeepos.ui_base.views.GlideApp
 import com.zeepos.utilities.DateTimeUtil
 import id.streetbox.live.ui.bookhomevisit.BookHomeVisitActivity
+import id.streetbox.live.ui.main.MainActivity
 import id.streetbox.live.ui.menu.MenuActivity
 import id.streetbox.live.ui.menu.MenuAdapter
 import id.streetbox.live.ui.menu.MenuViewEvent
@@ -242,6 +243,11 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
 
     override fun initResourceLayout(): Int {
         return R.layout.activity_nearby_detail_visit
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(MainActivity.getIntent(this))
     }
 
     override fun init() {

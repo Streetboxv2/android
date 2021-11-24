@@ -32,6 +32,7 @@ import id.streetbox.live.adapter.AdapterMenu
 import id.streetbox.live.adapter.AdapterViewPagerMenuVisit
 import com.example.dbroom.db.room.enitity.MenuItemStore
 import id.streetbox.live.ui.bookhomevisit.BookHomeVisitActivity
+import id.streetbox.live.ui.main.MainActivity
 import id.streetbox.live.ui.main.doortodoor.notification.NotifInstagramActivity
 import id.streetbox.live.ui.main.home.nearby.NearbyDetailVisitActivity
 import id.streetbox.live.ui.pickuporder.PickupOrderActivity
@@ -117,6 +118,12 @@ class MenuActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                 showToastExt("Please add item first before take note", this@MenuActivity)
             }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        startActivity(MainActivity.getIntent(this))
     }
 
 

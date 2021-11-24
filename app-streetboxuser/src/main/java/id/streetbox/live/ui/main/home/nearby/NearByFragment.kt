@@ -31,7 +31,6 @@ class NearByFragment : BaseFragment<NearByViewEvent, NearByViewModel>() {
     private var page: Int = 1
     private var isLocationUpdate = false
     var distance: String? = ""
-    var mutableListFoodTruck: MutableList<FoodTruck> = arrayListOf()
 
     override fun initResourceLayout(): Int {
         return R.layout.fragment_nearby
@@ -101,6 +100,8 @@ class NearByFragment : BaseFragment<NearByViewEvent, NearByViewModel>() {
     }
 
     override fun onEvent(useCase: NearByViewEvent) {
+        var mutableListFoodTruck: MutableList<FoodTruck> = arrayListOf()
+
         when (useCase) {
             is NearByViewEvent.GetNearBySuccess -> {
                 swipe_refresh.isRefreshing = false

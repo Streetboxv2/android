@@ -358,17 +358,19 @@ class PickupOrderActivity : BaseActivity<PickupOrderReviewViewEvent, PickUpOrder
         if(typeTax == 0 && isActive == true){
 
             totalMenuItem = totalMenuItem + calculateTax
-            taxName = taxName+"(Excl)"
+            taxName = taxName
+            tv_tax_label.text = taxName +"(Excl)"
 
         }else if(typeTax == 1 && isActive == true){
-            taxName = taxName+"(Incl)"
+            taxName = taxName
+            tv_tax_label.text = taxName +"(Incl)"
         }
 
 
         tv_subtotal.text =
             NumberUtil.formatToStringWithoutDecimal(subtotalItem)
         tv_total_tax.text =  NumberUtil.formatToStringWithoutDecimal(calculateTax)
-        tv_tax_label.text = taxName
+
 
         tv_total_payment.text =
             NumberUtil.formatToStringWithoutDecimal(totalMenuItem)

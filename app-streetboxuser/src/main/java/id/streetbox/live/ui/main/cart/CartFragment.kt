@@ -42,6 +42,7 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
     var getSaveCart: String? = ""
     var adapterMenuChoiceOrder: AdapterPickupOrderNearby? = null
     var typesTax:Int = 0
+    var taxId:Long = 0
     var taxName:String = ConstVar.EMPTY_STRING
     var totalTax:Double = 0.0
     var isActive:Boolean =  false
@@ -117,6 +118,8 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
             bundle.putInt("taxType",typesTax)
             bundle.putDouble("totalTax",totalTax)
             bundle.putBoolean("isActive",isActive)
+            bundle.putDouble("amount",totalTax)
+            bundle.putInt("taxId",taxId.toInt())
 
 
             val intent = Intent(requireContext(), PickupOrderActivity::class.java)
@@ -152,6 +155,7 @@ class CartFragment : BaseFragment<CartViewEvent, CartViewModel>() {
             }
             CartViewEvent.NoDataInCart ->{} //swipe_refresh.isRefreshing = false
             is CartViewEvent.GetTaxSuccess -> {
+                taxId = useCase.tax.id
                 taxName = useCase.tax.name!!
                 typesTax = useCase.tax.type
                 totalTax = useCase.tax.amount

@@ -231,6 +231,7 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
                 Toast.makeText(context,"Failed",Toast.LENGTH_LONG).show()
             }
             OrderBillViewEvent.CloseOrderSuccess -> {
+                dismissLoading()
                 val data: HashMap<String, Any> = hashMapOf()
                 data["order"] = order!!
                 data["orderBills"] = order!!.orderBill
@@ -279,7 +280,7 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
         onlineOrderViewModel?.getRecentOrder()
         btn_print.setOnClickListener{
 
-//            showLoading()
+            showLoading()
              formatReceiptformat()
              printBluetooth()
 //            trxId?.let { it1 -> viewModel.closeOnlineOrder(it1) }
@@ -287,11 +288,6 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
 
         }
 
-    private fun printSomePrintable() {
-        val printables = getSomePrintables()
-        printing?.print(printables)
-        trxId?.let { it1 -> viewModel.closeOnlineOrder(it1) }
-    }
 
     private fun checkPrinter() {
         if (Printooth.hasPairedPrinter())
@@ -374,7 +370,7 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
                 subTot =
                     "[L]<b>Subtotal </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(order!!.grandTotal - calculate) + "\n"
                 taxTotal =
-                    "[L]<b>" + taxName + "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
+                    "[L]<b>" + taxName+"(Excl)" + "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
                         calculate
                     ) + "\n"
                 grandTot =
@@ -386,7 +382,7 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
                 subTot =
                     "[L]<b>Subtotal </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(order!!.grandTotal ) + "\n"
                 taxTotal =
-                    "[L]<b>" + taxName + "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
+                    "[L]<b>" + taxName + "(incl)" + "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
                         calculate
                     ) + "\n"
                 grandTot =
@@ -418,9 +414,9 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
 
                 AsyncBluetoothEscPosPrint(context).execute(getAsyncEscPosPrinter(selectedDevice))
 
-//                    Handler().postDelayed({
+                    Handler().postDelayed({
                         trxId?.let { it1 -> viewModel.closeOnlineOrder(it1) }
-//                    }, 1000)
+                    }, 1000)
 
 
             } catch (e: Exception) {
@@ -498,187 +494,8 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
 
     }
 
-    private fun getSomePrintables() = ArrayList<Printable>().apply {
-
-        val taxSales = if (order!!.taxSales.isNotEmpty()) order!!.taxSales[0] else null
-
-        val taxName = taxSales?.name ?: ConstVar.EMPTY_STRING
-
-        val address: String = userOperator?.address.toString()
-        add(RawPrintable.Builder(byteArrayOf(27, 100, 4)).build()) // feed lines example in raw mode
-
-        val username = userOperator!!.userName!!.substring(0,userOperator!!.userName!!.indexOf("@"));
-
-        add(
-            ImagePrintable.Builder(theBitmap!!)
-                .setAlignment(ALIGNMENT_CENTER)
-                .build())
 
 
-        add(
-            TextPrintable.Builder()
-                .setText(user!!.name!!)
-                .setAlignment(DefaultPrinter.ALIGNMENT_CENTER)
-                .setFontSize(10)
-                .setLineSpacing(DefaultPrinter.LINE_SPACING_60)
-                .setNewLinesAfter(1)
-                .build()
-        )
-
-        add(
-            TextPrintable.Builder()
-                .setText(address)
-                .setAlignment(DefaultPrinter.ALIGNMENT_CENTER)
-                .setNewLinesAfter(1)
-                .build()
-        )
-
-        add(
-            TextPrintable.Builder()
-                .setText("Employee  :"+username)
-                .setAlignment(DefaultPrinter.ALIGNMENT_CENTER)
-                .setNewLinesAfter(1)
-                .build()
-        )
-
-        add(
-            TextPrintable.Builder()
-                .setText(""+DateTimeUtil.getCurrentTimeStamp("dd-MM-yyyy hh:mm"))
-                .setAlignment(DefaultPrinter.ALIGNMENT_CENTER)
-                .setNewLinesAfter(1)
-                .build()
-        )
-
-        add(
-            TextPrintable.Builder()
-                .setText("===============================")
-                .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
-                .setNewLinesAfter(1)
-                .build()
-        )
-
-        add(
-            TextPrintable.Builder()
-                .setText("No Antrian   : "+order!!.orderNo)
-                .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
-                .setNewLinesAfter(1)
-                .setLineSpacing(DefaultPrinter.LINE_SPACING_60)
-                .build()
-        )
-
-        add(
-            TextPrintable.Builder()
-                .setText("OrderBill No : "+order!!.orderBill[0].billNo)
-                .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
-                .setNewLinesAfter(1)
-                .setLineSpacing(DefaultPrinter.LINE_SPACING_60)
-                .build()
-        )
-
-        for( i in order!!.productSales.indices) {
-            add(
-                TextPrintable.Builder()
-                    .setText(order!!.productSales[i].name + "\n" + ""+order!!.productSales[i].qty+ " x " + NumberUtil.formatToStringWithoutDecimal(order!!.productSales[i].price))
-                    .setAlignment(DefaultPrinter.LINE_SPACING_60)
-                    .setNewLinesAfter(2)
-                    .build()
-            )
-        }
-
-        add(
-            TextPrintable.Builder()
-                .setText("===============================")
-                .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
-                .setAlignment(DefaultPrinter.LINE_SPACING_60)
-                .setNewLinesAfter(1)
-                .build()
-        )
-
-                add(
-                    TextPrintable.Builder()
-                        .setText("SubTotal              : "+  NumberUtil.formatToStringWithoutDecimal(order!!.orderBill[0].subTotal))
-                        .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
-                        .setNewLinesAfter(1)
-                        .build()
-                )
-        if(taxSales == null){
-                add(
-                    TextPrintable.Builder()
-                        .setText("Grand Total         : "+ NumberUtil.formatToStringWithoutDecimal(order!!.orderBill[0].subTotal))
-                        .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
-                        .setNewLinesAfter(1)
-                        .build()
-                )
-        }else {
-
-            if (type < 1) {
-
-                add(
-                    TextPrintable.Builder()
-                        .setText(taxName + "(Excl.)     : " + NumberUtil.formatToStringWithoutDecimal(
-                            order!!.orderBill[0].totalTax
-                        )
-
-                        )
-                        .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
-                        .setNewLinesAfter(1)
-                        .build()
-                )
-
-
-                add(
-                    TextPrintable.Builder()
-                        .setText("Grand Total          : " + NumberUtil.formatToStringWithoutDecimal(order!!.grandTotal + order!!.orderBill[0].totalTax))
-                        .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
-                        .setNewLinesAfter(1)
-                        .build()
-                )
-
-            } else if(type > 1){
-
-                add(
-                    TextPrintable.Builder()
-                        .setText(taxName + "(Incl.)      : " + NumberUtil.formatToStringWithoutDecimal(
-                            order!!.orderBill[0].totalTax
-                        )
-
-                        )
-                        .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
-                        .setNewLinesAfter(1)
-                        .build()
-                )
-
-                add(
-                    TextPrintable.Builder()
-                        .setText("Grand Total            : " + NumberUtil.formatToStringWithoutDecimal(order!!.grandTotal))
-                        .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
-                        .setNewLinesAfter(1)
-                        .build()
-                )
-
-            }
-        }
-
-        add(
-            TextPrintable.Builder()
-                .setText("===============================")
-                .setAlignment(DefaultPrinter.ALIGNMENT_LEFT)
-                .setAlignment(DefaultPrinter.LINE_SPACING_60)
-                .setNewLinesAfter(1)
-                .build()
-        )
-
-        add(
-            TextPrintable.Builder()
-                .setText("Thank You")
-                .setAlignment(DefaultPrinter.ALIGNMENT_CENTER)
-                .setNewLinesAfter(1)
-                .build()
-        )
-
-
-
-    }
 
 
 }
