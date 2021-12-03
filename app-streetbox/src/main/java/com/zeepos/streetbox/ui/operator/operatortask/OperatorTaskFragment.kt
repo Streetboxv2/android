@@ -2,6 +2,7 @@ package com.zeepos.streetbox.ui.operator.operatortask
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
@@ -29,6 +30,8 @@ import com.zeepos.utilities.DateTimeUtil
 import com.zeepos.utilities.PermissionUtils
 import com.zeepos.utilities.SharedPreferenceUtil
 import kotlinx.android.synthetic.main.operator_task_fragment.*
+import kotlinx.android.synthetic.main.operator_task_fragment.swipe_refresh
+import kotlinx.android.synthetic.main.parkingspace_fragment.*
 import kotlinx.android.synthetic.main.parkingspace_fragment.rcv
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -119,6 +122,12 @@ class OperatorTaskFragment : BaseFragment<OperatorTaskViewEvent, OperatorTaskVie
             adapter = operatorTaskAdapter
         }
 
+        swipe_refresh.setColorSchemeColors(Color.rgb(47, 223, 189))
+        swipe_refresh.isRefreshing = true
+        swipe_refresh.setOnRefreshListener {
+            viewModel.getParkingOperatorTask()
+        }
+
         btn_shiftout.setOnClickListener {
             viewModel.shiftOutOperatorTask()
             saveStatusShiftFalse()
@@ -190,6 +199,9 @@ class OperatorTaskFragment : BaseFragment<OperatorTaskViewEvent, OperatorTaskVie
     override fun onEvent(useCase: OperatorTaskViewEvent) {
         when (useCase) {
             is OperatorTaskViewEvent.GetAllParkingOperatorTaskSuccess -> {
+                if (swipe_refresh.isRefreshing) {
+                    operatorTaskAdapter.data.clear()
+                }
                 operatorTaskAdapter.addData(useCase.data)
                 if (useCase.data.size == 0) {
                     btn_shiftout.visibility = View.VISIBLE

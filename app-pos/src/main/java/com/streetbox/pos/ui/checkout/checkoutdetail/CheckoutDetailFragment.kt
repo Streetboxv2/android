@@ -310,6 +310,7 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
                 data["paymentSales"] = order.paymentSales
                 data["taxSales"] = order.taxSales
 
+
                 val jsonText: String = gson.toJson(data)
 //                viewModel.createSync(ConstVar.SYNC_TYPE_TRANSACTION, order.businessDate, jsonText)
 
@@ -326,12 +327,12 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
                 }
 
 
-                try {
-                    viewModel.getAllTransaction(startDate, endDate, "")
-                } catch(e: Exception) {
-                    e.printStackTrace()
-                    viewModel.getRecentOrder()
-                }
+//                try {
+//                    viewModel.getAllTransaction(startDate, endDate, "")
+//                } catch(e: Exception) {
+//                    e.printStackTrace()
+//                    viewModel.getRecentOrder()
+//                }
 
             }
             is CheckoutDetailViewEvent.GetAllTransactionSuccess -> {

@@ -55,15 +55,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             sendNotification(title = title.toString(), body = body.toString())
             EventBus.getDefault().post(MessageEvent())
         }
-        else {
-//            println("respon Notif ${remoteMessage.notification!!.imageUrl}")
-            Log.d(TAG, "From: " + remoteMessage.from)
-            Log.d("respon Data enduser", "${remoteMessage.data}")
-            sendNotification(
-                remoteMessage.notification!!.title.toString(),
-                remoteMessage.notification!!.body.toString()
-            )
-        }
+//        else {
+////            println("respon Notif ${remoteMessage.notification!!.imageUrl}")
+//            Log.d(TAG, "From: " + remoteMessage.from)
+//            Log.d("respon Data enduser", "${remoteMessage.data}")
+//            sendNotification(
+//                remoteMessage.notification!!.title.toString(),
+//                remoteMessage.notification!!.body.toString()
+//            )
+//        }
     }
 
 
@@ -75,14 +75,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .putExtra("typeNotif", "listnotif")
 //            .putExtra("key", remoteMessage.data["typeNotif"])
 
-
+        val uniqueInt = (System.currentTimeMillis() and 0xff).toInt()
         val contentIntentQuest = PendingIntent.getActivity(
-            this, 0,
+            this, uniqueInt,
             qIntent, PendingIntent.FLAG_UPDATE_CURRENT
         )
 
+
+
         val contentView = RemoteViews(packageName, R.layout.layout_popup_notif)
-        contentView.setImageViewResource(R.id.image, R.mipmap.ic_launcher)
+        contentView.setImageViewResource(R.id.image, R.mipmap.ic_launcher_foreground)
         contentView.setTextViewText(R.id.tvTitlePopupNotif, body)
 
 
@@ -90,7 +92,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
         val notificationBuilder = NotificationCompat.Builder(this, notificationChannel)
-            .setColor(ContextCompat.getColor(this, R.color.green))
+            .setColor(ContextCompat.getColor(this, R.color.orange))
             .setContentTitle(body)
             .setContentText(title)
             .setDefaults(Notification.DEFAULT_ALL)

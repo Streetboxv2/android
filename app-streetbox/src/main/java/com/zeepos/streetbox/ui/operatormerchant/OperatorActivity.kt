@@ -216,10 +216,17 @@ class OperatorActivity : BaseActivity<OperatorViewEvent, OperatorViewModel>() {
     override fun onEvent(useCase: OperatorViewEvent) {
         when (useCase) {
             is OperatorViewEvent.GetOperatorSuccess -> {
+                val list: MutableList<User> = ArrayList()
                 useCase.data?.let {
-                    operatorAdapter.setList(useCase.data)
-                }
+                    useCase.data.forEach {
+                        if(it.tasksId < 1){
+                            list.add(it)
+                        }
 
+                    }
+
+                }
+                operatorAdapter.setList(list)
                 dismissLoading()
 
             }

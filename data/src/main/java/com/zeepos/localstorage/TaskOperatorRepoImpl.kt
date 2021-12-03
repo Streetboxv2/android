@@ -137,8 +137,8 @@ class TaskOperatorRepoImpl @Inject constructor(
             .map {
                 if (it.isSuccess()) {
                     val taskOperatorList = it.data
-                    if (taskOperatorList != null)
-                        insertUpdate(taskOperatorList)
+//                    if (taskOperatorList != null)
+//                        insertUpdate(taskOperatorList)
                     return@map taskOperatorList
                 }
 

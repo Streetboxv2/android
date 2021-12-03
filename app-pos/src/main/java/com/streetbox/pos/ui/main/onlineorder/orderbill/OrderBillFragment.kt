@@ -281,11 +281,20 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
     override fun onViewReady(savedInstanceState: Bundle?) {
         initList()
         onlineOrderViewModel?.getRecentOrder()
+        btn_close.setOnClickListener{
+            showLoading()
+            trxId?.let { it1 -> viewModel.closeOnlineOrder(it1) }
+        }
         btn_print.setOnClickListener{
 
-            showLoading()
+
              formatReceiptformat()
              printBluetooth()
+
+//            trxId?.let { it1 -> viewModel.closeOnlineOrder(it1) }
+//            Handler().postDelayed({
+//                        trxId?.let { it1 -> viewModel.closeOnlineOrder(it1) }
+//                    }, 1000)
 //            trxId?.let { it1 -> viewModel.closeOnlineOrder(it1) }
         }
 
@@ -417,9 +426,9 @@ class OrderBillFragment : BaseFragment<OrderBillViewEvent, OrderBillViewModel>()
 
                 AsyncBluetoothEscPosPrint(context).execute(getAsyncEscPosPrinter(selectedDevice))
 
-                    Handler().postDelayed({
-                        trxId?.let { it1 -> viewModel.closeOnlineOrder(it1) }
-                    }, 1000)
+//                    Handler().postDelayed({
+//                        trxId?.let { it1 -> viewModel.closeOnlineOrder(it1) }
+//                    }, 1000)
 
 
             } catch (e: Exception) {

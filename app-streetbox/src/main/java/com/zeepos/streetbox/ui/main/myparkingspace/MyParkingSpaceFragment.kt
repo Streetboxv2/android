@@ -122,7 +122,7 @@ class MyParkingSpaceFragment : BaseFragment<MyParkingSpaceViewEvent, MyParkingSp
             .filter {
                 if (it.isEmpty()) {
                     myParkingSpaceAdapter.data.clear()
-                    viewModel.getParkingSales()
+                    viewModel.getParkingSalesCloud(true)
                     isLoadMore = true
                     return@filter false
                 }
@@ -174,8 +174,8 @@ class MyParkingSpaceFragment : BaseFragment<MyParkingSpaceViewEvent, MyParkingSp
 
 //                    myParkingSpaceAdapter.addData(useCase.data)
                     myParkingSpaceAdapter.setList(useCase.data)//currently api not support load more
-//                    myParkingSpaceAdapter.loadMoreModule.loadMoreComplete()
-                    myParkingSpaceAdapter.loadMoreModule.loadMoreEnd()
+                    myParkingSpaceAdapter.loadMoreModule.loadMoreComplete()
+//                    myParkingSpaceAdapter.loadMoreModule.loadMoreEnd()
                 } else {
                     myParkingSpaceAdapter.loadMoreModule.loadMoreEnd()
                 }

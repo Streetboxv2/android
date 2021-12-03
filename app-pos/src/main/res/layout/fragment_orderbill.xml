@@ -29,52 +29,52 @@
                 android:id="@+id/tv_no_order"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="No. Order : #ODR72114001"
                 android:layout_marginStart="@dimen/_6sdp"
                 android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/color_text_regular"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="No. Order : #ODR72114001" />
 
             <View
                 android:id="@+id/header_separator"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:background="@color/grey"
-                app:layout_constraintTop_toBottomOf="@+id/tv_no_order"
                 android:layout_marginTop="@dimen/_6sdp"
+                android:background="@color/grey"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_no_order" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcv_order"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toTopOf="@+id/header_separator"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/total_separator"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/total_separator" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/header_separator" />
 
             <View
                 android:id="@+id/total_separator"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:background="@color/grey"
                 android:layout_marginBottom="@dimen/_10sdp"
-                app:layout_constraintStart_toStartOf="parent"
+                android:background="@color/grey"
+                app:layout_constraintBottom_toTopOf="@+id/tv_notesOrder"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/tv_notesOrder" />
+                app:layout_constraintStart_toStartOf="parent" />
 
 
             <TextView
                 android:id="@+id/tv_subTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Subtotal "
-                android:visibility="visible"
                 android:layout_marginStart="@dimen/_6sdp"
                 android:fontFamily="@font/poppins_bold"
+                android:text="Subtotal "
                 android:textColor="@color/black"
+                android:visibility="visible"
                 app:layout_constraintBottom_toTopOf="@+id/tv_taxLabel"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -82,24 +82,24 @@
                 android:id="@+id/tv_resSubTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_bold"
-                android:textColor="@color/black"
-                android:text="0"
-                android:visibility="visible"
                 android:layout_marginEnd="@dimen/_10sdp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:fontFamily="@font/poppins_bold"
+                android:text="0"
+                android:textColor="@color/black"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_subTotal"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_subTotal" />
 
             <TextView
                 android:id="@+id/tv_taxLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tax       "
-                android:visibility="gone"
                 android:layout_marginStart="@dimen/_6sdp"
                 android:fontFamily="@font/poppins_bold"
+                android:text="Tax       "
                 android:textColor="@color/black"
+                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/tv_grand_total_label"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -107,12 +107,12 @@
                 android:id="@+id/tv_tax"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:fontFamily="@font/poppins_bold"
                 android:textColor="@color/black"
                 android:visibility="gone"
-                android:layout_marginEnd="@dimen/_10sdp"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_taxLabel"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_taxLabel" />
 
 
@@ -120,10 +120,10 @@
                 android:id="@+id/tv_grand_total_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total"
                 android:layout_marginStart="@dimen/_6sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:fontFamily="@font/poppins_bold"
+                android:text="Total"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toTopOf="@+id/btn_print"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -133,24 +133,24 @@
                 android:id="@+id/tv_grand_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_bold"
-                android:textColor="@color/black"
-                android:text="0"
-                android:visibility="visible"
                 android:layout_marginEnd="@dimen/_10sdp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:fontFamily="@font/poppins_bold"
+                android:text="0"
+                android:textColor="@color/black"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_grand_total_label"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_grand_total_label" />
 
             <TextView
                 android:id="@+id/tv_notesOrder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Notes       "
-                android:visibility="visible"
                 android:layout_marginStart="@dimen/_6sdp"
                 android:fontFamily="@font/poppins_bold"
+                android:text="Notes       "
                 android:textColor="@color/black"
+                android:visibility="visible"
                 app:layout_constraintBottom_toTopOf="@+id/tv_subTotal"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -158,24 +158,24 @@
                 android:id="@+id/tv_resNotesOrder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_bold"
-                android:textColor="@color/black"
-                android:text=""
-                android:visibility="visible"
                 android:layout_marginEnd="@dimen/_10sdp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:fontFamily="@font/poppins_bold"
+                android:text=""
+                android:textColor="@color/black"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_notesOrder"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_notesOrder" />
 
             <TextView
                 android:id="@+id/tv_phoneCustomer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Phone       "
-                android:visibility="visible"
                 android:layout_marginStart="@dimen/_6sdp"
                 android:fontFamily="@font/poppins_bold"
+                android:text="Phone       "
                 android:textColor="@color/black"
+                android:visibility="visible"
                 app:layout_constraintBottom_toTopOf="@+id/tv_notesOrder"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -183,30 +183,46 @@
                 android:id="@+id/tv_resPhoneCustomer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_bold"
-                android:textColor="@color/black"
-                android:text=""
-                android:visibility="visible"
                 android:layout_marginEnd="@dimen/_10sdp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:fontFamily="@font/poppins_bold"
+                android:text=""
+                android:textColor="@color/black"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_phoneCustomer"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_phoneCustomer" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_print"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Print"
+
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/button_add_bg"
                 android:backgroundTint="@color/colorPOS"
-                android:textColor="@color/white"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
                 android:fontFamily="@font/poppins_regular"
-                android:layout_marginBottom="@dimen/_6sdp"
+                android:text="Print"
+                android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:background="@drawable/button_add_bg" />
+                app:layout_constraintHorizontal_bias="0.021"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/button_add_bg"
+                android:backgroundTint="@color/colorPOS"
+
+                android:fontFamily="@font/poppins_regular"
+                android:text="Close"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.972"
+                app:layout_constraintStart_toStartOf="@id/btn_print" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
