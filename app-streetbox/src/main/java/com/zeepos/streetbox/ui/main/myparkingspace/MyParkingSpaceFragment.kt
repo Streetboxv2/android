@@ -169,6 +169,7 @@ class MyParkingSpaceFragment : BaseFragment<MyParkingSpaceViewEvent, MyParkingSp
                     viewModel.getAllOperator()
                     if (swipe_refresh.isRefreshing) {
                         myParkingSpaceAdapter.data.clear()
+                        swipe_refresh.isRefreshing = false
                     }
 
 

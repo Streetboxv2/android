@@ -201,6 +201,7 @@ class OperatorTaskFragment : BaseFragment<OperatorTaskViewEvent, OperatorTaskVie
             is OperatorTaskViewEvent.GetAllParkingOperatorTaskSuccess -> {
                 if (swipe_refresh.isRefreshing) {
                     operatorTaskAdapter.data.clear()
+                    swipe_refresh.isRefreshing = false
                 }
                 operatorTaskAdapter.addData(useCase.data)
                 if (useCase.data.size == 0) {
