@@ -11,7 +11,7 @@
         android:enabled="true"
         android:icon="@drawable/ic_baseline_notifications_none_24"
         android:title="Door to Door"
-        android:visible="false" />
+        android:visible="true" />
 
     <item
         android:id="@+id/nv_order_history"
