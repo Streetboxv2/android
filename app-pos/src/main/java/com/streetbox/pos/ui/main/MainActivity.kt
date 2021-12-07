@@ -86,17 +86,17 @@ class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
-            showLoading()
+//            showLoading()
         if(typeNotif!=null){
             val intent = Intent(this,OnlineOrderActivity::class.java)
             startActivity(intent)
         }else {
 
-            try {
-                viewModel.getAllTransaction(startDate, endDate, "")
-
-            } catch (e: Exception) {
-                e.printStackTrace()
+//            try {
+//                viewModel.getAllTransaction(startDate, endDate, "")
+//
+//            } catch (e: Exception) {
+//                e.printStackTrace()
                 addFragment(
                     ProductFragment.newInstance(),
                     R.id.fl_left,
@@ -108,7 +108,7 @@ class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
                     OrderFragment::class.java.simpleName
                 )
                 viewModel.getRecentOrder()
-            }
+//            }
         }
     }
 

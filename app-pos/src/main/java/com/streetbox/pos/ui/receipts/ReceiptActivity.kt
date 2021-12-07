@@ -64,9 +64,9 @@ class ReceiptActivity : BaseActivity<ReceiptViewEvent, ReceiptViewModel>() {
         initList()
 
         showLoading()
-        Handler().postDelayed({
+//        Handler().postDelayed({
             viewModel.getAllTransaction(startDate, endDate, "")
-        }, 2000)
+//        }, 2000)
 
         val selectedDateDisplay =
             DateTimeUtil.getDateWithFormat(startDate, "dd/MM/YYYY")
@@ -97,17 +97,18 @@ class ReceiptActivity : BaseActivity<ReceiptViewEvent, ReceiptViewModel>() {
     override fun onEvent(useCase: ReceiptViewEvent) {
         when (useCase) {
             is ReceiptViewEvent.GetAllTransactionSuccess -> {
-                Thread.sleep(2000)
+//                Thread.sleep(2000)
                 dismissLoading()
                 receiptAdapter.setList(useCase.orderList)
             }
             is ReceiptViewEvent.VoidOrderSuccess -> {
+
                 Toast.makeText(
                     this,
                     "Void Order Success",
                     Toast.LENGTH_SHORT
                 ).show()
-                viewModel.getAllTransaction(startDate, endDate, "")
+//                viewModel.getAllTransaction(startDate, endDate, "")
             }
         }
     }
@@ -135,7 +136,6 @@ class ReceiptActivity : BaseActivity<ReceiptViewEvent, ReceiptViewModel>() {
 
             bundle.putString("orderUniqueId", order.uniqueId)
             bundle.putInt("taxType", order.taxSales[0].type)
-            bundle.putDouble("taxAmount", order.orderBill[0].totalTax)
             bundle.putString("taxName",order.taxSales[0].name)
             bundle.putBoolean("isActive",order.taxSales[0].isActive)
             dialog.arguments = bundle

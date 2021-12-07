@@ -347,7 +347,7 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
                 formatReceipt()
                 printBluetooth()
 
-                viewModel.closeOrder(order.uniqueId)
+//                viewModel.closeOrder(order.uniqueId)
 
                 qrCode.let {
                     showDialog(CheckoutQRDialog.getInstance(it, printContent, printKitchenContent))
