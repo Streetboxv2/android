@@ -8,7 +8,7 @@ import id.streetbox.live.R
 import kotlinx.android.synthetic.main.activity_notif_instagram.*
 
 class NotifInstagramActivity : AppCompatActivity() {
-    var merchantIg: String = ""
+    var merchantIg: String? = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notif_instagram)

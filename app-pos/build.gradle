@@ -10,14 +10,14 @@ def versionPatch = 1
 def versionBuild = 0
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.streetbox.pos"
         minSdkVersion 21
-        targetSdkVersion 29
-        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+        targetSdkVersion 30
+        versionCode versionMajor * 10003 + versionMinor * 1003 + versionPatch * 103 + versionBuild
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true

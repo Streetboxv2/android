@@ -206,7 +206,7 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
         }
         Log.d(ConstVar.TAG, "order test")
         Log.d(ConstVar.TAG, order.grandTotal.toString())
-        Log.d(ConstVar.TAG, order?.orderBill[0]?.billNo)
+//        Log.d(ConstVar.TAG, order?.orderBill[0]?.billNo)
 //        Log.d(ConstVar.TAG, order?.trx[0]?.trxId)
         tv_status_label?.text = "Status: ${order?.orderBill[0]?.billNo}"
         if(order.taxSales[0].isActive == true){
