@@ -42,8 +42,8 @@ class OperatorTaskFragment : BaseFragment<OperatorTaskViewEvent, OperatorTaskVie
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var currentLatLng: LatLng? = null
     private var locationCallback: LocationCallback? = null
-    private var currentLatitude: Double? = null
-    private var currentLongitude: Double? = null
+    private var latParkingSpace: Double = 0.0
+    private var lonParkingSpace: Double = 0.0
     private var parkingOperatorId: Long? = null
     private var status: Int? = null
     private var address: String? = ConstVar.EMPTY_STRING
@@ -67,11 +67,17 @@ class OperatorTaskFragment : BaseFragment<OperatorTaskViewEvent, OperatorTaskVie
 
         viewModel =
             ViewModelProvider(this, viewModeFactory).get(OperatorTaskViewModel::class.java)
-        viewModel.getParkingOperatorTask()
+
         operatorTaskAdapter = OperatorTaskAdapter()
         val arg = arguments
-        showLoading()
 
+
+    }
+
+    override fun onResume() {
+        showLoading()
+        viewModel.getParkingOperatorTask()
+        super.onResume()
     }
 
     @SuppressLint("MissingPermission")
@@ -168,6 +174,7 @@ class OperatorTaskFragment : BaseFragment<OperatorTaskViewEvent, OperatorTaskVie
         operatorTaskAdapter.setOnItemClickListener { adapter, _, position ->
             context?.let {
                 val parkingOperator = adapter.getItem(position) as TaskOperator
+
                 parkingOperatorId = parkingOperator.tasksId
                 status = parkingOperator.status
                 address = parkingOperator.address
@@ -177,6 +184,8 @@ class OperatorTaskFragment : BaseFragment<OperatorTaskViewEvent, OperatorTaskVie
                 typesId = parkingOperator.typesId
                 scheduleDate = parkingOperator.scheduleDate
                 types = parkingOperator.types!!
+                latParkingSpace = parkingOperator.latParkingSpace
+                lonParkingSpace = parkingOperator.lonParkingSpace
 
 
                 if (status == 3) {
@@ -302,7 +311,9 @@ class OperatorTaskFragment : BaseFragment<OperatorTaskViewEvent, OperatorTaskVie
                     endDate = endDate!!,
                     scheduleDate = scheduleDate!!,
                     parkingSpaceName = parkingSpaceName!!,
-                    types = types
+                    types = types,
+                    latParkingSpace = latParkingSpace,
+                    lonParkingSpace = lonParkingSpace
                 )
             }
         )

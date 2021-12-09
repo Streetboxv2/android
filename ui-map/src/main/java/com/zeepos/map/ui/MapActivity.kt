@@ -107,6 +107,8 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
             scheduleDate: String = ConstVar.EMPTY_STRING,
             parkingSpaceName: String = ConstVar.EMPTY_STRING,
             types: String = ConstVar.EMPTY_STRING,
+            latParkingSpace:Double = 0.0,
+            lonParkingSpace:Double = 0.0,
             bundle: Bundle? = null
         ): Intent {
             val intent = Intent(context, MapActivity::class.java)
@@ -120,6 +122,8 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
             intent.putExtra("scheduleDate", scheduleDate)
             intent.putExtra("parkingSpaceName", parkingSpaceName)
             intent.putExtra("types", types)
+            intent.putExtra("latparkingspace",latParkingSpace)
+            intent.putExtra("lonparkingspace",lonParkingSpace)
             if (bundle != null)
                 intent.putExtras(bundle)
             return intent
@@ -145,6 +149,8 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
     private var parkingSalesId: Long = 0L
     private var taskId: Long = 0L
     private var typesId: Long = 0L
+    private var latparkingspace:Double = 0.0
+    private var lonparkingspace:Double = 0.0
     private var address: String? = null
     private var startdate: String? = null
     private var enddate: String? = null
@@ -172,6 +178,8 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
         scheduleDate = intent.getStringExtra("scheduleDate")
         parkingspaceNameRegular = intent.getStringExtra("parkingSpaceName")
         types = intent.getStringExtra("types")
+        latparkingspace = intent.getDoubleExtra("latparkingspace",0.0)
+        lonparkingspace = intent.getDoubleExtra("lonparkingspace",0.0)
         Log.d("address", "" + address)
         Log.d("startdate", "" + startdate)
         Log.d("enddate", "" + enddate)
@@ -252,8 +260,21 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
                 }
             }
             MapViewEvent.InformCabBooked -> informCabBooked()
-            is MapViewEvent.ShowPath -> showPath(useCase.mapData)
-            is MapViewEvent.UpdateFoodTruckLocation -> updateFoodTruckLocation(useCase.mapData)
+            is MapViewEvent.ShowPath -> {
+                showPath(useCase.mapData)
+                if (!isTripEnd) {
+                    viewModel.updateCurrentFoodTruckPosition(
+                        taskId,
+                        currentLatLng!!.latitude!!,
+                        currentLatLng!!.longitude!!,
+                        latparkingspace,
+                        lonparkingspace
+                    )
+                }
+            }
+            is MapViewEvent.UpdateFoodTruckLocation ->{
+                updateFoodTruckLocation(useCase.mapData)
+            }
             MapViewEvent.InformFoodTruckIsArriving -> informFoodTruckIsArriving()
             MapViewEvent.InformFoodTruckArrived -> informFoodTruckArrived()
             MapViewEvent.InformTripStart -> informTripStart()
@@ -342,6 +363,7 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
                 viewModel.getCurrentFoodTruckCheckInLocationFromServer(taskId)
             }
             ConstVar.MAP_TYPE_DIRECTION -> {
+
 
             }
             ConstVar.MAP_TYPE_LOCATION -> {
@@ -763,8 +785,12 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
                     viewModel.requestDirection(
                         taskId,
                         it.latitude,
-                        it.longitude
+                        it.longitude,
+                        latparkingspace ,
+                        lonparkingspace
                     )
+
+
 
 //                    LocationUpdateWorker.enqueue(
 //                        this@MapActivity,
@@ -831,6 +857,7 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
                     }
 
                     initLocation()
+
                 } else {
 
                     if (mapType == ConstVar.MAP_TYPE_DIRECTION) {
@@ -850,7 +877,9 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
                                 viewModel.updateCurrentFoodTruckPosition(
                                     taskId,
                                     it.latitude,
-                                    it.longitude
+                                    it.longitude,
+                                    latparkingspace,
+                                    lonparkingspace
                                 )
                             }
                         }
@@ -1233,11 +1262,7 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
         val lng = mapData.latLng?.lng ?: 0.0
         val newLatLng = LatLng(lat, lng)
 
-        if (appType == ConstVar.APP_MERCHANT) {
-            movingFoodTruckMarkerMap.forEach {
-                movingFoodTruckMarker = it.key
-            }
-        }else {
+
             movingFoodTruckMarkerMap.forEach {
                 val taskOperator = it.value as TaskOperator
                 if (taskOperator.tasksId == newTaskOperator.tasksId) {
@@ -1248,7 +1273,7 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
                     }
                     return@forEach
                 }
-            }
+
         }
 
         if (movingFoodTruckMarker == null) {
@@ -1367,7 +1392,9 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
                 viewModel.getCurrentTaskDirection(
                     newTaskOperator.tasksId,
                     newLatLng.latitude,
-                    newLatLng.longitude
+                    newLatLng.longitude,
+                    latparkingspace,
+                    lonparkingspace
                 )
         } else {
             if (previousLatLngFromServer == newLatLng) return

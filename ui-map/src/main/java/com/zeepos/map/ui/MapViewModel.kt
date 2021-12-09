@@ -53,10 +53,10 @@ class MapViewModel @Inject constructor(
     val parkingScheduleObs: MutableLiveData<List<ParkingSchedule>> = MutableLiveData()
     val merchantScheduleObs: MutableLiveData<List<Schedule>> = MutableLiveData()
 
-    fun getCurrentTaskDirection(taskId: Long, latitude: Double, longitude: Double) {
+    fun getCurrentTaskDirection(taskId: Long, latitude: Double, longitude: Double,latparkingspace:Double,lonparkingspace:Double) {
         val disposable =
             requestDirectionUseCase.execute(
-                RequestDirectionUseCase.Params(taskId, latitude, longitude)
+                RequestDirectionUseCase.Params(taskId, latitude, longitude,latparkingspace,lonparkingspace  )
             )
                 .subscribe({
                     viewEventObservable.value = MapViewEvent.ShowPath(it)
@@ -66,9 +66,9 @@ class MapViewModel @Inject constructor(
         addDisposable(disposable)
     }
 
-    fun requestDirection(taskId: Long, currentLat: Double, currentLng: Double) {
+    fun requestDirection(taskId: Long, currentLat: Double, currentLng: Double,latparkingspace:Double,lonparkingspace:Double) {
         val disposable = requestDirectionUseCase.execute(
-            RequestDirectionUseCase.Params(taskId, currentLat, currentLng)
+            RequestDirectionUseCase.Params(taskId, currentLat, currentLng,latparkingspace,lonparkingspace)
         )
             .subscribe({
                 viewEventObservable.value = MapViewEvent.ShowPath(it)
@@ -338,8 +338,10 @@ class MapViewModel @Inject constructor(
         addDisposable(disposable)
     }
 
-    fun updateCurrentFoodTruckPosition(taskId: Long, currentLat: Double, currentLng: Double) {
-        val taskOperator = taskOperatorRepo.get(taskId)
+    fun updateCurrentFoodTruckPosition(taskId: Long, currentLat: Double, currentLng: Double,latparkingspace: Double,lonparkingspace: Double) {
+        val taskOperator = TaskOperator()
+        taskOperator.lonParkingSpace = latparkingspace
+        taskOperator.lonParkingSpace = lonparkingspace
 
         taskOperator?.let {
             val mapData = MapData(

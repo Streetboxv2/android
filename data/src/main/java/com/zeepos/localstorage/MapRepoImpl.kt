@@ -188,8 +188,11 @@ class MapRepoImpl @Inject constructor(
 
     override fun getFoodTruckDirection(params: RequestDirectionUseCase.Params): Observable<MapData> {
 
-        val taskOperator = taskOperatorRepo.get(params.taskId)
-            ?: return Observable.error(Throwable(ConstVar.DATA_NULL))
+//        val taskOperator = taskOperatorRepo.get(params.taskId)
+//            ?: return Observable.error(Throwable(ConstVar.DATA_NULL))
+        val taskOperator = TaskOperator()
+        taskOperator.latParkingSpace = params.latparkingspace
+        taskOperator.lonParkingSpace = params.lonparkingspace
 
         return getGoogleMapDirection(
             params.currentLat, params.currentLng,

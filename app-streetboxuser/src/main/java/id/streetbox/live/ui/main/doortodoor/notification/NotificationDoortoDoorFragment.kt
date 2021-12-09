@@ -77,6 +77,7 @@ class NotificationDoortoDoorFragment : BaseFragment<DoortoDoorViewEvent, DoortoD
 
     override fun onResume() {
         super.onResume()
+        showLoading()
         viewModel.callGetListNotif()
     }
 

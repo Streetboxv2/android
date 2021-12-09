@@ -370,7 +370,7 @@ class NotificationDoortoDoorMapsActivity :
             })
     }
 
-    fun addPolyline(list: MutableList<LatLng>) {
+ /*   fun addPolyline(list: MutableList<LatLng>) {
         for (z in 0 until list.size - 1) {
             val src: LatLng = list[z]
             val dest: LatLng = list[z + 1]
@@ -385,6 +385,6 @@ class NotificationDoortoDoorMapsActivity :
             googleMap!!.addPolyline(polylineOptions)
         }
     }
-
+*/
 
 }

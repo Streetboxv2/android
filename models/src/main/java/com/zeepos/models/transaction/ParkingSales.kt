@@ -30,6 +30,7 @@ class ParkingSales {
     var description: String? = ConstVar.EMPTY_STRING
     var latitude: Double = 0.0
     var longitude: Double = 0.0
+    var isTracking: Boolean = false
     var price: Double = 0.0
     var subtotal: Double = 0.0
     var businessDate: Long = 0L

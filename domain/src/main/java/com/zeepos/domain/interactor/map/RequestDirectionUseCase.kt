@@ -21,6 +21,8 @@ class RequestDirectionUseCase @Inject constructor(
     data class Params(
         val taskId: Long,
         val currentLat: Double,
-        val currentLng: Double
+        val currentLng: Double,
+        val latparkingspace:Double,
+        val lonparkingspace:Double
     )
 }
