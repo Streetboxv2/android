@@ -50,15 +50,19 @@ import com.zeepos.models.ConstVar
 import com.zeepos.models.entities.MapData
 import com.zeepos.models.master.FoodTruck
 import com.zeepos.models.master.ParkingSpace
+import com.zeepos.models.response.ResponseDirectionsMaps
 import com.zeepos.models.transaction.TaskOperator
 import com.zeepos.ui_base.ui.BaseActivity
 import com.zeepos.ui_base.views.GlideApp
 import com.zeepos.utilities.SharedPreferenceUtil
+import com.zeepos.utilities.hideView
+import com.zeepos.utilities.showView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_maps.*
+import okhttp3.OkHttpClient
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -74,6 +78,7 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
     var distance: String? = ""
 
     var latLng: LatLng? = null
+    var listlatlng:MutableList<LatLng> = ArrayList()
 
     @Inject
     lateinit var mapUiEvent: MapUiEvent
@@ -107,8 +112,7 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
             scheduleDate: String = ConstVar.EMPTY_STRING,
             parkingSpaceName: String = ConstVar.EMPTY_STRING,
             types: String = ConstVar.EMPTY_STRING,
-            latParkingSpace:Double = 0.0,
-            lonParkingSpace:Double = 0.0,
+            latLng:MutableList<LatLng> = ArrayList(),
             bundle: Bundle? = null
         ): Intent {
             val intent = Intent(context, MapActivity::class.java)
@@ -121,9 +125,9 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
             intent.putExtra("endDate", endDate)
             intent.putExtra("scheduleDate", scheduleDate)
             intent.putExtra("parkingSpaceName", parkingSpaceName)
+            intent.putParcelableArrayListExtra("listlatlng",ArrayList(latLng))
             intent.putExtra("types", types)
-            intent.putExtra("latparkingspace",latParkingSpace)
-            intent.putExtra("lonparkingspace",lonParkingSpace)
+
             if (bundle != null)
                 intent.putExtras(bundle)
             return intent
@@ -178,8 +182,9 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
         scheduleDate = intent.getStringExtra("scheduleDate")
         parkingspaceNameRegular = intent.getStringExtra("parkingSpaceName")
         types = intent.getStringExtra("types")
-        latparkingspace = intent.getDoubleExtra("latparkingspace",0.0)
-        lonparkingspace = intent.getDoubleExtra("lonparkingspace",0.0)
+        listlatlng = intent.getParcelableArrayListExtra("listlatlng")
+        latparkingspace = listlatlng[0].latitude
+        lonparkingspace = listlatlng[0].longitude
         Log.d("address", "" + address)
         Log.d("startdate", "" + startdate)
         Log.d("enddate", "" + enddate)
@@ -262,15 +267,7 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
             MapViewEvent.InformCabBooked -> informCabBooked()
             is MapViewEvent.ShowPath -> {
                 showPath(useCase.mapData)
-                if (!isTripEnd) {
-                    viewModel.updateCurrentFoodTruckPosition(
-                        taskId,
-                        currentLatLng!!.latitude!!,
-                        currentLatLng!!.longitude!!,
-                        latparkingspace,
-                        lonparkingspace
-                    )
-                }
+
             }
             is MapViewEvent.UpdateFoodTruckLocation ->{
                 updateFoodTruckLocation(useCase.mapData)
@@ -772,6 +769,21 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
         googleMap.isMyLocationEnabled = true
     }
 
+    fun addPolyline(list: MutableList<LatLng>) {
+        for (z in 0 until list.size - 1) {
+            val src: LatLng = list[z]
+            val dest: LatLng = list[z + 1]
+
+            val polylineOptions = PolylineOptions()
+            polylineOptions.color(Color.BLACK)
+            polylineOptions.width(5f)
+            polylineOptions.add(
+                LatLng(src.latitude, src.longitude),
+                LatLng(dest.latitude, dest.longitude)
+            )
+            googleMap!!.addPolyline(polylineOptions)
+        }
+    }
     private fun initLocation() {
         setCurrentLocationAsPickUp()
 //        enableMyLocationOnMap()
@@ -782,13 +794,15 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
             latLng = it
             when (mapType) {
                 ConstVar.MAP_TYPE_DIRECTION -> {
-                    viewModel.requestDirection(
-                        taskId,
-                        it.latitude,
-                        it.longitude,
-                        latparkingspace ,
-                        lonparkingspace
-                    )
+                    addPolyline(listlatlng)
+
+//                    viewModel.requestDirection(
+//                        taskId,
+//                        it.latitude,
+//                        it.longitude,
+//                        latparkingspace ,
+//                        lonparkingspace
+//                    )
 
 
 
@@ -1211,7 +1225,9 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
         statusTextView.text = getString(R.string.your_cab_is_booked)
     }
 
+
     private fun showPath(mapData: MapData) {
+
         val latLngList = arrayListOf<LatLng>()
         val builder = LatLngBounds.Builder()
         for (latLngData in mapData.latLngList) {

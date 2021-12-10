@@ -17,14 +17,20 @@ import androidx.core.content.ContextCompat
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.zeepos.models.ConstVar
 import com.zeepos.streetbox.R
 import com.zeepos.streetbox.ui.main.MainActivity
+import com.zeepos.streetbox.ui.operator.main.OperatorFTActivity
+import com.zeepos.utilities.SharedPreferenceUtil
 import org.json.JSONObject
 
 class MyFirebaseMessagingServiceFoodTruck : FirebaseMessagingService() {
 
     val TAG = "Service"
     var notificationChannel = "com.zeepos.streetbox"
+
+    private val app_type:String =  SharedPreferenceUtil.getString(this, ConstVar.APP_TYPE, ConstVar.EMPTY_STRING)
+            ?: ConstVar.EMPTY_STRING
 
     override fun onNewToken(token: String) {
         Log.d("respon Tag", "toke refress :  $token")
@@ -52,10 +58,14 @@ class MyFirebaseMessagingServiceFoodTruck : FirebaseMessagingService() {
     private fun sendNotification(title: String, body: String) {
         val mNotificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        val qIntent = Intent(this, MainActivity::class.java)
-            .putExtra("typeNotif", "listnotif")
-//            .putExtra("key", remoteMessage.data["typeNotif"])
+        var qIntent = Intent()
+        if(app_type == ConstVar.APP_MERCHANT) {
+           qIntent = Intent(this, MainActivity::class.java)
+               .putExtra("typeNotif", "listnotif")
+        }else{
+             qIntent = Intent(this, OperatorFTActivity::class.java)
+                .putExtra("typeNotifOperator", "listnotif")
+        }
 
 
         val contentIntentQuest = PendingIntent.getActivity(

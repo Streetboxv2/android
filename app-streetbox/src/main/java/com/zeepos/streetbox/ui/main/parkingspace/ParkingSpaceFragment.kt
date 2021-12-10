@@ -126,7 +126,6 @@ class ParkingSpaceFragment : BaseFragment<ParkingSpaceViewEvent, ParkingSpaceVie
                         parkingSpaceAdapter.data.clear()
                     }
 
-                    parkingSpaceAdapter.data.clear()
                     parkingSpaceAdapter.addData(useCase.data)
                     parkingSpaceAdapter.loadMoreModule.loadMoreComplete()
                 } else {

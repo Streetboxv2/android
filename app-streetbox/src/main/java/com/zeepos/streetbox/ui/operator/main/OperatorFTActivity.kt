@@ -15,6 +15,8 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.*
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import com.zeepos.models.ConstVar
 import com.zeepos.streetbox.R
 import com.zeepos.streetbox.ui.main.myparkingspace.MyParkingSpaceFragment
@@ -33,6 +35,7 @@ class OperatorFTActivity : BaseActivity<OperatorFTViewEvent, OperatorFTViewModel
     private var latitude: Double? = null
     private var longitude: Double? = null
     private var isFlag: Boolean? = null
+    var typeNotifOperator: String? = null
     override fun initResourceLayout(): Int {
         return R.layout.operator_ft_activity
     }
@@ -42,11 +45,30 @@ class OperatorFTActivity : BaseActivity<OperatorFTViewEvent, OperatorFTViewModel
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         viewModel.checkStatusShiftIn()
         getLastLocation()
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w("TAG TOKEN", "getInstanceId failed", task.exception)
+                    return@OnCompleteListener
+                }
+                // Get new Instance ID token
+                val token = task.result?.token
+                // Log and toast
 
+                Log.d("TAG", token)
+
+                viewModel.sendToken(token!!)
+            })
+        typeNotifOperator = intent.getStringExtra("typeNotifOperator")
 
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
+        if(typeNotifOperator!=null) {
+            startActivity(OperatorMainActivity.getIntent(this,
+                latitude!!, longitude!!,0)
+            )
+        }
         toolbar.setNavigationOnClickListener{
             logout()
         }

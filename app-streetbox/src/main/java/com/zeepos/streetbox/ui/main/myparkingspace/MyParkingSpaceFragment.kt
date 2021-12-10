@@ -43,8 +43,12 @@ class MyParkingSpaceFragment : BaseFragment<MyParkingSpaceViewEvent, MyParkingSp
             ViewModelProvider(this, viewModeFactory).get(MyParkingSpaceViewModel::class.java)
         myParkingSpaceAdapter = MyParkingSpaceAdapter()
 //        viewModel.getParkingSales()//if use cache uncomment this
-        viewModel.getParkingSalesCloud(true)
 
+    }
+
+    override fun onResume() {
+        viewModel.getParkingSalesCloud(true)
+        super.onResume()
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
@@ -166,23 +170,22 @@ class MyParkingSpaceFragment : BaseFragment<MyParkingSpaceViewEvent, MyParkingSp
         when (useCase) {
             is MyParkingSpaceViewEvent.GetAllParkingSalesSuccess -> {
                 if (useCase.data.isNotEmpty()) {
-                    viewModel.getAllOperator()
+
                     if (swipe_refresh.isRefreshing) {
                         myParkingSpaceAdapter.data.clear()
-                        swipe_refresh.isRefreshing = false
                     }
 
 
 //                    myParkingSpaceAdapter.addData(useCase.data)
                     myParkingSpaceAdapter.setList(useCase.data)//currently api not support load more
-                    myParkingSpaceAdapter.loadMoreModule.loadMoreComplete()
-//                    myParkingSpaceAdapter.loadMoreModule.loadMoreEnd()
+                    myParkingSpaceAdapter.loadMoreModule.loadMoreEnd()
+                    viewModel.getAllOperator()
                 } else {
                     myParkingSpaceAdapter.loadMoreModule.loadMoreEnd()
                 }
 
                 swipe_refresh.isRefreshing = false
-                dismissLoading()
+//                dismissLoading()
             }
             is MyParkingSpaceViewEvent.GetAllParkingSpaceFailed -> {
                 myParkingSpaceAdapter.loadMoreModule.loadMoreFail()

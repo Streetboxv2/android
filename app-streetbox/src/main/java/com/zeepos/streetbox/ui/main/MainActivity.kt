@@ -35,6 +35,7 @@ class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
         return R.layout.activity_main
     }
 
+
     override fun init() {
         FirebaseInstanceId.getInstance().instanceId
             .addOnCompleteListener(OnCompleteListener { task ->

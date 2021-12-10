@@ -1,9 +1,12 @@
 package com.zeepos.streetbox.ui.operator.main
 
+import android.util.Log
 import com.zeepos.domain.interactor.CheckStatusShiftUseCase
+import com.zeepos.domain.interactor.SendTokenUseCase
 import com.zeepos.domain.interactor.ShiftUseCase
 import com.zeepos.domain.interactor.operator.GetTaskOperatorUseCase
 import com.zeepos.domain.repository.LocalPreferencesRepository
+import com.zeepos.models.ConstVar
 import com.zeepos.models.entities.None
 import com.zeepos.models.entities.ResponseApi
 import com.zeepos.models.master.Shift
@@ -14,7 +17,8 @@ class OperatorFTViewModel @Inject constructor(
     private val getTaskOperatorUseCase: GetTaskOperatorUseCase,
     private val shiftUseCase: ShiftUseCase,
     private val checkStatusShiftUseCase: CheckStatusShiftUseCase,
-    private val localPreferencesRepository: LocalPreferencesRepository
+    private val localPreferencesRepository: LocalPreferencesRepository,
+    private val sendTokenUseCase: SendTokenUseCase
 
     ) : BaseViewModel<OperatorFTViewEvent>() {
     fun getTaskOperator(userId: Long) {
@@ -29,6 +33,20 @@ class OperatorFTViewModel @Inject constructor(
         addDisposable(operatorDisposable)
     }
 
+    fun sendToken(token: String) {
+        val disposable = sendTokenUseCase.execute(
+            SendTokenUseCase.Params(
+                token
+            )
+        )
+            .subscribe({
+                Log.d(ConstVar.TAG, "Send Token success!")
+            }, {
+                it.printStackTrace()
+            })
+
+        addDisposable(disposable)
+    }
     fun shiftInOperatorTask() {
         addDisposable(
             shiftUseCase.execute(None())

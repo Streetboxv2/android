@@ -19,22 +19,26 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.model.LatLng
 import com.zeepos.map.ui.MapActivity
 import com.zeepos.models.ConstVar
+import com.zeepos.models.response.ResponseDirectionsMaps
 import com.zeepos.models.transaction.TaskOperator
+import com.zeepos.networkmaps.ApiClientMaps
 import com.zeepos.streetbox.R
 import com.zeepos.streetbox.ui.operator.main.OperatorFTActivity
 import com.zeepos.streetbox.ui.operator.main.OperatorMainActivity
 import com.zeepos.streetbox.worker.LocationUpdateWorker
 import com.zeepos.ui_base.ui.BaseFragment
 import com.zeepos.ui_login.LoginActivity
-import com.zeepos.utilities.DateTimeUtil
-import com.zeepos.utilities.PermissionUtils
-import com.zeepos.utilities.SharedPreferenceUtil
+import com.zeepos.utilities.*
 import kotlinx.android.synthetic.main.operator_task_fragment.*
 import kotlinx.android.synthetic.main.operator_task_fragment.swipe_refresh
 import kotlinx.android.synthetic.main.parkingspace_fragment.*
 import kotlinx.android.synthetic.main.parkingspace_fragment.rcv
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 class OperatorTaskFragment : BaseFragment<OperatorTaskViewEvent, OperatorTaskViewModel>() {
 
@@ -56,6 +60,7 @@ class OperatorTaskFragment : BaseFragment<OperatorTaskViewEvent, OperatorTaskVie
     private var customerName: String = ConstVar.EMPTY_STRING
     private var types: String = ConstVar.EMPTY_STRING
     private var parkingSpace: String = ConstVar.EMPTY_STRING
+    private var listLatLng:MutableList<LatLng> = ArrayList()
 
     override fun initResourceLayout(): Int {
         return R.layout.operator_task_fragment
@@ -198,7 +203,11 @@ class OperatorTaskFragment : BaseFragment<OperatorTaskViewEvent, OperatorTaskVie
                     goToMap()
                 }else{
                     viewModel.taskOnGoing(parkingOperatorId!!)
-                    goToMap()
+                    var origin:String = ""
+                    var destination:String = ""
+                    origin = "${currentLatLng!!.latitude},${currentLatLng!!.longitude}"
+                    destination = "${latParkingSpace},${lonParkingSpace}"
+                    hitGoogleMap(origin,destination)
                 }
             }
         }
@@ -210,15 +219,15 @@ class OperatorTaskFragment : BaseFragment<OperatorTaskViewEvent, OperatorTaskVie
             is OperatorTaskViewEvent.GetAllParkingOperatorTaskSuccess -> {
                 if (swipe_refresh.isRefreshing) {
                     operatorTaskAdapter.data.clear()
-                    swipe_refresh.isRefreshing = false
+
                 }
-                operatorTaskAdapter.addData(useCase.data)
+                operatorTaskAdapter.setList(useCase.data)
                 if (useCase.data.size == 0) {
                     btn_shiftout.visibility = View.VISIBLE
                     checkDataSizeEmpty("")
                 }
 
-
+                swipe_refresh.isRefreshing = false
                 dismissLoading()
             }
             is OperatorTaskViewEvent.GetAllParkingOperatorTaskFailed -> {
@@ -292,6 +301,37 @@ class OperatorTaskFragment : BaseFragment<OperatorTaskViewEvent, OperatorTaskVie
 
     }
 
+    fun hitGoogleMap(origin: String, destination: String){
+            showLoading()
+            ApiClientMaps
+                .ApiClient()
+                ?.requestDirectionMaps(
+                    origin,
+                    destination,
+                    context!!.getString(R.string.google_api_key)
+                )
+                ?.enqueue(object : Callback<ResponseDirectionsMaps?> {
+                    override fun onResponse(
+                        call: Call<ResponseDirectionsMaps?>,
+                        response: Response<ResponseDirectionsMaps?>
+                    ) {
+                        dismissLoading()
+                        val responseDirectionsMaps = response.body()
+                        if (responseDirectionsMaps?.routes?.isNotEmpty()!!) {
+                            val list =
+                                MapUtils.decodePoly(responseDirectionsMaps!!.routes?.get(0)?.overviewPolyline?.points)
+                            listLatLng = list
+                        }
+                        goToMap()
+                    }
+
+                    override fun onFailure(call: Call<ResponseDirectionsMaps?>, t: Throwable) {
+                    }
+
+                })
+        }
+
+
     fun goToMap(){
         if(types == "REGULAR"){
             context?.let {
@@ -312,8 +352,7 @@ class OperatorTaskFragment : BaseFragment<OperatorTaskViewEvent, OperatorTaskVie
                     scheduleDate = scheduleDate!!,
                     parkingSpaceName = parkingSpaceName!!,
                     types = types,
-                    latParkingSpace = latParkingSpace,
-                    lonParkingSpace = lonParkingSpace
+                    latLng = listLatLng
                 )
             }
         )
