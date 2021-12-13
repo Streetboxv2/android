@@ -51,6 +51,9 @@ data class DataItemNotificationBlast(
     val ig_account: String? = null,
 
     @field:SerializedName("plat_no")
-    val platNomor: String? = null
+    val platNomor: String? = null,
+
+    @field:SerializedName("expire_minute")
+    val expireMinutes: Int? = null,
 
 ) : Parcelable

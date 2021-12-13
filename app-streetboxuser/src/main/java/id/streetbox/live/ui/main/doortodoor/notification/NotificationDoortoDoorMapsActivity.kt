@@ -223,35 +223,39 @@ class NotificationDoortoDoorMapsActivity :
     }
 
     private fun moveCamera(latLng: LatLng?) {
-        googleMap?.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+        googleMap!!.animateCamera(
+            CameraUpdateFactory.newLatLngZoom(latLng, 19.0f
+            )
+        )
+//        googleMap?.moveCamera(CameraUpdateFactory.newLatLng(latLng))
     }
 
     private fun showPath(latLngData: LatLng?,latLngData1: LatLng?) {
         val latLngList = arrayListOf<LatLng>()
-        val builder = LatLngBounds.Builder()
+//        val builder = LatLngBounds.Builder()
 //        for (latLngData in latLngList.latLngList) {
             val latLng = LatLng(latLngData!!.latitude, latLngData.longitude)
           val latLngDest = LatLng(latLngData1!!.latitude, latLngData1.longitude)
-            builder.include(latLng)
+//            builder.include(latLng)
             latLngList.add(latLng)
         latLngList.add(latLngDest)
 //        }
-        val bounds = builder.build()
+//        val bounds = builder.build()
 
         moveCamera(latLngList[0])
-        googleMapFoodTruck?.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 2))
-        val polylineOptions = PolylineOptions()
-        polylineOptions.color(Color.GRAY)
-        polylineOptions.width(5f)
-        polylineOptions.addAll(latLngList)
-        val greyPolyLine = googleMapFoodTruck!!.addPolyline(polylineOptions)
-        greyPolyLineList.add(greyPolyLine)
+//        googleMapFoodTruck?.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 2))
+//        val polylineOptions = PolylineOptions()
+//        polylineOptions.color(Color.GRAY)
+//        polylineOptions.width(5f)
+//        polylineOptions.addAll(latLngList)
+//        val greyPolyLine = googleMapFoodTruck!!.addPolyline(polylineOptions)
+//        greyPolyLineList.add(greyPolyLine)
 
-        val blackPolylineOptions = PolylineOptions()
-        blackPolylineOptions.width(5f)
-        blackPolylineOptions.color(Color.parseColor("#EF6623"))
-        val orangePolyLine = googleMapFoodTruck!!.addPolyline(blackPolylineOptions)
-        orangePolyLineList.add(orangePolyLine)
+//        val blackPolylineOptions = PolylineOptions()
+//        blackPolylineOptions.width(5f)
+//        blackPolylineOptions.color(Color.parseColor("#EF6623"))
+//        val orangePolyLine = googleMapFoodTruck!!.addPolyline(blackPolylineOptions)
+//        orangePolyLineList.add(orangePolyLine)
 
         originMarker = addOriginPickupMarkerAndGet(latLngList[0])
         originMarker!!.setAnchor(0.5f, 0.5f)
@@ -259,13 +263,13 @@ class NotificationDoortoDoorMapsActivity :
         destinationMarker = addOriginDestinationMarkerAndGet(latLngList[latLngList.size - 1])
         destinationMarker?.setAnchor(0.5f, 0.5f)
 
-        val polylineAnimator = AnimationUtils.polyLineAnimator()
-        polylineAnimator.addUpdateListener { valueAnimator ->
-            val percentValue = (valueAnimator.animatedValue as Int)
-            val index = (greyPolyLine.points!!.size * (percentValue / 100.0f)).toInt()
-            orangePolyLine.points = greyPolyLine.points!!.subList(0, index)
-        }
-        polylineAnimator.start()
+//        val polylineAnimator = AnimationUtils.polyLineAnimator()
+//        polylineAnimator.addUpdateListener { valueAnimator ->
+//            val percentValue = (valueAnimator.animatedValue as Int)
+//            val index = (greyPolyLine.points!!.size * (percentValue / 100.0f)).toInt()
+//            orangePolyLine.points = greyPolyLine.points!!.subList(0, index)
+//        }
+//        polylineAnimator.start()
     }
 
     private fun addOriginPickupMarkerAndGet(latLng: LatLng): Marker {
@@ -358,7 +362,7 @@ class NotificationDoortoDoorMapsActivity :
                         tvDurationEstimate.text =
                             "Jarak tempuh Anda $getKm dengan estimasi sampai $getDuration"
 
-//                        addPolyline(list)
+                        addPolyline(list)
                     } else {
                         hideView(tvDurationEstimate)
                     }
@@ -370,7 +374,7 @@ class NotificationDoortoDoorMapsActivity :
             })
     }
 
- /*   fun addPolyline(list: MutableList<LatLng>) {
+    fun addPolyline(list: MutableList<LatLng>) {
         for (z in 0 until list.size - 1) {
             val src: LatLng = list[z]
             val dest: LatLng = list[z + 1]
@@ -385,6 +389,6 @@ class NotificationDoortoDoorMapsActivity :
             googleMap!!.addPolyline(polylineOptions)
         }
     }
-*/
+
 
 }

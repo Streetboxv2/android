@@ -140,8 +140,14 @@ class AcceptedCallMapsActivity : BaseActivity<BroadCastViewEvent, BroadCastViewM
             ).title("Lokasi Anda")
         )
 
-        googleMap!!.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-        googleMap!!.animateCamera(CameraUpdateFactory.zoomTo(14f))
+
+        //Move the camera to the user's location and zoom in!
+        googleMap!!.animateCamera(
+            CameraUpdateFactory.newLatLngZoom(latLng, 19.0f
+            )
+        )
+//        googleMap!!.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+//        googleMap!!.animateCamera(CameraUpdateFactory.zoomTo(14f))
 
         val origin =
             "${dataItemGetStatusCallFoodTruck?.latitudeFoodtruck},${dataItemGetStatusCallFoodTruck?.longitudeFoodtruck}"
