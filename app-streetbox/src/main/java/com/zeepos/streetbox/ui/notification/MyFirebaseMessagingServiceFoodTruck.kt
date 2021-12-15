@@ -56,7 +56,6 @@ class MyFirebaseMessagingServiceFoodTruck : FirebaseMessagingService() {
     private fun sendNotification(title: String, body: String) {
         val mNotificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        var qIntent = Intent()
 //        if(app_type == ConstVar.APP_MERCHANT) {
 //           qIntent = Intent(this, MainActivity::class.java)
 //               .putExtra("typeNotif", "listnotif")
@@ -64,7 +63,8 @@ class MyFirebaseMessagingServiceFoodTruck : FirebaseMessagingService() {
 //             qIntent = Intent(this, OperatorFTActivity::class.java)
 //                .putExtra("typeNotifOperator", "listnotif")
 //        }
-
+       val  qIntent = Intent(this, OperatorFTActivity::class.java)
+                .putExtra("typeNotifOperator", "listnotif")
 
         val contentIntentQuest = PendingIntent.getActivity(
             this, 0,
