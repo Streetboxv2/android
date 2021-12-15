@@ -1,8 +1,10 @@
 package com.streetbox.pos.ui.receipts
 
+import com.zeepos.models.entities.OrderHistory
 import com.zeepos.models.master.Tax
 import com.zeepos.models.transaction.AllTransaction
 import com.zeepos.models.transaction.Order
+import com.zeepos.models.transaction.ProductSales
 import com.zeepos.models.transaction.Trx
 import com.zeepos.ui_base.ui.BaseViewEvent
 
@@ -14,4 +16,6 @@ sealed class ReceiptViewEvent : BaseViewEvent {
     data class GetHistorySuccess(val orderList: List<Trx>) : ReceiptViewEvent()
     data class VoidOrderSuccess(val message: String) : ReceiptViewEvent()
     data class GetTaxSuccess(val tax: Tax) : ReceiptViewEvent()
+    data class GetDetailOrderHistorySuccess(val data: AllTransaction) : ReceiptViewEvent()
+    data class GetDetailOrderHistoryFailed(val errorMessage: String) : ReceiptViewEvent()
 }

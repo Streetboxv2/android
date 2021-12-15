@@ -327,12 +327,12 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
                 }
 
 
-//                try {
-//                    viewModel.getAllTransaction(startDate, endDate, "")
-//                } catch(e: Exception) {
-//                    e.printStackTrace()
-//                    viewModel.getRecentOrder()
-//                }
+                try {
+                    viewModel.getAllTransaction(startDate, endDate, "")
+                } catch(e: Exception) {
+                    e.printStackTrace()
+                    viewModel.getRecentOrder()
+                }
 
             }
             is CheckoutDetailViewEvent.GetAllTransactionSuccess -> {

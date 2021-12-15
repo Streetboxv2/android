@@ -8,9 +8,7 @@ import com.zeepos.models.entities.OrderHistoryDetail
 import com.zeepos.models.factory.ObjectFactory
 import com.zeepos.models.master.FoodTruck
 import com.zeepos.models.master.User
-import com.zeepos.models.transaction.Order
-import com.zeepos.models.transaction.Order_
-import com.zeepos.models.transaction.TaxSales
+import com.zeepos.models.transaction.*
 import com.zeepos.remotestorage.RemoteService
 import com.zeepos.remotestorage.RetrofitException
 import com.zeepos.utilities.DateTimeUtil
@@ -152,6 +150,24 @@ class OrderRepoImpl @Inject internal constructor(
 
     override fun getOrder(uniqueId: String): Order? {
         return box.query().equal(Order_.uniqueId, uniqueId).build().findFirst()
+    }
+
+    override fun getOrderCloudPOS(trxId: String): Single<AllTransaction> {
+        val queryMap: HashMap<String, String> = hashMapOf()
+        queryMap["trxID"] = trxId
+        return service.getOrderHistoryPos(queryMap)
+            .onErrorResumeNext{
+                Single.error {
+                    RetrofitException.handleRetrofitException(it, retrofit)
+                }
+            }
+            .map {
+                if (it.isSuccess()) {
+                    val data = it.data
+                    return@map data
+                }
+                throw Exceptions.propagate(Throwable(ConstVar.DATA_NULL))
+            }
     }
 
     override fun getOrderCloud(page: Int, filter: String): Single<List<OrderHistory>> {

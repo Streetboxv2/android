@@ -316,6 +316,11 @@ interface RemoteService {
         @Path("trxid") trxId: String
     ):Single<ResponseApi<OrderHistoryDetail>>
 
+    @GET("/merchant/pos/getdetailtransaction")
+    fun getOrderHistoryPos(
+        @QueryMap query: Map<String, String>
+    ):Single<ResponseApi<AllTransaction>>
+
 
     @GET("consumer/home/visit-sales/detail/{merchantId}")
     fun getHomeVisitBookDate(

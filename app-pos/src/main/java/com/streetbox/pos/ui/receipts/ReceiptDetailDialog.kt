@@ -27,6 +27,7 @@ import com.dantsu.escposprinter.connection.DeviceConnection
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothConnection
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg
+import com.google.gson.Gson
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
@@ -43,9 +44,13 @@ import com.streetbox.pos.async.AsyncBluetoothEscPosPrint
 import com.streetbox.pos.async.AsyncEscPosPrinter
 import com.streetbox.pos.ui.main.MainActivity
 import com.zeepos.models.ConstVar
+import com.zeepos.models.master.FoodTruck
 import com.zeepos.models.master.Tax
 import com.zeepos.models.master.User
 import com.zeepos.models.transaction.Order
+import com.zeepos.models.transaction.OrderBill
+import com.zeepos.models.transaction.PaymentSales
+import com.zeepos.models.transaction.ProductSales
 import com.zeepos.ui_base.ui.BaseDialogFragment
 import com.zeepos.ui_base.views.GlideApp
 import com.zeepos.utilities.DateTimeUtil
@@ -56,12 +61,15 @@ import kotlinx.android.synthetic.main.footer_receipt_detail.*
 import kotlinx.android.synthetic.main.fragment_checkout_detail.*
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 /**
  * Created by Arif S. on 10/13/20
  */
 class  ReceiptDetailDialog : BaseDialogFragment() {
+    @Inject
+    lateinit var gson: Gson
 
     private lateinit var headerView: View
     private lateinit var footerView: View
@@ -86,10 +94,24 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
     private var qrCodeM:String = ""
     private var header:String=""
     private var type: Int = 0
-    private var typeTax:Int = 0
+    private var taxType:Int = 0
     private var taxName:String = ConstVar.EMPTY_STRING
     private var isActive:Boolean = false
+    private var trxId:String = ""
+    private var billNo:String = ConstVar.EMPTY_STRING
+    private var typePayment:String = ConstVar.EMPTY_STRING
     var calculate:Double = 0.0
+    var productMenu:List<ProductSales> = ArrayList()
+    var orderBillMenu:List<OrderBill> = ArrayList()
+    var createdAt:Long = 0
+    var dateCreated:Long = 0
+    var typeOrder:String = ConstVar.EMPTY_STRING
+    var grandTotal:Double = 0.0
+    var orderNo:String = ""
+    var businessDate:Long = 0
+
+    private lateinit var productSales: ProductSales
+
 
 
 
@@ -114,36 +136,44 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
         adapter = ReceiptDetailAdapter()
         initList()
 
-        viewModel?.orderObs?.observe(this, Observer {
-            order = it
-            if(order!=null) {
-                setData(order)
-            }
-
-        })
 
         val bundle = arguments
+
         if (bundle != null) {
             val orderUniqueId = bundle.getString("orderUniqueId") ?: ""
             taxName = bundle.getString("taxName","")
-            typeTax = bundle.getInt("taxType",0)
-
+            taxType = bundle.getInt("taxType",0)
+            trxId = bundle.getString("trxId",trxId)
+            isActive = bundle.getBoolean("isActive",false)
+            billNo = bundle.getString("billNo",ConstVar.EMPTY_STRING)
+            typePayment = bundle.getString("typePayment",ConstVar.EMPTY_STRING)
+            typeOrder = bundle.getString("typeOrder",ConstVar.EMPTY_STRING)
+            createdAt = bundle.getLong("createdAt",0)
+            dateCreated = bundle.getLong("dateCreated",0)
+            grandTotal = bundle.getDouble("grandTotal",0.0)
+            orderNo = bundle.getString("noAntrian",ConstVar.EMPTY_STRING)
+            businessDate = bundle.getLong("businessDate",0)
+            gson = Gson()
+            val orderList = bundle.getString("order",ConstVar.EMPTY_STRING)
+             val productList = bundle.getString("productSales")
+             val orderBill = bundle.getString("orderBill")
             isActive = bundle.getBoolean("isActive",isActive)
-            if (orderUniqueId.isNotEmpty()) {
-                viewModel?.getOrder(orderUniqueId)
-            }
+
+             productMenu = gson.fromJson(productList, Array<ProductSales>::class.java).toList()
+             orderBillMenu = gson.fromJson(orderBill,Array<OrderBill>::class.java).toList()
+
+//            if (orderUniqueId.isNotEmpty()) {
+//                viewModel?.getOrder(orderUniqueId)
+//            }
         }
 
         user = viewModel!!.getProfileMerchantLocal()
 
         userOperator = viewModel!!.getOperator()
 
-
-        viewModel?.tax?.observe(this, Observer {
-            tax = it
+        setData()
 
 
-        })
 
 //        checkPrinter()
 
@@ -171,8 +201,8 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
 
         btn_print.setOnClickListener {
 //            printSomePrintable()
-            if(order.typeOrder.equals("Online")){
-                order.createdAt = order.dateCreated
+            if(typeOrder.equals("Online")){
+                createdAt = dateCreated
             }
             formatReceipt()
             printBluetooth()
@@ -185,7 +215,7 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
         }
 
         btn_void.setOnClickListener {
-            viewModel!!.voidOrder(order.trxId)
+            viewModel!!.voidOrder(trxId)
             Handler().postDelayed({
                 startActivity(context?.let { it1 -> ReceiptActivity.getIntent(it1) })
             }, 1000)
@@ -195,31 +225,26 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
 
     }
 
-    private fun setData(order: Order) {
-        if(order.typeOrder.equals("Online")){
-            order.createdAt = order.dateCreated
+    private fun setData() {
+        if(typeOrder.equals("Online")){
+            createdAt = dateCreated
         }
-        if (order.trxId.isNotEmpty()) {
-            tv_no_trx?.text = "No Transaksi #${order.trxId}"
+        if (trxId.isNotEmpty()) {
+            tv_no_trx?.text = "No Transaksi #${trxId}"
         } else {
-            tv_no_trx?.text = "No Transaksi #${order.billNo}"
+            tv_no_trx?.text = "No Transaksi #${billNo}"
         }
-        Log.d(ConstVar.TAG, "order test")
-        Log.d(ConstVar.TAG, order.grandTotal.toString())
+
 //        Log.d(ConstVar.TAG, order?.orderBill[0]?.billNo)
 //        Log.d(ConstVar.TAG, order?.trx[0]?.trxId)
-        tv_status_label?.text = "Status: ${order?.orderBill[0]?.billNo}"
-        if(order.taxSales[0].isActive == true){
-            if(order.taxSales[0].type == 0){
-                order.grandTotal =  order.grandTotal
-            }
-        }
-        tv_grand_total?.text = "${NumberUtil.formatToStringWithoutDecimal(order.grandTotal)}"
-        order.productSales[0].subtotal = order.grandTotal
-        if(order!=null) {
-            adapter.setList(order.productSales)
-            setFooterData(order)
-        }
+        tv_status_label?.text = "Status: ${orderBillMenu[0]?.billNo}"
+
+        tv_grand_total?.text = "${NumberUtil.formatToStringWithoutDecimal(grandTotal)}"
+        productMenu[0]!!.subtotal = grandTotal
+//        if(order!=null) {
+            adapter.setList(productMenu)
+            setFooterData()
+//        }
     }
 
     override fun onResume() {
@@ -260,7 +285,7 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
         return footerView
     }
 
-    private fun setFooterData(order: Order) {
+    private fun setFooterData() {
         val tvSubtotal = footerView.findViewById<TextView>(R.id.tv_subtotals)
         val tvTotalTax = footerView.findViewById<TextView>(R.id.tv_total_tax)
         val tvTaxLabel = footerView.findViewById<TextView>(R.id.tv_tax_label)
@@ -269,31 +294,29 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
         val tvTrxDateLabel = footerView.findViewById<TextView>(R.id.tv_trx_date_label)
         val ivQR = footerView.findViewById<ImageView>(R.id.iv_qr)
 
-        val orderBill = if (order.orderBill.isNotEmpty()) order.orderBill[0] else null
-        val taxSales = if (order.taxSales.isNotEmpty()) order.taxSales[0] else null
-        val paymentSales = if (order.paymentSales.isNotEmpty()) order.paymentSales[0] else null
 
-        val totalTax: Double = orderBill?.totalTax ?: 0.0
-        val subTotal: Double = order.grandTotal ?: 0.0
-        var totalPayment: Double = order.grandTotal ?: 0.0
-        val taxType = taxSales ?: 1
+
+        val totalTax: Double = orderBillMenu[0]?.totalTax ?: 0.0
+        val subTotal: Double = grandTotal ?: 0.0
+        var totalPayment: Double = grandTotal ?: 0.0
+
         val taxTypeDisplay =
             if (taxType == ConstVar.TAX_TYPE_EXCLUSIVE) ConstVar.TAX_TYPE_EXCLUSIVE_DISPLAY else ConstVar.TAX_TYPE_INCLUSIVE_DISPLAY
-        val paymentMethod = (paymentSales?.name ?: order?.typePayment ?: "-") + " - " + order?.typeOrder
-        if(order.typeOrder.equals("Online")){
-            order.createdAt = order.dateCreated
+        val paymentMethod = ( typePayment ?: "-") + " - " + typeOrder
+        if(typeOrder.equals("Online")){
+            createdAt = dateCreated
 
         }
 
-       calculate = order.orderBill[0].totalTax
-        val a:Double = order.orderBill[0].subTotal
+       calculate = orderBillMenu[0].totalTax
+        val a:Double = orderBillMenu[0].subTotal
         if(isActive == true) {
-            if (order.taxSales[0].type == 0) {
+            if (taxType == 0) {
                 tvTotalTax.text = "${NumberUtil.formatToStringWithoutDecimal(calculate)}"
                 tvTaxLabel.text = taxName + "(Excl)"
                 tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(subTotal - calculate )}"
                 tvTotalPayment.text = "${NumberUtil.formatToStringWithoutDecimal(totalPayment)}"
-            } else if (order.taxSales[0].type  == 1) {
+            } else if (taxType  == 1) {
                 tvTaxLabel.text = taxName + "(Incl)"
                 tvSubtotal.text = "${NumberUtil.formatToStringWithoutDecimal(subTotal)}"
                 tvTotalTax.text = "${NumberUtil.formatToStringWithoutDecimal(calculate)}"
@@ -314,10 +337,10 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
 
         tvTrxDateLabel.text = "${
             DateTimeUtil.getDateWithFormat(
-                order.businessDate,
+                businessDate,
                 "dd/MM/YYYY"
             )
-        } ${DateTimeUtil.getLocalDateWithFormat(order.createdAt, "HH:mm")}"
+        } ${DateTimeUtil.getLocalDateWithFormat(createdAt, "HH:mm")}"
 
 /*r
         if (totalTax <= 0) {
@@ -326,9 +349,9 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
         }b
 */
 
-        if (order.typePayment == "QRIS") {
+        if (typePayment == "QRIS") {
             var qrCode = "";
-            for (row in order.productSales) {
+            for (row in productMenu) {
                 if (row.qrCode != "") {
                     qrCode = row.qrCode
                 }
@@ -344,7 +367,7 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
             }
         }else {
             ivQR.visibility = View.GONE
-            if (order.typePayment.equals("CASH")) {
+            if (typePayment.equals("CASH")) {
                 btn_void.visibility = View.VISIBLE
             }
         }
@@ -354,41 +377,41 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
 
 
     fun formatReceipt(){
-        for (i in order.productSales.indices) {
+        for (i in productMenu.indices) {
 
             header = "[L]QTY ITEM[R]PRICE\n"
-            var productName = order.productSales[i].name
+            var productName = productMenu[i].name
             if (productName.length > 15) {
-                productName = order.productSales[i].name.substring(0,15) + "..."
+                productName = productMenu[i].name.substring(0,15) + "..."
             }
-            val disc = order.productSales[i].discount
+            val disc = productMenu[i].discount
             val discPrice =
-                (order.productSales[i].priceOriginal * order.productSales[i].discount / 100)
+                (productMenu[i].priceOriginal * productMenu[i].discount / 100)
             if(disc > 0) {
-                menuDisc += "[L]"+ order.productSales[i].qty+"   "+ productName + "[R]" + NumberUtil.formatToStringWithoutDecimal(
-                    order.productSales[i].price
+                menuDisc += "[L]"+ productMenu[i].qty+"   "+ productName + "[R]" + NumberUtil.formatToStringWithoutDecimal(
+                    productMenu[i].price
                 ) + "\n" +"[L]     discount " + NumberUtil.formatToStringWithoutDecimal(
                     discPrice)+"\n"
 
             }else{
-                menu += "[L]" + order.productSales[i].qty +" "+ productName  + "[R]" + NumberUtil.formatToStringWithoutDecimal(
-                    order.productSales[i].price
+                menu += "[L]" +productMenu[i].qty +" "+ productName  + "[R]" + NumberUtil.formatToStringWithoutDecimal(
+                    productMenu[i].price
                 ) + "\n"
             }
         }
-        val taxSales = if (order.taxSales.isNotEmpty()) order.taxSales[0] else null
-        val taxName = taxSales?.name ?: ConstVar.EMPTY_STRING
-        val grandTotal = order.grandTotal
-        calculate =  order.orderBill[0].totalTax
-        if(taxSales == null || order.taxSales[0].isActive == false){
-            subTot =  "[L]<b>Subtotal </b>" +"[R]"+ NumberUtil.formatToStringWithoutDecimal(order.grandTotal) + "\n"
+
+
+        val grandTotal = grandTotal
+        calculate = orderBillMenu[0].totalTax
+        if( isActive == false){
+            subTot =  "[L]<b>Subtotal </b>" +"[R]"+ NumberUtil.formatToStringWithoutDecimal(grandTotal) + "\n"
             grandTot = "[L]<b>Grand Total </b>" + "[R]" +  NumberUtil.formatToStringWithoutDecimal(
-                order.grandTotal)+"\n"
+                grandTotal)+"\n"
 
-        }else if( order.taxSales[0].isActive == true){
+        }else if( isActive == true){
 
 
-            if (order.taxSales[0].type == 1) {
+            if (taxType == 1) {
                 taxTotal =
                     "[L]<b>" + taxName+ "(Incl)"+ "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
                         calculate
@@ -397,9 +420,9 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
                     "[L]<b>Grand Total </b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
                        grandTotal
                     ) + "\n"
-                subTot =  "[L]<b>Subtotal </b>" +"[R]"+ NumberUtil.formatToStringWithoutDecimal(order.grandTotal) + "\n"
+                subTot =  "[L]<b>Subtotal </b>" +"[R]"+ NumberUtil.formatToStringWithoutDecimal(grandTotal) + "\n"
 
-            }else if (order.taxSales[0].type == 0){
+            }else if (taxType == 0){
                 taxTotal =
                     "[L]<b>" + taxName +"(Excl)"+ "</b>" + "[R]" + NumberUtil.formatToStringWithoutDecimal(
                         calculate
@@ -449,16 +472,15 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
      */
     @SuppressLint("SimpleDateFormat")
     fun getAsyncEscPosPrinter(printerConnection: DeviceConnection?): AsyncEscPosPrinter? {
-        val taxSales = if (order.taxSales.isNotEmpty()) order.taxSales[0] else null
 
-        val taxName = taxSales?.name ?: ConstVar.EMPTY_STRING
 
+        val productSales = productMenu
         val username =
             userOperator!!.userName!!.substring(0, userOperator!!.userName!!.indexOf("@"));
 
         val address: String = userOperator?.address.toString()
-        val disc = order.productSales[0].discount
-        val discPrice = (order.productSales[0].priceOriginal * order.productSales[0].discount / 100)
+        val disc = productMenu[0].discount
+        val discPrice = (productMenu[0].priceOriginal * productMenu[0].discount / 100)
 
         val format =
             SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm")
@@ -474,9 +496,9 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
             ) + "</img>\n";
         }
 
-        if (order.typePayment == "QRIS") {
+        if (typePayment == "QRIS") {
             var qrCode = "";
-            for (row in order.productSales) {
+            for (row in productSales) {
                 if (row.qrCode != "") {
                     qrCode = row.qrCode
                 }
@@ -502,10 +524,10 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
                     "[L]\n" +
                     "[C]"+address+"\n" +
                     "[C]Employee : "+username+"\n" +
-                    "[C]" + format.format(order.createdAt) + "\n" +
+                    "[C]" + format.format(createdAt) + "\n" +
                     "[C]================================\n"+
-                    "[L]No Antrian: "+order.orderNo+"\n"+
-                    "[L]Transaction ID : " + order.trxId+"\n"+
+                    "[L]No Antrian: "+orderNo+"\n"+
+                    "[L]Transaction ID : " + trxId+"\n"+
                     "[C]================================\n"+
                     header+
                     menu +
@@ -516,8 +538,8 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
                     grandTot +
                     "[C]================================\n"+
                     qrCodeM +
-                    "[L]<b>Payment Method</b>" + "[R]" + order.typePayment + "\n" +
-                    "[L]<b>Type</b>" + "[R]" + order.typeOrder + "\n" +
+                    "[L]<b>Payment Method</b>" + "[R]" + typePayment + "\n" +
+                    "[L]<b>Type</b>" + "[R]" + typeOrder + "\n" +
                     "[C]================================\n"+
                     "[C]THANK YOU\n" +
                     "[C]\n" +

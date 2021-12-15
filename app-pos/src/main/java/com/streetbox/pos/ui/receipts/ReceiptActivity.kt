@@ -13,9 +13,14 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.gson.Gson
 import com.streetbox.pos.R
 import com.streetbox.pos.ui.main.MainActivity
+import com.zeepos.models.ConstVar
 import com.zeepos.models.transaction.Order
+import com.zeepos.models.transaction.PaymentSales
+import com.zeepos.models.transaction.ProductSales
+import com.zeepos.models.transaction.TaxSales
 import com.zeepos.ui_base.ui.BaseActivity
 import com.zeepos.utilities.DateTimeUtil
 import io.objectbox.BoxStore.context
@@ -31,6 +36,7 @@ import kotlinx.android.synthetic.main.fragment_payment_sales.sv_search
 import kotlinx.android.synthetic.main.setting_list.toolbar
 import java.util.*
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 /**
  * Created by Arif S. on 10/7/20
@@ -40,6 +46,15 @@ class ReceiptActivity : BaseActivity<ReceiptViewEvent, ReceiptViewModel>() {
     private var startDate: Long = DateTimeUtil.getCurrentLocalDateWithoutTime()
     private var endDate: Long = DateTimeUtil.getCurrentLocalDateWithoutTime()
     private val compositeDisposable = CompositeDisposable()
+    val dialog = ReceiptDetailDialog()
+    val bundle = Bundle()
+    var order = Order()
+    var taxSales:TaxSales? = null
+    var productSalesList:List<ProductSales> = ArrayList()
+    var paymentSalesList:List<PaymentSales> = ArrayList()
+    var billNo:String = ConstVar.EMPTY_STRING
+    @Inject
+    lateinit var gson: Gson
 
     override fun initResourceLayout(): Int {
         return R.layout.activity_receipt
@@ -110,6 +125,32 @@ class ReceiptActivity : BaseActivity<ReceiptViewEvent, ReceiptViewModel>() {
                 ).show()
 //                viewModel.getAllTransaction(startDate, endDate, "")
             }
+
+            is ReceiptViewEvent.GetDetailOrderHistorySuccess -> {
+                val taxType = useCase.data.taxSales!![0].type
+                val taxName = useCase.data.taxSales!![0].name
+                val isActvie = useCase.data.taxSales!![0].isActive
+                val productSales = useCase.data.productSales
+                val orderBill = useCase.data.orderBills
+
+                bundle.putString("orderUniqueId", order.uniqueId)
+                bundle.putString("trxId", order.trxId)
+                bundle.putString("orderBill", gson.toJson(orderBill))
+                bundle.putInt("taxType", taxType)
+                bundle.putString("productSales",gson.toJson(productSales))
+                bundle.putString("taxName",taxName)
+                bundle.putString("typeOrder",order.typeOrder)
+                bundle.putLong("createdAt",order.createdAt)
+                bundle.putLong("dateCreated",order.dateCreated)
+                bundle.putDouble("grandTotal",order.grandTotal)
+                bundle.putString("noAntrian",order.orderNo)
+                bundle.putLong("businessDate",order.businessDate)
+                bundle.putBoolean("isActive",isActvie)
+                bundle.putString("billNo",billNo)
+                bundle.putString("typePayment",order.typePayment)
+                dialog.arguments = bundle
+                showDialog(dialog)
+            }
         }
     }
 
@@ -129,17 +170,17 @@ class ReceiptActivity : BaseActivity<ReceiptViewEvent, ReceiptViewModel>() {
         }
 
         receiptAdapter.setOnItemClickListener { adapter, view, position ->
-            val order = adapter.getItem(position) as Order
-            val dialog = ReceiptDetailDialog()
-            val bundle = Bundle()
+             order = adapter.getItem(position) as Order
+//            val dialog = ReceiptDetailDialog()
+//            val bundle = Bundle()
 
-
-            bundle.putString("orderUniqueId", order.uniqueId)
-            bundle.putInt("taxType", order.taxSales[0].type)
-            bundle.putString("taxName",order.taxSales[0].name)
-            bundle.putBoolean("isActive",order.taxSales[0].isActive)
-            dialog.arguments = bundle
-            showDialog(dialog)
+                viewModel.getDetailOrderHistoryPOS(order.trxId)
+//            bundle.putString("orderUniqueId", order.uniqueId)
+//            bundle.putInt("taxType", order.taxSales[0].type)
+//            bundle.putString("taxName",order.taxSales[0].name)
+//            bundle.putBoolean("isActive",order.taxSales[0].isActive)
+//            dialog.arguments = bundle
+//            showDialog(dialog)
         }
     }
 
