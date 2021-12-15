@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.SystemClock
 import android.view.animation.Interpolator
 import android.view.animation.LinearInterpolator
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
@@ -27,6 +28,8 @@ import kotlinx.android.synthetic.main.activity_notification_doorto_door_maps.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
 class NotificationDoortoDoorMapsActivity :
     BaseActivity<DoortoDoorViewEvent, DoortoDoorViewModel>() {
@@ -103,10 +106,32 @@ class NotificationDoortoDoorMapsActivity :
 
     }
 
+    fun isExpired(): Boolean {
+        if (dataItemNotificationBlast?.expireMinutes != null) {
+            val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+            val d1 = input.parse(dataItemNotificationBlast!!.createdAt)
+            val cal: Calendar = Calendar.getInstance()
+            cal.setTime(d1)
+            cal.add(Calendar.MINUTE, dataItemNotificationBlast!!.expireMinutes!!)
+            val newTime: String = input.format(cal.getTime())
+            val d2 = input.parse(newTime)
+            val cal2: Calendar = Calendar.getInstance()
+            val currentTime: String = input.format(cal2.getTime())
+            val d3 = input.parse(currentTime)
+
+            return d3 >= d2
+        }
+        return false
+    }
+
     private fun initOnClick() {
         btnCallFoodTruck.setOnClickListener {
-            showLoading()
-            viewModel.callReqFoodTruck(dataItemNotificationBlast?.id.toString())
+            if (!isExpired()) {
+                showLoading()
+                viewModel.callReqFoodTruck(dataItemNotificationBlast?.id.toString())
+            } else {
+                Toast.makeText(this,"EXPIRED", Toast.LENGTH_LONG).show()
+            }
         }
 
         imgBackMaps.setOnClickListener {
@@ -145,7 +170,7 @@ class NotificationDoortoDoorMapsActivity :
             this
         )
 
-        if (!dataItemNotificationBlast!!.status.equals("ONGOING")) {
+        if (!dataItemNotificationBlast!!.status.equals("ONGOING") || isExpired()) {
             hideView(btnCallFoodTruck)
         } else showView(btnCallFoodTruck)
     }
