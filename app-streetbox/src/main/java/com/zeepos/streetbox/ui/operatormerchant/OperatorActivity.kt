@@ -93,7 +93,8 @@ class OperatorActivity : BaseActivity<OperatorViewEvent, OperatorViewModel>() {
                         viewModel.createOperatorTaskHomeVisit(trxVisitSalesId,foodTruck)
 
                     }else{
-                        selectDate(foodTruck)
+//                        selectDate(foodTruck)
+                        viewModel.createOperatorTask(parkingSlotSalesId, foodTruck, "")
                     }
 
                 }

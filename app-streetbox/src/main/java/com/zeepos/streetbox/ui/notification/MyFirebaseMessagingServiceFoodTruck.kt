@@ -29,8 +29,6 @@ class MyFirebaseMessagingServiceFoodTruck : FirebaseMessagingService() {
     val TAG = "Service"
     var notificationChannel = "com.zeepos.streetbox"
 
-    private val app_type:String =  SharedPreferenceUtil.getString(this, ConstVar.APP_TYPE, ConstVar.EMPTY_STRING)
-            ?: ConstVar.EMPTY_STRING
 
     override fun onNewToken(token: String) {
         Log.d("respon Tag", "toke refress :  $token")
@@ -59,13 +57,13 @@ class MyFirebaseMessagingServiceFoodTruck : FirebaseMessagingService() {
         val mNotificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         var qIntent = Intent()
-        if(app_type == ConstVar.APP_MERCHANT) {
-           qIntent = Intent(this, MainActivity::class.java)
-               .putExtra("typeNotif", "listnotif")
-        }else{
-             qIntent = Intent(this, OperatorFTActivity::class.java)
-                .putExtra("typeNotifOperator", "listnotif")
-        }
+//        if(app_type == ConstVar.APP_MERCHANT) {
+//           qIntent = Intent(this, MainActivity::class.java)
+//               .putExtra("typeNotif", "listnotif")
+//        }else{
+//             qIntent = Intent(this, OperatorFTActivity::class.java)
+//                .putExtra("typeNotifOperator", "listnotif")
+//        }
 
 
         val contentIntentQuest = PendingIntent.getActivity(
