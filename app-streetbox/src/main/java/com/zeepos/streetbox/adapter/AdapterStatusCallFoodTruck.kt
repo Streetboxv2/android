@@ -22,7 +22,7 @@ class AdapterStatusCallFoodTruck(
             itemView.apply {
                 tvNameStatusCall.text = dataItemGetStatusCallFoodTruck.name
                 tvDateStatusCall.ConvertDateCreateAt(dataItemGetStatusCallFoodTruck.createdAt.toString())
-                tvQueueFoodTruck.text = dataItemGetStatusCallFoodTruck.queueNo.toString()
+                tvQueueFoodTruck.text = (position + 1).toString() // dataItemGetStatusCallFoodTruck.queueNo.toString()
 
                 imgStatusCallFoodTruck.loadImageUrl(
                     ConstVar.PATH_IMAGE + dataItemGetStatusCallFoodTruck.profile_picture,

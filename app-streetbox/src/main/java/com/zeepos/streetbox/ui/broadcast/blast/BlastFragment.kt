@@ -359,10 +359,14 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
             }
 
             override fun onFinish() {
-                timerCountDown = dataCooldown!!
-                tvTimerBlast.text = "Blast Now"
-                hideView(multipleLoader)
-                showView(imgRippleLoader)
+                if (isClickAutoBlast) {
+                    hitApiBlastNotif()
+                } else {
+                    timerCountDown = dataCooldown!!
+                    tvTimerBlast.text = "Blast Now"
+                    hideView(multipleLoader)
+                    showView(imgRippleLoader)
+                }
             }
         }
         countDownTimer?.start()
@@ -373,7 +377,9 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
             override fun onTick(millisUntilFinished: Long) {
                 timeRunningAuto = millisUntilFinished
                 tvTimerAutoBlast?.text = hmsTimeFormatter(millisUntilFinished)
-                progressBarCircle.progress = (millisUntilFinished / 1000).toInt()
+                if (progressBarCircle != null) {
+                    progressBarCircle.progress = (millisUntilFinished / 1000).toInt()
+                }
                 println("respon Test countd auto")
             }
 
