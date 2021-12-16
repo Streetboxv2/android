@@ -45,7 +45,7 @@ class MyFirebaseMessagingServiceFoodTruck : FirebaseMessagingService() {
             val jsonObject = JSONObject(paramsObject as Map<String, String>)
             println("respon Json Notif $jsonObject")
             val body = jsonObject.get("body")
-             title = ""+jsonObject.get("title")
+             title = jsonObject.get("title").toString()
             println("respon Json Notif body $body")
 
             sendNotification(title = title.toString(), body = body.toString())
@@ -57,7 +57,7 @@ class MyFirebaseMessagingServiceFoodTruck : FirebaseMessagingService() {
         val mNotificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         var qIntent = Intent()
-        if(title.equals("New Online Order")) {
+        if(title.equals("New Home Visit Order")) {
            qIntent = Intent(this, MainActivity::class.java)
                .putExtra("typeNotif", "listnotif")
         }else{

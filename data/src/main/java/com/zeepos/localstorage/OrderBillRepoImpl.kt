@@ -51,12 +51,15 @@ class OrderBillRepoImpl @Inject constructor(
 
             var subtotal = 0.0
             var totalTax = 0.0
+            var grandTotalqty = 0
 
             for (productSales in orderBill.productSales) {
                 subtotal += productSales.price * productSales.qty
+                grandTotalqty += productSales.qty
             }
 
             orderBill.subTotal = subtotal
+            order.grandTotalqty = grandTotalqty
 
             if (tax != null) {
                 totalTax = subtotal * tax.amount / 100

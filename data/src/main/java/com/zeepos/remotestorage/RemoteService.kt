@@ -155,7 +155,7 @@ interface RemoteService {
     @POST("/merchant/registration-token/{token}")
     fun sendToken(@Path("token") token: String): Completable
 
-    @POST("/merchant/registration-token/{token}")
+    @POST("/consumer/registration-token-foodtruck/{token}")
     fun sendTokenFoodtruck(@Path("token") token: String): Completable
 
     @POST("/consumer/registration-token/{token}")

@@ -80,11 +80,8 @@ class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
 
     override fun onViewReady(savedInstanceState: Bundle?) {
         if(typeNotif!= null ){
-            if(typeNotif!!.equals("New Online Order")) {
                 addFragment(MyParkingSpaceFragment.newInstance(), R.id.fl_content)
-            }else{
-                startActivity(OperatorFTActivity.getIntent(this))
-            }
+
         }else{
             addFragment(ParkingSpaceFragment.newInstance(), R.id.fl_content)
         }
