@@ -28,7 +28,7 @@ class MyFirebaseMessagingServiceFoodTruck : FirebaseMessagingService() {
 
     val TAG = "Service"
     var notificationChannel = "com.zeepos.streetbox"
-
+    var title:String = ""
 
     override fun onNewToken(token: String) {
         Log.d("respon Tag", "toke refress :  $token")
@@ -45,7 +45,7 @@ class MyFirebaseMessagingServiceFoodTruck : FirebaseMessagingService() {
             val jsonObject = JSONObject(paramsObject as Map<String, String>)
             println("respon Json Notif $jsonObject")
             val body = jsonObject.get("body")
-            val title = jsonObject.get("title")
+             title = ""+jsonObject.get("title")
             println("respon Json Notif body $body")
 
             sendNotification(title = title.toString(), body = body.toString())
@@ -56,15 +56,15 @@ class MyFirebaseMessagingServiceFoodTruck : FirebaseMessagingService() {
     private fun sendNotification(title: String, body: String) {
         val mNotificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-//        if(app_type == ConstVar.APP_MERCHANT) {
-//           qIntent = Intent(this, MainActivity::class.java)
-//               .putExtra("typeNotif", "listnotif")
-//        }else{
-//             qIntent = Intent(this, OperatorFTActivity::class.java)
-//                .putExtra("typeNotifOperator", "listnotif")
-//        }
-       val  qIntent = Intent(this, OperatorFTActivity::class.java)
+        var qIntent = Intent()
+        if(title.equals("New Online Order")) {
+           qIntent = Intent(this, MainActivity::class.java)
+               .putExtra("typeNotif", "listnotif")
+        }else{
+             qIntent = Intent(this, OperatorFTActivity::class.java)
                 .putExtra("typeNotifOperator", "listnotif")
+        }
+
 
         val contentIntentQuest = PendingIntent.getActivity(
             this, 0,

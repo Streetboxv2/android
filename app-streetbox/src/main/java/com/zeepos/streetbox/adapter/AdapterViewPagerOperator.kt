@@ -18,14 +18,15 @@ class AdapterViewPagerOperator(
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
+
             0 -> {
-                BlastFragment()
-            }
-            1 -> {
                 OperatorTaskFragment()
             }
-            2 -> {
+            1 -> {
                 OperatorFreeTaskFragment()
+            }
+            2 -> {
+                BlastFragment()
             }
             else -> {
                 throw IllegalArgumentException("")

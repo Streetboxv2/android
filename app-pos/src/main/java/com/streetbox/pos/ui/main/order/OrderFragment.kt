@@ -31,6 +31,7 @@ class  OrderFragment : BaseFragment<OrderViewEvent, OrderViewModel>() {
     private lateinit var orderAdapter: OrderAdapter
     private var mainViewModel: MainViewModel? = null
     private lateinit var order: Order
+    var countOrder:Int = 0
 
     override fun initResourceLayout(): Int {
         return R.layout.fragment_order
@@ -52,11 +53,13 @@ class  OrderFragment : BaseFragment<OrderViewEvent, OrderViewModel>() {
                 orderAdapter.addData(it)
             }
             else {
-
+                countOrder = 0
+                order.productSales.forEach {
+                    countOrder =+ it.qty
+                }
                 orderAdapter.setList(order.productSales)
             }
 
-            tv_total_order_count?.text = "Count : ${orderAdapter.itemCount}"
 
             viewModel.calculateOrder(order)
 
@@ -72,9 +75,10 @@ class  OrderFragment : BaseFragment<OrderViewEvent, OrderViewModel>() {
             }
 
             tv_no_order?.text = "No. Order : ${it.orderNo}"
-            tv_total_order_count?.text = "Count : ${orderAdapter.itemCount}"
-            tv_grand_total?.text = "0"
 
+            tv_grand_total?.text = "0"
+            val count =+ countOrder
+            tv_total_order_count?.text = "Count : ${count}"
         })
 
     }

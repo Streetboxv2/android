@@ -355,7 +355,7 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
 
             }
             is CheckoutDetailViewEvent.GetQRCodePaymentFailed -> {
-                Toast.makeText(context, "Failed", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Maaf pembayaran kurang dari total pesanan ", Toast.LENGTH_LONG).show()
             }
         }
     }

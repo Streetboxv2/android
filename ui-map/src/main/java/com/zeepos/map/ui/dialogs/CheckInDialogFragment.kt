@@ -182,7 +182,6 @@ class CheckInDialogFragment : BottomSheetDialogFragment(), View.OnClickListener 
             et_notes.visibility = View.GONE
             tv_name.setText(parkingspaceName)
             tv_address.setText(address)
-            txt_startdatetime.setText(dateSchedule)
 
             btn_checkin.setOnClickListener {
                 if (types == "HOMEVISIT") {

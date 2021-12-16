@@ -261,7 +261,7 @@ class OperatorActivity : BaseActivity<OperatorViewEvent, OperatorViewModel>() {
             "OK"
         ) { p0, _ ->
             p0?.dismiss()
-            finish()
+
         }
         alertDialogBuilder.show()
     }
