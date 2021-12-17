@@ -40,16 +40,16 @@ class MyFirebaseMessagingServiceFoodTruck : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        if (remoteMessage.data.isNotEmpty()) {
-            val paramsObject = remoteMessage.data
-            val jsonObject = JSONObject(paramsObject as Map<String, String>)
-            println("respon Json Notif $jsonObject")
-            val body = jsonObject.get("body")
-             title = jsonObject.get("title").toString()
-            println("respon Json Notif body $body")
+//        if (remoteMessage.data.isNotEmpty()) {
+//            val paramsObject = remoteMessage.data
+//            val jsonObject = JSONObject(paramsObject as Map<String, String>)
+//            println("respon Json Notif $jsonObject")
+//            val body = jsonObject.get("body")
+//             title = jsonObject.get("title").toString()
+//            println("respon Json Notif body $body")
 
-            sendNotification(title = title.toString(), body = body.toString())
-        }
+            sendNotification(title = remoteMessage.notification!!.title!!, body = remoteMessage.notification!!.body!!)
+//        }
     }
 
 
