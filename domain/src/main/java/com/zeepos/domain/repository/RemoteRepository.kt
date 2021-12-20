@@ -33,6 +33,7 @@ interface RemoteRepository {
     fun getProfileMerchant(): Single<ResponseApi<User>>
     fun getPaymentSales(): Single<ResponseApi<List<PaymentSales>>>
     fun sendDataToken(params: SendTokenUseCase.Params): Completable
+    fun sendDataTokenFoodtruck(params: SendTokenFoodtruckUseCase.Params): Completable
     fun sendDataTokenUser(params: SendTokenUser.Params): Completable
     fun getReceiveMessage(): Completable
     fun getDataTermCondition(): Single<ResponseTermCondition>

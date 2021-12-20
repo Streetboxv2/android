@@ -34,7 +34,7 @@
             android:src="@drawable/location"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_name"
-            android:visibility="visible"/>
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_address"
@@ -56,7 +56,7 @@
             android:layout_width="@dimen/_15sdp"
             android:layout_height="@dimen/_15sdp"
             android:src="@drawable/time"
-            android:layout_marginTop="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_30sdp"
             app:layout_constraintTop_toBottomOf="@+id/iv_address"
             app:layout_constraintStart_toStartOf="parent"
             android:visibility="visible"/>
@@ -65,28 +65,27 @@
             android:id="@+id/txt_startdatetime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:fontFamily="@font/poppins_regular"
             android:text="Today 08:00 - 22:00"
             android:textColor="@color/color_text_regular"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_address"
-            app:layout_constraintStart_toEndOf="@+id/iv_startdatetime"
+            android:layout_marginLeft="@dimen/_5sdp"
+            app:layout_constraintTop_toBottomOf="@+id/txt_address"
             app:layout_constraintTop_toTopOf="@+id/iv_startdatetime"
-            app:layout_constraintVertical_bias="0.087" />
+            app:layout_constraintStart_toEndOf="@+id/iv_startdatetime"
+            tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/txt_notes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:fontFamily="@font/poppins_bold"
             android:text="Address"
             android:textColor="@color/color_text_regular"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_startdatetime"
-            app:layout_constraintTop_toTopOf="@+id/iv_startdatetime"
-            app:layout_constraintVertical_bias="0.025"
-            tools:ignore="MissingConstraints"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:layout_constraintVertical_bias="0.155"
+            tools:ignore="MissingConstraints" />
 
         <EditText
             android:id="@+id/et_notes"
@@ -114,6 +113,7 @@
             android:background="@drawable/button_live_tracking_bg"
             android:textColor="@color/white"
             android:layout_marginTop="@dimen/_20sdp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_notes" />
@@ -127,9 +127,10 @@
             android:visibility="visible"
             android:background="@drawable/button_live_tracking_bg"
             android:textColor="@color/white"
-            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_100sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+
             app:layout_constraintTop_toBottomOf="@+id/et_notes" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

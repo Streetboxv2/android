@@ -2,6 +2,7 @@ package com.zeepos.streetbox.ui.operator.main
 
 import android.util.Log
 import com.zeepos.domain.interactor.CheckStatusShiftUseCase
+import com.zeepos.domain.interactor.SendTokenFoodtruckUseCase
 import com.zeepos.domain.interactor.SendTokenUseCase
 import com.zeepos.domain.interactor.ShiftUseCase
 import com.zeepos.domain.interactor.operator.GetTaskOperatorUseCase
@@ -18,7 +19,7 @@ class OperatorFTViewModel @Inject constructor(
     private val shiftUseCase: ShiftUseCase,
     private val checkStatusShiftUseCase: CheckStatusShiftUseCase,
     private val localPreferencesRepository: LocalPreferencesRepository,
-    private val sendTokenUseCase: SendTokenUseCase
+    private val sendTokenFoodtruckUseCase: SendTokenFoodtruckUseCase
 
     ) : BaseViewModel<OperatorFTViewEvent>() {
     fun getTaskOperator(userId: Long) {
@@ -33,14 +34,14 @@ class OperatorFTViewModel @Inject constructor(
         addDisposable(operatorDisposable)
     }
 
-    fun sendToken(token: String) {
-        val disposable = sendTokenUseCase.execute(
-            SendTokenUseCase.Params(
+    fun sendTokenFoodtruck(token: String) {
+        val disposable = sendTokenFoodtruckUseCase.execute(
+            SendTokenFoodtruckUseCase.Params(
                 token
             )
         )
             .subscribe({
-                Log.d(ConstVar.TAG, "Send Token success!")
+                Log.d(ConstVar.TAG, "Send Token Foodtruck success!")
             }, {
                 it.printStackTrace()
             })

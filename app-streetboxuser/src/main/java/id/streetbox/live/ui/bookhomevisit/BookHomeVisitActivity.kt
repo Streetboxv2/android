@@ -42,6 +42,7 @@ import com.zeepos.utilities.NumberUtil
 import com.zeepos.utilities.showToastExt
 import com.zeepos.utilities.showView
 import id.streetbox.live.R
+import id.streetbox.live.ui.main.MainActivity
 import id.streetbox.live.ui.main.address.AddressDeliveryActivity
 import id.streetbox.live.ui.orderreview.homevisit.BookHomeVisitOrderActivity
 import kotlinx.android.synthetic.main.activity_book_home_visit.*
@@ -408,7 +409,8 @@ class BookHomeVisitActivity : BaseActivity<BookHomeVisitViewEvent, BookHomeVisit
             }
             is BookHomeVisitViewEvent.GetFoodTruckHomeVisitDataFailed -> {
                 dismissLoading()
-                Toast.makeText(this, useCase.errorMessage, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "HomeVisit Is Not Available", Toast.LENGTH_SHORT).show()
+                startActivity(MainActivity.getIntent(this))
             }
 
             is BookHomeVisitViewEvent.OnCalculateDone -> {

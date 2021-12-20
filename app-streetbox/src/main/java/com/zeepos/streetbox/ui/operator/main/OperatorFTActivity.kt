@@ -57,7 +57,7 @@ class OperatorFTActivity : BaseActivity<OperatorFTViewEvent, OperatorFTViewModel
 
                 Log.d("TAG", token)
 
-                viewModel.sendToken(token!!)
+                viewModel.sendTokenFoodtruck(token!!)
             })
         typeNotifOperator = intent.getStringExtra("typeNotifOperator")
 

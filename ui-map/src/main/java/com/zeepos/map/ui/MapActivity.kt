@@ -183,8 +183,10 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
         parkingspaceNameRegular = intent.getStringExtra("parkingSpaceName")
         types = intent.getStringExtra("types")
         listlatlng = intent.getParcelableArrayListExtra("listlatlng")
-        latparkingspace = listlatlng[0].latitude
-        lonparkingspace = listlatlng[0].longitude
+        if(listlatlng.size > 0) {
+            latparkingspace = listlatlng[0].latitude
+            lonparkingspace = listlatlng[0].longitude
+        }
         Log.d("address", "" + address)
         Log.d("startdate", "" + startdate)
         Log.d("enddate", "" + enddate)
@@ -796,13 +798,13 @@ class MapActivity : BaseActivity<MapViewEvent, MapViewModel>(), CheckInListener,
                 ConstVar.MAP_TYPE_DIRECTION -> {
                     addPolyline(listlatlng)
 
-//                    viewModel.requestDirection(
-//                        taskId,
-//                        it.latitude,
-//                        it.longitude,
-//                        latparkingspace ,
-//                        lonparkingspace
-//                    )
+                    viewModel.requestDirection(
+                        taskId,
+                        it.latitude,
+                        it.longitude,
+                        latparkingspace ,
+                        lonparkingspace
+                    )
 
 
 

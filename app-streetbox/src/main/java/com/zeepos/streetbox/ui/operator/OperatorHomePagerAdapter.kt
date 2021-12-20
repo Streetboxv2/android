@@ -15,10 +15,11 @@ class OperatorHomePagerAdapter(fm: FragmentManager, data: Bundle) :
     private var data: Bundle? = data
     override fun getItem(position: Int): Fragment =
         when (position) {
-            0 -> BlastFragment.newInstance("", "")
-            1 -> OperatorTaskFragment.getInstance(data)
-            2 -> OperatorFreeTaskFragment.newInstance()
-            else -> BlastFragment.newInstance("","")
+
+            0 -> OperatorTaskFragment.getInstance(data)
+            1 -> OperatorFreeTaskFragment.newInstance()
+
+            else -> OperatorTaskFragment.getInstance(data)
         }
 
     override fun setPrimaryItem(container: ViewGroup, position: Int, `object`: Any) {
@@ -27,9 +28,10 @@ class OperatorHomePagerAdapter(fm: FragmentManager, data: Bundle) :
 
     override fun getPageTitle(position: Int): CharSequence? {
         when (position) {
-            0 -> return "Broadcast"
-            1 -> return "Reguler Task"
-            2 -> return "Free Task"
+
+            0 -> return "Reguler Task"
+            1 -> return "Free Task"
+
         }
 
         return "Reguler Task"

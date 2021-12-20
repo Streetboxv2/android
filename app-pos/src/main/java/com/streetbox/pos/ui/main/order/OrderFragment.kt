@@ -31,6 +31,7 @@ class  OrderFragment : BaseFragment<OrderViewEvent, OrderViewModel>() {
     private lateinit var orderAdapter: OrderAdapter
     private var mainViewModel: MainViewModel? = null
     private lateinit var order: Order
+    var countOrder:Int = -1
 
     override fun initResourceLayout(): Int {
         return R.layout.fragment_order
@@ -56,7 +57,6 @@ class  OrderFragment : BaseFragment<OrderViewEvent, OrderViewModel>() {
                 orderAdapter.setList(order.productSales)
             }
 
-            tv_total_order_count?.text = "Count : ${orderAdapter.itemCount}"
 
             viewModel.calculateOrder(order)
 
@@ -72,8 +72,9 @@ class  OrderFragment : BaseFragment<OrderViewEvent, OrderViewModel>() {
             }
 
             tv_no_order?.text = "No. Order : ${it.orderNo}"
-            tv_total_order_count?.text = "Count : ${orderAdapter.itemCount}"
+
             tv_grand_total?.text = "0"
+            val count =+ countOrder
 
         })
 
@@ -118,10 +119,11 @@ class  OrderFragment : BaseFragment<OrderViewEvent, OrderViewModel>() {
                     if(productSales.qty > 1 ) {
                         productSales.qty = productSales.qty - 1
                         viewModel.removeQtyProduct(productSales)
-
+                        order.grandTotalqty = order.grandTotalqty - productSales.qty
                         if (productSales.discount > 0){
 
                             val grandTotal = order.grandTotal - productSales.priceAfterDiscount
+
                             tv_grand_total.text = ""+NumberUtil.formatToStringWithoutDecimal(grandTotal)
                         }else{
                             val grandTotal = order.grandTotal - productSales.price
@@ -133,6 +135,7 @@ class  OrderFragment : BaseFragment<OrderViewEvent, OrderViewModel>() {
 
 
                     }else if(productSales.qty <2) {
+                        order.grandTotalqty = order.grandTotalqty - productSales.qty
                         orderAdapter.remove(productSales)
                         viewModel.removeProductSales(productSales)
                         if (productSales.discount > 0){
@@ -144,6 +147,7 @@ class  OrderFragment : BaseFragment<OrderViewEvent, OrderViewModel>() {
                             tv_grand_total.text = ""+NumberUtil.formatToStringWithoutDecimal(grandTotal)
                         }
                     }
+
                 }
             }
         }
@@ -162,15 +166,23 @@ class  OrderFragment : BaseFragment<OrderViewEvent, OrderViewModel>() {
                 this.order = orderBill.order.target//update order to get updated product sales
                 val grandTotal = NumberUtil.formatToStringWithoutDecimal(orderBill.subTotal)
                 tv_grand_total?.text = grandTotal
+
+                tv_total_order_count?.text = "Count : ${order.grandTotalqty}"
             }
             OrderViewEvent.OnRemoveProductSuccess -> {
-                tv_total_order_count?.text = "Count : ${orderAdapter.itemCount}"
+
                 viewModel.calculateOrder(order)
 //                orderAdapter.setList(order.productSales)
             }
             OrderViewEvent.OnRemoveProductQtySuccess -> {
+
                     viewModel.calculateOrder(order)
                     orderAdapter . setList (order.productSales)
+                order.productSales.forEach {
+                    countOrder =+ it.qty
+                }
+
+
         }
         }
     }

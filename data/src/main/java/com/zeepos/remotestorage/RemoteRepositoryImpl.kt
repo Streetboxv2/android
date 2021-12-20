@@ -351,6 +351,10 @@ class RemoteRepositoryImpl @Inject internal constructor(
         return service.sendToken(params.token)
     }
 
+    override fun sendDataTokenFoodtruck(params: SendTokenFoodtruckUseCase.Params): Completable {
+        return service.sendTokenFoodtruck(params.token)
+    }
+
     override fun sendDataTokenUser(params: SendTokenUser.Params): Completable {
         return service.sendTokenUser(params.token)
     }

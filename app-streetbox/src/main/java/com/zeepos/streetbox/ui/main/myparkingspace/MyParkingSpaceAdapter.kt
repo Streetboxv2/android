@@ -53,7 +53,6 @@ class MyParkingSpaceAdapter(data: MutableList<ParkingSales> = arrayListOf()) :
             tvPlatNo.text="B 8888 STB"
             tvPlatNo.text = item.platNo
             tvHomeVisit.visibility = View.VISIBLE
-            btnLiveMonitor.visibility = View.VISIBLE
             tvRating.visibility = View.GONE
             ivRating.visibility = View.GONE
            imageUrlPic = imageProfPic
@@ -67,7 +66,6 @@ class MyParkingSpaceAdapter(data: MutableList<ParkingSales> = arrayListOf()) :
             }
             tvPlatNo.visibility = View.INVISIBLE
             tvHomeVisit.visibility = View.VISIBLE
-            btnLiveMonitor.visibility = View.INVISIBLE
             tvRating.visibility = View.GONE
             ivRating.visibility = View.GONE
             imageUrlPic = imageProfPic
@@ -75,7 +73,7 @@ class MyParkingSpaceAdapter(data: MutableList<ParkingSales> = arrayListOf()) :
 
         } else if(item.trxVisitSalesId < 1 && item.tasksId > 0 ){
             if(item.isTracking == false){
-                btnLiveMonitor.visibility = View.GONE
+                btnLiveMonitor.visibility = View.INVISIBLE
             }else{
                 btnLiveMonitor.visibility = View.VISIBLE
             }
@@ -83,7 +81,6 @@ class MyParkingSpaceAdapter(data: MutableList<ParkingSales> = arrayListOf()) :
             tvPlatNo.text="B 8889 STB"
             tvPlatNo.text = item.platNo
             tvHomeVisit.visibility = View.GONE
-            btnLiveMonitor.visibility = View.VISIBLE
             tvRating.visibility = View.VISIBLE
             ivRating.visibility = View.VISIBLE
             tvDescription.visibility = View.VISIBLE

@@ -111,7 +111,7 @@ class CheckInDialogFragment : BottomSheetDialogFragment(), View.OnClickListener 
         }
 
         if (mapType == ConstVar.MAP_TYPE_FREE_TASK && isDrag == true) {
-            txt_notes.visibility = View.GONE
+            txt_notes.visibility = View.VISIBLE
             et_notes.visibility = View.VISIBLE
             btn_checkin.visibility = View.VISIBLE
             btn_setlocation.visibility = View.GONE
@@ -129,7 +129,7 @@ class CheckInDialogFragment : BottomSheetDialogFragment(), View.OnClickListener 
 
         if (mapType == ConstVar.MAP_TYPE_FREE_TASK && isDrag == false) {
             taskId = args!!.getLong("tasksId")
-            txt_notes.visibility = View.GONE
+            txt_notes.visibility = View.VISIBLE
             et_notes.visibility = View.VISIBLE
             btn_checkin.visibility = View.VISIBLE
             btn_setlocation.visibility = View.GONE
@@ -182,7 +182,6 @@ class CheckInDialogFragment : BottomSheetDialogFragment(), View.OnClickListener 
             et_notes.visibility = View.GONE
             tv_name.setText(parkingspaceName)
             tv_address.setText(address)
-            txt_startdatetime.setText(dateSchedule)
 
             btn_checkin.setOnClickListener {
                 if (types == "HOMEVISIT") {

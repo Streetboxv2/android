@@ -340,7 +340,7 @@ class MapViewModel @Inject constructor(
 
     fun updateCurrentFoodTruckPosition(taskId: Long, currentLat: Double, currentLng: Double,latparkingspace: Double,lonparkingspace: Double) {
         val taskOperator = TaskOperator()
-        taskOperator.lonParkingSpace = latparkingspace
+        taskOperator.latParkingSpace = latparkingspace
         taskOperator.lonParkingSpace = lonparkingspace
 
         taskOperator?.let {

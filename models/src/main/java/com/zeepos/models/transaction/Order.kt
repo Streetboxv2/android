@@ -25,6 +25,7 @@ class Order {
     var businessDate: Long = 0L
     var totalDiscount: Double = 0.0
     var grandTotal: Double = 0.0
+    var grandTotalqty:Int = 0
     var createdAt: Long = 0L
     var updatedAt: Long = 0L
     var no: Int = 0

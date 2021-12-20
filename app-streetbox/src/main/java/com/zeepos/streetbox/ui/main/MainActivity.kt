@@ -21,9 +21,13 @@ import com.zeepos.streetbox.ui.main.logs.LogFragment
 import com.zeepos.streetbox.ui.main.myparkingspace.MyParkingSpaceFragment
 import com.zeepos.streetbox.ui.main.parkingspace.ParkingSpaceFragment
 import com.zeepos.streetbox.ui.main.profile.ProfileFragment
+import com.zeepos.streetbox.ui.operator.main.OperatorFTActivity
+import com.zeepos.streetbox.ui.operatormerchant.OperatorActivity
 import com.zeepos.ui_base.ui.BaseActivity
 import com.zeepos.utilities.SharedPreferenceUtil
 import kotlinx.android.synthetic.main.activity_main.*
+import okhttp3.internal.trimSubstring
+import okio.utf8Size
 
 
 class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
@@ -75,8 +79,9 @@ class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
-        if(typeNotif!=null){
-            addFragment(MyParkingSpaceFragment.newInstance(), R.id.fl_content)
+        if(typeNotif!= null ){
+                addFragment(MyParkingSpaceFragment.newInstance(), R.id.fl_content)
+
         }else{
             addFragment(ParkingSpaceFragment.newInstance(), R.id.fl_content)
         }
