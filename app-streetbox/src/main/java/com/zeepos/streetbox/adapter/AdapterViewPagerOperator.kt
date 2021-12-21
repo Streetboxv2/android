@@ -25,9 +25,9 @@ class AdapterViewPagerOperator(
             1 -> {
                 OperatorFreeTaskFragment()
             }
-//            2 -> {
-//                BlastFragment()
-//            }
+            2 -> {
+                BlastFragment()
+            }
             else -> {
                 throw IllegalArgumentException("")
             }

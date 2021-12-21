@@ -45,25 +45,17 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        if (remoteMessage.data.isNotEmpty()) {
-            val paramsObject = remoteMessage.data
-            val jsonObject = JSONObject(paramsObject as Map<String, String>)
-            println("respon Json Notif $jsonObject")
-            val body = jsonObject.get("body")
-            val title = jsonObject.get("title")
-            println("respon Json Notif body $body")
+//        if (remoteMessage.data.isNotEmpty()) {
+//            val paramsObject = remoteMessage.data
+//            val jsonObject = JSONObject(paramsObject as Map<String, String>)
+//            println("respon Json Notif $jsonObject")
+//            val body = jsonObject.get("body")
+//            val title = jsonObject.get("title")
+//            println("respon Json Notif body $body")
 
-            sendNotification(title = title.toString(), body = body.toString())
-        }
-//        else {
-//            println("respon Notif ${remoteMessage.notification!!.imageUrl}")
-//            Log.d(TAG, "From: " + remoteMessage.from)
-//            Log.d("respon Data enduser", "${remoteMessage.data}")
-//            sendNotification(
-//                remoteMessage.notification!!.title.toString(),
-//                remoteMessage.notification!!.body.toString()
-//            )
+            sendNotification(title = remoteMessage.notification!!.title!!, body = remoteMessage.notification!!.body!!)
 //        }
+
     }
 
 
@@ -71,6 +63,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val mNotificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+//        if(title.c)
         val qIntent = Intent(this, MainActivity::class.java)
             .putExtra("typeNotif", "listnotif")
 //            .putExtra("key", remoteMessage.data["typeNotif"])

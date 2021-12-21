@@ -18,8 +18,8 @@ class OperatorHomePagerAdapter(fm: FragmentManager, data: Bundle) :
 
             0 -> OperatorTaskFragment.getInstance(data)
             1 -> OperatorFreeTaskFragment.newInstance()
-
-            else -> OperatorTaskFragment.getInstance(data)
+//            2 -> BlastFragment.newInstance("", "")
+            else -> BlastFragment.newInstance("","")
         }
 
     override fun setPrimaryItem(container: ViewGroup, position: Int, `object`: Any) {
@@ -31,7 +31,7 @@ class OperatorHomePagerAdapter(fm: FragmentManager, data: Bundle) :
 
             0 -> return "Reguler Task"
             1 -> return "Free Task"
-
+            2 -> return "Door to Door"
         }
 
         return "Reguler Task"
