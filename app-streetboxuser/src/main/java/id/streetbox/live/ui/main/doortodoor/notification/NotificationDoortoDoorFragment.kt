@@ -1,5 +1,6 @@
 package id.streetbox.live.ui.main.doortodoor.notification
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -83,23 +84,35 @@ class NotificationDoortoDoorFragment : BaseFragment<DoortoDoorViewEvent, DoortoD
 
     override fun onViewReady(savedInstanceState: Bundle?) {
         val user = viewModel.getUserLocal()
+
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        val defaultValue = true
+        val isNotif = sharedPref.getBoolean("SAVETOPIC", defaultValue)
 //        showLoading()
 
         val getSaveTopic = Hawk.get<String>("saveTopic")
 
-        if (getSaveTopic != null) {
-            if (getSaveTopic.equals("save"))
-                switchNotif.isChecked = true
-        } else {
+        if (isNotif) {
             suscribeNotif(user?.id.toString())
             switchNotif.isChecked = true
+        } else {
+            switchNotif.isChecked = false
         }
+//        if (getSaveTopic != null) {
+//            if (getSaveTopic.equals("save"))
+//                switchNotif.isChecked = true
+//        } else {
+//            suscribeNotif(user?.id.toString())
+//            switchNotif.isChecked = false
+//        }
 
 
         switchNotif.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 suscribeNotif(user?.id.toString())
-            } else unSuscribeNotif(user?.id.toString())
+            } else {
+                unSuscribeNotif(user?.id.toString())
+            }
         }
 
     }
@@ -107,6 +120,11 @@ class NotificationDoortoDoorFragment : BaseFragment<DoortoDoorViewEvent, DoortoD
     fun suscribeNotif(userId: String) {
         showLoading()
         Hawk.put("saveTopic", "save")
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            putBoolean("SAVETOPIC", true)
+            apply()
+        }
         FirebaseMessaging.getInstance().subscribeToTopic("blast_$userId")
             .addOnSuccessListener {
                 dismissLoading()
@@ -116,6 +134,12 @@ class NotificationDoortoDoorFragment : BaseFragment<DoortoDoorViewEvent, DoortoD
     fun unSuscribeNotif(userId: String) {
         showLoading()
         Hawk.delete("saveTopic")
+        val getSaveTopic = Hawk.get<String>("saveTopic")
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            putBoolean("SAVETOPIC", false)
+            apply()
+        }
         FirebaseMessaging.getInstance().unsubscribeFromTopic("blast_$userId")
             .addOnSuccessListener {
                 dismissLoading()
