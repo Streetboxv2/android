@@ -1,6 +1,5 @@
 package id.streetbox.live.adapter
 
-import android.util.Log
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
 import com.zeepos.models.ConstVar
@@ -14,6 +13,7 @@ import kotlinx.android.synthetic.main.layout_item_status_call.view.tvDateStatusC
 import kotlinx.android.synthetic.main.layout_item_status_call.view.tvStatusCall
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class AdapterListNotifBlast(
     val dataItemNotificationBlast: DataItemNotificationBlast,
@@ -34,15 +34,33 @@ class AdapterListNotifBlast(
 
             return d3 >= d2
         }
+
+        return false
+    }
+    fun isDiffDay(): Boolean {
+        val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+        val d1 = input.parse(dataItemNotificationBlast.createdAt)
+
+        val cal2: Calendar = Calendar.getInstance()
+        val currentTimeStr: String = input.format(cal2.getTime())
+        val currentTime = input.parse(currentTimeStr)
+        val diff: Long = currentTime.time - d1.time
+        if (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) > 0) {
+            return true
+        }
         return false
     }
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.apply {
             itemView.apply {
                 tvStatusCall.text = dataItemNotificationBlast.status
-                if (dataItemNotificationBlast.status == "ONGOING" && isExpired()) {
+                if (dataItemNotificationBlast.status == "ACCEPT") {
+                    tvStatusCall.text = "ON THE WAY"
+                }
+                if ((dataItemNotificationBlast.status == "ONGOING" || dataItemNotificationBlast.status == "ACCEPT") && isExpired()) {
                     tvStatusCall.text = "EXPIRE"
                 }
+
                 tvDateStatusCall.ConvertDateCreateAt(dataItemNotificationBlast.createdAt.toString())
 
                 tvNameStatusCallNotif.text = dataItemNotificationBlast.name
@@ -56,6 +74,7 @@ class AdapterListNotifBlast(
                 || dataItemNotificationBlast.status.equals("REJECT", ignoreCase = true)
                 || dataItemNotificationBlast.status.equals("EXPIRE", ignoreCase = true)
                 || isExpired()
+                || isDiffDay()
             ) {
 
             } else {

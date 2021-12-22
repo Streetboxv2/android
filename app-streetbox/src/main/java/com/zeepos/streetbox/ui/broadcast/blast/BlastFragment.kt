@@ -203,25 +203,14 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
         calendar.time = getLastDate
         calendar.add(Calendar.MINUTE, dataItem.interval!!)
 
-        println("DATA ITEM")
-        println(dataItem)
-        println("GET LAST DATE")
-        println(getLastDate)
-
         //result lastblast + cooldown
         val resultLastBlastTime = formatTime.format(calendar.time)
-        println("RESULT LAST BLAST")
-        println(resultLastBlastTime)
 
         val currentTime: String =
             SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
 
         val lastBlastParse = formatTime.parse(resultLastBlastTime)
         val currentParse = formatTime.parse(currentTime)
-        println("RESULT LAST BLAST TIME")
-        println(lastBlastParse)
-        println("CURRENT TIME")
-        println(currentParse)
 
         var testTotal = lastBlastParse.time - currentParse.time
         val limit = dataItem.interval!! * 60000.toLong()
@@ -236,7 +225,7 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
             timeCountInMilliSecondsAuto = testTotal
             startCountDownTimerAutoBlast()
         } else {
-            countDownTimerAutoBlast?.onFinish()
+            countDownTimerAutoBlast?.cancel()
             println("respon Pause")
         }
 
@@ -258,7 +247,7 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
 
         switchAutoBlast.isChecked = dataItem.isAutoBlast!!
         isClickSwitch = dataItem.isAutoBlast!!
-//        isClickAutoBlast = dataItem.isAutoBlast!!
+        isClickAutoBlast = dataItem.isAutoBlast!!
 
         println("respon Click blast $isClickAutoBlast")
 
@@ -343,9 +332,10 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
                 hitApiAutoBlastNotif()
                 println("respon Switch if true")
             } else {
-                isClickAutoBlast = true
+                isClickAutoBlast = false
                 Hawk.put("isClickSwitch", isClickAutoBlast)
                 hitApiAutoBlastNotif()
+                countDownTimerAutoBlast?.cancel()
                 println("respon Switch else true")
             }
         }
@@ -387,20 +377,18 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
     private fun startCountDownTimerAutoBlast() {
         countDownTimerAutoBlast = object : CountDownTimer(timeCountInMilliSecondsAuto, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                timeRunningAuto = millisUntilFinished
-                tvTimerAutoBlast?.text = hmsTimeFormatter(millisUntilFinished)
-                if (progressBarCircle != null) {
-                    progressBarCircle.progress = (millisUntilFinished / 1000).toInt()
+                if (dataRuleBlast?.isAutoBlast!!) {
+                    timeRunningAuto = millisUntilFinished
+                    tvTimerAutoBlast?.text = hmsTimeFormatter(millisUntilFinished)
+                    if (progressBarCircle != null) {
+                        progressBarCircle.progress = (millisUntilFinished / 1000).toInt()
+                    }
                 }
                 println("respon Test countd auto")
             }
 
             override fun onFinish() {
                 println("respon Finish auto")
-//                isClickAutoBlast = false
-//                Hawk.put("isClickSwitch", isClickAutoBlast)
-//                switchAutoBlast.isChecked = isClickAutoBlast
-//                tvTimerAutoBlast?.text = hmsTimeFormatter(timeRunningAuto)
                 if (dataRuleBlast != null) {
                     startCountDownAuto(dataRuleBlast!!)
                 } else {

@@ -15,8 +15,8 @@ class OperatorHomeFragment : BaseFragment<OperatorHomeViewEvent, OperatorHomeVie
     private lateinit var viewPagerAdapter: OperatorHomePagerAdapter
     var adapterViewPagerOperator: AdapterViewPagerOperator? = null
     private val titles =
-        arrayOf("Regular Task", "Free Task","Door To Door")
-//        arrayOf("Regular Task", "Free Task")
+        arrayOf("Regular Task", "Free Task", "Door to Door")
+
     override fun initResourceLayout(): Int {
         return R.layout.operator_home
     }

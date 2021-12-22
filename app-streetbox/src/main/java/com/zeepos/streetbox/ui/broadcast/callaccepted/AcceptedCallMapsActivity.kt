@@ -8,6 +8,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.orhanobut.hawk.Hawk
 import com.zeepos.models.ConstVar
 import com.zeepos.models.response.DataItemGetStatusCallFoodTruck
 import com.zeepos.models.response.ResponseDirectionsMaps
@@ -55,6 +56,11 @@ class AcceptedCallMapsActivity : BaseActivity<BroadCastViewEvent, BroadCastViewM
     private fun initOnclick() {
         btnFinishOrder.setOnClickListener {
             showLoading()
+            val isClickSave = Hawk.get<Boolean>("isClickSwitch")
+            if (isClickSave != null && !isClickSave) {
+                Hawk.put("isClickSwitch", isClickSave)
+                viewModel.callReqAutoBlastToggle()
+            }
             viewModel.callFinishOrder(dataItemGetStatusCallFoodTruck?.id.toString())
         }
 
@@ -94,6 +100,9 @@ class AcceptedCallMapsActivity : BaseActivity<BroadCastViewEvent, BroadCastViewM
 
     override fun onEvent(useCase: BroadCastViewEvent) {
         when (useCase) {
+            is BroadCastViewEvent.OnSuccessReqAutoBlast -> {
+                viewModel.callGetTimerBlast()
+            }
             is BroadCastViewEvent.OnSuccessListFinishOrder -> {
                 dismissLoading()
                 showToastExt("Finish Order", this)
@@ -176,6 +185,7 @@ class AcceptedCallMapsActivity : BaseActivity<BroadCastViewEvent, BroadCastViewM
                         MapUtils.decodePoly(responseDirectionsMaps?.routes?.get(0)?.overviewPolyline?.points)
 
                     val destinationLatlng = LatLng(latitudeEnd, longitudeEnd)
+
                     addPolyline(list, destinationLatlng)
                 }
 

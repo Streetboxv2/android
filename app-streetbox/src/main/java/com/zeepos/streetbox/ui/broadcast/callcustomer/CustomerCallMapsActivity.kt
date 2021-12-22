@@ -8,6 +8,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.orhanobut.hawk.Hawk
 import com.zeepos.models.ConstVar
 import com.zeepos.models.response.DataItemGetStatusCallFoodTruck
 import com.zeepos.models.response.ResponseDirectionsMaps
@@ -58,6 +59,11 @@ class CustomerCallMapsActivity : BaseActivity<BroadCastViewEvent, BroadCastViewM
     private fun initOnclick() {
         btnAccepted.setOnClickListener {
             showLoading()
+            val isClickSave = Hawk.get<Boolean>("isClickSwitch")
+            if (isClickSave != null && isClickSave) {
+                Hawk.put("isClickSwitch", !isClickSave)
+                viewModel.callReqAutoBlastToggle()
+            }
             viewModel.callAcceptedOrder(dataItemGetStatusCallFoodTruck?.id.toString(), "accept")
         }
 
@@ -170,8 +176,16 @@ class CustomerCallMapsActivity : BaseActivity<BroadCastViewEvent, BroadCastViewM
                     val responseDirectionsMaps = response.body()
                     val list =
                         decodePoly(responseDirectionsMaps?.routes?.get(0)?.overviewPolyline?.points)
+                    val getDuration =
+                        responseDirectionsMaps!!.routes?.get(0)?.legs?.get(0)?.duration?.text
+                    val getKm =
+                        responseDirectionsMaps.routes?.get(0)?.legs?.get(0)?.distance?.text
 
                     val destinationLatlng = LatLng(latitudeEnd, longitudeEnd)
+
+                    tvDurationEstimate.text =
+                        "Jarak tempuh Anda $getKm dengan estimasi sampai $getDuration"
+
                     addPolyline(list, destinationLatlng)
 
                 }
