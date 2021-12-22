@@ -81,8 +81,13 @@ class NotificationDoortoDoorMapsActivity :
         igMerchant = dataItemGetStatusCall?.ig_account.toString()
         latitudeEnd = dataItemGetStatusCall?.latitudeEndUser!!
         longitudeEnd = dataItemGetStatusCall!!.longitudeEndUser!!
+        if(dataItemGetStatusCall?.status.equals("ACCEPT")){
+            tvStatusCallDetailNotif.text = "OTW"
+        }else{
+            tvStatusCallDetailNotif.text = dataItemGetStatusCall!!.status
+        }
         tvNameUserNotifDetail.text = dataItemGetStatusCall?.name
-        tvStatusCallDetailNotif.text = dataItemGetStatusCall!!.status
+
         tvDateStatusCallDetailNotif.ConvertDateCreateAt(dataItemGetStatusCall!!.createdAt.toString())
         tvPlatNomorFoodtruck.text = "Plat Nomor : " + dataItemGetStatusCall!!.platNomor
 

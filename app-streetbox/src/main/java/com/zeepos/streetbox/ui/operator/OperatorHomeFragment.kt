@@ -29,6 +29,7 @@ class OperatorHomeFragment : BaseFragment<OperatorHomeViewEvent, OperatorHomeVie
         viewPagerAdapter = OperatorHomePagerAdapter(childFragmentManager, bundle)
     }
 
+
     override fun onViewReady(savedInstanceState: Bundle?) {
         val bundle = arguments
         val lat = bundle!!.getDouble("lat")

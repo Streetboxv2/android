@@ -18,7 +18,12 @@ class AdapterStatusCallEndUser(
                 tvDateStatusCall.ConvertDateCreateAt(dataItemGetStatusCall.createdAt.toString())
                 tvQueueStatusCall.text = dataItemGetStatusCall.queueNo.toString()
                 tvNameStatusCall.text = dataItemGetStatusCall.name
-                tvStatusCall.text = dataItemGetStatusCall.status
+                if(dataItemGetStatusCall.status!!.equals("ACCEPT")){
+                    tvStatusCall.text = "On The Way"
+                }else{
+                    tvStatusCall.text = dataItemGetStatusCall.status
+                }
+
             }
             itemView.setOnClickListener {
                 onClickItemAny.clickItem(dataItemGetStatusCall)

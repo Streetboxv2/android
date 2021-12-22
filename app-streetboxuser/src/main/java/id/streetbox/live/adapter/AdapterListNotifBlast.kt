@@ -39,7 +39,13 @@ class AdapterListNotifBlast(
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.apply {
             itemView.apply {
-                tvStatusCall.text = dataItemNotificationBlast.status
+
+                if(dataItemNotificationBlast.status.equals("ACCEPT")){
+                    tvStatusCall.text = "On The Way"
+                }else {
+                    tvStatusCall.text = dataItemNotificationBlast.status
+                }
+
                 if (dataItemNotificationBlast.status == "ONGOING" && isExpired()) {
                     tvStatusCall.text = "EXPIRE"
                 }
