@@ -1,5 +1,6 @@
 package id.streetbox.live.ui.main.profile
 
+import android.content.Context
 import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.graphics.Paint
@@ -12,20 +13,22 @@ import com.example.dbroom.db.room.AppDatabase
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
+import com.orhanobut.hawk.Hawk
 import com.zeepos.models.ConstVar
 import com.zeepos.models.master.User
 import com.zeepos.ui_base.ui.BaseFragment
 import com.zeepos.ui_base.views.GlideApp
 import com.zeepos.ui_login.LoginActivity
-import com.zeepos.utilities.PermissionUtils
-import com.zeepos.utilities.intentPageData
-import com.zeepos.utilities.loadImageUrl
+import com.zeepos.utilities.*
 import id.streetbox.live.R
 import id.streetbox.live.ui.editprofile.EditProfileActivity
 import id.streetbox.live.ui.main.address.AddressDeliveryActivity
+import id.streetbox.live.ui.main.doortodoor.DoortoDoorViewEvent
 import id.streetbox.live.ui.termsconditions.TermConditionActivity
 import kotlinx.android.synthetic.main.activity_edit_profile.*
+import kotlinx.android.synthetic.main.fragment_notification_doorto_door.*
 import kotlinx.android.synthetic.main.profile_fragment.*
 import kotlinx.android.synthetic.main.profile_fragment.iv_profile
 import javax.inject.Inject
@@ -59,6 +62,7 @@ class ProfileFragment : BaseFragment<ProfileViewEvent, ProfileViewModel>() {
         super.onResume()
         showLoading()
         viewModel.getUserInfoCloud()
+        viewModel.callGetListNotif()
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
@@ -105,8 +109,69 @@ class ProfileFragment : BaseFragment<ProfileViewEvent, ProfileViewModel>() {
                 .putExtras(bundle)
             startActivity(intent)
         }
+
+        val user = viewModel.getUserLocal()
+
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        val defaultValue = true
+        val isNotif = sharedPref.getBoolean("SAVETOPIC", defaultValue)
+//        showLoading()
+
+        val getSaveTopic = Hawk.get<String>("saveTopic")
+
+        if (isNotif) {
+            suscribeNotif(user?.id.toString())
+            switchNotif.isChecked = true
+        } else {
+            switchNotif.isChecked = false
+        }
+//        if (getSaveTopic != null) {
+//            if (getSaveTopic.equals("save"))
+//                switchNotif.isChecked = true
+//        } else {
+//            suscribeNotif(user?.id.toString())
+//            switchNotif.isChecked = false
+//        }
+
+
+        switchNotif.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                suscribeNotif(user?.id.toString())
+            } else {
+                unSuscribeNotif(user?.id.toString())
+            }
+        }
+
     }
 
+    fun suscribeNotif(userId: String) {
+        showLoading()
+        Hawk.put("saveTopic", "save")
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            putBoolean("SAVETOPIC", true)
+            apply()
+        }
+        FirebaseMessaging.getInstance().subscribeToTopic("blast_$userId")
+            .addOnSuccessListener {
+                dismissLoading()
+            }
+    }
+
+    fun unSuscribeNotif(userId: String) {
+        showLoading()
+        Hawk.delete("saveTopic")
+        val getSaveTopic = Hawk.get<String>("saveTopic")
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            putBoolean("SAVETOPIC", false)
+            apply()
+        }
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("blast_$userId")
+            .addOnSuccessListener {
+                dismissLoading()
+            }
+    }
     private fun signOut(dialog: DialogInterface) {
         val gso =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -136,6 +201,19 @@ class ProfileFragment : BaseFragment<ProfileViewEvent, ProfileViewModel>() {
                 updateUserInfoUi(useCase.user)
             }
             is ProfileViewEvent.GetUserInfoFailed -> {
+            }
+            is ProfileViewEvent.OnSuccessListNotif -> {
+                dismissLoading()
+                val dataItem = useCase.responseListNotificationBlast.data
+//                if (dataItem!!.isNotEmpty())
+//                    initAdapter(dataItem)
+//                else {
+//                    showView(tvNotFoundNotif)
+//                    hideView(rvListNotifBlast)
+//                }
+            }
+            is ProfileViewEvent.OnFailed -> {
+                dismissLoading()
             }
         }
     }
