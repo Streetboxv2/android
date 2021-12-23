@@ -77,11 +77,20 @@ class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
                /* HomeFragment.newInstance(typeNotif.toString()),
                 R.id.fl_content,
                 HomeFragment::class.simpleName*/
+            if(typeNotif!!.equals("Online Order Nearby")){
                 replaceFragment(
                     OrderHistoryFragment.newInstance(),
                     R.id.fl_content,
                     OrderHistoryFragment::class.simpleName
                 )
+            }else{
+                replaceFragment(
+                    DoortoDoorFragment.newInstance("",""),
+                    R.id.fl_content,
+                    OrderHistoryFragment::class.simpleName
+                )
+            }
+
 //            )
         } else {
             addFragment(

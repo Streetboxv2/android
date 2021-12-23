@@ -36,6 +36,7 @@ class OperatorFTActivity : BaseActivity<OperatorFTViewEvent, OperatorFTViewModel
     private var longitude: Double? = null
     private var isFlag: Boolean? = null
     var typeNotifOperator: String? = null
+    var body: String? = null
     override fun initResourceLayout(): Int {
         return R.layout.operator_ft_activity
     }
@@ -60,6 +61,7 @@ class OperatorFTActivity : BaseActivity<OperatorFTViewEvent, OperatorFTViewModel
                 viewModel.sendTokenFoodtruck(token!!)
             })
         typeNotifOperator = intent.getStringExtra("typeNotifOperator")
+        body = intent.getStringExtra("body")
 
     }
 

@@ -32,6 +32,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     val TAG = "Service"
     var notificationChannel = "id.streetbox.live"
+    var body : String = ""
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
@@ -45,16 +46,18 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-//        if (remoteMessage.data.isNotEmpty()) {
-//            val paramsObject = remoteMessage.data
-//            val jsonObject = JSONObject(paramsObject as Map<String, String>)
-//            println("respon Json Notif $jsonObject")
-//            val body = jsonObject.get("body")
-//            val title = jsonObject.get("title")
-//            println("respon Json Notif body $body")
-
+        if (remoteMessage.data.isNotEmpty()) {
+            val paramsObject = remoteMessage.data
+            val jsonObject = JSONObject(paramsObject as Map<String, String>)
+            println("respon Json Notif $jsonObject")
+            body = jsonObject.get("body").toString()
+            val title = jsonObject.get("title").toString()
+            println("respon Json Notif body $body")
+            sendNotification(title = title , body = body as String)
+        }else{
             sendNotification(title = remoteMessage.notification!!.title!!, body = remoteMessage.notification!!.body!!)
-//        }
+        }
+
 
     }
 
@@ -65,7 +68,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
 //        if(title.c)
         val qIntent = Intent(this, MainActivity::class.java)
-            .putExtra("typeNotif", "listnotif")
+            .putExtra("typeNotif", body)
 //            .putExtra("key", remoteMessage.data["typeNotif"])
 
 

@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.zeepos.map.utils.PermissionUtils
 import com.zeepos.streetbox.R
+import com.zeepos.streetbox.ui.broadcast.blast.BlastFragment
 import com.zeepos.streetbox.ui.operator.OperatorHomeFragment
 import com.zeepos.ui_base.ui.BaseActivity
 
@@ -21,6 +22,8 @@ class OperatorMainActivity : BaseActivity<OperatorMainViewEvent, OperatorMainMod
     private var latitude: Double? = 0.0
     private var longitude: Double? = 0.0
     private var type: Int = 0
+    private var title: String = ""
+    private var body: String = ""
 
     override fun initResourceLayout(): Int {
         return R.layout.operator_main
@@ -55,14 +58,16 @@ class OperatorMainActivity : BaseActivity<OperatorMainViewEvent, OperatorMainMod
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
-        addFragment(
-            OperatorHomeFragment.newInstance(),
-            R.id.fl_contentOperator,
-            OperatorHomeFragment::class.simpleName,
-            latitude!!,
-            longitude!!,
-            type
-        )
+
+            addFragment(
+                OperatorHomeFragment.newInstance(),
+                R.id.fl_contentOperator,
+                OperatorHomeFragment::class.simpleName,
+                latitude!!,
+                longitude!!,
+                type
+            )
+
     }
 
     override fun onEvent(useCase: OperatorMainViewEvent) {

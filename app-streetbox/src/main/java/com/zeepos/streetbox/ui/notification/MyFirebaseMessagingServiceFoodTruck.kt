@@ -29,6 +29,7 @@ class MyFirebaseMessagingServiceFoodTruck : FirebaseMessagingService() {
     val TAG = "Service"
     var notificationChannel = "com.zeepos.streetbox"
     var title:String = ""
+    var body:String = ""
 
     override fun onNewToken(token: String) {
         Log.d("respon Tag", "toke refress :  $token")
@@ -40,15 +41,19 @@ class MyFirebaseMessagingServiceFoodTruck : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-//        if (remoteMessage.data.isNotEmpty()) {
-//            val paramsObject = remoteMessage.data
-//            val jsonObject = JSONObject(paramsObject as Map<String, String>)
-//            println("respon Json Notif $jsonObject")
-//            val body = jsonObject.get("body")
-//             title = jsonObject.get("title").toString()
-//            println("respon Json Notif body $body")
-
+        if (remoteMessage.data.isNotEmpty()) {
+            val paramsObject = remoteMessage.data
+            val jsonObject = JSONObject(paramsObject as Map<String, String>)
+            println("respon Json Notif $jsonObject")
+             body = jsonObject.get("body").toString()
+            title = jsonObject.get("title").toString()
+            println("respon Json Notif body $body")
+            sendNotification(title = title, body = body as String)
+        }else{
             sendNotification(title = remoteMessage.notification!!.title!!, body = remoteMessage.notification!!.body!!)
+        }
+
+
 //        }
     }
 
@@ -59,10 +64,12 @@ class MyFirebaseMessagingServiceFoodTruck : FirebaseMessagingService() {
         var qIntent = Intent()
         if(title.equals("New Home Visit Order")) {
            qIntent = Intent(this, MainActivity::class.java)
-               .putExtra("typeNotif", "listnotif")
+               .putExtra("typeNotif", title)
+               .putExtra("body",body)
         }else{
              qIntent = Intent(this, OperatorFTActivity::class.java)
-                .putExtra("typeNotifOperator", "listnotif")
+                .putExtra("typeNotifOperator", body)
+                 .putExtra("body",body)
         }
 
 
