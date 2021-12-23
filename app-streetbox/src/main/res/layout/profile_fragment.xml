@@ -83,6 +83,17 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
+                        <TextView
+                            android:fontFamily="@font/poppins_bold"
+                            android:id="@+id/tv_info"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Current Location"
+                            android:textColor="@color/black"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_title"/>
+
                         <ImageView
                             android:id="@+id/iv_location"
                             android:layout_width="@dimen/_16sdp"
@@ -105,7 +116,7 @@
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
                             app:layout_constraintStart_toEndOf="@+id/iv_location"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+                            app:layout_constraintTop_toBottomOf="@+id/tv_info" />
 
                         <View
                             android:id="@+id/separator_5"

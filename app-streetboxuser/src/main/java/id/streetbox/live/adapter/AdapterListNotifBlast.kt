@@ -40,9 +40,11 @@ class AdapterListNotifBlast(
         viewHolder.apply {
             itemView.apply {
 
-                if(dataItemNotificationBlast.status.equals("ACCEPT")){
+                if(dataItemNotificationBlast.status!!.equals("ACCEPT")){
                     tvStatusCall.text = "On The Way"
-                }else {
+                }else if(dataItemNotificationBlast.status!!.equals("REJECTED") || dataItemNotificationBlast.status!!.equals("REJECT"))
+                    tvStatusCall.text = "EXPIRE"
+                else {
                     tvStatusCall.text = dataItemNotificationBlast.status
                 }
 

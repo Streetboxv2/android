@@ -8,6 +8,7 @@ import com.zeepos.streetbox.R
 import com.zeepos.streetbox.adapter.AdapterViewPagerOperator
 import com.zeepos.ui_base.ui.BaseFragment
 import kotlinx.android.synthetic.main.operator_home.*
+import java.text.FieldPosition
 
 class OperatorHomeFragment : BaseFragment<OperatorHomeViewEvent, OperatorHomeViewModel>() {
 
@@ -27,6 +28,7 @@ class OperatorHomeFragment : BaseFragment<OperatorHomeViewEvent, OperatorHomeVie
 
         viewModel = ViewModelProvider(this, viewModeFactory).get(OperatorHomeViewModel::class.java)
         viewPagerAdapter = OperatorHomePagerAdapter(childFragmentManager, bundle)
+       
     }
 
 

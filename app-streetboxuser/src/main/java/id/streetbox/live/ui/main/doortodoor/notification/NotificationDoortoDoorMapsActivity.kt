@@ -81,8 +81,12 @@ class NotificationDoortoDoorMapsActivity :
         igMerchant = dataItemGetStatusCall?.ig_account.toString()
         latitudeEnd = dataItemGetStatusCall?.latitudeEndUser!!
         longitudeEnd = dataItemGetStatusCall!!.longitudeEndUser!!
-        if(dataItemGetStatusCall?.status.equals("ACCEPT")){
-            tvStatusCallDetailNotif.text = "OTW"
+
+
+        if(dataItemGetStatusCall?.status!!.equals("ACCEPT")){
+            tvStatusCallDetailNotif.text = "On The Way"
+        }else if (dataItemGetStatusCall?.status!!.equals("REJECTED") || dataItemGetStatusCall?.status!!.equals("REJECT")){
+            tvStatusCallDetailNotif.text = "EXPIRE"
         }else{
             tvStatusCallDetailNotif.text = dataItemGetStatusCall!!.status
         }
