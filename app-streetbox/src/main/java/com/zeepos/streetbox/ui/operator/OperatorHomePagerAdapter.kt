@@ -18,7 +18,7 @@ class OperatorHomePagerAdapter(fm: FragmentManager, data: Bundle) :
 
             0 -> OperatorTaskFragment.getInstance(data)
             1 -> OperatorFreeTaskFragment.newInstance()
-//            2 -> BlastFragment.newInstance("", "")
+            2 -> BlastFragment.newInstance("", "")
             else -> BlastFragment.newInstance("","")
         }
 

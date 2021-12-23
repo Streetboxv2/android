@@ -127,6 +127,19 @@
 
         </RelativeLayout>
 
+        <TextView
+            android:id="@+id/tvDurationEstimate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/rlStatusFinish"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_15sdp"
+            android:background="@drawable/bg_rectangle"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10sdp" />
+
         <LinearLayout
             android:id="@+id/llAcceptReject"
             android:layout_width="match_parent"
@@ -153,7 +166,7 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:layout_weight="1"
-                android:text="Accepted" />
+                android:text="ON THE WAY" />
         </LinearLayout>
 
     </RelativeLayout>

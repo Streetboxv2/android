@@ -84,7 +84,7 @@ class NotificationDoortoDoorMapsActivity :
 
 
         if(dataItemGetStatusCall?.status!!.equals("ACCEPT")){
-            tvStatusCallDetailNotif.text = "On The Way"
+            tvStatusCallDetailNotif.text = "ON THE WAY"
         }else if (dataItemGetStatusCall?.status!!.equals("REJECTED") || dataItemGetStatusCall?.status!!.equals("REJECT")){
             tvStatusCallDetailNotif.text = "EXPIRE"
         }else{

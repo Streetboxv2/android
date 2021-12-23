@@ -19,8 +19,11 @@ class AdapterStatusCallEndUser(
                 tvQueueStatusCall.text = dataItemGetStatusCall.queueNo.toString()
                 tvNameStatusCall.text = dataItemGetStatusCall.name
                 if(dataItemGetStatusCall.status!!.equals("ACCEPT")){
-                    tvStatusCall.text = "On The Way"
-                }else{
+                    tvStatusCall.text = "ON THE WAY"
+                }else if(dataItemGetStatusCall.status!!.equals("REJECT") || dataItemGetStatusCall.status!!.equals("REJECTED")){
+                        tvStatusCall.text = "REJECT"
+                    }
+                else{
                     tvStatusCall.text = dataItemGetStatusCall.status
                 }
 
