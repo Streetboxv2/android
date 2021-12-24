@@ -366,7 +366,7 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
 
             override fun onFinish() {
                 timerCountDown = dataCooldown!!
-                tvTimerBlast.text = "Blast Now"
+                tvTimerBlast?.text = "Blast Now"
                 hideView(multipleLoader)
                 showView(imgRippleLoader)
             }

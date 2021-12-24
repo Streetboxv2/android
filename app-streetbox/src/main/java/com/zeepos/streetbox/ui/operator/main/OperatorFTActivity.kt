@@ -35,11 +35,23 @@ class OperatorFTActivity : BaseActivity<OperatorFTViewEvent, OperatorFTViewModel
     private var latitude: Double? = null
     private var longitude: Double? = null
     private var isFlag: Boolean? = null
-    var typeNotifOperator: String? = null
-    var body: String? = null
+    var typeNotifOperator:String = ""
+    var body:String = ""
+
+//    private val typeNotifOperator: String by lazy {
+//        SharedPreferenceUtil.getString(this, "title", ConstVar.EMPTY_STRING)
+//            ?: ConstVar.EMPTY_STRING
+//    }
+//
+//    private val typNotifBody: String by lazy {
+//        SharedPreferenceUtil.getString(this, "body", ConstVar.EMPTY_STRING)
+//            ?: ConstVar.EMPTY_STRING
+//    }
     override fun initResourceLayout(): Int {
         return R.layout.operator_ft_activity
     }
+
+
 
     override fun init() {
         viewModel = ViewModelProvider(this, viewModeFactory).get(OperatorFTViewModel::class.java)
@@ -60,8 +72,21 @@ class OperatorFTActivity : BaseActivity<OperatorFTViewEvent, OperatorFTViewModel
 
                 viewModel.sendTokenFoodtruck(token!!)
             })
+
+
         typeNotifOperator = intent.getStringExtra("typeNotifOperator")
         body = intent.getStringExtra("body")
+        SharedPreferenceUtil.setString(
+            this,
+            "title",
+            typeNotifOperator
+        )
+
+        SharedPreferenceUtil.setString(
+            this,
+            "body",
+            body
+        )
 
     }
 
@@ -78,9 +103,16 @@ class OperatorFTActivity : BaseActivity<OperatorFTViewEvent, OperatorFTViewModel
             if (isFlag == false) {
                 viewModel.shiftInOperatorTask()
             } else {
+                if(typeNotifOperator!=null) {
                     startActivity(OperatorMainActivity.getIntent(this,
                         latitude!!, longitude!!,0)
                     )
+                }else{
+                    startActivity(OperatorMainActivity.getIntent(this,
+                        latitude!!, longitude!!,0)
+                    )
+                }
+
             }
         }
     }

@@ -47,6 +47,7 @@ class HomeFragment : BaseFragment<HomeViewEvent, HomeViewModel>() {
         val menuItem = toolbar.menu.findItem(R.id.nv_search)
 
         viewpager.adapter = viewPagerAdapter
+
         tab.setupWithViewPager(viewpager)
 
         println("respon Tipe Notif $typeNotif")

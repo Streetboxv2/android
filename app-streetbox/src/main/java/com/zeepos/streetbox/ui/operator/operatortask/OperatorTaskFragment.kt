@@ -360,9 +360,8 @@ class OperatorTaskFragment : BaseFragment<OperatorTaskViewEvent, OperatorTaskVie
 
     companion object {
 
-        fun getInstance(data: Bundle?): OperatorTaskFragment {
+        fun getInstance(): OperatorTaskFragment {
             val fragment = OperatorTaskFragment()
-            fragment.arguments = data
             return fragment
         }
         fun newInstance(): OperatorTaskFragment {

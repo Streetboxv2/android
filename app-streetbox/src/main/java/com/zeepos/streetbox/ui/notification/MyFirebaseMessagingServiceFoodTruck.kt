@@ -41,6 +41,7 @@ class MyFirebaseMessagingServiceFoodTruck : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        val a = remoteMessage
         if (remoteMessage.data.isNotEmpty()) {
             val paramsObject = remoteMessage.data
             val jsonObject = JSONObject(paramsObject as Map<String, String>)

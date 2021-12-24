@@ -5,38 +5,24 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import com.chad.library.adapter.base.listener.InstanceFragment
 import com.zeepos.streetbox.ui.broadcast.blast.BlastFragment
 import com.zeepos.streetbox.ui.operator.operatortask.OperatorTaskFragment
 import com.zeepos.streetbox.ui.operatorfreetask.OperatorFreeTaskFragment
 
-class OperatorHomePagerAdapter(fm: FragmentManager, data: Bundle) :
-
+class OperatorHomePagerAdapter(fm: FragmentManager, val instanceFragment: InstanceFragment) :
     FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-    private var data: Bundle? = data
-    override fun getItem(position: Int): Fragment =
-        when (position) {
-
-            0 -> OperatorTaskFragment.getInstance(data)
-            1 -> OperatorFreeTaskFragment.newInstance()
-            2 -> BlastFragment.newInstance("", "")
-            else -> BlastFragment.newInstance("","")
-        }
-
-    override fun setPrimaryItem(container: ViewGroup, position: Int, `object`: Any) {
-        super.setPrimaryItem(container, position, `object`)
-    }
+    override fun getItem(position: Int): Fragment = instanceFragment.instanceFragment(position)
 
     override fun getPageTitle(position: Int): CharSequence? {
         when (position) {
-
-            0 -> return "Reguler Task"
+            0 -> return "Regular Task"
             1 -> return "Free Task"
-            2 -> return "Door to Door"
+            2 -> return "Door To Door"
         }
 
-        return "Reguler Task"
+        return "Regular Task"
     }
 
-
-    override fun getCount(): Int = 2
+    override fun getCount(): Int = 3
 }
