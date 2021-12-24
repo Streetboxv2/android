@@ -35,8 +35,8 @@ class OperatorFTActivity : BaseActivity<OperatorFTViewEvent, OperatorFTViewModel
     private var latitude: Double? = null
     private var longitude: Double? = null
     private var isFlag: Boolean? = null
-    var typeNotifOperator:String = ""
-    var body:String = ""
+    var typeNotifOperator:String? = null
+    var body:String? = null
 
 //    private val typeNotifOperator: String by lazy {
 //        SharedPreferenceUtil.getString(this, "title", ConstVar.EMPTY_STRING)
@@ -76,17 +76,19 @@ class OperatorFTActivity : BaseActivity<OperatorFTViewEvent, OperatorFTViewModel
 
         typeNotifOperator = intent.getStringExtra("typeNotifOperator")
         body = intent.getStringExtra("body")
-        SharedPreferenceUtil.setString(
-            this,
-            "title",
-            typeNotifOperator
-        )
+        if(typeNotifOperator!=null) {
+            SharedPreferenceUtil.setString(
+                this,
+                "title",
+                typeNotifOperator
+            )
 
-        SharedPreferenceUtil.setString(
-            this,
-            "body",
-            body
-        )
+            SharedPreferenceUtil.setString(
+                this,
+                "body",
+                body
+            )
+        }
 
     }
 

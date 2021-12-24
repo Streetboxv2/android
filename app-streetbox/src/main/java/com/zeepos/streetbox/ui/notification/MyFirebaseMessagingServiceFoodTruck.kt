@@ -28,8 +28,8 @@ class MyFirebaseMessagingServiceFoodTruck : FirebaseMessagingService() {
 
     val TAG = "Service"
     var notificationChannel = "com.zeepos.streetbox"
-    var title:String = ""
-    var body:String = ""
+    var title:String = "title"
+    var body:String = "body"
 
     override fun onNewToken(token: String) {
         Log.d("respon Tag", "toke refress :  $token")
@@ -41,7 +41,6 @@ class MyFirebaseMessagingServiceFoodTruck : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        val a = remoteMessage
         if (remoteMessage.data.isNotEmpty()) {
             val paramsObject = remoteMessage.data
             val jsonObject = JSONObject(paramsObject as Map<String, String>)
@@ -69,7 +68,7 @@ class MyFirebaseMessagingServiceFoodTruck : FirebaseMessagingService() {
                .putExtra("body",body)
         }else{
              qIntent = Intent(this, OperatorFTActivity::class.java)
-                .putExtra("typeNotifOperator", body)
+                .putExtra("typeNotifOperator", title)
                  .putExtra("body",body)
         }
 
