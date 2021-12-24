@@ -94,9 +94,8 @@ class NotificationDoortoDoorFragment : BaseFragment<DoortoDoorViewEvent, DoortoD
 
         if (isNotif) {
             suscribeNotif(user?.id.toString())
-            switchNotif.isChecked = true
         } else {
-            switchNotif.isChecked = false
+            unSuscribeNotif(user?.id.toString())
         }
 //        if (getSaveTopic != null) {
 //            if (getSaveTopic.equals("save"))
@@ -107,13 +106,13 @@ class NotificationDoortoDoorFragment : BaseFragment<DoortoDoorViewEvent, DoortoD
 //        }
 
 
-        switchNotif.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                suscribeNotif(user?.id.toString())
-            } else {
-                unSuscribeNotif(user?.id.toString())
-            }
-        }
+//        switchNotif.setOnCheckedChangeListener { buttonView, isChecked ->
+//            if (isChecked) {
+//                suscribeNotif(user?.id.toString())
+//            } else {
+//                unSuscribeNotif(user?.id.toString())
+//            }
+//        }
 
     }
 
