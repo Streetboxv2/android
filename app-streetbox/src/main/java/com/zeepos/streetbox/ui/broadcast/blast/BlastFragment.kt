@@ -3,6 +3,7 @@ package com.zeepos.streetbox.ui.broadcast.blast
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.CompoundButton
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.chad.library.adapter.base.listener.InstanceFragment
@@ -177,13 +178,14 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
 
             is BroadCastViewEvent.OnFailed -> {
                 dismissLoading()
-                println("respon thro blast ${useCase.throwable.message}")
+//                println("respon thro blast ${useCase.throwable.message}")
+
             }
 
             is BroadCastViewEvent.OnFailedBlastNotif -> {
                 dismissLoading()
                 val throwable = useCase.throwable
-                showToastExt(showErrorMessageThrowable(throwable), requireContext())
+                showToastExt("Mohon segera proses customer call",requireContext())
             }
 
             is BroadCastViewEvent.OnSuccessUpdateLoc -> {
@@ -367,7 +369,7 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
 
             override fun onFinish() {
                 timerCountDown = dataCooldown!!
-                tvTimerBlast.text = "Blast Now"
+                tvTimerBlast?.text = "Blast Now"
                 hideView(multipleLoader)
                 showView(imgRippleLoader)
             }

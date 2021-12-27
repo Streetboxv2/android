@@ -20,7 +20,7 @@
             android:src="@drawable/logo_text" />
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabOperator"
+            android:id="@+id/tab"
             style="@style/Widget.MaterialComponents.TabLayout.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,11 +29,28 @@
             app:tabIndicatorFullWidth="true"
             app:tabMaxWidth="0dp"
             app:tabMode="fixed"
-            app:tabTextColor="@color/white" />
+            app:tabTextColor="@color/white">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Regular Task" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Free Task" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Door To Door" />
+
+        </com.google.android.material.tabs.TabLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.viewpager2.widget.ViewPager2
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpagerOperator"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
