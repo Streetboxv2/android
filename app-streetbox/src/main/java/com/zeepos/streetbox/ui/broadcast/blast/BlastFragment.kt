@@ -354,6 +354,7 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
 
 
     private fun startCountDownTimer() {
+        showView(rlMultipleLoader)
         showView(multipleLoader)
         hideView(imgRippleLoader)
         countDownTimer = object : CountDownTimer(timeCountInMilliSeconds, 1000) {
