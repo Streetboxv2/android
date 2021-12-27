@@ -21,7 +21,7 @@ class AdapterStatusCallEndUser(
                 if(dataItemGetStatusCall.status!!.equals("ACCEPT")){
                     tvStatusCall.text = "ON THE WAY"
                 }else if(dataItemGetStatusCall.status!!.equals("REJECT") || dataItemGetStatusCall.status!!.equals("REJECTED")){
-                        tvStatusCall.text = "REJECT"
+                        tvStatusCall.text = "EXPIRE"
                     }
                 else{
                     tvStatusCall.text = dataItemGetStatusCall.status
