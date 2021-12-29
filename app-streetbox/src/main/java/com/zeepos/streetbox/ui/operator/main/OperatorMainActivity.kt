@@ -34,8 +34,6 @@ class OperatorMainActivity : BaseActivity<OperatorMainViewEvent, OperatorMainMod
         latitude = data!!.getDouble("lat")
         longitude = data.getDouble("lon")
         type = data.getInt("type")
-        title = data.getString("title").toString()
-        body = data.getString("body").toString()
         viewModel = ViewModelProvider(this, viewModeFactory).get(OperatorMainModel::class.java)
 
     }

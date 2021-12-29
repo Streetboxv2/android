@@ -27,14 +27,6 @@ class OperatorHomeFragment : BaseFragment<OperatorHomeViewEvent, OperatorHomeVie
     private val titles =
         arrayOf("Regular Task", "Free Task", "Door to Door")
 
-    val title =
-        context?.let { SharedPreferenceUtil.getString(it,"title" ,ConstVar.EMPTY_STRING) }
-            ?: ConstVar.EMPTY_STRING
-
-    val body =
-        context?.let { SharedPreferenceUtil.getString(it,"body" ,ConstVar.EMPTY_STRING) }
-            ?: ConstVar.EMPTY_STRING
-
 
 
     val instanceFragment = object : InstanceFragment {
@@ -64,13 +56,33 @@ class OperatorHomeFragment : BaseFragment<OperatorHomeViewEvent, OperatorHomeVie
 
 
         viewpagerOperator.adapter = viewPagerAdapter
+        val title =
+            context?.let { SharedPreferenceUtil.getString(it,"typeNotifOperator" ,ConstVar.EMPTY_STRING) }
+                ?: ConstVar.EMPTY_STRING
+
+        val body =
+            context?.let { SharedPreferenceUtil.getString(it,"body" ,ConstVar.EMPTY_STRING) }
+                ?: ConstVar.EMPTY_STRING
+
         if(title.equals("Incoming calll!")) {
             viewpagerOperator.setCurrentItem(3)
+            SharedPreferenceUtil.setString(
+                requireContext(),
+                "typeNotifOperator",
+                ""
+            )
+
+            SharedPreferenceUtil.setString(
+                requireContext(),
+                "body",
+                ""
+            )
         }else{
             viewpagerOperator.setCurrentItem(0)
         }
         tab.setupWithViewPager(viewpagerOperator)
 //        setTabViewPager()
+
     }
 
 

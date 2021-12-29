@@ -2,6 +2,7 @@ package com.zeepos.streetbox.ui.broadcast.blast
 
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.View
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -136,6 +137,12 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
+        showLoading()
+        initial()
+    }
+
+    override fun onResume() {
+        super.onResume()
         showLoading()
         initial()
     }
@@ -322,6 +329,7 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
         }
     }
 
+
     fun initSwitchAutoBlast() {
         switchAutoBlast.setOnCheckedChangeListener { buttonView, isChecked ->
             isClickSwitch = isChecked
@@ -370,7 +378,8 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
             override fun onFinish() {
                 timerCountDown = dataCooldown!!
                 tvTimerBlast?.text = "Blast Now"
-                hideView(multipleLoader)
+                multipleLoader.visibility = View.INVISIBLE
+                showView(rlMultipleLoader)
                 showView(imgRippleLoader)
             }
         }
