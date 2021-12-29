@@ -67,6 +67,11 @@ class AdapterListNotifBlast(
                     tvStatusCall.text = "EXPIRE"
                 }
 
+                if (dataItemNotificationBlast.status == "CALLING") {
+
+                    tvStatusCall.text = "WAITING"
+                }
+
                 tvDateStatusCall.ConvertDateCreateAt(dataItemNotificationBlast.createdAt.toString())
 
                 tvNameStatusCallNotif.text = dataItemNotificationBlast.name
