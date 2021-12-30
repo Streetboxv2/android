@@ -34,12 +34,16 @@ fun ImageView.loadImageUrl(url: String, context: Context) {
 }
 
 fun showView(view: View) {
-    view.visibility = View.VISIBLE
+    if (view !== null) {
+        view.visibility = View.VISIBLE
+    }
 }
 
 
 fun hideView(view: View) {
-    view.visibility = View.GONE
+    if (view !== null) {
+        view.visibility = View.GONE
+    }
 }
 
 fun hideKeyboard(view: View, context: Context) {
