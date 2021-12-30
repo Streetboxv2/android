@@ -380,7 +380,9 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
             override fun onFinish() {
                 timerCountDown = dataCooldown!!
                 tvTimerBlast?.text = "Blast Now"
-                multipleLoader.visibility = View.INVISIBLE
+                if (multipleLoader != null) {
+                    multipleLoader.visibility = View.INVISIBLE
+                }
                 showView(rlMultipleLoader)
                 showView(imgRippleLoader)
             }
