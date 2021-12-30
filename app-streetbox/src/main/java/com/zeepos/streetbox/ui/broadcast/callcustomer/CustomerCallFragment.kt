@@ -1,6 +1,7 @@
 package com.zeepos.streetbox.ui.broadcast.callcustomer
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.chad.library.adapter.base.listener.OnClickItemAny
@@ -92,8 +93,10 @@ class CustomerCallFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel
             is BroadCastViewEvent.OnSuccessList -> {
                 mutableListDataItemGetStatusCallFoodTruck =
                     useCase.dataItemGetStatusCallFoodTruck.data as MutableList<DataItemGetStatusCallFoodTruck>
-                if (mutableListDataItemGetStatusCallFoodTruck.isNotEmpty())
+                if (mutableListDataItemGetStatusCallFoodTruck.isNotEmpty()) {
                     initAdapter(mutableListDataItemGetStatusCallFoodTruck)
+                    tvNotFoundCustomer.visibility = View.INVISIBLE
+                }
                 else {
                     hideView(progressListBlast)
                     showView(tvNotFoundCustomer)

@@ -51,7 +51,10 @@ class OperatorFTActivity : BaseActivity<OperatorFTViewEvent, OperatorFTViewModel
         return R.layout.operator_ft_activity
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        getLastLocation()
+    }
 
     override fun init() {
         viewModel = ViewModelProvider(this, viewModeFactory).get(OperatorFTViewModel::class.java)
@@ -76,28 +79,12 @@ class OperatorFTActivity : BaseActivity<OperatorFTViewEvent, OperatorFTViewModel
 
         typeNotifOperator = intent.getStringExtra("typeNotifOperator")
         body = intent.getStringExtra("body")
-        if(typeNotifOperator!=null) {
-            SharedPreferenceUtil.setString(
-                this,
-                "title",
-                typeNotifOperator
-            )
 
-            SharedPreferenceUtil.setString(
-                this,
-                "body",
-                body
-            )
-        }
 
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
-        if(typeNotifOperator!=null) {
-            startActivity(OperatorMainActivity.getIntent(this,
-                latitude!!, longitude!!,0)
-            )
-        }
+
         toolbar.setNavigationOnClickListener{
             logout()
         }
@@ -105,15 +92,11 @@ class OperatorFTActivity : BaseActivity<OperatorFTViewEvent, OperatorFTViewModel
             if (isFlag == false) {
                 viewModel.shiftInOperatorTask()
             } else {
-                if(typeNotifOperator!=null) {
+
                     startActivity(OperatorMainActivity.getIntent(this,
                         latitude!!, longitude!!,0)
                     )
-                }else{
-                    startActivity(OperatorMainActivity.getIntent(this,
-                        latitude!!, longitude!!,0)
-                    )
-                }
+
 
             }
         }
@@ -195,6 +178,22 @@ class OperatorFTActivity : BaseActivity<OperatorFTViewEvent, OperatorFTViewModel
                     } else {
                         latitude = location.latitude
                         longitude = location.longitude
+                        if(typeNotifOperator!=null) {
+                            SharedPreferenceUtil.setString(
+                                this,
+                                "typeNotifOperator",
+                                typeNotifOperator
+                            )
+
+                            SharedPreferenceUtil.setString(
+                                this,
+                                "body",
+                                body
+                            )
+                            startActivity(OperatorMainActivity.getIntent(this,
+                                latitude!!, longitude!!,0)
+                            )
+                        }
                     }
                 }
             } else {
