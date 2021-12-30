@@ -268,7 +268,10 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
     private fun startManualBlast(dataItem: DataRuleBlast) {
         if (!isActive) {
             showView(tvKetNotData)
-            hideView(rlMultipleLoader)
+//            hideView(rlMultipleLoader)
+            if (rlMultipleLoader != null) {
+                rlMultipleLoader.visibility = View.INVISIBLE
+            }
             hideView(switchAutoBlast)
         } else {
             showView(rlMultipleLoader)
@@ -310,17 +313,17 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
                             " and current time $timeFormatTotal"
                 )
 
+                if (!isClickSwitch) {
+                    countDownTimerAutoBlast?.cancel()
+                    println("respon puaseee ")
+                }
 
                 if (timeFormatTotal.time > parseGetCoolDown.time) {
                     tvTimerBlast.text = "Blast Now"
                 } else {
+                    hideView(imgRippleLoader)
                     timeCountInMilliSeconds = testTotal
                     startCountDownTimer()
-                }
-
-                if (!isClickSwitch) {
-                    countDownTimerAutoBlast?.cancel()
-                    println("respon puaseee ")
                 }
             } else {
                 timerCountDown = dataItem.cooldown!!
