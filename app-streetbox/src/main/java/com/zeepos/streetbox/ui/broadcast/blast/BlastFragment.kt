@@ -261,7 +261,7 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
     private fun startManualBlast(dataItem: DataRuleBlast) {
         if (!isActive) {
             showView(tvKetNotData)
-            hideView(rlMultipleLoader)
+//            hideView(rlMultipleLoader)
             hideView(switchAutoBlast)
         } else {
             showView(rlMultipleLoader)
