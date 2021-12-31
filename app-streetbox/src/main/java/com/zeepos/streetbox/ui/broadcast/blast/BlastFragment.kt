@@ -177,6 +177,7 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
             is BroadCastViewEvent.OnSuccessNotifBlastManual -> {
                 dismissLoading()
                 val dataItem = useCase.jsonObject
+
                 viewModel.callGetTimerBlast()
             }
             is BroadCastViewEvent.OnSuccessReqAutoBlast -> {
@@ -275,6 +276,7 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
             hideView(switchAutoBlast)
         } else {
             showView(rlMultipleLoader)
+            showView(multipleLoader)
             showView(switchAutoBlast)
 
             if (dataItem.lastManualBlast?.isNotEmpty()!!) {
@@ -315,12 +317,15 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
 
                 if (!isClickSwitch) {
                     countDownTimerAutoBlast?.cancel()
+                    timeCountInMilliSeconds = 0
                     println("respon puaseee ")
                 }
 
                 if (timeFormatTotal.time > parseGetCoolDown.time) {
                     tvTimerBlast.text = "Blast Now"
                 } else {
+                    showView(rlMultipleLoader)
+                    showView(multipleLoader)
                     hideView(imgRippleLoader)
                     timeCountInMilliSeconds = testTotal
                     startCountDownTimer()
@@ -367,8 +372,8 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
 
 
     private fun startCountDownTimer() {
-        showView(multipleLoader)
-        hideView(imgRippleLoader)
+//        showView(multipleLoader)
+//        hideView(imgRippleLoader)
         countDownTimer = object : CountDownTimer(timeCountInMilliSeconds, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 timeRunning = millisUntilFinished
@@ -414,6 +419,8 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
                     tvTimerAutoBlast?.text = hmsTimeFormatter(timeRunningAuto)
                 }
             }
+
+
         }
         countDownTimerAutoBlast?.start()
     }

@@ -81,7 +81,7 @@
                 android:id="@+id/multipleLoader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"
+                android:visibility="visible"
                 app:multipleripple_animDuration="3000"
                 app:multipleripple_circleColor="@color/colorPrimaryDark"
                 app:multipleripple_circleInitialRadius="@dimen/_37sdp"
@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:src="@drawable/circle_green"
-                android:visibility="gone" />
+               />
 
             <TextView
                 android:id="@+id/tvTimerBlast"
