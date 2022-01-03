@@ -152,6 +152,12 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
         initCurrentLocation()
         setTabViewPager()
 
+        imgRippleLoaderNew.setOnClickListener {
+            isClickAutoBlast = false
+            Hawk.put("isClickSwitch", isClickAutoBlast)
+            hitApiBlastNotif()
+        }
+
         imgRippleLoader.setOnClickListener {
             isClickAutoBlast = false
             Hawk.put("isClickSwitch", isClickAutoBlast)
@@ -223,9 +229,9 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
 
         var testTotal = lastBlastParse.time - currentParse.time
         val limit = dataItem.interval!! * 60000.toLong()
-        if (testTotal > limit || testTotal < 0) {
+//        if (testTotal > limit || testTotal < 0) {
             testTotal = limit
-        }
+//        }
         val formatTotal = formatTime.format(testTotal)
         println("respon Time auto $testTotal and $formatTotal and current time $currentParse")
 
@@ -267,14 +273,13 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
 
     private fun startManualBlast(dataItem: DataRuleBlast) {
         if (!isActive) {
-            showView(tvKetNotData)
-//            hideView(rlMultipleLoader)
-            if (rlMultipleLoader != null) {
-                rlMultipleLoader.visibility = View.INVISIBLE
-            }
+//            showView(tvKetNotData)
+//            showView(rlMultipleLoader)
+//            hideView(rlMultipleLoaderNew)
             hideView(switchAutoBlast)
         } else {
-            showView(rlMultipleLoader)
+//            hideView(rlMultipleLoader)
+//            showView(rlMultipleLoaderNew)
             showView(switchAutoBlast)
 
             if (dataItem.lastManualBlast?.isNotEmpty()!!) {
@@ -321,7 +326,7 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
                 if (timeFormatTotal.time > parseGetCoolDown.time) {
                     tvTimerBlast.text = "Blast Now"
                 } else {
-                    hideView(imgRippleLoader)
+//                    hideView(imgRippleLoader)
                     timeCountInMilliSeconds = testTotal
                     startCountDownTimer()
                 }
@@ -345,6 +350,7 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
                 hitApiAutoBlastNotif()
                 println("respon Switch if true")
             } else {
+                tvTimerAutoBlast?.text = hmsTimeFormatter(0)
                 isClickAutoBlast = false
                 Hawk.put("isClickSwitch", isClickAutoBlast)
                 hitApiAutoBlastNotif()
@@ -367,12 +373,14 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
 
 
     private fun startCountDownTimer() {
-        showView(multipleLoader)
-        hideView(imgRippleLoader)
+//        showView(multipleLoader)
+//        hideView(imgRippleLoader)
+        hideView(rlMultipleLoader)
+        showView(rlMultipleLoaderNew)
         countDownTimer = object : CountDownTimer(timeCountInMilliSeconds, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 timeRunning = millisUntilFinished
-                tvTimerBlast?.text = hmsTimeFormatter(millisUntilFinished)
+                tvTimerBlastNew?.text = hmsTimeFormatter(millisUntilFinished)
                 progressBarCircle?.progress = (millisUntilFinished / 1000).toInt()
                 println("respon Test countd")
             }
@@ -380,11 +388,8 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
             override fun onFinish() {
                 timerCountDown = dataCooldown!!
                 tvTimerBlast?.text = "Blast Now"
-                if (multipleLoader != null) {
-                    multipleLoader.visibility = View.INVISIBLE
-                }
                 showView(rlMultipleLoader)
-                showView(imgRippleLoader)
+                hideView(rlMultipleLoaderNew)
             }
         }
         countDownTimer?.start()

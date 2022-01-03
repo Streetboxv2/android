@@ -96,10 +96,53 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:src="@drawable/circle_green"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/tvTimerBlast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="Blast Now"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlMultipleLoaderNew"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_10sdp"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <com.agrawalsuneet.loaderspack.loaders.MultipleRippleLoader
+                android:id="@+id/multipleLoaderNew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:multipleripple_animDuration="3000"
+                app:multipleripple_circleColor="@color/colorPrimaryDark"
+                app:multipleripple_circleInitialRadius="@dimen/_37sdp"
+                app:multipleripple_fromAlpha="0.7"
+                app:multipleripple_interpolator="@android:anim/decelerate_interpolator"
+                app:multipleripple_noOfRipples="3"
+                app:multipleripple_toAplha="0.2" />
+
+            <ImageView
+                android:id="@+id/imgRippleLoaderNew"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/circle_green"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tvTimerBlastNew"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
