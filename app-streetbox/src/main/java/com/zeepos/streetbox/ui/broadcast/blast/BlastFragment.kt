@@ -12,6 +12,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.messaging.FirebaseMessaging
 import com.orhanobut.hawk.Hawk
+import com.zeepos.models.ConstVar
 import com.zeepos.models.master.User
 import com.zeepos.models.response.DataRuleBlast
 import com.zeepos.streetbox.R
@@ -80,8 +81,10 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
     }
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -139,12 +142,18 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
     override fun onViewReady(savedInstanceState: Bundle?) {
         showLoading()
         initial()
+
     }
 
     override fun onResume() {
         super.onResume()
         showLoading()
         initial()
+        val lastAutoBlast =
+            SharedPreferenceUtil.getString(requireContext(), "lastautoblast","00:00:00")
+                ?: "00:00:00"
+
+        tvTimer.setText(lastAutoBlast)
     }
 
 
@@ -179,6 +188,8 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
             is BroadCastViewEvent.OnSuccessTimerGetBlast -> {
                 val dataItem = useCase.responseRuleBlast.data
                 validationTimer(dataItem)
+                lastAutoBlast(dataItem!!)
+                tvTimer.setText(dataItem.lastAutoBlast)
             }
             is BroadCastViewEvent.OnSuccessNotifBlastManual -> {
                 dismissLoading()
@@ -268,6 +279,15 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
 
         startCountDownAuto(dataItem)
         startManualBlast(dataItem)
+
+    }
+
+    private fun lastAutoBlast(dataItem: DataRuleBlast){
+        SharedPreferenceUtil.setString(
+            requireContext(),
+            "lastautoblast",
+            dataItem.lastAutoBlast
+        )
 
     }
 
