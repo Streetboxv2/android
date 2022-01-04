@@ -19,7 +19,7 @@ class HomePagerAdapter(fm: FragmentManager, val instanceFragment: InstanceFragme
         when (position) {
             0 -> return "Nearby"
             1 -> return "Home Visit"
-//            2 -> return "Door To Door"
+            2 -> return "Door To Door"
         }
 
         return "Nearby"
