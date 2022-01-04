@@ -276,11 +276,11 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
 //            showView(tvKetNotData)
 //            showView(rlMultipleLoader)
 //            hideView(rlMultipleLoaderNew)
-            hideView(switchAutoBlast)
+//            hideView(switchAutoBlast)
         } else {
 //            hideView(rlMultipleLoader)
 //            showView(rlMultipleLoaderNew)
-            showView(switchAutoBlast)
+//            showView(switchAutoBlast)
 
             if (dataItem.lastManualBlast?.isNotEmpty()!!) {
                 lastTimerCountDonw = ConvertDateTimeString(dataItem.lastManualBlast.toString())
@@ -375,12 +375,12 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
     private fun startCountDownTimer() {
 //        showView(multipleLoader)
 //        hideView(imgRippleLoader)
-        hideView(rlMultipleLoader)
-        showView(rlMultipleLoaderNew)
+//        hideView(rlMultipleLoader)
+//        showView(rlMultipleLoaderNew)
         countDownTimer = object : CountDownTimer(timeCountInMilliSeconds, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 timeRunning = millisUntilFinished
-                tvTimerBlastNew?.text = hmsTimeFormatter(millisUntilFinished)
+                tvTimerBlast?.text = hmsTimeFormatter(millisUntilFinished)
                 progressBarCircle?.progress = (millisUntilFinished / 1000).toInt()
                 println("respon Test countd")
             }
@@ -388,8 +388,8 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
             override fun onFinish() {
                 timerCountDown = dataCooldown!!
                 tvTimerBlast?.text = "Blast Now"
-                showView(rlMultipleLoader)
-                hideView(rlMultipleLoaderNew)
+//                showView(rlMultipleLoader)
+//                hideView(rlMultipleLoaderNew)
             }
         }
         countDownTimer?.start()

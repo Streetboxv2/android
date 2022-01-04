@@ -57,7 +57,8 @@ class AcceptedCallMapsActivity : BaseActivity<BroadCastViewEvent, BroadCastViewM
         btnFinishOrder.setOnClickListener {
             showLoading()
             val isClickSave = Hawk.get<Boolean>("isClickSwitch")
-            if (isClickSave != null && !isClickSave) {
+            val originSwitch = Hawk.get<Boolean>("originSwitch")
+            if (isClickSave != null && !isClickSave && originSwitch) {
                 Hawk.put("isClickSwitch", isClickSave)
                 viewModel.callReqAutoBlastToggle()
             }
