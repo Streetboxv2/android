@@ -153,16 +153,16 @@ class MenuActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
 
     override fun onResume() {
         super.onResume()
-        showLoading()
-        isGetOrderSuccess = false
-        viewModel.getBookAvailableDate(merchantId)
-        if (types.equals("homevisit", ignoreCase = true)) {
-            tvTitleMenuHeader.text = "Menu Visit"
-            viewModel.getProduct("visit", merchantId)
-        } else {
-            tvTitleMenuHeader.text = "Menu Nearby"
-            viewModel.getProduct("nearby", merchantId)
-        }
+//        showLoading()
+//        isGetOrderSuccess = false
+//        viewModel.getBookAvailableDate(merchantId)
+//        if (types.equals("homevisit", ignoreCase = true)) {
+//            tvTitleMenuHeader.text = "Menu Visit"
+//            viewModel.getProduct("visit", merchantId)
+//        } else {
+//            tvTitleMenuHeader.text = "Menu Nearby"
+//            viewModel.getProduct("nearby", merchantId)
+//        }
     }
 
 

@@ -83,13 +83,14 @@ class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
                     R.id.fl_content,
                     OrderHistoryFragment::class.simpleName
                 )
-            }else{
-                replaceFragment(
-                    DoortoDoorFragment.newInstance("",""),
-                    R.id.fl_content,
-                    OrderHistoryFragment::class.simpleName
-                )
             }
+//            else{
+//                replaceFragment(
+//                    DoortoDoorFragment.newInstance("",""),
+//                    R.id.fl_content,
+//                    OrderHistoryFragment::class.simpleName
+//                )
+//            }
 
 //            )
         } else {
@@ -227,14 +228,14 @@ class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
                         )
                         return true
                     }
-                    R.id.nav_dortodoor -> {
-                        replaceFragment(
-                            DoortoDoorFragment.newInstance(typeNotif.toString(), ""),
-                            R.id.fl_content,
-                            DoortoDoorFragment::class.simpleName
-                        )
-                        return true
-                    }
+//                    R.id.nav_dortodoor -> {
+//                        replaceFragment(
+//                            DoortoDoorFragment.newInstance(typeNotif.toString(), ""),
+//                            R.id.fl_content,
+//                            DoortoDoorFragment::class.simpleName
+//                        )
+//                        return true
+//                    }
                     R.id.nv_order_history -> {
                         replaceFragment(
                             OrderHistoryFragment.newInstance(),

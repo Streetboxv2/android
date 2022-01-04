@@ -84,6 +84,8 @@ class BookHomeVisitActivity : BaseActivity<BookHomeVisitViewEvent, BookHomeVisit
 
     override fun onResume() {
         super.onResume()
+        init()
+//            totalQty
 
         bookedData.visitSales.clear()
     }

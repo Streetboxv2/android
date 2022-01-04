@@ -2,6 +2,7 @@ package com.zeepos.payment
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.ViewGroup
@@ -96,6 +97,7 @@ class QRDialog : BaseDialogFragment() {
 
                 if (appType == ConstVar.APP_CUSTOMER) {
                    saveQr()
+
                 }else {
                     dismiss()
                     activity?.setResult(Activity.RESULT_OK)

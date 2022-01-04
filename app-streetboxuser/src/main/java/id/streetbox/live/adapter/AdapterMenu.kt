@@ -116,7 +116,7 @@ class AdapterMenu(
     }
 
     fun setProDuctSalesMap(productSalesList: List<ProductSales>) {
-//        productSalesMap.clear()
+        productSalesMap.clear()
         productSalesList.forEach {
             productSalesMap[it.productId] = it
             println("respon angka ${it.qty}")

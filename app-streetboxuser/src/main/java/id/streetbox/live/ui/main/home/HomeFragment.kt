@@ -28,7 +28,7 @@ class HomeFragment : BaseFragment<HomeViewEvent, HomeViewModel>() {
             when (position) {
                 0 -> NearByFragment.newInstance()
                 1 -> HomeVisitFragment.newInstance()
-                2 -> DoortoDoorFragment.newInstance("", "")
+//                2 -> DoortoDoorFragment.newInstance("", "")
                 else -> NearByFragment.newInstance()
             }
     }
