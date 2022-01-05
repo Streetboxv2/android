@@ -73,10 +73,7 @@ class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
     override fun onViewReady(savedInstanceState: Bundle?) {
 
         if (typeNotif != null) {
-//            addFragment(
-               /* HomeFragment.newInstance(typeNotif.toString()),
-                R.id.fl_content,
-                HomeFragment::class.simpleName*/
+
             if(typeNotif!!.equals("Online Order Nearby")){
                 replaceFragment(
                     OrderHistoryFragment.newInstance(),
@@ -84,15 +81,14 @@ class MainActivity : BaseActivity<MainViewEvent, MainViewModel>() {
                     OrderHistoryFragment::class.simpleName
                 )
             }
-//            else{
-//                replaceFragment(
-//                    DoortoDoorFragment.newInstance("",""),
-//                    R.id.fl_content,
-//                    OrderHistoryFragment::class.simpleName
-//                )
-//            }
+            else{
+                replaceFragment(
+                    DoortoDoorFragment.newInstance("",""),
+                    R.id.fl_content,
+                    OrderHistoryFragment::class.simpleName
+                )
+            }
 
-//            )
         } else {
             addFragment(
                 HomeFragment.newInstance(""),

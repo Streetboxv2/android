@@ -48,6 +48,7 @@ class ProfileFragment : BaseFragment<ProfileViewEvent, ProfileViewModel>() {
     }
 
     override fun init() {
+        user = User()
         viewModel = ViewModelProvider(this, viewModeFactory).get(ProfileViewModel::class.java)
     }
 

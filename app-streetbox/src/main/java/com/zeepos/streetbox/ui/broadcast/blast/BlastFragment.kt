@@ -140,7 +140,7 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
     }
 
     override fun onViewReady(savedInstanceState: Bundle?) {
-        showLoading()
+//        showLoading()
         initial()
 
     }
