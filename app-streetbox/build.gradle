@@ -42,12 +42,12 @@ android {
     productFlavors {
         dev {
             dimension "basic"
-            buildConfigField 'String', 'SERVER', '"https://streebox-api.deploy.cbs.co.id"'
+            buildConfigField 'String', 'SERVER', '"https://api.streetbox.id/"'
             buildConfigField 'String', 'CLIENT_ID', '"streetbox-mobile-merchant"'
         }
         demo {
             dimension "basic"
-            buildConfigField 'String', 'SERVER', '"https://streebox-api.deploy.cbs.co.id"'
+            buildConfigField 'String', 'SERVER', '"https://api.streetbox.id/"'
             buildConfigField 'String', 'CLIENT_ID', '"streetbox-mobile-merchant"'
         }
         prod {
@@ -111,6 +111,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'com.github.jeffreyliu8:android-ripple-background:1.0.1'
 
     implementation "androidx.multidex:multidex:$multidex"
     implementation "io.reactivex.rxjava2:rxjava:$rxJava"

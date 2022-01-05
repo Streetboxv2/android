@@ -162,15 +162,21 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
         setTabViewPager()
 
         imgRippleLoaderNew.setOnClickListener {
-            isClickAutoBlast = false
-            Hawk.put("isClickSwitch", isClickAutoBlast)
-            hitApiBlastNotif()
+            if (tvTimerBlast !== null && tvTimerBlast?.text !== null && tvTimerBlast?.text!!.equals("Blast Now")) {
+                isClickAutoBlast = false
+                Hawk.put("isClickSwitch", isClickAutoBlast)
+                Hawk.put("blastManual", true)
+                hitApiBlastNotif()
+            }
         }
 
         imgRippleLoader.setOnClickListener {
-            isClickAutoBlast = false
-            Hawk.put("isClickSwitch", isClickAutoBlast)
-            hitApiBlastNotif()
+            if (tvTimerBlast !== null && tvTimerBlast?.text !== null && tvTimerBlast?.text!!.equals("Blast Now")) {
+                isClickAutoBlast = false
+                Hawk.put("isClickSwitch", isClickAutoBlast)
+                Hawk.put("blastManual", true)
+                hitApiBlastNotif()
+            }
         }
 
         val user = viewModel.getUser()
@@ -240,17 +246,31 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
 
         var testTotal = lastBlastParse.time - currentParse.time
         val limit = dataItem.interval!! * 60000.toLong()
-//        if (testTotal > limit || testTotal < 0) {
+        val fromSwitch = Hawk.get<Boolean>("fromSwitch")
+        if (testTotal > limit || testTotal < 0) {
             testTotal = limit
-//        }
+        }
+        if (fromSwitch != null && fromSwitch) {
+            testTotal = limit
+            Hawk.put("fromSwitch", false)
+        }
         val formatTotal = formatTime.format(testTotal)
         println("respon Time auto $testTotal and $formatTotal and current time $currentParse")
 
         if (dataItem.isAutoBlast!!) {
             println("respon start")
             timeCountInMilliSecondsAuto = testTotal
-            startCountDownTimerAutoBlast()
+
+            val isStillRun = Hawk.get<Boolean>("isStillRun")
+            if (isStillRun !== null && !isStillRun) {
+                startCountDownTimerAutoBlast()
+            } else {
+                Hawk.put("isStillRun", false)
+                countDownTimerAutoBlast?.cancel()
+                startCountDownTimerAutoBlast()
+            }
         } else {
+            Hawk.put("isStillRun", false)
             countDownTimerAutoBlast?.cancel()
             println("respon Pause")
         }
@@ -277,8 +297,13 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
 
         println("respon Click blast $isClickAutoBlast")
 
-        startCountDownAuto(dataItem)
-        startManualBlast(dataItem)
+        val blastManual = Hawk.get<Boolean>("blastManual")
+        if (blastManual !== null && blastManual) {
+            startManualBlast(dataItem)
+            Hawk.put("blastManual", false)
+        } else {
+            startCountDownAuto(dataItem)
+        }
 
     }
 
@@ -339,6 +364,7 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
                 )
 
                 if (!isClickSwitch) {
+                    Hawk.put("isStillRun", false)
                     countDownTimerAutoBlast?.cancel()
                     println("respon puaseee ")
                 }
@@ -367,6 +393,7 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
             if (isClickSwitch) {
                 isClickAutoBlast = true
                 Hawk.put("isClickSwitch", isClickAutoBlast)
+                Hawk.put("fromSwitch", true)
                 hitApiAutoBlastNotif()
                 println("respon Switch if true")
             } else {
@@ -374,6 +401,7 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
                 isClickAutoBlast = false
                 Hawk.put("isClickSwitch", isClickAutoBlast)
                 hitApiAutoBlastNotif()
+                Hawk.put("isStillRun", false)
                 countDownTimerAutoBlast?.cancel()
                 println("respon Switch else true")
             }
@@ -394,9 +422,10 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
 
     private fun startCountDownTimer() {
 //        showView(multipleLoader)
-//        hideView(imgRippleLoader)
+        hideView(imgRippleLoader)
 //        hideView(rlMultipleLoader)
 //        showView(rlMultipleLoaderNew)
+        rippleBackground.startRippleAnimation();
         countDownTimer = object : CountDownTimer(timeCountInMilliSeconds, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 timeRunning = millisUntilFinished
@@ -408,6 +437,8 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
             override fun onFinish() {
                 timerCountDown = dataCooldown!!
                 tvTimerBlast?.text = "Blast Now"
+                rippleBackground.stopRippleAnimation();
+                showView(imgRippleLoader)
 //                showView(rlMultipleLoader)
 //                hideView(rlMultipleLoaderNew)
             }
@@ -418,6 +449,7 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
     private fun startCountDownTimerAutoBlast() {
         countDownTimerAutoBlast = object : CountDownTimer(timeCountInMilliSecondsAuto, 1000) {
             override fun onTick(millisUntilFinished: Long) {
+                Hawk.put("isStillRun", true)
                 if (dataRuleBlast?.isAutoBlast!!) {
                     timeRunningAuto = millisUntilFinished
                     tvTimerAutoBlast?.text = hmsTimeFormatter(millisUntilFinished)
@@ -430,6 +462,7 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
 
             override fun onFinish() {
                 println("respon Finish auto")
+                Hawk.put("isStillRun", false)
                 if (dataRuleBlast != null) {
                     startCountDownAuto(dataRuleBlast!!)
                 } else {
