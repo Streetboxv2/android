@@ -52,7 +52,10 @@ class ProductRepoImpl @Inject internal constructor(
     }
 
     override fun getAllProductsCloud(filter: String, merchantId: Long): Single<List<Product>> {
-        return service.getAllProducts(merchantId)
+
+        val queryMap: HashMap<String, String> = hashMapOf()
+        queryMap["filter"] = "$filter"
+        return service.getAllProducts(merchantId,queryMap)
             .onErrorResumeNext {
                 Single.error {
                     RetrofitException.handleRetrofitException(it, retrofit)

@@ -298,7 +298,8 @@ interface RemoteService {
 
     @GET("consumer/merchant/menu/{merchantId}")
     fun getAllProducts(
-        @Path("merchantId") merchantId: Long
+        @Path("merchantId") merchantId: Long,
+        @QueryMap query: Map<String, String> = mapOf()
     ): Single<ResponseApi<List<Product>>>
 
     @GET("consumer/payment-method")
