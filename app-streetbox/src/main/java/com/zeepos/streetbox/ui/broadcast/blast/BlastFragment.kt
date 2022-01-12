@@ -84,7 +84,7 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        println("ON CREATE")
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -147,6 +147,7 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
 
     override fun onResume() {
         super.onResume()
+        println("ON RESUME")
         showLoading()
         initial()
         val lastAutoBlast =
@@ -154,6 +155,14 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
                 ?: "00:00:00"
 
         tvTimer.setText(lastAutoBlast)
+
+        val isRunAuto = Hawk.get<Boolean>("isRunAuto")
+        if (isRunAuto != null && isRunAuto) {
+            val currentTimeRun = Hawk.get<Long>("currentTimeRun")
+            if (currentTimeRun != null && tvTimerBlast?.text!!.equals("Blast Now")) {
+                startCountDownTimerResume(currentTimeRun)
+            }
+        }
     }
 
 
@@ -323,9 +332,6 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
 //            hideView(rlMultipleLoaderNew)
 //            hideView(switchAutoBlast)
         } else {
-//            hideView(rlMultipleLoader)
-//            showView(rlMultipleLoaderNew)
-//            showView(switchAutoBlast)
 
             if (dataItem.lastManualBlast?.isNotEmpty()!!) {
                 lastTimerCountDonw = ConvertDateTimeString(dataItem.lastManualBlast.toString())
@@ -372,7 +378,6 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
                 if (timeFormatTotal.time > parseGetCoolDown.time) {
                     tvTimerBlast.text = "Blast Now"
                 } else {
-//                    hideView(imgRippleLoader)
                     timeCountInMilliSeconds = testTotal
                     startCountDownTimer()
                 }
@@ -419,28 +424,57 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
         }.attach()
     }
 
+    private fun startCountDownTimerResume(resumeTime: Long) {
+        hideView(imgRippleLoader)
+        val countDownTimer2 = object : CountDownTimer(resumeTime, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                rippleBackground.startRippleAnimation();
+                tvTimerBlast?.text = hmsTimeFormatter(millisUntilFinished)
+                progressBarCircle?.progress = (millisUntilFinished / 1000).toInt()
+                println("respon Test countd2")
+            }
+
+            override fun onFinish() {
+                Hawk.put("isRunAuto", false)
+                timerCountDown = dataCooldown!!
+                tvTimerBlast?.text = "Blast Now"
+                if (rippleBackground != null) {
+                    rippleBackground.stopRippleAnimation();
+                }
+                if (imgRippleLoader != null) {
+                    showView(imgRippleLoader)
+                }
+            }
+        }
+        countDownTimer2?.start()
+    }
 
     private fun startCountDownTimer() {
-//        showView(multipleLoader)
         hideView(imgRippleLoader)
-//        hideView(rlMultipleLoader)
-//        showView(rlMultipleLoaderNew)
+        Hawk.put("isRunAuto", true)
         rippleBackground.startRippleAnimation();
         countDownTimer = object : CountDownTimer(timeCountInMilliSeconds, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 timeRunning = millisUntilFinished
+                Hawk.put("currentTimeRun", millisUntilFinished)
                 tvTimerBlast?.text = hmsTimeFormatter(millisUntilFinished)
                 progressBarCircle?.progress = (millisUntilFinished / 1000).toInt()
                 println("respon Test countd")
             }
 
             override fun onFinish() {
+                Hawk.put("isRunAuto", false)
                 timerCountDown = dataCooldown!!
                 tvTimerBlast?.text = "Blast Now"
-                rippleBackground.stopRippleAnimation();
-                showView(imgRippleLoader)
-//                showView(rlMultipleLoader)
-//                hideView(rlMultipleLoaderNew)
+                if (rippleBackground != null) {
+                    rippleBackground.stopRippleAnimation();
+                }
+//                if (rippleBackground2 != null) {
+//                    rippleBackground2.stopRippleAnimation();
+//                }
+                if (imgRippleLoader != null) {
+                    showView(imgRippleLoader)
+                }
             }
         }
         countDownTimer?.start()
