@@ -34,7 +34,7 @@ class MonthYearPickerDialog : DialogFragment() {
         monthPicker.maxValue = 12
         monthPicker.value = cal.get(Calendar.MONTH)
         val year: Int = cal.get(Calendar.YEAR)
-        yearPicker.minValue = year
+        yearPicker.minValue = year - 1
         yearPicker.maxValue = MAX_YEAR
         yearPicker.value = year
         builder.setView(dialog) // Add action buttons
