@@ -428,9 +428,16 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
         hideView(imgRippleLoader)
         val countDownTimer2 = object : CountDownTimer(resumeTime, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                rippleBackground.startRippleAnimation();
-                tvTimerBlast?.text = hmsTimeFormatter(millisUntilFinished)
-                progressBarCircle?.progress = (millisUntilFinished / 1000).toInt()
+                Hawk.put("currentTimeRun", millisUntilFinished)
+                if (rippleBackground != null) {
+                    rippleBackground.startRippleAnimation();
+                }
+                if (tvTimerBlast != null) {
+                    tvTimerBlast?.text = hmsTimeFormatter(millisUntilFinished)
+                }
+                if (progressBarCircle != null) {
+                    progressBarCircle?.progress = (millisUntilFinished / 1000).toInt()
+                }
                 println("respon Test countd2")
             }
 
@@ -438,6 +445,9 @@ class BlastFragment : BaseFragment<BroadCastViewEvent, BroadCastViewModel>() {
                 Hawk.put("isRunAuto", false)
                 timerCountDown = dataCooldown!!
                 tvTimerBlast?.text = "Blast Now"
+                if (tvTimerBlast != null) {
+                    tvTimerBlast?.text = "Blast Now"
+                }
                 if (rippleBackground != null) {
                     rippleBackground.stopRippleAnimation();
                 }
