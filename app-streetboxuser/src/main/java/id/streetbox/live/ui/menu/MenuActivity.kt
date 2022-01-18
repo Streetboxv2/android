@@ -315,7 +315,7 @@ class MenuActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
             }
             is MenuViewEvent.GetProductFailed -> {
                 dismissLoading()
-                showToastExt(useCase.errorMessage, this)
+                showToastExt("Tidak ada menu pada merchant ini", this)
             }
             is MenuViewEvent.GetOrCreateOrderSuccess -> {
                 dismissLoading()
