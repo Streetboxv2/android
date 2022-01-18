@@ -82,7 +82,7 @@ class HistoryFragment : BaseFragment<HistoryViewEvent, HistoryViewModel>() {
                 } else {
 //                    swipe_refresh.isRefreshing = false
                     orderHistoryAdapter.loadMoreModule.loadMoreEnd()
-                    Toast.makeText(requireContext(), "Tidak ada data", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(requireContext(), "Tidak ada data", Toast.LENGTH_SHORT).show()
                 }
             }
             is HistoryViewEvent.GetOrderHistoryFailed -> {

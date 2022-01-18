@@ -38,7 +38,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/ll_header"
         android:background="@color/orange" />
 
@@ -300,7 +300,7 @@
                 android:layout_height="wrap_content"
                 android:text="Change password"
                 android:textColor="@color/white"
-                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
                 android:fontFamily="@font/poppins_regular"

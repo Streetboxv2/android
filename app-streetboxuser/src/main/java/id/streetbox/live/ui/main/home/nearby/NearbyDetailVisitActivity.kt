@@ -272,7 +272,7 @@ class NearbyDetailVisitActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
         showLoading()
         getSaveListMenu = AppDatabase.getInstance(this)
             .dataDao().getAllDataListMenuNearby(merchantId.toInt())
-        viewModel.getProduct("visit", merchantId)
+        viewModel.getProduct("nearby", merchantId)
         viewModel.getRecentOrder(merchantId, foodTruck)
     }
 
