@@ -45,7 +45,12 @@ class ReceiptAdapter(data: MutableList<Order> = mutableListOf()) :
         if (item.trxId.isEmpty()) {
             holder.setText(R.id.tv_no_trx, "Processing Sync Server...")
         } else {
-            holder.setText(R.id.tv_no_trx, item.trxId)
+            if(item.typePayment.equals("CASH")){
+                holder.setText(R.id.tv_no_trx, ""+item.billNo)
+            }else{
+                holder.setText(R.id.tv_no_trx, item.trxId)
+            }
+
         }
         holder.setText(R.id.tv_jumlah, jumlah)
         if (item.trxId.isEmpty()) {
