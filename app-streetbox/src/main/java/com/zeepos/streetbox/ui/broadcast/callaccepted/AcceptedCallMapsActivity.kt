@@ -2,6 +2,7 @@ package com.zeepos.streetbox.ui.broadcast.callaccepted
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -40,7 +41,24 @@ class AcceptedCallMapsActivity : BaseActivity<BroadCastViewEvent, BroadCastViewM
         return R.layout.activity_call_accepted
     }
 
+    override fun onResume() {
+        val onprocess =
+            SharedPreferenceUtil.getString(applicationContext!!, "onprocess", ConstVar.EMPTY_STRING)
+                ?: ConstVar.EMPTY_STRING
+
+        if(onprocess.equals("1")){
+            btnOnProses.visibility = View.INVISIBLE
+            btnFinishOrder.visibility = View.VISIBLE
+        }else{
+            btnOnProses.visibility = View.VISIBLE
+            btnFinishOrder.visibility = View.INVISIBLE
+        }
+
+        super.onResume()
+    }
+
     override fun init() {
+
         dataItemGetStatusCallFoodTruck =
             intent.getParcelableExtra(ConstVar.DATA_ITEM_STATUS_CALL_FOODTRUCK)
         viewModel = ViewModelProvider(this, viewModeFactory).get(BroadCastViewModel::class.java)
@@ -55,6 +73,11 @@ class AcceptedCallMapsActivity : BaseActivity<BroadCastViewEvent, BroadCastViewM
 
     private fun initOnclick() {
         btnFinishOrder.setOnClickListener {
+            SharedPreferenceUtil.setString(
+                applicationContext,
+                "onprocess",
+                "0"
+            )
             showLoading()
             val isClickSave = Hawk.get<Boolean>("isClickSwitch")
             val originSwitch = Hawk.get<Boolean>("originSwitch")
@@ -66,6 +89,15 @@ class AcceptedCallMapsActivity : BaseActivity<BroadCastViewEvent, BroadCastViewM
         }
 
         btnOnProses.setOnClickListener {
+            SharedPreferenceUtil.setString(
+                applicationContext,
+               "onprocess",
+                "1"
+            )
+
+            btnFinishOrder.visibility = View.VISIBLE
+            btnOnProses.visibility = View.INVISIBLE
+
             showLoading()
             viewModel.callOnprocessOrder(dataItemGetStatusCallFoodTruck?.id.toString(), "onprocess")
         }

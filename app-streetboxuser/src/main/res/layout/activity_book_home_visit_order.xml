@@ -89,7 +89,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
-                android:text="Menu yang di pilih"
+                android:text="Menu yang di pilih1"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13sdp"
                 android:textStyle="bold"
