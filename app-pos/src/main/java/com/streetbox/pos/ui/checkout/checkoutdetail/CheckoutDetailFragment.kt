@@ -153,6 +153,7 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
         }
         btn_charge.setOnClickListener {
             isCashPayment = true
+           
             if (et_cash_amount.text.toString().isNullOrEmpty()) {
                 cashAmount = 0.0
             } else if (!et_cash_amount.text.toString().isNullOrEmpty()) {
@@ -170,8 +171,9 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
         btn_other_payment.setOnClickListener {
             showLoading()
             isCashPayment = false
-//            viewModel.closeOrder(order.uniqueId)
+
             order.address = "Address"
+            order.typePayment = "QRIS"
             val orderJson = gson.toJson(order)
             viewModel.getQRCodePayment(
                 order.merchantId,
@@ -347,7 +349,7 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
                 formatReceipt()
                 printBluetooth()
 
-//                viewModel.closeOrder(order.uniqueId)
+                viewModel.closeOrder(order.uniqueId)
 
                 qrCode.let {
                     showDialog(CheckoutQRDialog.getInstance(it, printContent, printKitchenContent))
@@ -421,7 +423,7 @@ class CheckoutDetailFragment : BaseFragment<CheckoutDetailViewEvent, CheckoutDet
             }
         }
 
-        if (isCashPayment) {
+        if (isCashPayment == true) {
             order.typePayment = "CASH"
 
             pay =
