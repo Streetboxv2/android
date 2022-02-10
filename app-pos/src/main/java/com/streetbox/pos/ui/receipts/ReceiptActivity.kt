@@ -105,6 +105,7 @@ class ReceiptActivity : BaseActivity<ReceiptViewEvent, ReceiptViewModel>() {
         btn_cari.setOnClickListener {
 //            if (!sv_search.isIconified)
 //                sv_search.isIconified = true
+            showLoading()
             viewModel.getAllTransaction(startDate, endDate, "")
         }
     }
