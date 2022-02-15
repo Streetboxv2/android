@@ -377,6 +377,7 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
 
 
     fun formatReceipt(){
+        menu = ""
         for (i in productMenu.indices) {
 
             header = "[L]QTY ITEM[R]PRICE\n"
@@ -473,7 +474,7 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
     @SuppressLint("SimpleDateFormat")
     fun getAsyncEscPosPrinter(printerConnection: DeviceConnection?): AsyncEscPosPrinter? {
 
-
+        qrCodeM = ""
         val productSales = productMenu
         val username =
             userOperator!!.userName!!.substring(0, userOperator!!.userName!!.indexOf("@"));

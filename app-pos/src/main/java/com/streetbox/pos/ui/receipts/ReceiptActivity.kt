@@ -128,6 +128,7 @@ class ReceiptActivity : BaseActivity<ReceiptViewEvent, ReceiptViewModel>() {
             }
 
             is ReceiptViewEvent.GetDetailOrderHistorySuccess -> {
+                dismissLoading()
                 val taxType = useCase.data.taxSales!![0].type
                 val taxName = useCase.data.taxSales!![0].name
                 val isActvie = useCase.data.taxSales!![0].isActive
@@ -174,7 +175,7 @@ class ReceiptActivity : BaseActivity<ReceiptViewEvent, ReceiptViewModel>() {
              order = adapter.getItem(position) as Order
 //            val dialog = ReceiptDetailDialog()
 //            val bundle = Bundle()
-
+                showLoading()
                 viewModel.getDetailOrderHistoryPOS(order.trxId)
 //            bundle.putString("orderUniqueId", order.uniqueId)
 //            bundle.putInt("taxType", order.taxSales[0].type)
