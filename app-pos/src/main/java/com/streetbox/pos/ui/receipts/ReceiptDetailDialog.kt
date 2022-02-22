@@ -240,7 +240,9 @@ class  ReceiptDetailDialog : BaseDialogFragment() {
         tv_status_label?.text = "Status: ${orderBillMenu[0]?.billNo}"
 
         tv_grand_total?.text = "${NumberUtil.formatToStringWithoutDecimal(grandTotal)}"
-        productMenu[0]!!.subtotal = grandTotal
+        if (productMenu.size > 0) {
+            productMenu[0]!!.subtotal = grandTotal
+        }
 //        if(order!=null) {
             adapter.setList(productMenu)
             setFooterData()
