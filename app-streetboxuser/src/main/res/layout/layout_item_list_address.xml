@@ -106,18 +106,44 @@
                     android:text="Edit Address"
                     android:textAllCaps="false"
                     android:textSize="@dimen/_11sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/_2sdp">
 
                 <Button
-                    android:id="@+id/btnMoreAddress"
+                    android:id="@+id/btnSetPrimary"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_38sdp"
                     android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_weight="3"
-                    android:background="@drawable/ic_baseline_more_horiz_24"
-                    android:gravity="center" />
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Set Primary Cancassing"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/_11sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/_2sdp">
+
+                <Button
+                    android:id="@+id/btnDeleteAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_38sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Delete Address"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/_11sdp" />
             </LinearLayout>
 
 

@@ -59,29 +59,37 @@ class AdapterAddress(
                     onClickItemSelect.clickItem(item)
                 }
 
+                btnSetPrimary.setOnClickListener {
+                    onClickItemSelect.clickItemMarkAsAddress(item)
+                }
+
+                btnDeleteAddress.setOnClickListener {
+                    onClickItemSelect.clickItemDelete(item)
+                }
+
                 itemView.setOnClickListener {
                     onClickItemAny.clickItem(item)
                 }
 
-                btnMoreAddress.setOnClickListener {
-                    val popupMenu = PopupMenu(btnMoreAddress.context, itemView)
-                    popupMenu.inflate(R.menu.menu_option_address)
-                    popupMenu.show()
-
-                    popupMenu.setOnMenuItemClickListener {
-                        when (it.itemId) {
-                            R.id.ic_mark_address -> {
-                                onClickItemSelect.clickItemMarkAsAddress(item)
-                                return@setOnMenuItemClickListener true
-                            }
-                            R.id.ic_delete_address -> {
-                                onClickItemSelect.clickItemDelete(item)
-                                return@setOnMenuItemClickListener true
-                            }
-                        }
-                        return@setOnMenuItemClickListener false
-                    }
-                }
+//                btnMoreAddress.setOnClickListener {
+//                    val popupMenu = PopupMenu(btnMoreAddress.context, itemView)
+//                    popupMenu.inflate(R.menu.menu_option_address)
+//                    popupMenu.show()
+//
+//                    popupMenu.setOnMenuItemClickListener {
+//                        when (it.itemId) {
+////                            R.id.ic_mark_address -> {
+////                                onClickItemSelect.clickItemMarkAsAddress(item)
+////                                return@setOnMenuItemClickListener true
+////                            }
+//                            R.id.ic_delete_address -> {
+//                                onClickItemSelect.clickItemDelete(item)
+//                                return@setOnMenuItemClickListener true
+//                            }
+//                        }
+//                        return@setOnMenuItemClickListener false
+//                    }
+//                }
             }
         }
     }

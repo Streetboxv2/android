@@ -188,6 +188,31 @@ class MenuActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
             .into(iv_banner)
 
         rl_order_summary.visibility = View.GONE
+        rl_book_home_visit.visibility = View.VISIBLE
+        cl_book_home_visit.setOnClickListener {
+            if (types.equals("homevisit")) {
+                if (getProductSales.isNotEmpty()) {
+                    order.typeOrder = ConstVar.TRANSACTION_TYPE_VISIT
+                    viewModel.updateOrder(order)
+                    val bundle = Bundle()
+                    bundle.putString("foodTruckData", gson.toJson(foodTruck))
+                    bundle.putString("menulist", gson.toJson(order.productSales))
+                    bundle.putString("visituniqueid", order.uniqueId)
+                    bundle.putDouble("total", total)
+                    bundle.putInt("qty", qtyItems)
+                    startActivity(BookHomeVisitActivity.getIntent(this, merchantId, bundle))
+                } else showToastExt("Item not choice", this)
+
+            } else {
+                val bundle = Bundle()
+                bundle.putString("foodTruckData", gson.toJson(foodTruck))
+                startActivity(
+                    Intent(this, NearbyDetailVisitActivity::class.java)
+                        .putExtras(bundle)
+                        .putExtra(MERCHANT_ID, merchantId)
+                )
+            }
+        }
 
         tv_pickup.setOnClickListener {
             val bundle = Bundle()
@@ -396,8 +421,10 @@ class MenuActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
                 dismissLoading()
                 if (useCase.data.isNotEmpty()) {
                     rlBookHomeVisit?.visibility = View.VISIBLE
+                    rl_book_home_visit?.visibility = View.VISIBLE
                 } else {
                     rlBookHomeVisit?.visibility = View.GONE
+                    rl_book_home_visit?.visibility = View.GONE
                 }
             }
             is MenuViewEvent.GetFoodTruckHomeVisitDataFailed -> {
@@ -525,6 +552,7 @@ class MenuActivity : BaseActivity<MenuViewEvent, MenuViewModel>() {
         }
 
         rlBookHomeVisit?.visibility = View.GONE
+//        rl_book_home_visit?.visibility = View.GONE
 
         return view
     }

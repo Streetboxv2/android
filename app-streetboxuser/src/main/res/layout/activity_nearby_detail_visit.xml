@@ -76,7 +76,6 @@
 
     </LinearLayout>
 
-
     <RelativeLayout
         android:id="@+id/rl_order_summary"
         android:layout_width="match_parent"

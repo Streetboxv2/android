@@ -1260,7 +1260,7 @@
     },
     {
       "id": "22:4570048960932000574",
-      "lastPropertyId": "28:2196924500163316123",
+      "lastPropertyId": "29:8800527104150422643",
       "name": "Order",
       "properties": [
         {
@@ -1417,6 +1417,12 @@
           "id": "28:2196924500163316123",
           "name": "qrCode",
           "type": 9
+        },
+        {
+          "id": "29:8800527104150422643",
+          "name": "grandTotalqty",
+          "type": 5,
+          "flags": 4
         }
       ],
       "relations": []
@@ -1531,7 +1537,7 @@
     },
     {
       "id": "24:6740398924981164585",
-      "lastPropertyId": "24:8701125801893374573",
+      "lastPropertyId": "25:4575314904236793418",
       "name": "ParkingSales",
       "properties": [
         {
@@ -1669,6 +1675,12 @@
           "id": "24:8701125801893374573",
           "name": "platNo",
           "type": 9
+        },
+        {
+          "id": "25:4575314904236793418",
+          "name": "isTracking",
+          "type": 1,
+          "flags": 4
         }
       ],
       "relations": []
